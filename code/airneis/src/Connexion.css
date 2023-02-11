@@ -1,0 +1,47 @@
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
+    padding: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 20px;
+}
+
+input[type=text],input[type=number],input[type=email]{
+    border: 1px solid #150;
+    width: 300px;
+    height: 34px;
+    outline: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 100;
+    border-radius: 5px;
+}
+
+input[type=button]{
+    border: 1px solid #150;
+    text-align: center;
+    height: 34px;
+    outline: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 100;
+    background: #150;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+label{
+    font-size: 12px;
+    margin-bottom: 10px;
+}
