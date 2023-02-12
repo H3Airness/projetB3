@@ -8,6 +8,7 @@ import Home from './composants/front/Home';
 import Panier from './composants/front/Panier';
 import Recherche from './composants/front/Recherche';
 import NotFound from './composants/front/NotFound';
+import Connexion from './composants/front/Connexion';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -15,9 +16,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/' element={<App />}>
       <Route index element={<Home />} />
       <Route path='panier' element={<Panier />} />
-      <Route path='recherche' element={<Recherche />} />*
+      <Route path='recherche' element={<Recherche />} />
+      <Route path='connexion' element={<Connexion />} />
       <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
-  </BrowserRouter>,
+  </BrowserRouter>
 )

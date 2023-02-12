@@ -23,6 +23,11 @@ function Menu() {
                             return isActive ? "nav-link active text-light" : "nav-link"
                         }}>Recherche</NavLink>
                     </li>
+                    <li className="nav-item">
+                        <NavLink to="/connexion" className={({isActive}) => {
+                            return isActive ? "nav-link active text-light" : "nav-link"
+                        }}>Connexion</NavLink>
+                    </li>
                 </ul>
             </nav>
         </div>
