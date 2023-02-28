@@ -4,11 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-<<<<<<< Updated upstream
-import Home from './composants/front/Accueil';
-=======
 import Acceuil from './composants/front/Accueil';
->>>>>>> Stashed changes
 import Panier from './composants/front/Panier';
 import Recherche from './composants/front/Recherche';
 import NotFound from './composants/front/NotFound';

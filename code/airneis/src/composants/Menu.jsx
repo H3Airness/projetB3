@@ -8,11 +8,7 @@ function Menu() {
                     <li className="nav-item">
                         <NavLink to="/" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-<<<<<<< Updated upstream
                         }}><span className="navbar-brand fs-3 NavTitre">Àirneis</span></NavLink>
-=======
-                        }}><span className="navbar-brand fs-3 NavTitle">Àirneis</span></NavLink>
->>>>>>> Stashed changes
                     </li>
                     <li className="nav-item">
                         <NavLink to="/panier" className={({isActive}) => {

@@ -54,7 +54,6 @@ input[type="submit"]:hover {
   color: black;
 }
 
-<<<<<<< Updated upstream
 .NavTitre{
   margin-left: 80px;
 }
@@ -62,12 +61,3 @@ input[type="submit"]:hover {
 .NavItems{
   align-items: center;
 }
-=======
-.NavItems{
-  align-items: center;
-}
-
-.NavItems{
-  margin-left: 80px;
-}
->>>>>>> Stashed changes
