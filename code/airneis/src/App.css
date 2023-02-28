@@ -54,3 +54,10 @@ input[type="submit"]:hover {
   color: black;
 }
 
+.NavTitre{
+  margin-left: 80px;
+}
+
+.NavItems{
+  align-items: center;
+}

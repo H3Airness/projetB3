@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Menu from '../Menu';
 
 function Connexion() {
   const [name,setName] = useState('');

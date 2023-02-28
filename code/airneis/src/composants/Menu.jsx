@@ -3,15 +3,12 @@ import { NavLink } from "react-router-dom"
 function Menu() {
     return ( 
         <div className="bg-dark mb-3">
-            <nav className="navbar navbar-expand navbar-dark container">
-                <span className="navbar-brand fs-3">
-                    Àirneis
-                </span>
-                <ul className="navbar-nav">
+            <nav className="navbar navbar-expand navbar-dark">
+                <ul className="navbar-nav NavItems">
                     <li className="nav-item">
                         <NavLink to="/" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}>Accueil</NavLink>
+                        }}><span className="navbar-brand fs-3 NavTitre">Àirneis</span></NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/panier" className={({isActive}) => {

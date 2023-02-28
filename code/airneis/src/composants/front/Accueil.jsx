@@ -1,13 +1,15 @@
 import React from 'react';
+import Menu from '../Menu';
 import Gallery from '../Slider';
 
-const Home = () => {
+const Accueil = () => {
     return ( <>
     
     <div>
+        <Menu/>
         <Gallery />
     </div>
     </> );
 }
  
-export default Home ;
+export default Accueil ;

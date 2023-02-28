@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from './composants/front/Home';
+import Home from './composants/front/Accueil';
 import Panier from './composants/front/Panier';
 import Recherche from './composants/front/Recherche';
 import NotFound from './composants/front/NotFound';
