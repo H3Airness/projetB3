@@ -3,7 +3,7 @@ import Carousel from 'better-react-carousel'
 
 const Gallery = () => {
   return (
-    <Carousel cols={1} rows={1} gap={10} loop autoplay={3000} hideArrow={true} showDots={true} dotColorActive={'#000000'}>
+    <Carousel cols={1} rows={1} gap={10} loop autoplay={3000} showDots={true} dotColorActive={'#000000'}>
       <Carousel.Item>
         <img width="100%" src="https://t4.ftcdn.net/jpg/02/86/03/97/240_F_286039798_bSv7AUnD51WfrgG5w0rSabV3ujNvLgTn.jpg" />
       </Carousel.Item>
