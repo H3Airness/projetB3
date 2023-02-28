@@ -61,3 +61,17 @@ input[type="submit"]:hover {
 .NavItems{
   align-items: center;
 }
+
+.icone-recherche {
+  width: 40px;
+  filter: invert();
+}
+
+.icone-recherche:hover {
+  width: 40px;
+  filter: invert();
+}
+
+.test {
+  background-color: rgb(147, 129, 122)!important ;
+}
