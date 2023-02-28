@@ -6,11 +6,7 @@ function App() {
 
   return (
     <div className="page">
-      <Menu />
-      <div className="container">
-        <Outlet />
-      </div>
-
+      <Outlet />
     </div>
   )
 }
