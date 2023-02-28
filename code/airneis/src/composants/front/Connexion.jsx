@@ -15,7 +15,6 @@ function Connexion() {
 
   return (
     <>
-    <Menu/>
       <div class="login-card">
         <div class="card-header">
           <div class="log">Login</div>
