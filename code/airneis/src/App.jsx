@@ -3,10 +3,12 @@ import './App.css'
 
 function App() {
 
-  return (
+  return (<>
+    <Menu/>
     <div className="page">
       <Outlet />
     </div>
+    </>
   )
 }
 
