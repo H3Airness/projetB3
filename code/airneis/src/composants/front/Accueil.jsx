@@ -1,5 +1,4 @@
 import React from 'react';
-import Menu from '../Menu';
 import Gallery from '../Slider';
 
 
