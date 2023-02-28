@@ -4,31 +4,19 @@ import Menu from '../Menu';
 
 function Connexion() {
   const [name,setName] = useState('');
-  const [mobile,setMobile] = useState('');
-  const [email,setEmail] = useState('');
+  const [mdp,setMobile] = useState('');
 
   const handleSubmit = () => {
-    if(name.length === 0){
-      alert("Name has left Blank!");
-    }
-    else if(mobile.length === 0){
-      alert("Mobile has left Blank!");
-    }
-    else if(email.length === 0){
-      alert("Email has left Blank!");
-    }
-    else{
       const url = 'http://localhost/enquiry.php';
       let fData = new FormData();
       fData.append('name', name);
-      fData.append('mobile', mobile);
-      fData.append('email', email);
+      fData.append('mdp', mdp);
       axios.post(url, fData).then(response=> alert(response.data)).catch(error=> alert(error));
-    }
   }
 
   return (
     <>
+    <Menu/>
       <div class="login-card">
         <div class="card-header">
           <div class="log">Login</div>
@@ -42,7 +30,7 @@ function Connexion() {
 
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" name="mdp" id="mdp" value={mobile} onChange={(e) => setMobile(e.target.value)} />
+          <input type="password" name="mdp" id="mdp" value={mdp} onChange={(e) => setMobile(e.target.value)} />
         </div>
 
         <input type="button" name="submit" id="submit" value="connecter" onClick={handleSubmit} />
