@@ -4,10 +4,12 @@ import Menu from './composants/Menu'
 
 function App() {
 
-  return (
+  return (<>
+    <Menu/>
     <div className="page">
       <Outlet />
     </div>
+    </>
   )
 }
 

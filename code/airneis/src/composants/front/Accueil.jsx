@@ -6,7 +6,6 @@ const Accueil = () => {
     return ( <>
     
     <div>
-        <Menu/>
         <Gallery />
     </div>
     </> );
