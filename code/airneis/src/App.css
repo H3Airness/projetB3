@@ -1,4 +1,7 @@
-/* Formulaire Connexion */
+@font-face {
+  font-family: 'Marck';
+  src: url('../public/MarckScript-Regular.ttf');
+}
 
 .login-card {
   width: 300px;
@@ -61,6 +64,17 @@ input[type="submit"]:hover {
   margin-top: 15px !important;
   margin-bottom: 40px !important;
 }
+
+
+/* NavBar */
+
+.NavTitre{
+  margin-left: 20px;
+  font-family: 'Marck';
+  font-weight: bold;
+  font-size: 40px ;
+  color: #ffffff;
+  }
 
 
 /* NavBar */
