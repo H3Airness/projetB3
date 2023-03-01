@@ -9,6 +9,9 @@ import Panier from './composants/front/Panier';
 import Recherche from './composants/front/Recherche';
 import NotFound from './composants/front/NotFound';
 import Connexion from './composants/front/Connexion';
+import MentionLegale from './composants/front/MentionLegale';
+import CGU from './composants/front/CGU';
+import Contact from './composants/front/Contact';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -18,6 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='panier' element={<Panier />} />
       <Route path='recherche' element={<Recherche />} />
       <Route path='connexion' element={<Connexion />} />
+      <Route path='mention-legale' element={<MentionLegale/>} />
+      <Route path='CGU' element={<CGU/>} />
+      <Route path='contact' element={<Contact/>} />
       <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
