@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import Menu from './composants/Menu'
+import Footer from './composants/Footer'
 
 function App() {
 
@@ -8,6 +9,9 @@ function App() {
     <div className="page">
       <Menu />
         <Outlet />
+    </div>
+    <div class="sticky-bottom">
+        <Footer/>
     </div>
     </>
   )
