@@ -10,10 +10,10 @@
 	}
 	else{
 		$name = $_POST['name'];
-		$mobile = $_POST['mobile'];
+		$mdp = $_POST['mdp'];
 		$email = $_POST['email'];
 		
-		$sql = "INSERT INTO enquiry(name, mobile, email) VALUES('$name','$mobile','$email');";
+		$sql = "INSERT INTO enquiry(name, mdp) VALUES('$name','$mdp');";
 		$res = mysqli_query($conn, $sql);
 		
 		if($res){

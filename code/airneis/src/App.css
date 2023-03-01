@@ -59,6 +59,26 @@ input[type="submit"]:hover {
   color: black;
 }
 
+.ConnexionTitre{
+  text-align: center !important;
+  margin-top: 15px !important;
+  margin-bottom: 40px !important;
+}
+
+
+/* NavBar */
+
+.NavTitre{
+  margin-left: 20px;
+  font-family: 'Marck';
+  font-weight: bold;
+  font-size: 40px ;
+  color: #ffffff;
+  }
+
+
+/* NavBar */
+
 .NavTitre{
   margin-left: 20px;
   font-family: 'Marck';
