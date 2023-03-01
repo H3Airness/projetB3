@@ -3,6 +3,11 @@
   src: url('../public/MarckScript-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'Acme';
+  src: url('../public/Acme-Regular.ttf');
+}
+
 .login-card {
   width: 300px;
   margin: 0 auto;
@@ -101,3 +106,27 @@ input[type="submit"]:hover {
 .logo-airneis:hover {
   filter: saturate(300%);
 }
+
+.info-airneis {
+  text-align: center;
+  margin: 0;
+  font-family: "Acme";
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.info-airneis p {
+  margin: 0 !important;
+}
+
+.cat {
+  display: flex;
+  justify-content: center;
+}
+
+.row1 {
+  display: flex ;
+  justify-content: space-around;
+}
+
+

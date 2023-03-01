@@ -6,7 +6,7 @@ import Footer from './composants/Footer'
 function App() {
 
   return (<>
-    <div className="page">
+    <div>
       <Menu />
         <Outlet />
     </div>
