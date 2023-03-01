@@ -11,7 +11,11 @@ function Connexion() {
     let formType = {};
     formData.forEach((value, key) => formType[key] = formData.get(key));
 
-    console.log(formType);
+    axios.post('http://localhost:8000/enquiry.php', formType, {
+       headers: {
+        'Content-Type' : 'application/json',
+       }
+    }).then( response => console.log(response) );
   }
 
   return (
@@ -19,23 +23,23 @@ function Connexion() {
   <div className='ConnexionTitre'> 
     <NavLink to="/" className={({isActive}) => {
       return isActive ? "nav-link active text-light" : "nav-link"
-    }}><span className="navbar-brand fs-3">Àirneis</span></NavLink>
+    }}> <img className="logo-airneis-connexion" src="../../public/logo.svg" alt="" /><span className="ConnexionTitre">Àirneis</span></NavLink>
   </div>
 
-  <div class="login-card">
-    <div class="card-header">
-      <div class="log">Login</div>
+  <div className="login-card">
+    <div className="card-header">
+      <div className="log">Login</div>
     </div>
     <form onSubmit={handleSubmit}>
-      <div class="form-group">
-        <label for="username">Email:</label>
+      <div className="form-group">
+        <label htmlFor="username">Email:</label>
         <input required="" name="email" id="email" type="text" />
       </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
+      <div className="form-group">
+        <label htmlFor="password">Password:</label>
         <input required="" name="password" id="password" type="password" />
       </div>
-      <div class="form-group">
+      <div className="form-group">
         <input value="Login" type="submit" />
         </div>
     </form>
