@@ -121,8 +121,11 @@ input[type="submit"]:hover {
 .nav-bg {
  background-color: #4e4d4d !important;
  border-bottom: 2px solid rgb(255, 255, 255);
-
 }
+
+.nav-bg-footer {
+  background-color: #4e4d4d !important;
+ }
 
 .logo-airneis {
   margin-bottom: 7px;
