@@ -79,6 +79,10 @@ input[type="submit"]:hover {
   height: 100px;
 }
 
+.DivImages{
+  margin-left: 100px !important;
+}
+
 
 /* NavBar */
 
