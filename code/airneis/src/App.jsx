@@ -11,9 +11,6 @@ function App() {
     <div class="sticky-bottom">
         <Footer/>
     </div>
-    <div class="sticky-bottom">
-        <Footer/>
-    </div>
     </>
   )
 }
