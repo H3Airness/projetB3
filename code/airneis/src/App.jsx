@@ -5,8 +5,8 @@ import Footer from './composants/Footer'
 function App() {
 
   return (<>
-    <div className="page">
-      <Outlet />
+    <div>
+        <Outlet />
     </div>
     <div class="sticky-bottom">
         <Footer/>
