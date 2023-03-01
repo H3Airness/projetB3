@@ -1,3 +1,5 @@
+/* Formulaire Connexion */
+
 .login-card {
   width: 300px;
   margin: 0 auto;
@@ -53,6 +55,15 @@ input[type="submit"]:hover {
   background-color: #ccc;
   color: black;
 }
+
+.ConnexionTitre{
+  text-align: center !important;
+  margin-top: 15px !important;
+  margin-bottom: 40px !important;
+}
+
+
+/* NavBar */
 
 .NavTitre{
   margin-left: 80px;

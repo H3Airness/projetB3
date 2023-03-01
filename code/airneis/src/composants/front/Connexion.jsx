@@ -1,39 +1,45 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { NavLink } from "react-router-dom"
 
 function Connexion() {
-  const [name,setName] = useState('');
-  const [mdp,setMobile] = useState('');
 
-  const handleSubmit = () => {
-      const url = 'http://localhost/enquiry.php';
-      let fData = new FormData();
-      fData.append('name', name);
-      fData.append('mdp', mdp);
-      axios.post(url, fData).then(response=> alert(response.data)).catch(error=> alert(error));
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    let formType = {};
+    formData.forEach((value, key) => formType[key] = formData.get(key));
+
+    console.log(formType);
   }
 
   return (
     <>
-      <div class="login-card">
-        <div class="card-header">
-          <div class="log">Login</div>
-        </div>
+  <div className='ConnexionTitre'> 
+    <NavLink to="/" className={({isActive}) => {
+      return isActive ? "nav-link active text-light" : "nav-link"
+    }}><span className="navbar-brand fs-3">Àirneis</span></NavLink>
+  </div>
 
-      <form>
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+  <div class="login-card">
+    <div class="card-header">
+      <div class="log">Login</div>
+    </div>
+    <form onSubmit={handleSubmit}>
+      <div class="form-group">
+        <label for="username">Email:</label>
+        <input required="" name="email" id="email" type="text" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input required="" name="password" id="password" type="password" />
+      </div>
+      <div class="form-group">
+        <input value="Login" type="submit" />
         </div>
-
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" name="mdp" id="mdp" value={mdp} onChange={(e) => setMobile(e.target.value)} />
-        </div>
-
-        <input type="button" name="submit" id="submit" value="connecter" onClick={handleSubmit} />
-      </form>
-</div>
+    </form>
+  </div>
 
     </>
   );
