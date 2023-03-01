@@ -2,10 +2,10 @@ import { NavLink } from "react-router-dom"
 
 function Footer() {
     return ( 
-        <div className="bg-dark mb-3">
-            <nav className="navbar navbar-expand navbar-dark container">
+        <div className="nav-bg">
+            <nav className="navbar navbar-expand navbar-dark">
                 <ul className="navbar-nav">
-                    <li className="nav-item">
+                    <li className="nav-item footer">
                         <NavLink to="/CGU" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
                         }}>Condition Général d'Utilisation</NavLink>

@@ -144,6 +144,10 @@ input[type="submit"]:hover {
   font-weight: bold;
 }
 
+.footer {
+  margin-left: 80px;
+}
+
 .info-airneis p {
   margin: 0 !important;
 }

@@ -1,5 +1,8 @@
+import Menu from "../Menu";
+
 const MentionLegale = () => {
     return ( <>
+        <Menu/>
         <h1>Condition Général d'utilisation</h1>
         <p>
         APERÇU

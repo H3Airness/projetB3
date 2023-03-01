@@ -8,7 +8,7 @@ function App() {
     <div>
         <Outlet />
     </div>
-    <div class="sticky-bottom">
+    <div className="sticky-bottom nav-bg">
         <Footer/>
     </div>
     </>

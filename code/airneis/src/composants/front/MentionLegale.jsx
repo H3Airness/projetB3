@@ -1,5 +1,8 @@
+import Menu from "../Menu";
+
 const MentionLegale = () => {
     return ( <>
+        <Menu/>
         <h1>Mentions Légales</h1>
         <p>
         INFORMATIQUE ET LIBERTÉS
