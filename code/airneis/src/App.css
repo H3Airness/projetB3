@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Marck';
+  src: url('../public/MarckScript-Regular.ttf');
+}
+
 .login-card {
   width: 300px;
   margin: 0 auto;
@@ -56,8 +61,31 @@ input[type="submit"]:hover {
 
 .NavTitre{
   margin-left: 80px;
-}
+  font-family: 'Marck';
+  font-weight: bold;
+  font-size: 40px ;
+  color: #ffffff;
+  }
+
+.NavTitre:hover {
+  text-shadow: 0 0 5px #e8e7e7;
+  }
 
 .NavItems{
   align-items: center;
+}
+
+.icone-recherche {
+  width: 40px;
+  filter: invert();
+}
+
+.icone-recherche:hover {
+  filter: sepia(100%);
+}
+
+.nav-bg {
+ background-color: #4e4d4d !important;
+ border-bottom: 2px solid rgb(255, 255, 255);
+
 }
