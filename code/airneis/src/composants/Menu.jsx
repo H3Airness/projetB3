@@ -6,9 +6,10 @@ function Menu() {
             <nav className="navbar navbar-expand navbar-dark nav-bg">
                 <ul className="navbar-nav NavItems">
                     <li className="nav-item">
+                    
                         <NavLink to="/" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}><span className="NavTitre">Àirneis</span></NavLink>
+                        }}> <img className="logo-airneis" src="../../public/logo.svg" alt="" /><span className="NavTitre">Àirneis</span></NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/connexion" className={({isActive}) => {
