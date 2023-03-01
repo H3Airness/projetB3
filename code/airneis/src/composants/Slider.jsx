@@ -3,8 +3,6 @@ import Carousel from 'better-react-carousel';
 
 const Gallery = () => {
   const [autoplay, setAutoplay] = useState(true);
-  const dotColor = "#000000";
-  const dotColorActive = "#FFFFFF";
   const images = [
     { src: 'https://t4.ftcdn.net/jpg/02/86/03/97/240_F_286039798_bSv7AUnD51WfrgG5w0rSabV3ujNvLgTn.jpg', alt: 'image 1' },
     { src: 'https://t4.ftcdn.net/jpg/05/42/62/23/240_F_542622306_WJVksyeDFbSNe1xYr4EF8VMn4vgvUAq9.jpg', alt: 'image 2' },
@@ -16,7 +14,7 @@ const Gallery = () => {
   };
 
   return (
-    <Carousel cols={1} rows={1} gap={10} loop autoplay={autoplay ? 3000 : false} showDots dotColor={dotColor} dotColorActive={dotColorActive} onClick={handleInteraction}>
+    <Carousel cols={1} rows={1} gap={10} loop autoplay={autoplay ? 3000 : false} showDots dotColor={"#000000"} dotColorActive={"#333333"} onClick={handleInteraction}>
       {images.map((image, index) => (
         <Carousel.Item key={index}>
           <img src={image.src} alt={image.alt} style={{ width: '100%' }} />
