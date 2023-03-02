@@ -79,20 +79,6 @@ input[type="submit"]:hover {
   height: 100px;
 }
 
-.DivImages{
-  margin-left: 100px !important;
-}
-
-
-/* NavBar */
-
-.NavTitre{
-  margin-left: 20px;
-  font-family: 'Marck';
-  font-weight: bold;
-  font-size: 40px ;
-  color: #ffffff;
-  }
 
 
 /* NavBar */
@@ -161,12 +147,24 @@ input[type="submit"]:hover {
 
 .cat {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+  
 }
 
-.row1 {
-  display: flex ;
-  justify-content: space-around;
-}
+.content-img {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    padding: 0 20px;
+  }
+
+  .img1 {
+    margin-right: 100px;
+  }
+  
+  .img2 {
+    margin-left: 100px;
+  }
 
 

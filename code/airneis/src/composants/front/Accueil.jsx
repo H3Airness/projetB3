@@ -18,18 +18,18 @@ const Accueil = () => {
     </div>
 
     <div class="cat">
-    <div className="row row1">
-    <div className="col mb-5 mt-5 DivImages">
+    <div className="content-img">
+    <div className="col mb-5 mt-5 img1 img2">
       <NavLink to={"/"}>
         <img width={400} src={"https://picsum.photos/800/600?random=1"}/> 
       </NavLink>
     </div>
-    <div className="col mb-5 mt-5 DivImages">
+    <div className="col mb-5 mt-5 DivImages img1 img2">
       <NavLink to={"/"}>
         <img width={400} src={"https://picsum.photos/800/600?random=2"} />
       </NavLink>
     </div>
-    <div className="col mb-5 mt-5 DivImages">
+    <div className="col mb-5 mt-5 DivImages img1 img2">
       <NavLink to={"/"}>
         <img width={400} src={"https://picsum.photos/800/600?random=3"} />
       </NavLink>
