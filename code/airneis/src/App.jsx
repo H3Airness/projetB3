@@ -7,8 +7,6 @@ function App() {
   return (<>
     <div>
         <Outlet />
-    </div>
-    <div className="sticky-bottom">
         <Footer/>
     </div>
     </>

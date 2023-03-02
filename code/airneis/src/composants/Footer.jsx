@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom"
 
 function Footer() {
     return ( 
-        <div className="nav-bg-footer Footer">
-            <nav className="navbar navbar-expand navbar-dark">
+        <div className="nav-bg-footer">
+            <footer className="navbar navbar-expand navbar-dark Footer ">
                 <ul className="navbar-nav">
                     <li className="nav-item footer">
                         <NavLink to="/CGU" className={({isActive}) => {
@@ -29,7 +29,7 @@ function Footer() {
                         }}>Réseaux</NavLink>
                     </li>
                 </ul>
-            </nav>
+            </footer>
         </div>
      );
 }
