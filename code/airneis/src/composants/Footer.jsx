@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom"
 
 function Footer() {
     return ( 
-        <div className="nav-bg-footer">
+        <div className="nav-bg-footer Footer">
             <nav className="navbar navbar-expand navbar-dark">
                 <ul className="navbar-nav">
                     <li className="nav-item footer">
