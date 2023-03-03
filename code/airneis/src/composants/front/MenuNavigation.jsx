@@ -23,7 +23,7 @@ function MenuNavigation() {
   return (
     <div className="menu-navigation">
       <div className="icone-menu" onClick={toggleMenu}>
-        <img className="icone-recherche" src="../list_FILL0_wght400_GRAD0_opsz48.png" alt="Menu" />
+        <a className="nav-link"><img className="icone-recherche" src="../list_FILL0_wght400_GRAD0_opsz48.png" alt="Menu" /></a>
       </div>
       <nav className={`menu ${menuOpen ? "ouvert" : ""}`}>
         <ul>
