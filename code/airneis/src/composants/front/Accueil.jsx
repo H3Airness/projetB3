@@ -12,12 +12,12 @@ const Accueil = () => {
         <Menu/>
         <Gallery />
     </div>
-    <div className="info-airneis">
+    <div className="info-airneis mt-5">
         <p> VENANT DES HAUTES TERRES D'ÉCOSSE</p>
         <p> NOS MEUBLES SONT IMMORTELS</p>
     </div>
 
-    <div class="cat">
+    <div className="cat">
     <div className="content-img">
     <div className="col mb-5 mt-5 img1 img2">
       <NavLink to={"/"}>
