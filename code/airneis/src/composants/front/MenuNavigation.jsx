@@ -23,16 +23,16 @@ function MenuNavigation() {
   return (
     <div className="menu-navigation">
       <div className="icone-menu" onClick={toggleMenu}>
-        <a className="nav-link"><img className="icone-recherche" src="../list_FILL0_wght400_GRAD0_opsz48.png" alt="Menu" /></a>
+        <img className="icone-recherche" src="../list_FILL0_wght400_GRAD0_opsz48.png" alt="Menu" />
       </div>
       <nav className={`menu ${menuOpen ? "ouvert" : ""}`}>
         <ul>
-          <li><NavLink to={"/connexion"}><a>Se connecter</a></NavLink></li>
-          <li><NavLink to={"/"}><a>S'inscrire</a></NavLink></li>
-          <li><NavLink to={"/cgu"}><a>CGU</a></NavLink></li>
-          <li><NavLink to={"/mention-legale"}><a>Mentions légales</a></NavLink></li>
-          <li><NavLink to={"/contact"}><a>Contact</a></NavLink></li>
-          <li><NavLink to={"/"}><a>À Propos d'Àirneis</a></NavLink></li>
+          <li><NavLink to={"/connexion"}>Se connecter</NavLink></li>
+          <li><NavLink to={"/"}>S'inscrire</NavLink></li>
+          <li><NavLink to={"/cgu"}>CGU</NavLink></li>
+          <li><NavLink to={"/mention-legale"}>Mentions légales</NavLink></li>
+          <li><NavLink to={"/contact"}>Contact</NavLink></li>
+          <li><NavLink to={"/"}>À Propos d'Àirneis</NavLink></li>
         </ul>
       </nav>
     </div>
