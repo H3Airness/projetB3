@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { NavLink } from "react-router-dom"
-import Footer from '../Footer';
 
 function Connexion() {
 
@@ -11,7 +10,9 @@ function Connexion() {
     let formType = {};
     formData.forEach((value, key) => formType[key] = formData.get(key));
 
-    axios.post('http://localhost:8000/enquiry.php', formType, {
+    console.log(formType);
+
+    axios.post('http://localhost:8001/enquiry.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
