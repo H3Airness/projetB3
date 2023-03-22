@@ -35,16 +35,12 @@ function Inscription() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input required="" name="email" id="email" type="text" />
-        </div>
-        <div className="form-group">
           <label htmlFor="nom">Nom</label>
           <input required="" name="nom" id="nom" type="text" />
         </div>
         <div className="form-group">
-          <label htmlFor="prenom">Prenom</label>
-          <input required="" name="prenom" id="prenom" type="text" />
+          <label htmlFor="email">Email:</label>
+          <input required="" name="email" id="email" type="text" />
         </div>
         <div className="form-group">
           <label htmlFor="password">Mot de passe:</label>
