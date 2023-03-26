@@ -233,5 +233,9 @@ input[type="submit"]:hover {
 
 }
 
+.phraseQuestion{
+  margin-left: 60px;
+  text-decoration: none!important;
+}
 
 

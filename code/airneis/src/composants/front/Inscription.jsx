@@ -35,7 +35,7 @@ function Inscription() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="nom">Nom</label>
+          <label htmlFor="nom">Nom:</label>
           <input required="" name="nom" id="nom" type="text" />
         </div>
         <div className="form-group">
@@ -47,13 +47,13 @@ function Inscription() {
           <input required="" name="password" id="password" type="password" />
         </div>
         <div className="form-group">
-          <label htmlFor="ConfirmPassword">Confirmé mot de passe:</label>
-          <input required="" name="password" id="password" type="password" />
+          <label htmlFor="ConfirmPassword">Confirmer le mot de passe:</label>
+          <input required="" name="passwordConfirm" id="passwordConfirm" type="password" />
         </div>
         <div className="form-group">
           <input value="Login" type="submit" />
         </div>
-        <NavLink to="/connexion">Connectez vous ici !</NavLink>
+        <span className="phraseQuestion"><NavLink to="/connexion">Connectez vous ici !</NavLink></span>
       </form>
     </div>
   </div>    
