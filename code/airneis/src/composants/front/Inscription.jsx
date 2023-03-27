@@ -12,7 +12,7 @@ function Inscription() {
 
     console.log(formType);
 
-    axios.post('http://localhost:8001/enquiry.php', formType, {
+    axios.post('https://airnes.000webhostapp.com/inscription.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
@@ -47,8 +47,8 @@ function Inscription() {
           <input required="" name="password" id="password" type="password" />
         </div>
         <div className="form-group">
-          <label htmlFor="ConfirmPassword">Confirmé mot de passe:</label>
-          <input required="" name="password" id="password" type="password" />
+          <label htmlFor="ConfirmPassword">Confirmer mot de passe:</label>
+          <input required="" name="password2" id="password2" type="password" />
         </div>
         <div className="form-group">
           <input value="Login" type="submit" />

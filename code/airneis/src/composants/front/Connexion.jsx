@@ -12,7 +12,7 @@ function Connexion() {
 
     console.log(formType);
 
-    axios.post('http://localhost:8001/enquiry.php', formType, {
+    axios.post('http://localhost:8000/enquiry.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
@@ -38,7 +38,7 @@ function Connexion() {
           <input required="" name="email" id="email" type="text" />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Mot de passe:</label>
           <input required="" name="password" id="password" type="password" />
         </div>
         <div className="form-group">
