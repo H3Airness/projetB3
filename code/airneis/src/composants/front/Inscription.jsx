@@ -35,7 +35,7 @@ function Inscription() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="nom">Nom</label>
+          <label htmlFor="nom">Nom:</label>
           <input required="" name="nom" id="nom" type="text" />
         </div>
         <div className="form-group">
