@@ -45,7 +45,7 @@ function Connexion() {
         <div className="form-group">
           <input value="Login" type="submit" />
         </div>
-        <NavLink className="compteNav" to="/inscription">Créez un compte ici !</NavLink>
+        <NavLink className="compteNav" to="/inscription">Vous voulez crée un compte ?</NavLink>
       </form>
     </div>
   </div>    

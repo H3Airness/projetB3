@@ -53,7 +53,7 @@ function Inscription() {
         <div className="form-group">
           <input value="Login" type="submit" />
         </div>
-        <NavLink className="compteNav" to="/connexion">Connectez vous ici !</NavLink>
+        <NavLink className="compteNav" to="/connexion">Vous avez déjà un compte ?</NavLink>
       </form>
     </div>
   </div>    
