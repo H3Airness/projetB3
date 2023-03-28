@@ -25,7 +25,7 @@ function Connexion() {
     <div className='ConnexionTitre'> 
       <NavLink to="/" className={({isActive}) => {
         return isActive ? "nav-link active text-light" : "nav-link"
-      }}> <img className="logo-airneis-connexion" src="../../public/logo.svg" alt="" /><span className="ConnexionTitre">Àirneis</span></NavLink>
+      }}> <img className="logo-airneis-connexion" src="../../public/logo.svg" alt="" /><span className="titreConnexion">Àirneis</span></NavLink>
     </div>
 
   <div className='Min-heightConteiner'>   
