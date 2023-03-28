@@ -12,11 +12,12 @@ function Connexion() {
 
     console.log(formType);
 
-    axios.post('http://localhost:8000/enquiry.php', formType, {
+    axios.post('https://airnes.000webhostapp.com/connexion.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
     }).then( response => console.log(response) );
+
   }
 
   return (
@@ -44,7 +45,7 @@ function Connexion() {
         <div className="form-group">
           <input value="Login" type="submit" />
         </div>
-        <NavLink to="/inscription">Créez un compte ici !</NavLink>
+        <NavLink className="compteNav" to="/inscription">Créez un compte ici !</NavLink>
       </form>
     </div>
   </div>    
