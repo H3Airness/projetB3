@@ -233,5 +233,26 @@ input[type="submit"]:hover {
 
 }
 
+.compteNav{
+  color: rgb(59, 59, 59);
+  text-decoration: none;
+ padding-left: 30px;
+  
+}
+
+.compteNav:hover{
+  color: #e96e1d;
+}
+
+.titreConnexion{
+  transition: 1s;
+}
+
+.titreConnexion:hover{
+  text-shadow: 1px 1px 1px rgb(255, 152, 61), 0 0 1em rgb(255, 190, 110), 0 0 0.2em rgb(255, 203, 139);
+}
+
+
+
 
 

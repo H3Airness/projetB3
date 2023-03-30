@@ -28,7 +28,7 @@ function MenuNavigation() {
       <nav className={`menu ${menuOpen ? "ouvert" : ""}`}>
         <ul>
           <li><NavLink to={"/connexion"}>Se connecter</NavLink></li>
-          <li><NavLink to={"/"}>S'inscrire</NavLink></li>
+          <li><NavLink to={"/inscription"}>S'inscrire</NavLink></li>
           <li><NavLink to={"/cgu"}>CGU</NavLink></li>
           <li><NavLink to={"/mention-legale"}>Mentions légales</NavLink></li>
           <li><NavLink to={"/contact"}>Contact</NavLink></li>
