@@ -176,7 +176,8 @@ input[type="submit"]:hover {
 
 .Min-heightConteinerPanier{
   background-color: #e3dfdd;
-  display: flex;
+  max-height: 100%;
+  padding: 30px;
 }
 
 .menu-navigation {
@@ -259,12 +260,10 @@ input[type="submit"]:hover {
 
 .divArticles{
   width: 300px;
-  height: 100px;
 }
 
 .divPrixArticles{
   width: 200px;
-  height: 100px;
 }
 
 
