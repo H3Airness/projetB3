@@ -180,9 +180,10 @@ input[type="submit"]:hover {
   justify-content: center;
   width: 1000px;
   margin: auto;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   max-height: 100vh;
-  padding: 41px;
+  padding: 30px;
+  padding-bottom: 0;
 }
 
 .menu-navigation {
@@ -266,6 +267,7 @@ input[type="submit"]:hover {
 .divArticles{
   width: 500px;
   margin-right: 50px;
+  height: 586px;
 }
 
 .divPrixArticles{
