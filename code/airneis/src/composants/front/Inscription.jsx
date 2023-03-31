@@ -51,7 +51,7 @@ function Inscription() {
           <input required="" name="password2" id="password2" type="password" />
         </div>
         <div className="form-group">
-          <input value="Envoyer" type="submit" />
+          <input value="Login" type="submit" />
         </div>
         <NavLink className="compteNav" to="/connexion">Vous avez déjà un compte ?</NavLink>
       </form>
