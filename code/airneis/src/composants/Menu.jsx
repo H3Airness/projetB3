@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom"
+import MenuNavigation from "./front/MenuNavigation";
 
 
 function Menu() {
@@ -26,9 +27,7 @@ function Menu() {
                     </li>
 
                     <li className="nav-item">
-                        <NavLink to="/connexion" className={({isActive}) => {
-                            return isActive ? "nav-link active text-light" : "nav-link"
-                        }}><img class="icone-recherche" src="./list_FILL0_wght400_GRAD0_opsz48.png"></img> </NavLink>
+                       <MenuNavigation/>
                     </li>                    
                 </ul>
             </nav>
