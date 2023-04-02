@@ -12,7 +12,7 @@ function Connexion() {
 
     console.log(formType);
 
-    axios.post('https://airnes.000webhostapp.com/connexion.php', formType, {
+    axios.post('https://localhost:8001/enquiry.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }

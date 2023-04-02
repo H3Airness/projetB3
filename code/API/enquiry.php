@@ -1,27 +1,30 @@
 <?php 
 
-	/*header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS');
+	header('Access-Control-Allow-Origin: *');
+	header('Access-Control-Allow-Methods: *');
 	header('Access-Control-Allow-Headers: *');
-	header('Content-Type: application/json');*/
+	header('Content-Type: application/json');
 
-	/*$data = json_decode(file_get_contents('php://input'));
+	$data = json_decode(file_get_contents('php://input'));
 
 	$email = $data -> email;
 	$mdp = $data -> password;
 
+//Connexion à la BDD
 
-	http_response_code(201);*/
+$db = new PDO('mysql:host=86.247.29.14;dbname=airneis;charest=utf8', 'airneis','Admin1234!');
 
-	$user = "root";
-	$password = "Admin1234!";
+$request = $db->prepare('SELECT * FROM espace_membres WHERE email = :email AND password = :password');
+$request->execute(array('email' => $email, 'password' => $password));
 
-	$db = new PDO('mysql:host=localhost;dbname=airneis', $user, $password);
+$userExist = $request->fetch();
 
-	if(isset($db))
-	{
-		echo "Connected";
+if($userExist)
+{
+	$reponse = array('statut' => 'success', 'message' => 'Connexion réussie !');
+}
+else  $reponse = array('statut' => 'Error', 'message' => 'Email ou mot de passe incorrect.');
 
-	} else echo "Not Connected";
+echo json_encode($reponse);
 
 ?>
