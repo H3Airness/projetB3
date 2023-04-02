@@ -6,8 +6,8 @@ function Footer() {
     return ( 
         <div className="nav-bg-footer">
             <footer className="navbar navbar-expand navbar-dark Footer ">
-                <ul className="navbar-nav">
-                    <li className="nav-item footer">
+                <ul className="navbar-nav ">
+                    <li className="nav-item footer ">
                         <NavLink to="/CGU" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
                         }}>Condition Général d'Utilisation</NavLink>
