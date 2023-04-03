@@ -24,20 +24,20 @@ function Footer() {
                     </li>
                 </ul>
 
-                <ul className="navbar-nav ms-auto">
+                <ul className="navbar-nav ms-auto ml-">
                     <li className="nav-item">
-                        <a href="https://www.google.fr" target="_blank" rel="noopener noreferrer" className="nav-link">
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="nav-link">
+                            <FontAwesomeIcon icon={faLinkedin} className="text-light" size="2x"/>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="nav-link">
                             <FontAwesomeIcon icon={faInstagram} className="text-light" size="2x" />
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="https://www.google.fr" target="_blank" rel="noopener noreferrer" className="nav-link">
+                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="nav-link">
                             <FontAwesomeIcon icon={faFacebook} className="text-light" size="2x" />
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="https://www.google.fr" target="_blank" rel="noopener noreferrer" className="nav-link">
-                            <FontAwesomeIcon icon={faLinkedin} className="text-light" size="2x"/>
                         </a>
                     </li>
                 </ul>
