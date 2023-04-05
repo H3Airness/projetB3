@@ -26,7 +26,7 @@ function Menu() {
                         }}><img className="icone-recherche" src="./shopping_cart_FILL0_wght400_GRAD0_opsz48.png"></img> </NavLink>
                     </li>
 
-                    <li className="nav-item">
+                    <li className="nav-item troisbarresMenu">
                        <MenuNavigation/>
                     </li>                    
                 </ul>

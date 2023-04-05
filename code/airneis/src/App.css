@@ -111,11 +111,11 @@ input[type="submit"]:hover {
 
 .icone-recherche {
   width: 32px;
-  filter: invert();
+  filter: hue-rotate(90deg)!important;
 }
 
 .icone-recherche:hover {
-  filter: sepia(100%);
+  filter: hue-rotate(60deg)!important;
 }
 
 .nav-bg {
@@ -307,7 +307,14 @@ input[type="submit"]:hover {
 
 .ImgArticlesPanier{
   display: flex;
-  margin-left: 5px;
+}
+
+.ImgArticlesPanier p{
+  margin-left: 20px;
+}
+
+.troisbarresMenu{
+  margin-right: 20px;
 }
 
 

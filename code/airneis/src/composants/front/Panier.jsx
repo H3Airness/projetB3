@@ -9,6 +9,30 @@ const Panier = () => {
             <h3 className="text-center mb-5">Vos articles</h3>
                 <div className="ImgArticlesPanier">
                     <img className="rounded mb-4 d-block" width={150} heigth={50} src={"https://picsum.photos/800/600?random=3"} />
+                    <p className="descriptionPanierArticles">Nom de l'article, en stock, prix en euros</p>
+                </div>
+                <div className="ImgArticlesPanier">
+                    <img className="rounded mb-4 d-block" width={150} heigth={50} src={"https://picsum.photos/800/600?random=3"} />
+                    <p>Nom de l'article, en stock, prix en euros</p>
+                </div>
+                <div className="ImgArticlesPanier">
+                    <img className="rounded mb-4 d-block" width={150} heigth={50} src={"https://picsum.photos/800/600?random=3"} />
+                    <p>Nom de l'article, en stock, prix en euros</p>
+                </div>
+                <div className="ImgArticlesPanier">
+                    <img className="rounded mb-4 d-block" width={150} heigth={50} src={"https://picsum.photos/800/600?random=3"} />
+                    <p>Nom de l'article, en stock, prix en euros</p>
+                </div>
+                <div className="ImgArticlesPanier">
+                    <img className="rounded mb-4 d-block" width={150} heigth={50} src={"https://picsum.photos/800/600?random=3"} />
+                    <p>Nom de l'article, en stock, prix en euros</p>
+                </div>
+                <div className="ImgArticlesPanier">
+                    <img className="rounded mb-4 d-block" width={150} heigth={50} src={"https://picsum.photos/800/600?random=3"} />
+                    <p>Nom de l'article, en stock, prix en euros</p>
+                </div>
+                <div className="ImgArticlesPanier">
+                    <img className="rounded mb-4 d-block" width={150} heigth={50} src={"https://picsum.photos/800/600?random=3"} />
                     <p>Nom de l'article, en stock, prix en euros</p>
                 </div>
                 <div className="ImgArticlesPanier">
