@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { NavLink } from "react-router-dom"
+import { useState } from "react";
 
 function Connexion() {
+  const [response, setResponse] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -12,12 +14,17 @@ function Connexion() {
 
     console.log(formType);
 
-    axios.post('https://localhost:8000/enquiry.php', formType, {
+
+    axios.post('http://localhost/API.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
-    }).then( response => console.log(response) );
-
+    }).then(response => {
+      console.log(response.data);
+      setResponse(response.data);
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   return (
@@ -46,6 +53,7 @@ function Connexion() {
           <input value="Login" type="submit" />
         </div>
         <NavLink className="compteNav" to="/inscription">Vous voulez crée un compte ?</NavLink>
+        {response && <p className='text-center text-danger mt-3'>{response.message}</p>}
       </form>
     </div>
   </div>    
