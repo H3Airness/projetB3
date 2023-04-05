@@ -7,9 +7,11 @@ const Panier = () => {
     <div className="rounded Min-heightConteinerPanier">    
         <div className="shadow p-3 mb-5 bg-body rounded divArticles">
             <h3 className="text-center mb-5">Vos articles</h3>
-            <img className="rounded mb-4 d-block" width={200} height={140} src={"https://picsum.photos/800/600?random=3"} />
-            <img className="rounded mb-4 d-block" width={200} height={140} src={"https://picsum.photos/800/600?random=3"} />
-            <img className="rounded mb-4 d-block" width={200} height={140} src={"https://picsum.photos/800/600?random=3"} />
+                <div className="d-block">
+                    <img className="rounded mb-4 d-block" width={200} src={"https://picsum.photos/800/600?random=3"} />
+                    <img className="rounded mb-4 d-block" width={200} src={"https://picsum.photos/800/600?random=3"} />
+                    <img className="rounded mb-4 d-block" width={200} src={"https://picsum.photos/800/600?random=3"} />
+                </div>
         </div>
         <div className="shadow p-3 mb-5 bg-body rounded divPrixArticles">
             <h3 className="text-center">Total à payer</h3>

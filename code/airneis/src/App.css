@@ -267,12 +267,12 @@ input[type="submit"]:hover {
 .divArticles{
   width: 500px;
   margin-right: 50px;
-  height: 586px;
+  height: 70vh;
 }
 
 .divPrixArticles{
   width: 400px;
-  height: 200px;
+  height: 25vh;
   margin-left: 50px;
 }
 
