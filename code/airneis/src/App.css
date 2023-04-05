@@ -111,11 +111,10 @@ input[type="submit"]:hover {
 
 .icone-recherche {
   width: 32px;
-  filter: hue-rotate(90deg)!important;
 }
 
 .icone-recherche:hover {
-  filter: hue-rotate(60deg)!important;
+  filter: contrast(10%);
 }
 
 .nav-bg {
