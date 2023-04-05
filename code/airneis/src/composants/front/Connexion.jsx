@@ -53,7 +53,7 @@ function Connexion() {
           <input value="Login" type="submit" />
         </div>
         <NavLink className="compteNav" to="/inscription">Vous voulez crée un compte ?</NavLink>
-        {response && <p className='text-center text-danger mt-3'>{response.message}</p>}
+        {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
       </form>
     </div>
   </div>    

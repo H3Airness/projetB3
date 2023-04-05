@@ -316,5 +316,12 @@ input[type="submit"]:hover {
   margin-right: 20px;
 }
 
+.ReponseFormulaire{
+  padding: 10px;
+  background-color: lightcoral;
+  color: red;
+  border-radius: 10px;
+}
+
 
 
