@@ -276,6 +276,17 @@ input[type="submit"]:hover {
   margin-left: 50px;
 }
 
+.cgu-title {
+  display: flex;
+  justify-content: center;
+  font-family: 'Acme';
+}
+
+.cgu-title2 {
+  display: flex;
+  font-family: 'Acme';
+}
+
 
 
 
