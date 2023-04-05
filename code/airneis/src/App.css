@@ -8,6 +8,13 @@
   src: url('../public/Acme-Regular.ttf');
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .login-card {
   position: relative;
   width: 300px;
@@ -181,9 +188,10 @@ input[type="submit"]:hover {
   width: 1000px;
   margin: auto;
   margin-bottom: 10px;
-  max-height: 100vh;
+  height: 100%;
   padding: 30px;
   padding-bottom: 0;
+
 }
 
 .menu-navigation {
@@ -268,12 +276,17 @@ input[type="submit"]:hover {
   width: 500px;
   margin-right: 50px;
   height: 70vh;
+  overflow: auto;
 }
 
 .divPrixArticles{
   width: 400px;
   height: 25vh;
   margin-left: 50px;
+}
+
+.divPrixArticles p{
+  margin-bottom: 25px;
 }
 
 .cgu-title {
@@ -287,7 +300,15 @@ input[type="submit"]:hover {
   font-family: 'Acme';
 }
 
+.TotalPayer{
+  display: flex;
+  justify-content: space-between;
+}
 
+.ImgArticlesPanier{
+  display: flex;
+  margin-left: 5px;
+}
 
 
 
