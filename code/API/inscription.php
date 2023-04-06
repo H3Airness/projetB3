@@ -23,7 +23,7 @@ if($userExist)
 {
 	$reponse = array('statut' => 'success', 'message' => 'Connexion réussie !');
 }
-else  $reponse = array('statut' => 'Error', 'message' => 'Email ou mot de passe incorrect.');
+else  $reponse = array('statut' => 'Error', 'message' => 'Email ou mot de passe incorrect');
 
 echo json_encode($reponse);
 

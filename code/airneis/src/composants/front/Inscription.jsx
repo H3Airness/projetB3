@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 function Inscription() {
+  const [response, setResponse] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -12,11 +14,16 @@ function Inscription() {
 
     console.log(formType);
 
-    axios.post('https://airnes.000webhostapp.com/inscription.php', formType, {
+    axios.post('https://airneis.fr/inscription.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
-    }).then( response => console.log(response) );
+    }).then(response => {
+      console.log(response.data);
+      setResponse(response.data);
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   return (
@@ -51,9 +58,10 @@ function Inscription() {
           <input required="" name="password2" id="password2" type="password" />
         </div>
         <div className="form-group">
-          <input value="Login" type="submit" />
+          <input value="Créer un compte" type="submit" />
         </div>
         <NavLink className="compteNav" to="/connexion">Vous avez déjà un compte ?</NavLink>
+        {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
       </form>
     </div>
   </div>    
