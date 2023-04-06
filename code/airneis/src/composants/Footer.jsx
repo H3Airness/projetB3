@@ -15,7 +15,7 @@ function Footer() {
                     <li className="nav-item">
                         <NavLink to="/mention-legale" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}>Mention Légales</NavLink>
+                        }}>Mentions Légales</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/contact" className={({isActive}) => {

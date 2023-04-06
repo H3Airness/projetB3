@@ -41,7 +41,7 @@ function Connexion() {
         <div className="log">Connexion</div>
       </div>
       <form onSubmit={handleSubmit}>
-      {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
+        {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input required="" name="email" id="email" type="text" />
@@ -53,8 +53,10 @@ function Connexion() {
         <div className="form-group">
           <input value="Se connecter" type="submit" />
         </div>
-        <NavLink className="compteNav" to="/inscription">Vous voulez créer un compte ?</NavLink>
       </form>
+      <div className="text-center">
+      <NavLink className="compteNav" to="/inscription">Créer un compte ?</NavLink>
+      </div>
     </div>
   </div>
     </>
