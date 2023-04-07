@@ -9,7 +9,6 @@
 }
 
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -177,7 +176,7 @@ input[type="submit"]:hover {
   }
 
   .Min-heightConteiner{
-    min-height: calc(100vh - 56px - 220px);
+    min-height: calc(100vh - 66px - 220px);
   }
 
 .Min-heightConteinerPanier{
@@ -255,8 +254,6 @@ input[type="submit"]:hover {
 .compteNav{
   color: rgb(59, 59, 59);
   text-decoration: none;
- padding-left: 30px;
-  
 }
 
 .compteNav:hover{
@@ -318,8 +315,8 @@ input[type="submit"]:hover {
 
 .ReponseFormulaire{
   padding: 10px;
-  background-color: lightcoral;
-  color: red;
+  background-color: rgb(184, 0, 0);
+  color: white;
   border-radius: 10px;
 }
 

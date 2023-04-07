@@ -15,7 +15,7 @@ function Connexion() {
     console.log(formType);
 
 
-    axios.post('http://localhost/API.php', formType, {
+    axios.post('http://airneis.fr/connexion.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
@@ -35,12 +35,13 @@ function Connexion() {
       }}> <img className="logo-airneis-connexion" src="../../public/logo.svg" alt="" /><span className="titreConnexion">Àirneis</span></NavLink>
     </div>
 
-  <div className='Min-heightConteiner'>   
+  <div className='Min-heightConteiner'>
     <div className="login-card">
       <div className="card-header">
-        <div className="log">Login</div>
+        <div className="log">Connexion</div>
       </div>
       <form onSubmit={handleSubmit}>
+        {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input required="" name="email" id="email" type="text" />
@@ -50,13 +51,14 @@ function Connexion() {
           <input required="" name="password" id="password" type="password" />
         </div>
         <div className="form-group">
-          <input value="Login" type="submit" />
+          <input value="Se connecter" type="submit" />
         </div>
-        <NavLink className="compteNav" to="/inscription">Vous voulez crée un compte ?</NavLink>
-        {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
       </form>
+      <div className="text-center">
+      <NavLink className="compteNav" to="/inscription">Créer un compte ?</NavLink>
+      </div>
     </div>
-  </div>    
+  </div>
     </>
   );
 }
