@@ -19,6 +19,7 @@ html, body {
   width: 300px;
   height: max-content;
   margin: 0 auto;
+  margin-bottom: 20px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -86,6 +87,11 @@ input[type="submit"]:hover {
   margin-bottom: 30px;
   width: 100px;
   height: 100px;
+  transition: 0.5s;
+}
+
+.logo-airneis-connexion:hover{
+  filter: drop-shadow(0px 0px 10px rgb(255, 77, 0));
 }
 
 
@@ -261,11 +267,11 @@ input[type="submit"]:hover {
 }
 
 .titreConnexion{
-  transition: 1s;
+  transition: 0.5s;
 }
 
 .titreConnexion:hover{
-  text-shadow: 1px 1px 1px rgb(255, 152, 61), 0 0 1em rgb(255, 190, 110), 0 0 0.2em rgb(255, 203, 139);
+  text-shadow: 1px 1px 1px rgb(255, 143, 45), 0 0 2em rgb(255, 167, 59), 0 0 0.3em rgb(255, 185, 100);
 }
 
 .divArticles{
