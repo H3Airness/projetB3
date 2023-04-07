@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Marck';
-  src: url('../public/MarckScript-Regular.ttf');
+  src: url('/MarckScript-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Acme';
-  src: url('../public/Acme-Regular.ttf');
+  src: url('/Acme-Regular.ttf');
 }
 
 .login-card {

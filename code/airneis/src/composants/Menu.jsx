@@ -11,7 +11,7 @@ function Menu() {
                     
                         <NavLink to="/" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}> <img className="logo-airneis" src="../../public/logo.svg" alt="" /><span className="NavTitre">Àirneis</span></NavLink>
+                        }}> <img className="logo-airneis" src="/logo.svg" alt="" /><span className="NavTitre">Àirneis</span></NavLink>
                     </li>
                 </ul>
                 <ul className="navbar-nav NavItems ms-auto">
