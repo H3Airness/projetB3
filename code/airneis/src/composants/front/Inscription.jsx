@@ -14,7 +14,7 @@ function Inscription() {
 
     console.log(formType);
 
-    axios.post('http://airneis.fr/inscription.php', formType, {
+    axios.post('http://localhost/API.php', formType, {
        headers: {
         'Content-Type' : 'application/json',
        }
@@ -41,7 +41,6 @@ function Inscription() {
         <div className="log">Inscription</div>
       </div>
       <form onSubmit={handleSubmit}>
-        {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
         <div className="form-group">
           <label htmlFor="nom">Nom:</label>
           <input required="" name="nom" id="nom" type="text" />
@@ -59,11 +58,10 @@ function Inscription() {
           <input required="" name="password2" id="password2" type="password" />
         </div>
         <div className="form-group">
-          <input value="Créer un compte" type="submit" />
+          <input value="Login" type="submit" />
         </div>
-        <div className="text-center">
         <NavLink className="compteNav" to="/connexion">Vous avez déjà un compte ?</NavLink>
-        </div>
+        {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
       </form>
     </div>
   </div>    
