@@ -13,7 +13,7 @@ function Inscription() {
 
     let formType = {};
     formData.forEach((value, key) => formType[key] = formData.get(key));
-    
+
 
     async function postData() {
       try {
@@ -40,7 +40,7 @@ function Inscription() {
     </div>
 
   <div className='Min-heightConteiner'>   
-    <div className="login-card mb-3">
+    <div className="login-card">
       <div className="card-header">
         <div className="log">Inscription</div>
       </div>
@@ -63,7 +63,7 @@ function Inscription() {
           <input required="" name="password2" id="password2" type="password" />
         </div>
         <div className="form-group">
-          <input value="Login" type="submit" />
+          <input value="s'inscrire" type="submit" />
         </div>
         <div className="text-center">
         <NavLink className="compteNav" to="/connexion">Vous avez déjà un compte ?</NavLink>

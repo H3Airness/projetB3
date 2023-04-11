@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom"
 function Footer() {
     return ( 
         <div className="nav-bg-footer">
-            <footer className="navbar navbar-expand navbar-dark Footer">
+            <footer className="navbar navbar-expand navbar-dark Footer mt-3">
                 <ul className="navbar-nav ">
                     <li className="nav-item footer ">
                         <NavLink to="/CGU" className={({isActive}) => {
