@@ -13,14 +13,11 @@ function Connexion() {
 
     let formType = {};
     formData.forEach((value, key) => formType[key] = formData.get(key));
-
-    console.log(formType);
-
+    
 
     async function postData() {
       try {
         const response = await axios.post('http://airneis.fr/connexion.php', formType, {});
-        console.log(response.data);
         setResponse(response.data);
         if (response.data.status === 'success') {
           navigate('/');
