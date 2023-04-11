@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function Inscription() {
   const [response, setResponse] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -14,16 +16,20 @@ function Inscription() {
 
     console.log(formType);
 
-    axios.post('http://localhost/API.php', formType, {
-       headers: {
-        'Content-Type' : 'application/json',
-       }
-    }).then(response => {
-      console.log(response.data);
-      setResponse(response.data);
-    }).catch(error => {
-      console.log(error);
-    });
+    async function postData() {
+      try {
+        const response = await axios.post('http://airneis.fr/inscription.php', formType, {});
+        console.log(response.data);
+        setResponse(response.data);
+        if (response.data.status === 'success') {
+          navigate('/connexion');
+        } 
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    postData();
   }
 
   return (
@@ -36,7 +42,7 @@ function Inscription() {
     </div>
 
   <div className='Min-heightConteiner'>   
-    <div className="login-card">
+    <div className="login-card mb-3">
       <div className="card-header">
         <div className="log">Inscription</div>
       </div>

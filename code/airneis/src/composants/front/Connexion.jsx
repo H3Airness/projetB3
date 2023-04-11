@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function Connexion() {
   const [response, setResponse] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -15,16 +17,21 @@ function Connexion() {
     console.log(formType);
 
 
-    axios.post('http://airneis.fr/connexion.php', formType, {
-       headers: {
-        'Content-Type' : 'application/json',
-       }
-    }).then(response => {
-      console.log(response.data);
-      setResponse(response.data);
-    }).catch(error => {
-      console.log(error);
-    });
+    async function postData() {
+      try {
+        const response = await axios.post('http://airneis.fr/connexion.php', formType, {});
+        console.log(response.data);
+        setResponse(response.data);
+        if (response.data.status === 'success') {
+          navigate('/');
+        } 
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
+    postData();
+    
   }
 
   return (
