@@ -4,13 +4,13 @@ import Carousel from 'better-react-carousel';
 const Gallery = () => {
   const [autoplay, setAutoplay] = useState(true);
   const images = [
-    { src: '/img1.jpg', alt: 'image 1' },
-    { src: '/img2.jpg', alt: 'image 2' },
-    { src: '/img3.jpg', alt: 'image 3' },
-    { src: '/img4.jpg', alt: 'image 4' },
-    { src: '/img5.jpg', alt: 'image 5' },
-    { src: '/img6.jpg', alt: 'image 6' },
-    { src: '/img7.jpg', alt: 'image 7' },
+    { src: 'img1.jpg', alt: 'image 1' },
+    { src: 'img2.jpg', alt: 'image 2' },
+    { src: 'img3.jpg', alt: 'image 3' },
+    { src: 'img4.jpg', alt: 'image 4' },
+    { src: 'img5.jpg', alt: 'image 5' },
+    { src: 'img6.jpg', alt: 'image 6' },
+    { src: 'img7.jpg', alt: 'image 7' },
   ];
 
   const handleInteraction = () => {

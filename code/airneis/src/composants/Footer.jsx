@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom"
 function Footer() {
     return ( 
         <div className="nav-bg-footer">
-            <footer className="navbar navbar-expand navbar-dark Footer ">
+            <footer className="navbar navbar-expand navbar-dark Footer mt-3">
                 <ul className="navbar-nav ">
                     <li className="nav-item footer ">
                         <NavLink to="/CGU" className={({isActive}) => {
@@ -15,7 +15,7 @@ function Footer() {
                     <li className="nav-item">
                         <NavLink to="/mention-legale" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}>Mention Légales</NavLink>
+                        }}>Mentions Légales</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/contact" className={({isActive}) => {
