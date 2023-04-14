@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
 function MenuNavigation() {
@@ -22,7 +22,7 @@ function MenuNavigation() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  
+
   return (
     <div className="menu-navigation">
       <div className="icone-menu" onClick={toggleMenu}>
@@ -32,32 +32,13 @@ function MenuNavigation() {
           alt="Menu"
         />
       </div>
-      <nav className={`menu ${menuOpen ? "ouvert" : ""}`}>
+      <nav className={`menu ${menuOpen ? "ouvert" : ""}`} ref={menuRef}>
         <ul>
-          <li>
-            <NavLink to={"/connexion"}>Se connecter</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/contact"}>Contact</NavLink>
-          </li>
-          <li>
-            <NavLink to={"http://airneis.fr"} target="_blank">
-              airneis.fr
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"http://airneis.fr:3000"} target="_blank">
-              API
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"http://86.247.29.14:3000/phpmyadmin/"}
-              target="_blank"
-            >
-              BDD
-            </NavLink>
-          </li>
+          <li><NavLink to={"/connexion"}>Se connecter</NavLink></li>
+          <li><NavLink to={"/contact"}>Contact</NavLink></li>
+          <li><NavLink to={"http://airneis.fr"} target="_blank">airneis.fr</NavLink></li>
+          <li><NavLink to={"http://airneis.fr:3000"} target="_blank">API</NavLink></li>
+          <li><NavLink to={"http://86.247.29.14:3000/phpmyadmin/"} target="_blank">BDD</NavLink></li>
         </ul>
       </nav>
     </div>
