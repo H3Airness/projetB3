@@ -28,7 +28,6 @@ function MenuNavigation() {
       <nav className={`menu ${menuOpen ? "ouvert" : ""}`}>
         <ul>
           <li><NavLink to={"/connexion"}>Se connecter</NavLink></li>
-          <li><NavLink to={"/inscription"}>S'inscrire</NavLink></li>
           <li><NavLink to={"/contact"}>Contact</NavLink></li>
           <li><NavLink to={"http://airneis.fr"} target="_blank">airneis.fr</NavLink></li>
           <li><NavLink to={"http://airneis.fr:3000"} target="_blank">API</NavLink></li>

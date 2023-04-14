@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Acceuil from './composants/front/Accueil';
 import NotFound from './composants/front/NotFound';
 import Connexion from './composants/front/Connexion';
-import Inscription from './composants/front/Inscription';
 import Contact from './composants/front/Contact';
 import MenuNavigation from './composants/front/MenuNavigation';
 
@@ -18,7 +17,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/' element={<App />}>
       <Route index element={<Acceuil />} />
       <Route path='connexion' element={<Connexion />} />
-      <Route path='inscription' element={<Inscription />} />
       <Route path='contact' element={<Contact/>} />
       <Route path='menu-navigation' element={<MenuNavigation/>} />
       <Route path="*" element={<NotFound />} />
