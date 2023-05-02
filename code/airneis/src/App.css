@@ -52,7 +52,7 @@ html, body {
 .card-header .contact-log {
   margin: 0;
   margin-bottom: 20px;
-  font-size: 30px;
+  font-size: 35px;
   color: black;
 }
 
@@ -60,14 +60,8 @@ html, body {
   margin: 0;
   margin-bottom: 20px;
   font-family: 'Acme';
-  font-size: 30px;
+  font-size: 35px;
   color: black;
-}
-
-.contact-text{
-  margin-left: 20px;
-  font-family: 'Acme';
-  font-size: 20px ;
 }
 
 .form-group {
@@ -84,6 +78,16 @@ label {
 }
 
 input[type="text"], input[type="message"] {
+  width: 100%;
+  padding: 12px 100px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+
+textarea[type="text"], input[type="message"] {
   width: 100%;
   padding: 12px 100px;
   font-size: 16px;
@@ -372,6 +376,13 @@ input[type="submit"]:hover {
   background-color: rgb(184, 0, 0);
   color: white;
   border-radius: 10px;
+}
+
+.icon-contact {
+  margin-bottom: -10px;
+  margin-left: 20px;
+  font-family: 'Acme';
+  font-size: 20px ;
 }
 
 

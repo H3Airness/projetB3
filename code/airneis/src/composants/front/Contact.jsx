@@ -1,5 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
-import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import Menu from "../Menu";
 
@@ -39,13 +40,11 @@ function Contact() {
       </div>
 
       <div className="cat">
-        <div className="Contact-Info">
-        <div className="contact-log">Information de contact</div>
-          <p className="contact-text">
-          27-33 Av. des Champs-Élysées<br></br>
-          75008,Paris, France.<br></br>
-          airneis@hotmail.com
-          </p>   
+        <div>
+          <div className="contact-log">Information de contact</div>
+          <div className="icon-contact"><FontAwesomeIcon icon={faMapMarkerAlt} />  27-33 Av. des Champs-Élysées <br/> &nbsp; &nbsp; &nbsp; 75008,Paris, France</div><br></br>
+          <div className="icon-contact"><FontAwesomeIcon icon={faEnvelope} />  airneis@hotmail.com</div><br/>
+          <div className="icon-contact"><FontAwesomeIcon icon={faPhone} />  01 00 00 00 00</div>
         </div>
 
 
@@ -72,7 +71,7 @@ function Contact() {
 
               <div className="form-message">
                 <label htmlFor="message">Message:</label>
-                <input required="" name="message" id="message" type="text" />
+                <textarea required="" name="message" id="message" type="text" />
               </div>
               
               <div className="form-group">
