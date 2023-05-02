@@ -14,7 +14,7 @@ const Accueil = () => {
   </div>
   <div className="info-airneis mt-5">
     <p> VENANT DES HAUTES TERRES D'ÉCOSSE</p>
-    <p> NOS MEUBLES SONT IMMORTELS AAAAAAAAAAAHHHHHHHHHHHHHHHHHHH</p>
+    <p> NOS MEUBLES SONT IMMORTELS AH</p>
   </div>
 
   <div className="cat">
