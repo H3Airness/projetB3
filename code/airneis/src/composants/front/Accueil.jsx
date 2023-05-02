@@ -13,8 +13,8 @@ const Accueil = () => {
     <Gallery />
   </div>
   <div className="info-airneis mt-5">
-    <p> VENANT DES HAUTES TERRES D'ÉCOSSE!!!!</p>
-    <p> NOS MEUBLES SONT IMMORTELS</p>
+    <p> VENANT DES HAUTES TERRES D'ÉCOSSE</p>
+    <p> NOS MEUBLES SONT IMMORTELS!!!!</p>
   </div>
 
   <div className="cat">
