@@ -34,62 +34,53 @@ function Contact() {
     <>
       <Menu />
 
-      <div className="ConnexionTitre">
-        <NavLink
-          to="/"
-          className={({ isActive }) => {
-            return isActive ? "nav-link active text-light" : "nav-link";
-          }}
-        >
-          {" "}
-          <img className="logo-airneis-connexion" src="logo.svg" alt="" />
-          <span className="titreConnexion">Àirneis</span>
-        </NavLink>
+      <div className="ContactTitre">
+          <span>Formulaire de Contact</span>
       </div>
 
       <div className="cat">
-      <div className="Contact-Info">
-      <div className="contact-log">Information de contact</div>
-        <p className="contact-text">
-        27-33 Av. des Champs-Élysées<br></br>
-        75008,Paris, France.<br></br>
-        airneis@hotmail.com
-        </p>   
-      </div>
-
-
-      <div className="Min-heightConteiner">
-        <div className="contact-card">
-          <div className="card-header">
-            <div className="contact-log">Envoyer nous un message</div>
-          </div>
-          <form onSubmit={handleSubmit}>
-            {response && (
-              <p className="ReponseFormulaire text-center mt-3">
-                {response.message}
-              </p>
-            )}
-            <div className="form-group">
-              <label htmlFor="nom">Nom:</label>
-              <input required="" name="nom" id="nom" type="text" />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input required="" name="email" id="email" type="text" />
-            </div>
-
-            <div className="form-message">
-              <label htmlFor="message">Message:</label>
-              <input required="" name="message" id="message" type="text" />
-            </div>
-            
-            <div className="form-group">
-              <input value="Envoyer" type="submit" />
-            </div>
-
-          </form>
+        <div className="Contact-Info">
+        <div className="contact-log">Information de contact</div>
+          <p className="contact-text">
+          27-33 Av. des Champs-Élysées<br></br>
+          75008,Paris, France.<br></br>
+          airneis@hotmail.com
+          </p>   
         </div>
+
+
+        <div className="Min-heightConteiner">
+          <div className="contact-card">
+            <div className="card-header">
+              <div className="contact-log">Envoyer nous un message</div>
+            </div>
+            <form onSubmit={handleSubmit}>
+              {response && (
+                <p className="ReponseFormulaire text-center mt-3">
+                  {response.message}
+                </p>
+              )}
+              <div className="form-group">
+                <label htmlFor="nom">Nom:</label>
+                <input required="" name="nom" id="nom" type="text" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input required="" name="email" id="email" type="text" />
+              </div>
+
+              <div className="form-message">
+                <label htmlFor="message">Message:</label>
+                <input required="" name="message" id="message" type="text" />
+              </div>
+              
+              <div className="form-group">
+                <input value="Envoyer" type="submit" />
+              </div>
+
+            </form>
+          </div>
         </div>
       </div>
     </>

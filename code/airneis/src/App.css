@@ -30,7 +30,6 @@ html, body {
   position: relative;
   width: 400px;
   height: max-content;
-  margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -126,6 +125,14 @@ input[type="submit"]:hover {
   margin-bottom: 40px;
   font-size: 70px;
   font-family: 'Marck';
+}
+
+.ContactTitre{
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 40px;
+  font-size: 70px;
+  font-family: 'Acme';
 }
 
 .logo-airneis-connexion{
