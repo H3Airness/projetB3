@@ -338,7 +338,7 @@ input[type="submit"]:hover {
   text-align: center;
   margin-top: 50px;
   margin-bottom: 40px;
-  font-size: 70px;
+  font-size: 50px;
   font-family: 'Acme';
 }
 
@@ -355,11 +355,11 @@ thead,
 tfoot {
   background-color: #333;
   color: #fff;
-  font-size: 30px;
+  font-size: 25px;
   text-align: center;
   font-family: 'Acme';
 }
 
 .tableau_contact {
-  font-size: 25px;
+  font-size: 20px;
 }
