@@ -341,3 +341,25 @@ input[type="submit"]:hover {
   font-size: 70px;
   font-family: 'Acme';
 }
+
+table,
+td{
+  border: 1px solid #333;
+  border-left: 1px solid #333;
+  margin-left:auto;
+  margin-right:auto;
+  padding: 10px;
+}
+
+thead,
+tfoot {
+  background-color: #333;
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+  font-family: 'Acme';
+}
+
+.tableau_contact {
+  font-size: 25px;
+}
