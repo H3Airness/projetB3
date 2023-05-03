@@ -15,6 +15,26 @@ const Contact = () => {
             });
     }, []);
 
+    const handleDelete = (id) => {
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer cette ligne ?')) {
+          fetch(`http://airneis.ddns.net:3000/back_contact.php?id=${id}`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert('La ligne a été supprimée avec succès.');
+                window.location.reload();
+              } else {
+                alert('Une erreur est survenue lors de la suppression de la ligne.');
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              alert('Une erreur est survenue lors de la suppression de la ligne.');
+            });
+        }
+      }
+      
+
     return (
         <>
             <Menu />
@@ -24,7 +44,7 @@ const Contact = () => {
             </div>
 
             <div className="tableau_contact">
-                <table>
+                <table className='table table-bordered'>
                     <thead>
                         <tr>
                             <th>Date d'envoie</th>
@@ -32,6 +52,7 @@ const Contact = () => {
                             <th>Email</th>
                             <th>Message</th>
                             <th>Contacter</th>
+                            <th>Supprimer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +62,16 @@ const Contact = () => {
                                 <td>{donnee.nom}</td>
                                 <td>{donnee.email}</td>
                                 <td>{donnee.message}</td>
-                                <td><a href="mailto:{donnee.email}">Envoyer un e-mail</a></td>
+                                <td>
+                                    <center>
+                                        <a className="btn btn-warning" href={`mailto:${donnee.email}`}>Envoyer un e-mail</a>
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        <a className="btn btn-danger" href="" onClick={() => handleDelete(donnee.id)}>Supprimer</a>
+                                    </center>
+                                </td>
                             </tr>
                         ))}                      
                     </tbody>
