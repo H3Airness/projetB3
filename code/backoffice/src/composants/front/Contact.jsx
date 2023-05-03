@@ -24,7 +24,7 @@ const Contact = () => {
             </div>
 
             <div className="tableau_contact">
-                <table>
+                <table className='table table-bordered'>
                     <thead>
                         <tr>
                             <th>Date d'envoie</th>
@@ -32,6 +32,7 @@ const Contact = () => {
                             <th>Email</th>
                             <th>Message</th>
                             <th>Contacter</th>
+                            <th>Supprimer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +42,8 @@ const Contact = () => {
                                 <td>{donnee.nom}</td>
                                 <td>{donnee.email}</td>
                                 <td>{donnee.message}</td>
-                                <td><a href="mailto:{donnee.email}">Envoyer un e-mail</a></td>
+                                <td><center><a className="btn btn-warning" href={`mailto:${donnee.email}`}>Envoyer un e-mail</a></center></td>
+                                <td><center><a className="btn btn-danger" href="" onClick={() => ajouter(demande)}>Supprimer</a></center></td>
                             </tr>
                         ))}                      
                     </tbody>
