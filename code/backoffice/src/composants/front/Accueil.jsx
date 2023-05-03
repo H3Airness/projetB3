@@ -20,7 +20,6 @@ const Accueil = () => {
         <div className='DivAcceuil'> 
             <NavLink to={"http://86.247.29.14:3000/phpmyadmin/"} target="_blank" className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://upload.wikimedia.org/wikipedia/commons/9/95/PhpMyAdmin_logo.png" alt="" /><span className="texteacceuil">BDD (phpmyadmin)</span></NavLink>
         </div>
-
     </div>
     </> );
 }
