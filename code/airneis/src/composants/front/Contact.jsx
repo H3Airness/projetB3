@@ -17,7 +17,7 @@ function Contact() {
     async function postData() {
       try {
         const response = await axios.post(
-          "http://airneis.fr:3000/contact.php",
+          "http://airneis.ddns.net:3000/contact.php",
           formType,
           {}
         );
@@ -51,7 +51,7 @@ function Contact() {
         <div className="Min-heightConteiner">
           <div className="contact-card">
             <div className="card-header">
-              <div className="contact-log">Envoyer nous un message</div>
+              <div className="contact-log">Envoyez nous un message</div>
             </div>
             <form onSubmit={handleSubmit}>
               {response && (

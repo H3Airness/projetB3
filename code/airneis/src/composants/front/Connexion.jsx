@@ -18,7 +18,7 @@ function Connexion() {
     async function postData() {
       try {
         const response = await axios.post(
-          "http://airneis.fr:3000/connexion.php",
+          "http://airneis.ddns.net:3000/connexion.php",
           formType,
           {}
         );
