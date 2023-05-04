@@ -17,7 +17,7 @@ function Inscription() {
 
     async function postData() {
       try {
-        const response = await axios.post('http://airneis.fr/inscription.php', formType, {});
+        const response = await axios.post('http://airneis.ddns.net:3000/inscription.php', formType, {});
         setResponse(response.data);
         if (response.data.status === 'success') {
           navigate('/connexion');
