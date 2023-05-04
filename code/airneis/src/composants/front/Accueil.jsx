@@ -8,7 +8,7 @@ const Accueil = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    axios.get('http://airneis.fr:3000/accueil.php')
+    axios.get('http://airneis.ddns.net:3000/accueil.php')
       .then(response => setImages(response.data.slice(0, 3)))
       .catch(error => console.log(error));
   }, []);
