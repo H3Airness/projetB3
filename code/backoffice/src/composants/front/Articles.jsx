@@ -7,7 +7,7 @@ const Articles = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    axios.get('http://airneis.ddns.net:3000/accueil.php')
+    axios.get('http://airneis.ddns.net:3000/articles.php')
       .then(response => setImages(response.data))
       .catch(error => console.log(error));
   }, []);
@@ -25,9 +25,9 @@ const Articles = () => {
       <div className="cat">
         <div className="content-img">
           {images.map((image, index) => (
-            <div className="col mb-5 mt-5 img1 img2" key={index}>
+            <div className="col mb-5 mt-5 img1 img2 border border-secondary" key={index}>
               <NavLink to={"/"}>
-                <img width={400} src={image.source} alt={`image-${index}`} />
+                <img width={200} height={200} src={image.source} alt={`image-${index}`} />
               </NavLink>
             </div>
           ))}
