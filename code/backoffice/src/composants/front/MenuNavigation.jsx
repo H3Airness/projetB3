@@ -34,24 +34,11 @@ function MenuNavigation() {
       </div>
       <nav className={`menu ${menuOpen ? "ouvert" : ""}`} ref={menuRef}>
         <ul>
-          <li>
-            <NavLink to={"/connexion"}>Se connecter</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/inscription"}>S'inscrire</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/cgu"}>CGU</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/mention-legale"}>Mentions légales</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/contact"}>Contact</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/"}>À Propos d'Àirneis</NavLink>
-          </li>
+          <li><NavLink to={"/connexion"}>Se connecter</NavLink></li>
+          <li><NavLink to={"/contact"}>Formulaire de Contact</NavLink></li>
+          <li><NavLink to={"http://airneis.fr"} target="_blank">airneis.fr</NavLink></li>
+          <li><NavLink to={"http://airneis.fr:3000"} target="_blank">API</NavLink></li>
+          <li><NavLink to={"http://86.247.29.14:3000/phpmyadmin/"} target="_blank">BDD</NavLink></li>
         </ul>
       </nav>
     </div>
