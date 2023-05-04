@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Gallery from '../Slider';
 import { NavLink } from 'react-router-dom';
 import Menu from "../Menu";
 
-const Accueil = () => {
+const Articles = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
     axios.get('http://airneis.ddns.net:3000/accueil.php')
-      .then(response => setImages(response.data.slice(0, 3)))
+      .then(response => setImages(response.data))
       .catch(error => console.log(error));
   }, []);
 
@@ -17,11 +16,10 @@ const Accueil = () => {
     <>
       <div>
         <Menu />
-        <Gallery />
       </div>
       <div className="info-airneis mt-5">
-        <p> VENANT DES HAUTES TERRES D'ÉCOSSE</p>
-        <p> NOS MEUBLES SONT IMMORTELS</p>
+        <p>ESPACE ADMINISTRATION AIRNEIS</p>
+        <p>SELECTION DES ARTICLES</p>
       </div>
 
       <div className="cat">
@@ -39,4 +37,5 @@ const Accueil = () => {
   );
 }
 
-export default Accueil;
+export default Articles;
+
