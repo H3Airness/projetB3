@@ -360,3 +360,15 @@ tfoot {
 .tableau_contact {
   font-size: 20px;
 }
+
+.articles{
+  margin-left: 5px;
+  margin-bottom: 5px;
+  border: #2e2b2b solid 3px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.articles:hover{
+  border-color: rgb(196, 196, 101);
+}
