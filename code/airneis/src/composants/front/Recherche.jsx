@@ -14,12 +14,14 @@ const Recherche = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // Ici, vous pouvez appeler votre API de recherche pour obtenir les résultats pertinents
-    console.log(`Recherche soumise : ${recherche}`);
+    
+    console.log(`Recherche : ${recherche}`);
     const filtre = recherche.trim().toLowerCase(); // Ignorer les espaces et passer en minuscules
     const resultatsFiltres = donnees.filter(donnee =>
-      donnee.nom.toLowerCase().includes(filtre) // Filtrer en fonction du nom du produit
-    );
+        donnee.nom.toLowerCase().includes(filtre) ||
+        donnee.description.toLowerCase().includes(filtre)
+      );
+      
     setResultats(resultatsFiltres);
     setAucunResultat(resultatsFiltres.length === 0);
   }
@@ -77,7 +79,7 @@ const Recherche = () => {
           <div>
             {resultats.map((resultat) => (
               <p key={resultat.id}>
-                {resultat.nom} {resultat.prix} <img width={400} src={resultat.source} />
+                 {resultat.prix} <img width={400} src={resultat.source} />
               </p>
             ))}
           </div>
