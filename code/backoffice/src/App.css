@@ -165,6 +165,7 @@ input[type="submit"]:hover {
     flex-wrap: wrap;
     align-content: flex-end;
     padding: 0 20px;
+    margin-top: 50px;
   }
 
   .img1 {
@@ -362,11 +363,12 @@ tfoot {
 }
 
 .articles{
+  width: 250px;
   margin-left: 5px;
   margin-bottom: 5px;
   border: #2e2b2b solid 3px;
   border-radius: 6px;
-  transition: 0.2s;
+  transition: 0.1s;
 }
 
 .articles:hover{
@@ -376,4 +378,8 @@ tfoot {
 .articles.selected {
   border: 3px solid rgb(255, 145, 0);
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.boutonBackOfficeArticles{
+  width: 50%;
 }

@@ -27,10 +27,13 @@ const Articles = () => {
   };
 
   const handleSubmit = () => {
-    axios.post('http://airneis.ddns.net:3000/update_features.php', selectedImages)
+    axios.post('http://airneis.ddns.net:3000/update_features.php', { id: selectedImages })
       .then(response => console.log(response))
       .catch(error => console.log(error));
   }
+  
+  
+  
 
   return (
     <>
@@ -50,12 +53,17 @@ const Articles = () => {
               key={index}
               onClick={() => handleImageClick(index)}
             >
+              <p className='text-center'>{image.nom}</p>
               <img width={200} height={200} src={image.source} alt={`image-${index}`} />
+              <p className='m-2 text-primary'>Prix : {image.prix} €</p>
+              <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
             </div>
           ))}
         </div>
       </div>
-      <button onClick={handleSubmit} className='btn btn-primary'>Appliquer</button>
+      <div className="d-flex justify-content-center my-3">
+        <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Appliquer</button>
+      </div> 
     </>
   );
 }
