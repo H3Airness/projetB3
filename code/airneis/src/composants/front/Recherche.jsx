@@ -16,7 +16,7 @@ const Recherche = () => {
     event.preventDefault();
     
     console.log(`Recherche : ${recherche}`);
-    const filtre = recherche.trim().toLowerCase(); // Ignorer les espaces et passer en minuscules
+    const filtre = recherche.trim().toLowerCase(); 
     const resultatsFiltres = donnees.filter(donnee =>
         donnee.nom.toLowerCase().includes(filtre) ||
         donnee.description.toLowerCase().includes(filtre)
