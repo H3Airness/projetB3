@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Menu from "../Menu";
 
 const Recherche = () => {
   const [recherche, setRecherche] = useState("");
+  const [donnees, setDonnees] = useState([]);
+  const [resultats, setResultats] = useState([]);
+  const [aucunResultat, setAucunResultat] = useState(false);
 
   function handleChange(event) {
     setRecherche(event.target.value);
@@ -12,7 +16,24 @@ const Recherche = () => {
     event.preventDefault();
     // Ici, vous pouvez appeler votre API de recherche pour obtenir les résultats pertinents
     console.log(`Recherche soumise : ${recherche}`);
+    const filtre = recherche.trim().toLowerCase(); // Ignorer les espaces et passer en minuscules
+    const resultatsFiltres = donnees.filter(donnee =>
+      donnee.nom.toLowerCase().includes(filtre) // Filtrer en fonction du nom du produit
+    );
+    setResultats(resultatsFiltres);
+    setAucunResultat(resultatsFiltres.length === 0);
   }
+
+  useEffect(() => {
+    axios
+      .get("http://airneis.ddns.net:3000/recherche.php")
+      .then((response) => {
+        setDonnees(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>
@@ -47,6 +68,21 @@ const Recherche = () => {
           </div>
         </div>
       </div>
+      {aucunResultat ? (
+        <div className="h2 text-center mt-5 text-danger">
+          Nous n'avons pas trouvé de résultats à votre recherche. Nous sommes désolés.
+        </div>
+      ) : (
+        resultats.length > 0 && (
+          <div>
+            {resultats.map((resultat) => (
+              <p key={resultat.id}>
+                {resultat.nom} {resultat.prix} <img width={400} src={resultat.source} />
+              </p>
+            ))}
+          </div>
+        )
+      )}
     </>
   );
 };
