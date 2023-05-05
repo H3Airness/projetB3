@@ -15,18 +15,24 @@ const Contact = () => {
             });
     }, []);
 
+
     const handleDelete = (id) => {
-        axios.delete(`http://airneis.ddns.net:3000/back_contact_suppression.php?id=${id}`)
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette ligne ?")) {
+            axios.delete(`http://airneis.ddns.net:3000/back_contact_suppression.php?id=${id}`)
             .then(response => {
-                if (response.status === 204) {
+                if (response.status == 204) {
                     setDonnees(donnees.filter(donnee => donnee.id !== id));
+                    alert('La ligne a été supprimée avec succès.');
                 } else {
                     console.log(response.data.message);
+                    alert('erreur');
                 }
             })
             .catch(error => {
                 console.log(error);
+                alert('erreur');
             });
+        }
     };
 
     return (
