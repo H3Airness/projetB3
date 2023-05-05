@@ -17,10 +17,12 @@ const Articles = () => {
   const handleImageClick = (index) => {
     const image = images[index];
 
-    if (selectedImages.length < 3) {
-       setSelectedImages([...selectedImages, image]);
-    }else {
-        alert('Vous ne pouvez pas sélectionner plus de 3 images.');
+    if (selectedImages.includes(image)) { // Si l'image est déjà sélectionnée, on la désélectionne
+      setSelectedImages(selectedImages.filter(selectedImage => selectedImage !== image));
+    } else if (selectedImages.length < 3) { // Sinon, si on a moins de 3 images sélectionnées, on ajoute l'image à la sélection
+      setSelectedImages([...selectedImages, image]);
+    } else { // Sinon, on affiche un message d'alerte
+      alert('Vous ne pouvez pas sélectionner plus de 3 images.');
     }
   };
 
@@ -41,14 +43,18 @@ const Articles = () => {
       </div>
 
       <div className="cat">
-  <div className="content-img">
-    {images.map((image, index) => (
-      <div className='articles' key={index} onClick={() => handleImageClick(index)}>
-          <img width={200} height={200} src={image.source} alt={`image-${index}`} />
+        <div className="content-img">
+          {images.map((image, index) => (
+            <div
+              className={`articles ${selectedImages.includes(image) ? 'selected' : ''}`}
+              key={index}
+              onClick={() => handleImageClick(index)}
+            >
+              <img width={200} height={200} src={image.source} alt={`image-${index}`} />
+            </div>
+          ))}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
       <button onClick={handleSubmit} className='btn btn-primary'>Appliquer</button>
     </>
   );

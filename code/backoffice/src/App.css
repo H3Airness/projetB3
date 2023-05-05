@@ -366,9 +366,14 @@ tfoot {
   margin-bottom: 5px;
   border: #2e2b2b solid 3px;
   border-radius: 6px;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 
 .articles:hover{
   border-color: rgb(196, 196, 101);
+}
+
+.articles.selected {
+  border: 3px solid rgb(255, 145, 0);
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
