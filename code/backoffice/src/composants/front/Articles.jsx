@@ -18,27 +18,40 @@ const Articles = () => {
   const handleImageClick = (index) => {
     const image = images[index];
 
-    if (selectedImages.includes(image)) {
+    if(selectedImages.includes(image)) 
+    {
       setSelectedImages(selectedImages.filter(selectedImage => selectedImage !== image));
-    } else if (selectedImages.length < 3) {
+    }
+    else if(selectedImages.length < 3) 
+    {
       setSelectedImages([...selectedImages, image]);
-    } else {
+    } 
+    else 
+    {
       alert('Vous ne pouvez pas sélectionner plus de 3 images.');
     }
   };
 
   const handleSubmit = () => {
     const data = { images: selectedImages };
-    axios.post('http://airneis.ddns.net:3000/update_features.php', data)
-      .then(response => {
-        // Récupérer le message envoyé par le serveur
-        const message = response.data.message;
-        // Stocker le message dans la variable d'état "message"
-        setMessage(message);
-        // Afficher le message dans la console du navigateur
-        console.log(message);
-      })
-      .catch(error => console.log(error));
+
+    if(selectedImages < 1)
+    {
+      alert("Veuillez choisir au moins un article !");
+    }
+    else
+    {
+      axios.post('http://airneis.ddns.net:3000/update_features.php', data)
+        .then(response => {
+          // Récupérer le message envoyé par le serveur
+          const message = response.data.message;
+          // Stocker le message dans la variable d'état "message"
+          setMessage(message);
+          // Afficher le message dans la console du navigateur
+          console.log(message);
+        })
+        .catch(error => console.log(error));
+    }    
   }
   
   
@@ -51,6 +64,10 @@ const Articles = () => {
       <div className="info-airneis mt-5">
         <p>ESPACE ADMINISTRATION AIRNEIS</p>
         <p>SELECTION DES ARTICLES</p>
+      </div>
+
+      <div className='mt-4'>
+        {message && <p className='alert alert-success text-center'>{message}</p>}
       </div>
 
       <div className="cat">
@@ -76,7 +93,6 @@ const Articles = () => {
       <div className="d-flex justify-content-center my-3">
       <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-success'>Ajouter des nouveaux articles</button>
       </div> 
-      <p>{message}</p>
     </>
   );
 }
