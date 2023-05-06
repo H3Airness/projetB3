@@ -15,7 +15,6 @@ const Contact = () => {
             });
     }, []);
 
-
     const handleDelete = (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette ligne ?")) {
             axios.delete(`http://airneis.ddns.net:3000/back_contact_suppression.php?id=${id}`)
@@ -25,7 +24,7 @@ const Contact = () => {
                     alert('La ligne a été supprimée avec succès.');
                 } else {
                     console.log(response.data.message);
-                    alert('erreur');
+                    alert('La ligne n\'a pas pu être supprimée');
                 }
             })
             .catch(error => {

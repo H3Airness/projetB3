@@ -3,9 +3,11 @@ import { faMapMarkerAlt, faEnvelope, faPhone } from '@fortawesome/free-solid-svg
 import axios from "axios";
 import { useState } from "react";
 import Menu from "../Menu";
+import { useNavigate } from "react-router-dom";
 
 function Contact() {
   const [response, setResponse] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +24,11 @@ function Contact() {
           {}
         );
         setResponse(response.data);
+
+        if (response.status === 204) {
+          navigate("/");
+          alert('Message envoyé ! Nous vous répondrons dans les plus brefs délais.');
+        }
 
       } catch (error) {
         console.log(error);
@@ -75,7 +82,7 @@ function Contact() {
               </div>
               
               <div className="form-group">
-                <input value="Envoyer" type="submit" />
+                  <input value="Envoyer" type="submit"/>
               </div>
 
             </form>
