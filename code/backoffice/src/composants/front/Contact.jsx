@@ -16,24 +16,23 @@ const Contact = () => {
     }, []);
 
     const handleDelete = (id) => {
-        if (window.confirm('Êtes-vous sûr de vouloir supprimer cette ligne ?')) {
-          fetch(`http://airneis.ddns.net:3000/back_contact.php?id=${id}`, { method: 'DELETE' })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                alert('La ligne a été supprimée avec succès.');
-                window.location.reload();
-              } else {
-                alert('Une erreur est survenue lors de la suppression de la ligne.');
-              }
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette ligne ?")) {
+            axios.delete(`http://airneis.ddns.net:3000/back_contact_suppression.php?id=${id}`)
+            .then(response => {
+                if (response.status === 204) {
+                    setDonnees(donnees.filter(donnee => donnee.id !== id));
+                    alert('La ligne a été supprimée avec succès.');
+                }
+                if (response.status === 500) {
+                    alert('La ligne n\'a pas pu être supprimée');
+                }
             })
             .catch(error => {
-              console.error(error);
-              alert('Une erreur est survenue lors de la suppression de la ligne.');
+                console.log(error);
+                alert('erreur');
             });
         }
-      }
-      
+    };
 
     return (
         <>

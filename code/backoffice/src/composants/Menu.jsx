@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom"
 import MenuNavigation from "./front/MenuNavigation";
 
-
 function Menu() {
     return ( 
         <div className="bg-dark mb-3">
