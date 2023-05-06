@@ -23,9 +23,6 @@ const Contact = () => {
                     setDonnees(donnees.filter(donnee => donnee.id !== id));
                     alert('La ligne a été supprimée avec succès.');
                 }
-                if (response.status === 500) {
-                    alert('La ligne n\'a pas pu être supprimée');
-                }
             })
             .catch(error => {
                 console.log(error);
