@@ -19,7 +19,7 @@ const Contact = () => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette ligne ?")) {
             axios.delete(`http://airneis.ddns.net:3000/back_contact_suppression.php?id=${id}`)
             .then(response => {
-                if (response.status == 204) {
+                if (response.status === 204) {
                     setDonnees(donnees.filter(donnee => donnee.id !== id));
                     alert('La ligne a été supprimée avec succès.');
                 } else {
