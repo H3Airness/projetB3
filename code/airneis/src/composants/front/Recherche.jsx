@@ -37,56 +37,72 @@ const Recherche = () => {
       });
   }, []);
 
+  function handleClick(event) {
+    console.log(`Produit sélectionné : ${event.target.alt}`);
+  }
+
+
+
   return (
-    <>
-      <Menu />
-      <div className="text-center">
-        <h1>Page recherche</h1>
+  <>
+    <Menu />
+    <div className="text-center">
+      <h1>Page recherche</h1>
+    </div>
+    <br />
+    <div className="container mt-4">
+      <div className="row justify-content-center">
+        <div className="col-md-8 col-lg-6">
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Rechercher des produits"
+                value={recherche}
+                onChange={handleChange}
+              />
+              <div className="input-group-append justify-content-end align-items-center">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ marginLeft: "10px", marginTop: "5px" }}
+                >
+                  Rechercher
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <br />
-      <div className="container mt-4">
-        <div className="row justify-content-center">
-          <div className="col-md-8 col-lg-6">
-            <form onSubmit={handleSubmit}>
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Rechercher des produits"
-                  value={recherche}
-                  onChange={handleChange}
+    </div>
+    <div className="container mt-4">
+      <div className="row justify-content-center">
+        {resultats.length > 0 &&
+          resultats.map((resultat) => (
+            <div className="col-md-4 mb-3" key={resultat.id}>
+              <div className="card">
+                <img
+                  className="card-img-top"
+                  src={resultat.source}
+                  alt={resultat.nom}
+                  style={{ objectFit: "cover", height: "300px" }}
                 />
-                <div className="input-group-append justify-content-end align-items-center">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{ marginLeft: "10px", marginTop: "5px" }}
-                  >
-                    Rechercher
-                  </button>
+                <div className="card-body">
+                  <h5 className="card-title">{resultat.nom}</h5>
+                  <p className="card-text">{resultat.description}</p>
+                  <p className="card-text">{resultat.prix} €</p>
+                  <button className="btn btn-primary">Ajouter au panier</button>
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
+            </div>
+          ))}
       </div>
-      {aucunResultat ? (
-        <div className="h2 text-center mt-5 text-danger">
-          Nous n'avons pas trouvé de résultats à votre recherche. Nous sommes désolés.
-        </div>
-      ) : (
-        resultats.length > 0 && (
-          <div>
-            {resultats.map((resultat) => (
-              <p key={resultat.id}>
-                 {resultat.prix} <img width={400} src={resultat.source} />
-              </p>
-            ))}
-          </div>
-        )
-      )}
-    </>
-  );
+    </div>
+  </>
+);
+
+  
 };
 
 export default Recherche;
