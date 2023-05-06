@@ -215,13 +215,17 @@ input[type="submit"]:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  
+}
+
+.cat-contact {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .content-img {
     display: flex;
     flex-wrap: wrap;
-    
     padding: 0 30px;
   }
 
@@ -235,6 +239,10 @@ input[type="submit"]:hover {
 
   .Min-heightConteiner{
     min-height: calc(100vh - 66px - 220px);
+  }
+
+  .Min-heightConteiner-contact{
+    min-height: calc(40vh - 66px - 220px);
   }
 
 .Min-heightConteinerPanier{
