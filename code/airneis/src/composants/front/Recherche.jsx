@@ -41,7 +41,7 @@ const Recherche = () => {
     <>
       <Menu />
       <div className="text-center">
-        <h1>Page recherche</h1>
+        <h1></h1>
       </div>
       <br />
       <div className="container mt-4">
@@ -70,21 +70,33 @@ const Recherche = () => {
           </div>
         </div>
       </div>
-      {aucunResultat ? (
-        <div className="h2 text-center mt-5 text-danger">
-          Nous n'avons pas trouvé de résultats à votre recherche. Nous sommes désolés.
+      {aucunResultat && (
+        <div className="alert alert-danger text-center mt-5" role="alert">
+          Aucun résultat trouvé pour votre recherche.
         </div>
-      ) : (
-        resultats.length > 0 && (
-          <div>
-            {resultats.map((resultat) => (
-              <p key={resultat.id}>
-                 {resultat.prix} <img width={400} src={resultat.source} />
-              </p>
-            ))}
-          </div>
-        )
       )}
+      <div className="container mt-4">
+        <div className="row justify-content-center">
+          {resultats.length > 0 &&
+            resultats.map((resultat) => (
+              <div className="col-md-4 mb-3" key={resultat.id}>
+                <div className="card">
+                  <img
+                    className="card-img-top"
+                    src={resultat.source}
+                    alt={resultat.nom}
+                    style={{ objectFit: "cover", height: "300px" }}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{resultat.nom}</h5>
+                    <p className="card-text text-primary">{resultat.prix} €</p>
+                    <button className="btn btn-primary">Ajouter au panier</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
     </>
   );
 };
