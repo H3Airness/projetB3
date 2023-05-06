@@ -11,19 +11,19 @@ function Menu() {
                     
                         <NavLink to="/" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}> <img className="logo-airneis" src="logo.svg" alt="" /><span className="NavTitre">Àirneis</span></NavLink>
+                        }}> <img className="logo-airneis" src="http://airneis.ddns.net:3001/logo.svg" alt="" /><span className="NavTitre">Àirneis</span></NavLink>
                     </li>
                 </ul>
                 <ul className="navbar-nav NavItems ms-auto">
                     <li className="nav-item">
                         <NavLink to="/Recherche" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}><img className="icone-recherche" src="./search_FILL0_wght400_GRAD0_opsz48.png"></img> </NavLink>
+                        }}><img className="icone-recherche" src="http://airneis.ddns.net:3001/search_FILL0_wght400_GRAD0_opsz48.png"></img> </NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/Panier" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}><img className="icone-recherche" src="./shopping_cart_FILL0_wght400_GRAD0_opsz48.png"></img> </NavLink>
+                        }}><img className="icone-recherche" src="http://airneis.ddns.net:3001//shopping_cart_FILL0_wght400_GRAD0_opsz48.png"></img> </NavLink>
                     </li>
 
                     <li className="nav-item troisbarresMenu">

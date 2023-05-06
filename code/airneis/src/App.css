@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Marck';
-  src: url('MarckScript-Regular.ttf');
+  src: url('http://airneis.ddns.net:3001/MarckScript-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Acme';
-  src: url('Acme-Regular.ttf');
+  src: url('http://airneis.ddns.net:3001/Acme-Regular.ttf');
 }
 
 html, body {

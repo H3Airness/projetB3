@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Menu from "../Menu";
+import { Link } from "react-router-dom"
 
 const Recherche = () => {
   const [recherche, setRecherche] = useState("");
@@ -81,12 +82,14 @@ const Recherche = () => {
             resultats.map((resultat) => (
               <div className="col-md-4 mb-3" key={resultat.id}>
                 <div className="card">
-                  <img
-                    className="card-img-top"
-                    src={resultat.source}
-                    alt={resultat.nom}
-                    style={{ objectFit: "cover", height: "300px" }}
-                  />
+                  <Link to={`/Produit/${resultat.id}`}>
+                    <img
+                      className="card-img-top"
+                      src={resultat.source}
+                      alt={resultat.nom}
+                      style={{ objectFit: "cover", height: "300px" }}
+                    />
+                  </Link>
                   <div className="card-body">
                     <h5 className="card-title">{resultat.nom}</h5>
                     <p className="card-text text-primary">{resultat.prix} €</p>

@@ -28,7 +28,7 @@ const Accueil = () => {
         <div className="content-img">
           {images.map((image, index) => (
             <div className="col mb-5 mt-5 img1 img2" key={index}>
-              <NavLink to={"/"}>
+              <NavLink to={'/'}> 
                 <img width={400} src={image.source} alt={`image-${index}`} />
               </NavLink>
             </div>

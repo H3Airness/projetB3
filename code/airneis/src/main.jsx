@@ -14,6 +14,7 @@ import MentionLegale from './composants/front/MentionLegale';
 import CGU from './composants/front/CGU';
 import Contact from './composants/front/Contact';
 import MenuNavigation from './composants/front/MenuNavigation';
+import Produit from './composants/front/Produit';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='CGU' element={<CGU/>} />
       <Route path='contact' element={<Contact/>} />
       <Route path='menu-navigation' element={<MenuNavigation/>} />
+      <Route path='produit/:id' element={<Produit/>} />
       <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
