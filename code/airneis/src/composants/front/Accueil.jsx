@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Gallery from '../Slider';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Menu from "../Menu";
 
 const Accueil = () => {
@@ -28,9 +28,9 @@ const Accueil = () => {
         <div className="content-img">
           {images.map((image, index) => (
             <div className="col mb-5 mt-5 img1 img2" key={index}>
-              <NavLink to={'/'}> 
+              <Link to={`/Produit/${image.id}`}>
                 <img width={400} src={image.source} alt={`image-${index}`} />
-              </NavLink>
+              </Link>
             </div>
           ))}
         </div>
