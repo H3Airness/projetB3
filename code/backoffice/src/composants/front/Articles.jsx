@@ -53,6 +53,33 @@ const Articles = () => {
         .catch(error => console.log(error));
     }    
   }
+
+  const handleDelete = () => {
+    const data = { images: selectedImages };
+
+    if(selectedImages < 1)
+    {
+      alert("Veuillez choisir au moins un article !");
+    }
+    else
+    {
+      axios.post('http://airneis.ddns.net:3000/delete_articles.php', data)
+        .then(response => {
+          // Récupérer le message envoyé par le serveur
+          const message = response.data.message;
+          // Stocker le message dans la variable d'état "message"
+          setMessage(message);
+          // Afficher le message dans la console du navigateur
+          console.log(message);
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+          
+        })
+        .catch(error => console.log(error));
+    }    
+  }
   
   
   
@@ -87,11 +114,11 @@ const Articles = () => {
         </div>
       </div>
       <div className="d-flex justify-content-center my-3">
-        <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
+        <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
         <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
       </div>
       <div className="d-flex justify-content-center my-3">
-      <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-success'>Ajouter des nouveaux articles</button>
+      <button className='boutonBackOfficeArticles btn btn-success'>Ajouter des nouveaux articles</button>
       </div> 
     </>
   );
