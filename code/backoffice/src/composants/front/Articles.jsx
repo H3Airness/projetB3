@@ -56,28 +56,30 @@ const Articles = () => {
 
   const handleDelete = () => {
     const data = { images: selectedImages };
-
+  
     if(selectedImages < 1)
     {
       alert("Veuillez choisir au moins un article !");
     }
     else
     {
-      axios.post('http://airneis.ddns.net:3000/delete_articles.php', data)
-        .then(response => {
-          // Récupérer le message envoyé par le serveur
-          const message = response.data.message;
-          // Stocker le message dans la variable d'état "message"
-          setMessage(message);
-          // Afficher le message dans la console du navigateur
-          console.log(message);
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
-          
-        })
-        .catch(error => console.log(error));
+      if(window.confirm("Êtes-vous sûr de vouloir supprimer les articles sélectionnés ?")) {
+        axios.post('http://airneis.ddns.net:3000/delete_articles.php', data)
+          .then(response => {
+            // Récupérer le message envoyé par le serveur
+            const message = response.data.message;
+            // Stocker le message dans la variable d'état "message"
+            setMessage(message);
+            // Afficher le message dans la console du navigateur
+            console.log(message);
+  
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+            
+          })
+          .catch(error => console.log(error));
+        }
     }    
   }
   
