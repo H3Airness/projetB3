@@ -10,6 +10,7 @@ import Connexion from './composants/front/Connexion';
 import Contact from './composants/front/Contact';
 import MenuNavigation from './composants/front/MenuNavigation'
 import Articles from './composants/front/Articles';
+import AjouterArticles from './composants/front/AjouterArticles';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='articles' element={<Articles />} />
       <Route path='contact' element={<Contact/>} />
       <Route path='menu-navigation' element={<MenuNavigation/>} />
+      <Route path='ajouter-articles' element={<AjouterArticles/>} />
       <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

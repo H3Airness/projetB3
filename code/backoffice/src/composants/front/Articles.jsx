@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
 import Menu from "../Menu";
 
@@ -120,7 +121,7 @@ const Articles = () => {
         <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
       </div>
       <div className="d-flex justify-content-center my-3">
-      <button className='boutonBackOfficeArticles btn btn-success'>Ajouter des nouveaux articles</button>
+      <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'> Ajouter des nouveaux articles </NavLink>
       </div> 
     </>
   );
