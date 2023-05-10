@@ -10,7 +10,7 @@ function Livraison() {
         <Menu/>
         <center>
             <div className="ContactTitre">Vous allez trop vite</div>
-            <span>Cette page est encore en développement</span>
+            <span>Cette page est en développement</span>
             <br/>
             <img width={200} src="https://www.badenconsulting.com/wp-content/uploads/ISO_7010_W001.svg_.png" alt="" /> 
             <br/>

@@ -419,3 +419,7 @@ main {
 .align-items {
   align-items: center;
 }
+
+td, th {
+  vertical-align: middle;
+}

@@ -17,21 +17,13 @@ const Panier = () => {
         <div className="shadow p-3 mb-5 bg-body rounded divArticles">
           <h3 className="text-center mb-5">Vos articles</h3>
           <table className="table">
-            <thead>
-              <tr>
-                <th>Produit</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+            <tbody className="vertical-align">
               {panier.map((product) => {
                 return (
                   <tr key={product.id}>
                     <td>
                       <img
-                        className="rounded mb-4 d-block"
+                        className="rounded d-block"
                         width={150}
                         src={product.source}
                         alt={product.nom}
