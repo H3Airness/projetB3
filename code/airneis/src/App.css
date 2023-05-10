@@ -12,6 +12,8 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
+  min-height: calc(100vh - 12px);
 }
 
 .login-card {
@@ -241,7 +243,7 @@ input[type="submit"]:hover {
     min-height: calc(100vh - 66px - 220px);
   }
 
-  .Min-heightConteiner-contact{
+  .Min-heightConteiner-footer{
     min-height: calc(40vh - 66px - 220px);
   }
 
@@ -393,5 +395,23 @@ input[type="submit"]:hover {
   font-size: 20px ;
 }
 
+main {
+  min-height: calc(100vh - 66px);
+}
 
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 70px;
+  margin-left: 0px !important;
+}
 
+.margin-left {
+  margin-left: 20px !important;
+}
+
+.margin-right {
+  margin-right: 20px !important;
+}

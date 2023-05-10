@@ -50,7 +50,7 @@ function MenuNavigation() {
             <NavLink to={"/contact"}>Contact</NavLink>
           </li>
           <li>
-            <NavLink to={"/"}>À Propos d'Àirneis</NavLink>
+            <NavLink to={"/propos"}>À Propos d'Àirneis</NavLink>
           </li>
         </ul>
       </nav>

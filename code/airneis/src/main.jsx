@@ -13,6 +13,7 @@ import Inscription from './composants/front/Inscription';
 import MentionLegale from './composants/front/MentionLegale';
 import CGU from './composants/front/CGU';
 import Contact from './composants/front/Contact';
+import A_propos from './composants/front/A_propos';
 import MenuNavigation from './composants/front/MenuNavigation';
 import Produit from './composants/front/Produit';
 
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='mention-legale' element={<MentionLegale/>} />
       <Route path='CGU' element={<CGU/>} />
       <Route path='contact' element={<Contact/>} />
+      <Route path='propos' element={<A_propos/>} />
       <Route path='menu-navigation' element={<MenuNavigation/>} />
       <Route path='produit/:id' element={<Produit/>} />
       <Route path="*" element={<NotFound />} />

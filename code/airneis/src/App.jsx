@@ -7,6 +7,7 @@ function App() {
   return (<>
     <div>
         <Outlet />
+        <div className="Min-heightConteiner-footer"></div>
         <Footer/>
     </div>
     </>
