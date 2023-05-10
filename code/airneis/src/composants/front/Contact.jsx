@@ -86,8 +86,6 @@ function Contact() {
           </form>
         </div>
       </div>
-      <div className='Min-heightConteiner-contact'>
-      </div>
     </>
   );
 }

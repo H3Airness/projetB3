@@ -47,39 +47,37 @@ function Connexion() {
         </NavLink>
       </div>
 
-      <div className="Min-heightConteiner">
-        <div className="login-card">
-          <div className="card-header">
-            <div className="log">Connexion</div>
+      <div className="login-card">
+        <div className="card-header">
+          <div className="log">Connexion</div>
+        </div>
+        <form onSubmit={handleSubmit}>
+          {response && (
+            <p className="ReponseFormulaire text-center mt-3">
+              {response.message}
+            </p>
+          )}
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input required="" name="email" id="email" type="text" />
           </div>
-          <form onSubmit={handleSubmit}>
-            {response && (
-              <p className="ReponseFormulaire text-center mt-3">
-                {response.message}
-              </p>
-            )}
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input required="" name="email" id="email" type="text" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Mot de passe:</label>
-              <input
-                required=""
-                name="password"
-                id="password"
-                type="password"
-              />
-            </div>
-            <div className="form-group">
-              <input value="Se connecter" type="submit" />
-            </div>
-          </form>
-          <div className="text-center">
-            <NavLink className="compteNav" to="/inscription">
-              Créer un compte ?
-            </NavLink>
+          <div className="form-group">
+            <label htmlFor="password">Mot de passe:</label>
+            <input
+              required=""
+              name="password"
+              id="password"
+              type="password"
+            />
           </div>
+          <div className="form-group">
+            <input value="Se connecter" type="submit" />
+          </div>
+        </form>
+        <div className="text-center">
+          <NavLink className="compteNav" to="/inscription">
+            Créer un compte ?
+          </NavLink>
         </div>
       </div>
     </>
