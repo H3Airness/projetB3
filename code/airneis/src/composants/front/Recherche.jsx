@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Menu from "../Menu";
 import { Link } from "react-router-dom"
+import { dataContext } from "../context/dataContext"
 
 const Recherche = () => {
   const [recherche, setRecherche] = useState("");
   const [donnees, setDonnees] = useState([]);
   const [resultats, setResultats] = useState([]);
   const [aucunResultat, setAucunResultat] = useState(false);
+  const {ajouter} = useContext(dataContext)
 
   function handleChange(event) {
     setRecherche(event.target.value);
@@ -93,7 +95,7 @@ const Recherche = () => {
                   <div className="card-body">
                     <h5 className="card-title">{resultat.nom}</h5>
                     <p className="card-text text-primary">{resultat.prix} €</p>
-                    <button className="btn btn-primary">Ajouter au panier</button>
+                    <button className="btn btn-primary" onClick={() => ajouter(resultat) }>Ajouter au panier</button>
                   </div>
                 </div>
               </div>

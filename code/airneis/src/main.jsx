@@ -16,6 +16,7 @@ import Contact from './composants/front/Contact';
 import A_propos from './composants/front/A_propos';
 import MenuNavigation from './composants/front/MenuNavigation';
 import Produit from './composants/front/Produit';
+import Livraison from './composants/front/Livraison';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -33,6 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='propos' element={<A_propos/>} />
       <Route path='menu-navigation' element={<MenuNavigation/>} />
       <Route path='produit/:id' element={<Produit/>} />
+      <Route path='livraison' element={<Livraison/>} />
       <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

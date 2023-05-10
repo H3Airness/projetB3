@@ -21,4 +21,4 @@ export function DataContextProvider({children}) {
   );
 }
 
-export default { dataContext, DataContextProvider };
+export default DataContextProvider ;

@@ -1,43 +1,78 @@
 import Menu from "../Menu";
 import { useContext } from "react";
-import { dataContext } from "../context/dataContext"
+import { dataContext } from "../context/dataContext";
+import { NavLink } from "react-router-dom";
 
 const Panier = () => {
+  const { panier, supprimer } = useContext(dataContext);
 
-    const { panier, supprimer } = useContext(dataContext);
-    
-    return ( <>
-    <Menu/>
-    <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
-    <div className="rounded Min-heightConteinerPanier">    
+  // Calcul du total des prix des produits dans le panier
+  const totalProduits = panier.reduce((acc, curr) => acc + parseFloat(curr.prix), 0);
+
+  return (
+    <>
+      <Menu />
+      <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
+      <div className="rounded Min-heightConteinerPanier">
         <div className="shadow p-3 mb-5 bg-body rounded divArticles">
-            <h3 className="text-center mb-5">Vos articles</h3>
-            {panier.map((product) => {
+          <h3 className="text-center mb-5">Vos articles</h3>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Produit</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {panier.map((product) => {
                 return (
-                <tr key={product.id}>
-                    <div className="ImgArticlesPanier">
-                        <img className="rounded mb-4 d-block" width={150} src={product.source}/>
-                    </div>
-                    <td>{product.nom}</td>
-                    <td>{new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(product.prix)}</td>
+                  <tr key={product.id}>
                     <td>
-                        <button onClick={() => supprimer(product)} className="btn border-danger text-danger" >supprimer</button>
+                      <img
+                        className="rounded mb-4 d-block"
+                        width={150}
+                        src={product.source}
+                        alt={product.nom}
+                      />
                     </td>
-                </tr>
-            )}) }
+                    <td>{product.nom}</td>
+                    <td>
+                      {new Intl.NumberFormat("fr-FR", {
+                        style: "currency",
+                        currency: "EUR",
+                      }).format(product.prix)}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => supprimer(product)}
+                        className="btn border-danger text-danger"
+                      >
+                        Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
         <div className="shadow p-3 mb-5 bg-body rounded divPrixArticles">
-            <h3 className="text-center">Total à payer</h3>
-            <br/>
-            <p>Produits: 100euros</p>
-            <p>Livraison: 5euros</p>
-            <div className="TotalPayer">
-                <h6>Total: 105euros</h6>
+          <h3 className="text-center">Total à payer</h3>
+          <br />
+          <p>Produits: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(totalProduits)}</p>
+          <p>Livraison: 5€</p>
+          <div className="TotalPayer">
+            <h6>Total: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(totalProduits + 5)}</h6>
+            <NavLink to="/Livraison">
                 <button className="btn btn-primary">Payer</button>
-            </div>
+            </NavLink>
+          </div>
         </div>
-    </div>    
-    </> );
-}
- 
+      </div>
+    </>
+  );
+};
+
 export default Panier;

@@ -370,7 +370,7 @@ input[type="submit"]:hover {
 }
 
 .ImgArticlesPanier{
-  display: flex;
+  margin-bottom: 0px !important;
 }
 
 .ImgArticlesPanier p{
@@ -414,4 +414,8 @@ main {
 
 .margin-right {
   margin-right: 20px !important;
+}
+
+.align-items {
+  align-items: center;
 }
