@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom"
 import MenuNavigation from "./front/MenuNavigation";
+import React, { useContext } from "react";
+import { dataContext } from "../composants/context/dataContext";
 
 
 function Menu() {
+    const { panier, nombreProduits, supprimer } = useContext(dataContext);
+
     return ( 
         <div className="bg-dark mb-3">
             <nav className="navbar navbar-expand navbar-dark nav-bg border-0">
@@ -23,7 +27,16 @@ function Menu() {
                     <li className="nav-item">
                         <NavLink to="/Panier" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}><img className="icone-recherche" src="http://airneis.ddns.net:3001//shopping_cart_FILL0_wght400_GRAD0_opsz48.png"></img> </NavLink>
+                        }}>
+                            <div style={{position: 'relative'}}>
+                                <img className="icone-recherche" src="http://airneis.ddns.net:3001//shopping_cart_FILL0_wght400_GRAD0_opsz48.png" />
+                                {nombreProduits > 0 && (
+                                    <div className="nombre-panier">
+                                        {nombreProduits}
+                                    </div>
+                                )}
+                            </div>
+                        </NavLink>
                     </li>
 
                     <li className="nav-item troisbarresMenu">
