@@ -31,9 +31,10 @@ const Panier = () => {
       }
     }
     if (!found) {
-      produitsUniques.push({ ...product, quantite: 1 });
+      produitsUniques.push({ ...product, quantite: quantites[product.id] });
     }
   }
+
 
   return (
     <>
@@ -56,16 +57,16 @@ const Panier = () => {
                       />
                     </td>
                     <td>
-  {product.nom}
-  {product.quantite > 1 ? (
-    <span className="badge bg-danger ms-2">
-      {product.quantite}
-    </span>
-  ) : null}
-  <br />
-  Quantité : {product.quantite}
-</td>
-
+                      {product.nom}
+                      {product.quantite > 1 ? (
+                        <span className="badge bg-danger ms-2">
+                          {product.quantite}
+                        </span>
+                      ) : null}
+                    </td>
+                    <td>
+                      {product.quantite}
+                    </td>
                     <td>
                       {new Intl.NumberFormat("fr-FR", {
                         style: "currency",
