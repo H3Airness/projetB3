@@ -14,7 +14,7 @@ const Panier = () => {
       <Menu />
       <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
       <div className="rounded Min-heightConteinerPanier">
-        <div className="shadow p-3 mb-5 bg-body rounded divArticles">
+        <div className="shadow p-2 mb-4 bg-body rounded divArticles">
           <h3 className="text-center mb-5">Vos articles</h3>
           <table className="table">
             <tbody className="vertical-align">
