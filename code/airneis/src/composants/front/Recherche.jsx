@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Menu from "../Menu";
-import { Link } from "react-router-dom"
-import { dataContext } from "../context/dataContext"
 
 const Recherche = () => {
   const [recherche, setRecherche] = useState("");
   const [donnees, setDonnees] = useState([]);
   const [resultats, setResultats] = useState([]);
   const [aucunResultat, setAucunResultat] = useState(false);
-  const {ajouter} = useContext(dataContext)
 
   function handleChange(event) {
     setRecherche(event.target.value);
@@ -34,6 +31,7 @@ const Recherche = () => {
       .get("http://airneis.ddns.net:3000/recherche.php")
       .then((response) => {
         setDonnees(response.data);
+        setResultats(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -80,28 +78,26 @@ const Recherche = () => {
       )}
       <div className="container mt-4">
         <div className="row justify-content-center">
-          {resultats.length > 0 &&
-            resultats.map((resultat) => (
-              <div className="col-md-4 mb-3" key={resultat.id}>
-                <div className="card">
-                  <Link to={`/Produit/${resultat.id}`}>
-                    <img
-                      className="card-img-top"
-                      src={resultat.source}
-                      alt={resultat.nom}
-                      style={{ objectFit: "cover", height: "300px" }}
-                    />
-                  </Link>
-                  <div className="card-body">
-                    <h5 className="card-title">{resultat.nom}</h5>
-                    <p className="card-text text-primary">{resultat.prix} €</p>
-                    <button className="btn btn-primary" onClick={() => ajouter(resultat) }>Ajouter au panier</button>
-                  </div>
+          {resultats.map((resultat) => (
+            <div className="col-md-4 mb-3" key={resultat.id}>
+              <div className="card">
+                <img
+                  className="card-img-top"
+                  src={resultat.source}
+                  alt={resultat.nom}
+                  style={{ objectFit: "cover", height: "300px" }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{resultat.nom}</h5>
+                  <p className="card-text text-primary">{resultat.prix} €</p>
+                  <button className="btn btn-primary">Ajouter au panier</button>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
+
     </>
   );
 };
