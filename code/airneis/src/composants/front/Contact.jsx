@@ -25,6 +25,7 @@ function Contact() {
       nom : JSON.stringify(nomRef.current.value),
       email : emailRef.current.value ,
       message : JSON.stringify(messageRef.current.value),
+
   }
 
   if(getError(demande)) return ; 
@@ -104,12 +105,32 @@ function Contact() {
 
             <div className="form-group">
               <label htmlFor="email">Email:</label>
-              <input required="" name="email" id="email" type="text" />
+              
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="votre@email.fr"  
+                className="form-control mb-3" 
+                ref={emailRef}
+                onFocus={handleFocus}
+              />
+
             </div>
 
             <div className="form-message">
               <label htmlFor="message">Message:</label>
-              <textarea required="" name="message" id="message" type="text" />
+
+              <textarea 
+                name="message"
+                id="message"
+                placeholder="Commentaire" 
+                className="form-control mb-3" 
+                rows={5} 
+                ref={messageRef}
+                onFocus={handleFocus}>
+              </textarea>
+
             </div>
               
             <div className="form-group">
