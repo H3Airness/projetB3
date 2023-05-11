@@ -9,6 +9,32 @@ const Panier = () => {
   // Calcul du total des prix des produits dans le panier
   const totalProduits = panier.reduce((acc, curr) => acc + parseFloat(curr.prix), 0);
 
+  // Création d'un objet pour stocker le nombre de produits identiques
+  const quantites = {};
+  for (let product of panier) {
+    if (product.id in quantites) {
+      quantites[product.id]++;
+    } else {
+      quantites[product.id] = 1;
+    }
+  }
+
+  // Création d'un tableau d'objets contenant les produits uniques
+  const produitsUniques = [];
+  for (let product of panier) {
+    let found = false;
+    for (let i = 0; i < produitsUniques.length; i++) {
+      if (produitsUniques[i].id === product.id) {
+        found = true;
+        produitsUniques[i].quantite++;
+        break;
+      }
+    }
+    if (!found) {
+      produitsUniques.push({ ...product, quantite: 1 });
+    }
+  }
+
   return (
     <>
       <Menu />
@@ -18,7 +44,7 @@ const Panier = () => {
           <h3 className="text-center mb-5">Vos articles</h3>
           <table className="table">
             <tbody className="vertical-align">
-              {panier.map((product) => {
+              {produitsUniques.map((product) => {
                 return (
                   <tr key={product.id}>
                     <td>
@@ -29,7 +55,17 @@ const Panier = () => {
                         alt={product.nom}
                       />
                     </td>
-                    <td>{product.nom}</td>
+                    <td>
+  {product.nom}
+  {product.quantite > 1 ? (
+    <span className="badge bg-danger ms-2">
+      {product.quantite}
+    </span>
+  ) : null}
+  <br />
+  Quantité : {product.quantite}
+</td>
+
                     <td>
                       {new Intl.NumberFormat("fr-FR", {
                         style: "currency",
@@ -50,6 +86,7 @@ const Panier = () => {
             </tbody>
           </table>
         </div>
+
         <div className="shadow p-3 mb-5 bg-body rounded divPrixArticles">
           <h3 className="text-center">Total à payer</h3>
           <br />
@@ -60,7 +97,7 @@ const Panier = () => {
             <NavLink to="/Livraison">
                 <button className="btn btn-primary">Payer</button>
             </NavLink>
-          </div>
+        </div>
         </div>
       </div>
     </>
