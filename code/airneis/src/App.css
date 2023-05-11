@@ -416,10 +416,6 @@ main {
   margin-right: 20px !important;
 }
 
-.align-items {
-  align-items: center;
-}
-
 td, th {
   vertical-align: middle;
 }

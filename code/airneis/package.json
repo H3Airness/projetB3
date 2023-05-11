@@ -17,6 +17,7 @@
     "better-react-carousel": "^1.1.1",
     "bootstrap": "^5.2.3",
     "fortawesome": "^0.0.1-security",
+    "joi": "^17.9.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2"
