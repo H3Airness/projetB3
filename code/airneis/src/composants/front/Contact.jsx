@@ -33,7 +33,7 @@ function Contact() {
     const formData = new FormData(e.target);
 
     let formType = {};
-    formData.forEach((key) => (formType[key] = formData.get(key)));
+    formData.forEach((value, key) => (formType[key] = value));
 
     async function postData() {
       try {
