@@ -4,37 +4,10 @@ import { dataContext } from "../context/dataContext";
 import { NavLink } from "react-router-dom";
 
 const Panier = () => {
-  const { panier, supprimer } = useContext(dataContext);
+  const { ajouter, panier, retirer, supprimer } = useContext(dataContext);
 
   // Calcul du total des prix des produits dans le panier
   const totalProduits = panier.reduce((acc, curr) => acc + parseFloat(curr.prix), 0);
-
-  // Création d'un objet pour stocker le nombre de produits identiques
-  const quantites = {};
-  for (let product of panier) {
-    if (product.id in quantites) {
-      quantites[product.id]++;
-    } else {
-      quantites[product.id] = 1;
-    }
-  }
-
-  // Création d'un tableau d'objets contenant les produits uniques
-  const produitsUniques = [];
-  for (let product of panier) {
-    let found = false;
-    for (let i = 0; i < produitsUniques.length; i++) {
-      if (produitsUniques[i].id === product.id) {
-        found = true;
-        produitsUniques[i].quantite++;
-        break;
-      }
-    }
-    if (!found) {
-      produitsUniques.push({ ...product, quantite: quantites[product.id] });
-    }
-  }
-
 
   return (
     <>
@@ -45,37 +18,42 @@ const Panier = () => {
           <h3 className="text-center mb-5">Vos articles</h3>
           <table className="table">
             <tbody className="vertical-align">
-              {produitsUniques.map((product) => {
+              {panier.map((produit) => {
                 return (
-                  <tr key={product.id}>
+                  <tr key={produit.id}>
                     <td>
                       <img
                         className="rounded d-block"
                         width={150}
-                        src={product.source}
-                        alt={product.nom}
+                        src={produit.source}
+                        alt={produit.nom}
                       />
                     </td>
                     <td>
-                      {product.nom}
-                      {product.quantite > 1 ? (
-                        <span className="badge bg-danger ms-2">
-                          {product.quantite}
-                        </span>
-                      ) : null}
-                    </td>
-                    <td>
-                      {product.quantite}
+                      <button
+                        className="btn btn-sm btn-secondary"
+                        disabled={produit.quantite === 1}
+                        onClick={() => retirer(produit)}
+                      >
+                        -
+                      </button>
+                      <span className="mx-2">{produit.quantite}</span>
+                      <button
+                        className="btn btn-sm btn-secondary"
+                        onClick={() => ajouter(produit)}
+                      >
+                        +
+                      </button>
                     </td>
                     <td>
                       {new Intl.NumberFormat("fr-FR", {
                         style: "currency",
                         currency: "EUR",
-                      }).format(product.prix)}
+                      }).format(produit.prix)}
                     </td>
                     <td>
                       <button
-                        onClick={() => supprimer(product)}
+                        onClick={() => supprimer(produit)}
                         className="btn border-danger text-danger"
                       >
                         Supprimer

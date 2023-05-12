@@ -12,13 +12,15 @@ export function DataContextProvider({ children }) {
     if (nouveauPanier[produit.id]) { // si le produit est déjà dans le panier, on augmente sa quantité
       nouveauPanier[produit.id].quantite += 1;
     } else { // sinon, on ajoute une nouvelle entrée pour le produit dans le panier
-      nouveauPanier[produit.id] = { ...produit, quantite: 1 };
+      nouveauPanier[produit.id] = { ...produit, quantite: 2 };
+      nouveauPanier[produit.id].quantite += 1;
     }
     setPanier(nouveauPanier);
     setNombreProduits(nombreProduits + 1);
   }
+  
 
-  function supprimer(produit) {
+  function retirer(produit) {
     const nouveauPanier = { ...panier };
     if (nouveauPanier[produit.id].quantite > 1) { // si le produit a une quantité supérieure à 1, on la diminue
       nouveauPanier[produit.id].quantite -= 1;
@@ -29,9 +31,16 @@ export function DataContextProvider({ children }) {
     setNombreProduits(nombreProduits - 1);
   }
 
+  function supprimer(produit) {
+    const nouveauPanier = { ...panier };
+    delete nouveauPanier[produit.id]; // on supprime complètement le produit du panier
+    setPanier(nouveauPanier);
+    setNombreProduits(nombreProduits - produit.quantite); // on soustrait la quantité du produit supprimé du nombre total de produits dans le panier
+  }
+
   return (
     <dataContext.Provider
-      value={{ panier: Object.values(panier), nombreProduits, ajouter, supprimer }} // on transforme l'objet panier en tableau pour faciliter l'affichage dans le composant Panier
+      value={{ panier: Object.values(panier), nombreProduits, ajouter, retirer, supprimer }} // on transforme l'objet panier en tableau pour faciliter l'affichage dans le composant Panier
     >
       {children}
     </dataContext.Provider>
