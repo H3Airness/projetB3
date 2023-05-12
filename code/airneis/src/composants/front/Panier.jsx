@@ -15,7 +15,9 @@ const Panier = () => {
       <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
       <div className="rounded Min-heightConteinerPanier">
         <div className="shadow p-2 mb-4 bg-body rounded divArticles">
-          <h3 className="text-center mb-5">Vos articles</h3>
+          <h3 className="text-center mb-5">
+            Vos articles
+          </h3>
           <table className="table">
             <tbody className="vertical-align">
               {panier.map((produit) => {
@@ -29,6 +31,7 @@ const Panier = () => {
                         alt={produit.nom}
                       />
                     </td>
+
                     <td>
                       <button
                         className="btn btn-sm btn-secondary"
@@ -45,12 +48,14 @@ const Panier = () => {
                         +
                       </button>
                     </td>
+
                     <td>
                       {new Intl.NumberFormat("fr-FR", {
                         style: "currency",
                         currency: "EUR",
                       }).format(produit.prix)}
                     </td>
+
                     <td>
                       <button
                         onClick={() => supprimer(produit)}

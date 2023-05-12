@@ -12,7 +12,7 @@ export function DataContextProvider({ children }) {
     if (nouveauPanier[produit.id]) { // si le produit est déjà dans le panier, on augmente sa quantité
       nouveauPanier[produit.id].quantite += 1;
     } else { // sinon, on ajoute une nouvelle entrée pour le produit dans le panier
-      nouveauPanier[produit.id] = { ...produit, quantite: 2 };
+      nouveauPanier[produit.id] = { ...produit, quantite: 0 };
       nouveauPanier[produit.id].quantite += 1;
     }
     setPanier(nouveauPanier);
