@@ -54,8 +54,6 @@ const Panier = () => {
                         style: "currency",
                         currency: "EUR",
                       }).format(produit.prix)}
-
-                      <p>Total produits : {getTotalProduit()}</p>
                     </td>
 
                     <td>
