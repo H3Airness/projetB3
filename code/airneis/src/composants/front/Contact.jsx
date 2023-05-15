@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { useState, useRef } from "react";
-import Menu from "../Menu";
 import { useNavigate } from "react-router-dom";
 import { commandeVerif } from "../front/verif/VerifContact";
 import { useAlert } from "../front/alert/useAlert";
@@ -63,8 +62,6 @@ function Contact() {
 
   return (
     <>
-      <Menu />
-
       <div className="ContactTitre">
           <span>Formulaire de Contact</span>
       </div>

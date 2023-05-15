@@ -1,9 +1,7 @@
-import Menu from "../Menu";
 import './../../../src/App.css'
 
 const MentionLegale = () => {
     return ( <>
-        <Menu/>
         <div className="container">
             <h1 className="cgu-title">Condition Général d'utilisation</h1>
             <br/>

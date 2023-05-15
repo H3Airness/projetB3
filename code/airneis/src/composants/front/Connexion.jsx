@@ -2,7 +2,6 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Menu from "../Menu";
 
 function Connexion() {
   const [response, setResponse] = useState("");
@@ -32,8 +31,6 @@ function Connexion() {
 
   return (
     <>
-      <Menu />
-
       <div className="ConnexionTitre">
         <NavLink
           to="/"

@@ -1,4 +1,3 @@
-import Menu from "../Menu";
 import { useContext } from "react";
 import { dataContext } from "../context/dataContext";
 import { NavLink } from "react-router-dom";
@@ -11,7 +10,6 @@ const Panier = () => {
 
   return (
     <>
-      <Menu />
       <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
       <div className="rounded Min-heightConteinerPanier">
         <div className="shadow p-2 mb-4 bg-body rounded divArticles">
@@ -34,7 +32,7 @@ const Panier = () => {
 
                     <td>
                       <button
-                        className="btn btn-sm btn-secondary"
+                        className="btn btn-sm btn-primary"
                         disabled={produit.quantite === 1}
                         onClick={() => retirer(produit)}
                       >
@@ -42,7 +40,7 @@ const Panier = () => {
                       </button>
                       <span className="mx-2">{produit.quantite}</span>
                       <button
-                        className="btn btn-sm btn-secondary"
+                        className="btn btn-sm btn-primary"
                         onClick={() => ajouter(produit)}
                       >
                         +

@@ -1,9 +1,5 @@
-import Menu from "../Menu";
-
-
 const MentionLegale = () => {
     return ( <>
-        <Menu/>
         <div className="container">
             <h1 className="cgu-title">Mentions Légales</h1>
             <br/>

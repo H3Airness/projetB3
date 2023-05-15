@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Gallery from '../Slider';
 import { Link } from 'react-router-dom';
-import Menu from "../Menu";
 
 const Accueil = () => {
   const [images, setImages] = useState([]);
@@ -16,7 +15,6 @@ const Accueil = () => {
   return (
     <>
       <div>
-        <Menu />
         <Gallery />
       </div>
       <div className="info-airneis mt-5">

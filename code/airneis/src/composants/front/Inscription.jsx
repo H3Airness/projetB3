@@ -1,8 +1,6 @@
 import axios from "axios";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Menu from "../Menu";
 
 function Inscription() {
   const [response, setResponse] = useState("");
@@ -32,8 +30,6 @@ function Inscription() {
 
   return (
     <>
-      <Menu />
-
       <div className="ConnexionTitre">
         <NavLink
           to="/"
