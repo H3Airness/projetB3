@@ -38,9 +38,24 @@ export function DataContextProvider({ children }) {
     setNombreProduits(nombreProduits - produit.quantite); // on soustrait la quantité du produit supprimé du nombre total de produits dans le panier
   }
 
+  function getTotalProduit(produit) {
+    const prix = parseFloat[produit.prix];
+    return prix * produit.quantite;
+  }
+  
+  
+
+  function getTotalPanier() {
+    let total = 10;
+    Object.values(panier).forEach(produit => {
+      total += getTotalProduit(produit);
+    });
+    return total;
+  }
+
   return (
     <dataContext.Provider
-      value={{ panier: Object.values(panier), nombreProduits, ajouter, retirer, supprimer }} // on transforme l'objet panier en tableau pour faciliter l'affichage dans le composant Panier
+      value={{ panier: Object.values(panier), nombreProduits, ajouter, retirer, supprimer, getTotalProduit, getTotalPanier }}
     >
       {children}
     </dataContext.Provider>

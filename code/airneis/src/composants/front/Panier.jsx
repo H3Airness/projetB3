@@ -4,7 +4,7 @@ import { dataContext } from "../context/dataContext";
 import { NavLink } from "react-router-dom";
 
 const Panier = () => {
-  const { ajouter, panier, retirer, supprimer } = useContext(dataContext);
+  const { ajouter, panier, retirer, supprimer, getTotalProduit, getTotalPanier } = useContext(dataContext);
 
   // Calcul du total des prix des produits dans le panier
   const totalProduits = panier.reduce((acc, curr) => acc + parseFloat(curr.prix), 0);
@@ -54,6 +54,8 @@ const Panier = () => {
                         style: "currency",
                         currency: "EUR",
                       }).format(produit.prix)}
+
+                      <p>Total produits : {getTotalProduit()}</p>
                     </td>
 
                     <td>
