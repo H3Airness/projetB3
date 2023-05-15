@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import Menu from "../Menu";
 import { dataContext } from "../context/dataContext"
 import { Link } from "react-router-dom"
 
@@ -43,7 +42,6 @@ const Recherche = () => {
 
   return (
     <>
-      <Menu />
       <div className="text-center">
         <h1></h1>
       </div>

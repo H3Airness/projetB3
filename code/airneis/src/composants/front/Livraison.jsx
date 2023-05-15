@@ -1,5 +1,4 @@
 import React from 'react';
-import Menu from '../Menu';
 import { NavLink } from 'react-router-dom';
 
 
@@ -7,7 +6,6 @@ function Livraison() {
 
   return (
     <>
-        <Menu/>
         <center>
             <div className="ContactTitre">Vous allez trop vite</div>
             <span>Cette page est en développement</span>

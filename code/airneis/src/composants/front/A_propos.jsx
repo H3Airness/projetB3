@@ -1,10 +1,7 @@
-import Menu from '../Menu';
-
 function A_propos() {
 
   return (
     <>
-        <Menu/>
 
     </>
   );
