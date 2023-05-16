@@ -23,6 +23,10 @@ function Categorie() {
   
     return (
       <>
+        <img src={`http://airneis.ddns.net:3001/${categorie}/banniere.jpg`} alt={categorie} style={{ width: '100%' }}/>
+        <div className="ContactTitre">
+          <span>{categorie}</span>
+        </div>
         <div className="container mt-4">
           <div className="row justify-content-center">
             {products.map((product) => (

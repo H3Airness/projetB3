@@ -20,7 +20,7 @@ function Produit() {
 
   return (
     <>
-    <img src={`http://airneis.ddns.net:3001/cat/${product.categorie}.jpg`} alt={product.categorie} />
+    <img src={`http://airneis.ddns.net:3001/${product.categorie}/banniere.jpg`} alt={product.categorie} style={{ width: '100%' }}/>
       <center>
         <h1>{product.nom}</h1>
         <p>{product.description}</p>
