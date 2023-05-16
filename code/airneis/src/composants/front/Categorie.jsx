@@ -28,7 +28,7 @@ function Categorie() {
             {products.map((product) => (
               <div className="col-md-4 mb-3" key={product.id}>
                 <div className="card">
-                  <Link to={`/Produit/${product.categorie}`}>
+                  <Link to={`/Produit/${product.id}`}>
                     <img
                       className="card-img-top"
                       src={product.source}

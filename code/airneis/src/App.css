@@ -205,6 +205,15 @@ input[type="submit"]:hover {
   font-weight: bold;
 }
 
+.categorie {
+  text-align: center;
+  color: black !important;
+  margin: 0;
+  font-family: "Acme";
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .footer {
   margin-left: 80px;
 }
@@ -433,4 +442,12 @@ td, th {
   justify-content: center;
   align-items: center;
   font-size: 12px;
+}
+
+.text-decoration {
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration: none;
 }
