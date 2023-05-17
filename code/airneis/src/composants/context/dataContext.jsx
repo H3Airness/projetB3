@@ -15,6 +15,9 @@ export function DataContextProvider({ children }) {
       nouveauPanier[produit.id] = { ...produit, quantite: 0 };
       nouveauPanier[produit.id].quantite += 1;
     }
+
+    console.log("Produit ajouté :", produit);
+    console.log("Prix du produit :", produit.prix);
     setPanier(nouveauPanier);
     setNombreProduits(nombreProduits + 1);
   }
@@ -39,14 +42,14 @@ export function DataContextProvider({ children }) {
   }
 
   function getTotalProduit(produit) {
-    const prix = parseFloat[produit.prix];
+    console.log("Prix du produit:", (produit.prix));
+    const prix = parseFloat(produit.prix) || 0;
     return prix * produit.quantite;
   }
   
-  
 
   function getTotalPanier() {
-    let total = 10;
+    let total = 0;
     Object.values(panier).forEach(produit => {
       total += getTotalProduit(produit);
     });

@@ -3,7 +3,8 @@ import { dataContext } from "../context/dataContext";
 import { NavLink } from "react-router-dom";
 
 const Panier = () => {
-  const { ajouter, panier, retirer, supprimer, getTotalProduit, getTotalPanier } = useContext(dataContext);
+  const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } = useContext(dataContext);
+  console.log("Contenu du panier:", panier);
 
   // Calcul du total des prix des produits dans le panier
   const totalProduits = panier.reduce((acc, curr) => acc + parseFloat(curr.prix), 0);
@@ -12,7 +13,7 @@ const Panier = () => {
     <>
       <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
       <div className="rounded Min-heightConteinerPanier">
-        <div className="shadow p-2 mb-4 bg-body rounded divArticles">
+        <div className="shadow p-1 mb-4 bg-body rounded divArticles">
           <h3 className="text-center mb-5">
             Vos articles
           </h3>
@@ -47,11 +48,11 @@ const Panier = () => {
                       </button>
                     </td>
 
-                    <td>
+                    <td> 
                       {new Intl.NumberFormat("fr-FR", {
                         style: "currency",
                         currency: "EUR",
-                      }).format(produit.prix)}
+                      }).format(getTotalProduit(produit))}
                     </td>
 
                     <td>
@@ -69,17 +70,22 @@ const Panier = () => {
           </table>
         </div>
 
-        <div className="shadow p-3 mb-5 bg-body rounded divPrixArticles">
+        <div className="shadow p-3 bg-body rounded divPrixArticles">
           <h3 className="text-center">Total à payer</h3>
           <br />
-          <p>Produits: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(totalProduits)}</p>
-          <p>Livraison: 5€</p>
+          <p>
+            Tarif {nombreProduits > 1 && `pour (${nombreProduits} articles)`}:&nbsp;
+            {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(getTotalPanier())}
+          </p>
+
+
+          <p>Livraison: 10€</p>
           <div className="TotalPayer">
-            <h6>Total: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(totalProduits + 5)}</h6>
+            <h6>Total: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(getTotalPanier() + 5)}</h6>
             <NavLink to="/Livraison">
                 <button className="btn btn-primary">Payer</button>
             </NavLink>
-        </div>
+          </div>
         </div>
       </div>
     </>
