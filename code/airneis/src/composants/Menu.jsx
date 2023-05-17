@@ -5,7 +5,7 @@ import { dataContext } from "../composants/context/dataContext";
 
 
 function Menu() {
-    const { panier, nombreProduits, supprimer } = useContext(dataContext);
+    const { nombreProduits } = useContext(dataContext);
 
     return ( 
         <div className="bg-dark mb-3">

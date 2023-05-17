@@ -354,7 +354,7 @@ input[type="submit"]:hover {
 
 .divPrixArticles{
   width: 400px;
-  height: 25vh;
+  height: 27vh;
   margin-left: 50px;
 }
 
@@ -427,6 +427,8 @@ main {
 
 td, th {
   vertical-align: middle;
+  padding: 2px !important;
+  text-align: center;
 }
 
 .nombre-panier {
