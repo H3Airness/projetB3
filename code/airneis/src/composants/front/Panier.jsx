@@ -81,7 +81,7 @@ const Panier = () => {
 
           <p>Livraison: 10€</p>
           <div className="TotalPayer">
-            <h6>Total: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(getTotalPanier() + 5)}</h6>
+            <h6>Total: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(getTotalPanier() + 10)}</h6>
             <NavLink to="/Livraison">
                 <button className="btn btn-primary">Payer</button>
             </NavLink>
