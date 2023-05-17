@@ -6,9 +6,6 @@ const Panier = () => {
   const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } = useContext(dataContext);
   console.log("Contenu du panier:", panier);
 
-  // Calcul du total des prix des produits dans le panier
-  const totalProduits = panier.reduce((acc, curr) => acc + parseFloat(curr.prix), 0);
-
   return (
     <>
       <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
