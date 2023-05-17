@@ -6,54 +6,66 @@ import { useState } from "react";
 const AjouterArticles = () => {
     const [response, setResponse] = useState('');
     const navigate = useNavigate();
-
+    const [image, setImage] = useState(null);
+  
     const handleSubmit = e => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-    
-        let formType = {};
-        formData.forEach((value, key) => formType[key] = formData.get(key));
-        
-    
-        async function postData() {
-          try {
-            const response = await axios.post('http://airneis.ddns.net:3000/connexion.php', formType, {});
-            setResponse(response.data);
-            if (response.data.status === 'success') {
-              navigate('/');
-            } 
-          } catch (error) {
-            console.log(error);
-          }
+      e.preventDefault();
+      const formData = new FormData(e.target);
+  
+      // Ajouter l'image à FormData
+      formData.append('image', image);
+  
+      let formType = {};
+      formData.forEach((value, key) => formType[key] = formData.get(key));
+  
+      async function postData() {
+        try {
+          const response = await axios.post('/public', formType, {});
+          setResponse(response.data);
+          if (response.data.status === 'success') {
+            navigate('/');
+          } 
+        } catch (error) {
+          console.log(error);
         }
-        
-        postData();
-        
       }
+  
+      postData();
+    }
+  
+    const handleImageChange = e => {
+      e.preventDefault();
+      const formDataImage = new FormData();
+      
+      // Ajouter l'image à FormData
+      formDataImage.append('image', e.target.files[0]);
+  
+      axios.post('/public', formDataImage);
+      
+      // Stocker l'image dans le state
+      setImage(e.target.files[0]);
+    };  
   
   return (
     <>
-        <div className="login-card mt-5">
-            <div className="card-header">
-                <div className="log">Ajouter un article</div>
+        <div className="articles-card my-5">
+            <div className="articles-card-header">
+                <div className="card-title text-center display-5 mb-5">Ajouter un article</div>
             </div>
             <form onSubmit={handleSubmit}>
                 {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
-                <div className="form-group">
-                    <label htmlFor="nom">nom:</label>
-                    <input required="" name="nom" id="nom" type="text"/>
+                <div className="articles-card-group">
+                    <input required="" name="nom" id="nom" type="text" placeholder="Titre de l'article"/>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="description">description:</label>
-                    <textarea name="description" id="description" rows="4"></textarea>
+                <div className="articles-card-group">
+                    <textarea name="description" id="description" rows="4" placeholder="Description de l'article"></textarea>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="prix">Prix:</label>
-                    <input type="age" name="prix" id="prix" min="0" step="0.01" required />
+                <div className="articles-card-group">
+                    <input type="number" name="prix" id="prix" min="0" step="0.01" placeholder="Prix de l'article" required />
                 </div>    
-                <div className="form-group">
+                <div className="custom-select">
                     <label htmlFor="choix-item">Selectionnez une catégorie:</label>
-                        <select name="choix-item" id="choix-item">
+                        <select name="select" id="choix-item">
                             <option value="chaise">Chaise</option>
                             <option value="table">Table</option>
                             <option value="lit">Lit</option>
@@ -61,10 +73,7 @@ const AjouterArticles = () => {
                             <option value="bureau">Bureau</option>
                             <option value="fauteuil">Fauteuil</option>
                         </select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="image">Image :</label>
-                    <input type="file" name="image" id="image" accept="image/*" />
+                <input type="file" onChange={handleImageChange} id='ImageArticle'/>        
                 </div>
                 <input value="Ajouter" type="submit" />
             </form>

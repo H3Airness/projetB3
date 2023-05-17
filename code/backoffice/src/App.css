@@ -47,7 +47,7 @@ label {
   margin-bottom: 5px;
 }
 
-input[type="text"], input[type="password"] {
+input {
   width: 100%;
   padding: 12px 20px;
   font-size: 16px;
@@ -386,3 +386,22 @@ tfoot {
   width: 25%;
   margin-left: 10px;
 }
+
+/* The container must be positioned relative: */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select{
+  background-color: rgb(120, 120, 188);  
+}
+
+.custom-select select {
+  width: 200px;
+  background-color: rgb(107, 107, 207);
+  outline: none;
+  border: none;
+}
+
+

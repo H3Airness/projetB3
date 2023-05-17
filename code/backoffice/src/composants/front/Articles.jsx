@@ -35,25 +35,27 @@ const Articles = () => {
 
   const handleSubmit = () => {
     const data = { images: selectedImages };
-
-    if(selectedImages < 1)
-    {
+  
+    if(selectedImages < 1) {
       alert("Veuillez choisir au moins un article !");
-    }
-    else
-    {
+    } else {
       axios.post('http://airneis.ddns.net:3000/update_features.php', data)
         .then(response => {
           // Récupérer le message envoyé par le serveur
           const message = response.data.message;
           // Stocker le message dans la variable d'état "message"
           setMessage(message);
-          // Afficher le message dans la console du navigateur
-          console.log(message);
+          // Faire défiler la page jusqu'à l'élément message
+          document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
+          // Reresh la page
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         })
         .catch(error => console.log(error));
     }    
   }
+  
 
   const handleDelete = () => {
     const data = { images: selectedImages };
@@ -71,6 +73,8 @@ const Articles = () => {
             const message = response.data.message;
             // Stocker le message dans la variable d'état "message"
             setMessage(message);
+            // Faire défiler la page jusqu'à l'élément message
+            document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
             // Afficher le message dans la console du navigateur
             console.log(message);
   
@@ -92,12 +96,12 @@ const Articles = () => {
         <Menu />
       </div>
       <div className="info-airneis mt-5">
-        <p>ESPACE ADMINISTRATION AIRNEIS</p>
+        <p id='aimant'>ESPACE ADMINISTRATION AIRNEIS</p>
         <p>SELECTION DES ARTICLES</p>
       </div>
 
       <div className='mt-4'>
-        {message && <p className='alert alert-success text-center'>{message}</p>}
+        {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
       </div>
 
       <div className="cat">
