@@ -4,7 +4,7 @@ import { dataContext } from "../context/dataContext"
 
 function Produit() {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
+  const [produit, setProduct] = useState(null);
   const {ajouter} = useContext(dataContext)
 
   useEffect(() => {
@@ -14,19 +14,19 @@ function Produit() {
       .catch(error => console.error(error));
   }, [id]);
 
-  if (!product) {
+  if (!produit) {
     return <p>Chargement...</p>;
   }
 
   return (
     <>
-    <img src={`http://airneis.ddns.net:3000/img/${product.categorie}/banniere.jpg`} alt={product.categorie} style={{ width: '100%' }}/>
+    <img src={`http://airneis.ddns.net:3000/img/${produit.categorie}/banniere.jpg`} alt={produit.categorie} style={{ width: '100%' }}/>
       <center>
-        <h1>{product.nom}</h1>
-        <p>{product.description}</p>
-        <img src={product.source} alt={product.titre} />
-        <p>{product.prix}€</p>
-        <button className="btn btn-primary" onClick={() => ajouter(product) }>
+        <h1>{produit.nom}</h1>
+        <p>{produit.description}</p>
+        <img src={`http://airneis.ddns.net:3000/img/${produit.source}`} alt={produit.titre} />
+        <p>{produit.prix}€</p>
+        <button className="btn btn-primary" onClick={() => ajouter(produit) }>
           <span>Ajouter au panier</span>
         </button>
       </center>

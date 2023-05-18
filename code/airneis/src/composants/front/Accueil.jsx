@@ -50,7 +50,7 @@ const Accueil = () => {
           {images.map((image, index) => (
             <div className="col mb-5 mt-5 img1 img2" key={index}>
               <Link to={`/Produit/${image.id}`}>
-                <img width={400} src={image.source} alt={`image-${index}`} />
+                <img width={400} src={`http://airneis.ddns.net:3000/img/${image.source}`} alt={`image-${index}`} />
               </Link>
             </div>
           ))}

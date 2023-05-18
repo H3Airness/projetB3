@@ -5,12 +5,12 @@ import { dataContext } from "../context/dataContext"
 
 function Categorie() {
     const { categorie } = useParams();
-    const [products, setProducts] = useState([]);
+    const [produits, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const { ajouter } = useContext(dataContext);
 
     useEffect(() => {
-      axios.get('http://airneis.ddns.net:3000/categorie/categorie_acceuil.php')
+      axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${categorie}`)
         .then(response => setCategories(response.data))
         .catch(error => console.log(error));
     }, []);
@@ -25,7 +25,7 @@ function Categorie() {
         .catch(error => console.error(error));
     }, [categorie]);
   
-    if (products.length === 0) {
+    if (produits.length === 0) {
       return <p>Chargement...</p>;
     }
   
@@ -42,25 +42,25 @@ function Categorie() {
 
         <div className="container mt-4">
           <div className="row justify-content-center">
-            {products.map((product) => (
-              <div className="col-md-4 mb-3" key={product.id}>
+            {produits.map((produit) => (
+              <div className="col-md-4 mb-3" key={produit.id}>
                 <div className="card">
-                  <Link to={`/Produit/${product.id}`}>
+                  <Link to={`/Produit/${produit.id}`}>
                     <img
                       className="card-img-top"
-                      src={product.source}
-                      alt={product.titre}
+                      src={`http://airneis.ddns.net:3000/img/${produit.source}`}
+                      alt={produit.titre}
                       style={{ objectFit: "cover", height: "300px" }}
                     />
                   </Link>
   
                   <div className="card-body">
-                    <h5 className="card-title">{product.nom}</h5>
-                    <p className="card-text">{product.description}</p>
-                    <p className="card-text">{product.prix}€</p>
+                    <h5 className="card-title">{produit.nom}</h5>
+                    <p className="card-text">{produit.description}</p>
+                    <p className="card-text">{produit.prix}€</p>
                     <button
                       className="btn btn-primary"
-                      onClick={() => ajouter(product)}
+                      onClick={() => ajouter(produit)}
                     >
                       Ajouter au panier
                     </button>
