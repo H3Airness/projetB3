@@ -5,10 +5,17 @@ import { Link } from 'react-router-dom';
 
 const Accueil = () => {
   const [images, setImages] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios.get('http://airneis.ddns.net:3000/accueil.php')
       .then(response => setImages(response.data.slice(0, 3)))
+      .catch(error => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://airneis.ddns.net:3000/categorie_acceuil.php')
+      .then(response => setCategories(response.data))
       .catch(error => console.log(error));
   }, []);
 
@@ -26,6 +33,18 @@ const Accueil = () => {
         <div className="content-img">
          
             <div className="col mb-5 mt-5 img1 img2">
+              {categories.map((categorie) => (
+                <div className="col mb-5 mt-5 img1 img2 center" key={categorie.id}>
+                  <Link to={`/Categorie/${categorie.nom}`}>
+                    <img width={100} src={`http://airneis.ddns.net:3001/${categorie.nom}/icon.jpg`} alt={`image-${categorie.nom}`} />
+                    <p className='categorie'>{categorie.nom}</p>
+                  </Link>
+                </div>
+              ))}
+
+
+
+
               <center>
                 <Link to={`/Categorie/armoire`}>
                   <img width={100} src={"http://airneis.ddns.net:3001/armoire/armoire.jpg"} alt={`armoire`} />
