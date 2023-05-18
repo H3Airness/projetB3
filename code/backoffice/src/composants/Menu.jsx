@@ -10,7 +10,7 @@ function Menu() {
                     
                         <NavLink to="/" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}> <img className="logo-airneis" src="logo.svg" alt="" /><span className="NavTitre">Àirneis - Back-Office</span></NavLink>
+                        }}> <img className="logo-airneis" src="http://airneis.ddns.net:3000/img/logo.svg" alt="" /><span className="NavTitre">Àirneis - Back-Office</span></NavLink>
                     </li>
                 </ul>
                 <ul className="navbar-nav NavItems ms-auto">                  
