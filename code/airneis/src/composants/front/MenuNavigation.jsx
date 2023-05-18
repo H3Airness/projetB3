@@ -33,7 +33,7 @@ function MenuNavigation() {
       <div className="icone-menu" onClick={toggleMenu}>
         <img
           className="icone-recherche"
-          src="../list_FILL0_wght400_GRAD0_opsz48.png"
+          src="http://airneis.ddns.net:3000/img/icon_menu.png"
           alt="Menu"
         />
       </div>

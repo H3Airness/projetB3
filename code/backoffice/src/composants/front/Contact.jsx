@@ -6,7 +6,7 @@ const Contact = () => {
     const [donnees, setDonnees] = useState([]);
 
     useEffect(() => {
-        axios.get('http://airneis.ddns.net:3000/back_contact.php')
+        axios.get('http://airneis.ddns.net:3000/contact/back_contact.php')
             .then(response => {
                 setDonnees(response.data);
             })
@@ -17,7 +17,7 @@ const Contact = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette ligne ?")) {
-            axios.delete(`http://airneis.ddns.net:3000/back_contact_suppression.php?id=${id}`)
+            axios.delete(`http://airneis.ddns.net:3000/contact/back_contact_suppression.php?id=${id}`)
             .then(response => {
                 if (response.status === 204) {
                     setDonnees(donnees.filter(donnee => donnee.id !== id));
