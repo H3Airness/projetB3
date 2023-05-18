@@ -1,14 +1,22 @@
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { dataContext } from "../context/dataContext"
 
 function Categorie() {
     const { categorie } = useParams();
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const { ajouter } = useContext(dataContext);
+
+    useEffect(() => {
+      axios.get('http://airneis.ddns.net:3000/categorie/categorie_acceuil.php')
+        .then(response => setCategories(response.data))
+        .catch(error => console.log(error));
+    }, []);
   
     useEffect(() => {
-      fetch(`http://airneis.ddns.net:3000/categorie.php?categorie=${categorie}`)
+      fetch(`http://airneis.ddns.net:3000/categorie/categorie.php?categorie=${categorie}`)
         .then(response => response.json())
         .then(data => {
           console.log(data);
@@ -23,10 +31,15 @@ function Categorie() {
   
     return (
       <>
-        <img src={`http://airneis.ddns.net:3001/${categorie}/banniere.jpg`} alt={categorie} style={{ width: '100%' }}/>
-        <div className="ContactTitre">
-          <span>{categorie}</span>
-        </div>
+        {categories.map((categorie) => (
+          <div key={categorie.nom}>
+            <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '100%' }} />
+            <div className="ContactTitre">
+              <span>{categorie.nom}</span>
+            </div>
+          </div>
+        ))}
+
         <div className="container mt-4">
           <div className="row justify-content-center">
             {products.map((product) => (

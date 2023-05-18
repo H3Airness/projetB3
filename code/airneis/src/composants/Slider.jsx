@@ -4,13 +4,13 @@ import Carousel from 'better-react-carousel';
 const Gallery = () => {
   const [autoplay, setAutoplay] = useState(true);
   const images = [
-    { src: 'img1.jpeg', alt: 'image 1' },
-    { src: 'img2.jpeg', alt: 'image 2' },
-    { src: 'img3.jpeg', alt: 'image 3' },
-    { src: 'img4.jpeg', alt: 'image 4' },
-    { src: 'img5.jpeg', alt: 'image 5' },
-    { src: 'img6.jpeg', alt: 'image 6' },
-    { src: 'img7.jpeg', alt: 'image 7' },
+    { src: 'http://airneis.ddns.net:3000/img/canva/img1.jpg', alt: 'image 1' },
+    { src: 'http://airneis.ddns.net:3000/img/canva/img2.jpg', alt: 'image 2' },
+    { src: 'http://airneis.ddns.net:3000/img/canva/img3.jpg', alt: 'image 3' },
+    { src: 'http://airneis.ddns.net:3000/img/canva/img4.jpg', alt: 'image 4' },
+    { src: 'http://airneis.ddns.net:3000/img/canva/img5.jpg', alt: 'image 5' },
+    { src: 'http://airneis.ddns.net:3000/img/canva/img6.jpg', alt: 'image 6' },
+    { src: 'http://airneis.ddns.net:3000/img/canva/img7.jpg', alt: 'image 7' },
   ];
 
   const handleInteraction = () => {
