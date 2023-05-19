@@ -13,6 +13,7 @@ import Articles from './composants/front/Articles';
 import AjouterArticles from './composants/front/AjouterArticles';
 import Categorie from './composants/front/Categorie';
 import ModifierCategorie from './composants/front/ModifierCategorie';
+import AjouterCategorie from './composants/front/AjouterCategorie';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='ajouter-articles' element={<AjouterArticles />} />
         <Route path='categorie' element={<Categorie />} />
         <Route path='modifierCategorie/:categorie' element={<ModifierCategorie/>} />
+        <Route path='AjouterCategorie' element={<AjouterCategorie/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

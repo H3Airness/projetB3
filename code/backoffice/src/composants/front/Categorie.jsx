@@ -30,6 +30,8 @@ const Categorie = () => {
     return ( <>
         <div className="ContactTitre">
             <span>Gestion Catégorie</span>
+            <br/>
+            <Link to={`/AjouterCategorie`} className="btn btn-success">Ajouter une nouvelle catégorie</Link>
         </div>
 
         <div className="tableau_contact">
