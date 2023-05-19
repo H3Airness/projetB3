@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Menu from "../Menu";
 
 const Contact = () => {
     const [donnees, setDonnees] = useState([]);
@@ -33,8 +32,6 @@ const Contact = () => {
 
     return (
         <>
-            <Menu />
-
             <div className="ContactTitre">
                 <span>Formulaire de Contact</span>
             </div>

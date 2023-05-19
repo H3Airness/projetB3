@@ -7,7 +7,7 @@ const NotFound = () => {
    </br>
    <small>Page introuvable</small></h1>
          <div className="text-center">
-            <img src="giphy.gif" alt="" className="mb-2"/>
+            <img src="http://airneis.ddns.net:3000/img/giphy.gif" alt="" className="mb-2"/>
          </div>
          <div className="bg-dark p-1 mt-5 rounded">
         <a className= "text-white text-center text-decoration-none fs-5"><NavLink to="/" className="nav-link">Retourner à l'accueil</NavLink></a>

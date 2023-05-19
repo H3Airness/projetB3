@@ -38,7 +38,7 @@ function Inscription() {
           }}
         >
           {" "}
-          <img className="logo-airneis-connexion" src="logo.svg" alt="" />
+          <img className="logo-airneis-connexion" src="http://airneis.ddns.net:3000/img/logo.svg" alt="" />
           <span className="titreConnexion">Àirneis</span>
         </NavLink>
       </div>

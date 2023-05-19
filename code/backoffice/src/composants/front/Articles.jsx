@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
-import Menu from "../Menu";
 
 const Articles = () => {
   const [images, setImages] = useState([]);
@@ -92,9 +91,6 @@ const Articles = () => {
   
   return (
     <>
-      <div>
-        <Menu />
-      </div>
       <div className="info-airneis mt-5">
         <p id='aimant'>ESPACE ADMINISTRATION AIRNEIS</p>
         <p>SELECTION DES ARTICLES</p>
