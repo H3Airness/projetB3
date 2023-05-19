@@ -41,12 +41,6 @@ function ModifierCategorie() {
     return (
       <>
         {categories.map((categorie) => (
-          <div key={categorie.nom}>
-            <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '100%' }} />
-          </div>
-          ))}
-
-        {categories.map((categorie) => (
         <div className="categorie-card">
             <div className="card-header">
                 <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier la catégorie: {categorie.nom}</div>
@@ -54,15 +48,27 @@ function ModifierCategorie() {
             <form onSubmit={handleSubmit}>
                 {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
 
-                <div className="card-group">
-                    <input required={categorie.nom} name="nom" id="nom" type="text" placeholder="Nom de la catégorie"/>
+                <div className="card-group mb-4">
+                    <label htmlFor="nom">Modifier le nom de la catégorie:</label>
+                    <input required={categorie.nom} name="nom" id="nom" type="text" placeholder={categorie.nom}/>
                 </div>
 
-                <div className="custom-select">
-
-                <input type="file" id='ImageArticle'/>        
+                <div className='mb-4'>
+                    <label htmlFor="nom">Icon actuelle:</label>
+                    <center>
+                        <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
+                    </center>
+                    <input type="file" id='ImageArticle'/>        
                 </div>
-                <input value="Ajouter" type="submit" />
+
+                <div className='mb-4'>
+                    <label htmlFor="nom">Bannière Actuelle:</label>
+                    <center>
+                        <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
+                    </center>
+                    <input type="file" id='ImageArticle'/>        
+                </div>
+                <input value="Modifier" type="submit" />
             </form>
         </div>
         ))}
