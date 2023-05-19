@@ -63,7 +63,7 @@ const Categorie = () => {
                         <td>{categorie.date}</td>
                         <td>
                             <center>
-                                <Link to={`/Categorie/${categorie.id_categorie}`} className="btn btn-warning">Modifier</Link>
+                                <Link to={`/modifierCategorie/${categorie.id_categorie}`} className="btn btn-warning">Modifier</Link>
                             </center>
                         </td>
                         <td>

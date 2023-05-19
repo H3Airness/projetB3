@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='menu-navigation' element={<MenuNavigation />} />
         <Route path='ajouter-articles' element={<AjouterArticles />} />
         <Route path='categorie' element={<Categorie />} />
-        <Route path='modifiercategorie/:categorie' element={<ModifierCategorie />} />
+        <Route path='modifierCategorie/:categorie' element={<ModifierCategorie/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
