@@ -109,7 +109,7 @@ const Articles = () => {
               onClick={() => handleImageClick(index)}
             >
               <p className='text-center'>{image.nom}</p>
-              <img width={200} height={200} src={image.source} alt={`image-${index}`} />
+              <img width={200} height={200} src={`http://airneis.ddns.net:3000/img/${image.source}`} alt={`image-${index}`} />
               <p className='m-2 text-primary'>Prix : {image.prix} €</p>
               <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
             </div>
