@@ -1,11 +1,14 @@
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/authContext";
 
 function Connexion() {
   const [response, setResponse] = useState("");
   const navigate = useNavigate();
+
+  const authContext = useContext(AuthContext); // Utiliser le contexte AuthContext
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,10 +19,15 @@ function Connexion() {
 
     async function postData() {
       try {
-        const response = await axios.post('http://airneis.ddns.net:3000/connexion.php', formType, {});
+        const response = await axios.post(
+          "http://airneis.ddns.net:3000/connexion.php",
+          formType,
+          {}
+        );
         setResponse(response.data);
         if (response.data.status === "success") {
           navigate("/");
+          authContext.login(); 
         }
       } catch (error) {
         console.log(error);
@@ -38,8 +46,11 @@ function Connexion() {
             return isActive ? "nav-link active text-light" : "nav-link";
           }}
         >
-          {" "}
-          <img className="logo-airneis-connexion" src="http://airneis.ddns.net:3000/img/logo.svg" alt="" />
+          <img
+            className="logo-airneis-connexion"
+            src="http://airneis.ddns.net:3000/img/logo.svg"
+            alt=""
+          />
           <span className="titreConnexion">Àirneis</span>
         </NavLink>
       </div>
@@ -60,12 +71,7 @@ function Connexion() {
           </div>
           <div className="form-group">
             <label htmlFor="password">Mot de passe:</label>
-            <input
-              required=""
-              name="password"
-              id="password"
-              type="password"
-            />
+            <input required="" name="password" id="password" type="password" />
           </div>
           <div className="form-group">
             <input value="Se connecter" type="submit" />

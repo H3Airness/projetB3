@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 function MenuNavigation() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef(null);
   const location = useLocation();
+  const { login, logout } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -28,6 +31,16 @@ function MenuNavigation() {
     setMenuOpen(false);
   }, [location]);
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    login();
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    logout();
+  };
+
   return (
     <div className="menu-navigation">
       <div className="icone-menu" onClick={toggleMenu}>
@@ -39,12 +52,27 @@ function MenuNavigation() {
       </div>
       <nav className={`menu ${menuOpen ? "ouvert" : ""}`} ref={menuRef}>
         <ul>
-          <li>
-            <NavLink to={"/connexion"}>Se connecter</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/inscription"}>S'inscrire</NavLink>
-          </li>
+          {isLoggedIn ? (
+            <>
+              <li>
+                <NavLink to={"/mon-compte"}>Mon compte</NavLink>
+              </li>
+              <li>
+                <NavLink to={"/"} onClick={handleLogout}>
+                  Déconnexion
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink to={"/connexion"}>Se connecter</NavLink>
+              </li>
+              <li>
+                <NavLink to={"/inscription"}>S'inscrire</NavLink>
+              </li>
+            </>
+          )}
           <li>
             <NavLink to={"/cgu"}>CGU</NavLink>
           </li>
