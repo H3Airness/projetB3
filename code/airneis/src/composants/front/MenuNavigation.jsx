@@ -4,10 +4,9 @@ import { AuthContext } from "../context/authContext";
 
 function MenuNavigation() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef(null);
   const location = useLocation();
-  const { login, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -31,16 +30,6 @@ function MenuNavigation() {
     setMenuOpen(false);
   }, [location]);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    login();
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    logout();
-  };
-
   return (
     <div className="menu-navigation">
       <div className="icone-menu" onClick={toggleMenu}>
@@ -58,7 +47,7 @@ function MenuNavigation() {
                 <NavLink to={"/mon-compte"}>Mon compte</NavLink>
               </li>
               <li>
-                <NavLink to={"/"} onClick={handleLogout}>
+                <NavLink to={"/"} onClick={logout}>
                   Déconnexion
                 </NavLink>
               </li>
