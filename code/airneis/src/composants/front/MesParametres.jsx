@@ -1,5 +1,6 @@
 import { AuthContext } from "../context/authContext";
 import React, { useContext } from "react";
+import Connexion from "./Connexion";
 
 function MesParametres() {
     const { isLoggedIn } = useContext(AuthContext);
@@ -14,7 +15,7 @@ function MesParametres() {
             </>
           ) : (
             <>
-              <h1 className="text-center">Vous ne pouvez pas acceder à cette page sans vous connecter</h1>
+              <Connexion/>
             </>
           )}
     </>
