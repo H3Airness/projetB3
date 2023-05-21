@@ -44,12 +44,10 @@ function MenuNavigation() {
           {isLoggedIn ? (
             <>
               <li>
-                <NavLink to={"/mon-compte"}>Mon compte</NavLink>
+                <NavLink to={"/mesParametres"}>Mes paramètres</NavLink>
               </li>
               <li>
-                <NavLink to={"/"} onClick={logout}>
-                  Déconnexion
-                </NavLink>
+                <NavLink to={"/mesCommandes"}>Mes commandes</NavLink>
               </li>
             </>
           ) : (
@@ -74,6 +72,13 @@ function MenuNavigation() {
           <li>
             <NavLink to={"/propos"}>À Propos d'Àirneis</NavLink>
           </li>
+          {isLoggedIn && (
+            <li>
+              <NavLink to={"/"} onClick={logout}>
+                Déconnexion
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </div>

@@ -18,6 +18,8 @@ import MenuNavigation from './composants/front/MenuNavigation';
 import Produit from './composants/front/Produit';
 import Categorie from './composants/front/Categorie';
 import Livraison from './composants/front/Livraison';
+import MesParametres from './composants/front/MesParametres';
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -37,6 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='produit/:id' element={<Produit/>} />
       <Route path='categorie/:categorie' element={<Categorie/>} />
       <Route path='livraison' element={<Livraison/>} />
+      <Route path='mesParametres' element={<MesParametres/>} />
       <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
