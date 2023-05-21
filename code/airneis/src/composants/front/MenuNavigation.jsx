@@ -49,6 +49,11 @@ function MenuNavigation() {
               <li>
                 <NavLink to={"/mesCommandes"}>Mes commandes</NavLink>
               </li>
+              <li>
+                <NavLink to={"/"} onClick={logout}>
+                  Déconnexion
+                </NavLink>
+              </li>
             </>
           ) : (
             <>
@@ -72,13 +77,6 @@ function MenuNavigation() {
           <li>
             <NavLink to={"/propos"}>À Propos d'Àirneis</NavLink>
           </li>
-          {isLoggedIn && (
-            <li>
-              <NavLink to={"/"} onClick={logout}>
-                Déconnexion
-              </NavLink>
-            </li>
-          )}
         </ul>
       </nav>
     </div>
