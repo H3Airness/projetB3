@@ -86,11 +86,13 @@ input[type="submit"]:hover {
 }
 
 .ConnexionTitre{
+  width: 350px;
   text-align: center;
   margin-top: 50px;
   margin-bottom: 40px;
   font-size: 70px;
   font-family: 'Marck';
+
 }
 
 .logo-airneis-connexion{
@@ -275,6 +277,7 @@ input[type="submit"]:hover {
 
 .titreConnexion{
   transition: 1s;
+  color: black;
 }
 
 .titreConnexion:hover{
