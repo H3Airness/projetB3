@@ -96,7 +96,7 @@ function AjouterCategorie() {
               </div>
 
               <div className="d-flex justify-content-center my-3">
-                <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaire de Catégorie </NavLink>
+                <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaires de catégorie </NavLink>
               </div>
             </>
           ) : (
