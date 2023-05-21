@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from "../context/authContext";
+import Connexion from "./Connexion";
 
 const Contact = () => {
+    const { isLoggedIn } = useContext(AuthContext);
     const [donnees, setDonnees] = useState([]);
 
     useEffect(() => {
@@ -32,45 +35,53 @@ const Contact = () => {
 
     return (
         <>
-            <div className="ContactTitre">
-                <span>Formulaire de Contact</span>
-            </div>
+            {isLoggedIn ? (
+            <>
+                <div className="ContactTitre">
+                    <span>Formulaire de Contact</span>
+                </div>
 
-            <div className="tableau_contact">
-                <table className='table table-bordered'>
-                    <thead>
-                        <tr>
-                            <th>Date d'envoie</th>
-                            <th>Nom</th>
-                            <th>Email</th>
-                            <th>Message</th>
-                            <th>Contacter</th>
-                            <th>Supprimer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {donnees.map(donnee => (
-                            <tr key={donnee.id}>
-                                <td>{donnee.date}</td>
-                                <td>{donnee.nom}</td>
-                                <td>{donnee.email}</td>
-                                <td>{donnee.message}</td>
-                                <td>
-                                    <center>
-                                        <a className="btn btn-warning" href={`mailto:${donnee.email}`}>Envoyer un e-mail</a>
-                                    </center>
-                                </td>
-                                <td>
-                                    <center>
-                                        <a className="btn btn-danger" href="" onClick={() => handleDelete(donnee.id)}>Supprimer</a>
-                                    </center>
-                                </td>
+                <div className="tableau_contact">
+                    <table className='table table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>Date d'envoie</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Message</th>
+                                <th>Contacter</th>
+                                <th>Supprimer</th>
                             </tr>
-                        ))}                      
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {donnees.map(donnee => (
+                                <tr key={donnee.id}>
+                                    <td>{donnee.date}</td>
+                                    <td>{donnee.nom}</td>
+                                    <td>{donnee.email}</td>
+                                    <td>{donnee.message}</td>
+                                    <td>
+                                        <center>
+                                            <a className="btn btn-warning" href={`mailto:${donnee.email}`}>Envoyer un e-mail</a>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            <a className="btn btn-danger" href="" onClick={() => handleDelete(donnee.id)}>Supprimer</a>
+                                        </center>
+                                    </td>
+                                </tr>
+                            ))}                      
+                        </tbody>
+                    </table>
 
-            </div>
+                </div>
+            </>
+            ) : (
+            <>
+                <Connexion/>
+            </>
+        )}
         </>
     );
 }

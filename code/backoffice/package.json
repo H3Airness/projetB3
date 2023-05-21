@@ -16,6 +16,7 @@
     "better-react-carousel": "^1.1.1",
     "bootstrap": "^5.2.3",
     "fortawesome": "^0.0.1-security",
+    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",

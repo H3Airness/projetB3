@@ -1,83 +1,93 @@
 import { useParams, NavLink } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from "../context/authContext";
+import Connexion from "./Connexion";
 
 function ModifierCategorie() {
-    const [response, setResponse] = useState('');
-    const { categorie } = useParams();
-    const [categories, setCategories] = useState([]);
+  const { isLoggedIn } = useContext(AuthContext);
+  const [response, setResponse] = useState('');
+  const { categorie } = useParams();
+  const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-      axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${categorie}`)
-        .then(response => setCategories(response.data))
-        .catch(error => console.log(error));
-    }, []);
+  useEffect(() => {
+    axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${categorie}`)
+      .then(response => setCategories(response.data))
+      .catch(error => console.log(error));
+  }, []);
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
     
-        // Ajouter l'image à FormData
-        formData.append('image', image);
+    // Ajouter l'image à FormData
+    formData.append('image', image);
     
-        let formType = {};
-        formData.forEach((value, key) => formType[key] = formData.get(key));
+    let formType = {};
+    formData.forEach((value, key) => formType[key] = formData.get(key));
     
-        async function postData() {
-          try {
-            const response = await axios.post('/public', formType, {});
-            setResponse(response.data);
-            if (response.data.status === 'success') {
-              navigate('/');
-            } 
-          } catch (error) {
-            console.log(error);
-          }
-        }
-    
-        postData();
+    async function postData() {
+      try {
+        const response = await axios.post('/public', formType, {});
+        setResponse(response.data);
+        if (response.data.status === 'success') {
+          navigate('/');
+        } 
+      } catch (error) {
+        console.log(error);
       }
+    }
+    
+    postData();
+  }
  
-    return (
+return (
+  <>
+    {isLoggedIn ? (
       <>
         {categories.map((categorie) => (
-        <div className="categorie-card">
+          <div className="categorie-card">
             <div className="card-header">
-                <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier la catégorie: {categorie.nom}</div>
+              <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier la catégorie: {categorie.nom}</div>
             </div>
             <form onSubmit={handleSubmit}>
-                {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
+              {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
 
-                <div className="card-group mb-4">
-                    <label htmlFor="nom">Modifier le nom de la catégorie:</label>
-                    <input required={categorie.nom} name="nom" id="nom" type="text" placeholder={categorie.nom}/>
-                </div>
+              <div className="card-group mb-4">
+                <label htmlFor="nom">Modifier le nom de la catégorie:</label>
+                <input required={categorie.nom} name="nom" id="nom" type="text" placeholder={categorie.nom}/>
+              </div>
 
-                <div className='mb-4'>
-                    <label htmlFor="nom">Icon actuelle:</label>
-                    <center>
-                        <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
-                    </center>
-                    <input type="file" id='ImageArticle'/>        
-                </div>
+              <div className='mb-4'>
+                <label htmlFor="nom">Icon actuelle:</label>
+                <center>
+                  <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
+                </center>
+                <input type="file" id='ImageArticle'/>        
+              </div>
 
-                <div className='mb-4'>
-                    <label htmlFor="nom">Bannière Actuelle:</label>
-                    <center>
-                        <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
-                    </center>
-                    <input type="file" id='ImageArticle'/>        
-                </div>
-                <input value="Modifier" type="submit" />
+              <div className='mb-4'>
+                <label htmlFor="nom">Bannière Actuelle:</label>
+                <center>
+                  <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
+                </center>
+                <input type="file" id='ImageArticle'/>        
+              </div>
+              <input value="Modifier" type="submit" />
             </form>
-        </div>
+          </div>
         ))}
         <div className="d-flex justify-content-center my-3">
-            <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaire de Catégorie </NavLink>
+          <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaire de Catégorie </NavLink>
         </div> 
-           
       </>
-    );
-  }
+      ) : (
+      <>
+        <Connexion/>
+      </>
+      )}  
+    </>
+  );
+}
   
-  export default ModifierCategorie;
+export default ModifierCategorie;

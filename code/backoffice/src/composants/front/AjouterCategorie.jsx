@@ -1,8 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from "../context/authContext";
+import Connexion from "./Connexion";
 
 function AjouterCategorie() {
+  const { isLoggedIn } = useContext(AuthContext);
   const [response, setResponse] = useState('');
   const [nom, setNom] = useState('');
   const [icon, setIcon] = useState(null);
@@ -63,36 +66,44 @@ function AjouterCategorie() {
   };
 
   return (
-    <>
-      <div className="categorie-card">
-        <div className="card-header">
-          <div className="card-title text-center display-5 mb-5 ContactTitre">Création d'une catégorie:</div>
-        </div>
-        <form onSubmit={handleSubmit}>
-        {response && <p className='ReponseFormulaire text-center mt-3'>{response}</p>}
+    <> 
+      {isLoggedIn ? (
+            <>
+              <div className="categorie-card">
+                <div className="card-header">
+                  <div className="card-title text-center display-5 mb-5 ContactTitre">Création d'une catégorie:</div>
+                </div>
+                <form onSubmit={handleSubmit}>
+                {response && <p className='ReponseFormulaire text-center mt-3'>{response}</p>}
 
-          <div className="card-group mb-4">
-            <label htmlFor="nom">Nom de la catégorie:</label>
-            <input required name="nom" id="nom" type="text" placeholder="Nom de la catégorie" onChange={handleNomChange} />
-          </div>
+                  <div className="card-group mb-4">
+                    <label htmlFor="nom">Nom de la catégorie:</label>
+                    <input required name="nom" id="nom" type="text" placeholder="Nom de la catégorie" onChange={handleNomChange} />
+                  </div>
 
-          <div className='mb-4'>
-            <label htmlFor="icon">Icon (de préférence en 300x300 au format jpg):</label>
-            <input type="file" id="icon" onChange={handleIconChange} />
-          </div>
+                  <div className='mb-4'>
+                    <label htmlFor="icon">Icon (de préférence en 300x300 au format jpg):</label>
+                    <input type="file" id="icon" onChange={handleIconChange} />
+                  </div>
 
-          <div className='mb-4'>
-            <label htmlFor="banniere">Bannière :</label>
-            <input type="file" id="banniere" onChange={handleBanniereChange} />
-          </div>
+                  <div className='mb-4'>
+                    <label htmlFor="banniere">Bannière :</label>
+                    <input type="file" id="banniere" onChange={handleBanniereChange} />
+                  </div>
 
-          <input value="Créer" type="submit" />
-        </form>
-      </div>
+                  <input value="Créer" type="submit" />
+                </form>
+              </div>
 
-      <div className="d-flex justify-content-center my-3">
-        <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaire de Catégorie </NavLink>
-      </div>
+              <div className="d-flex justify-content-center my-3">
+                <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaire de Catégorie </NavLink>
+              </div>
+            </>
+          ) : (
+            <>
+                <Connexion/>
+            </>
+          )}
     </>
   );
 }

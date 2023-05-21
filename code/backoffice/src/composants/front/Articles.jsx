@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
+import { AuthContext } from "../context/authContext";
+import Connexion from "./Connexion";
 
 const Articles = () => {
+  const { isLoggedIn } = useContext(AuthContext);
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [message, setMessage] = useState('');
@@ -91,38 +94,46 @@ const Articles = () => {
   
   return (
     <>
-      <div className="info-airneis mt-5">
-        <p id='aimant'>ESPACE ADMINISTRATION AIRNEIS</p>
-        <p>SELECTION DES ARTICLES</p>
-      </div>
+      {isLoggedIn ? (
+        <>
+          <div className="info-airneis mt-5">
+            <p id='aimant'>ESPACE ADMINISTRATION AIRNEIS</p>
+            <p>SELECTION DES ARTICLES</p>
+          </div>
 
-      <div className='mt-4'>
-        {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
-      </div>
+          <div className='mt-4'>
+            {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
+          </div>
 
-      <div className="cat">
-        <div className="content-img">
-          {images.map((image, index) => (
-            <div
-              className={`articles ${selectedImages.includes(image) ? 'selected' : ''}`}
-              key={index}
-              onClick={() => handleImageClick(index)}
-            >
-              <p className='text-center'>{image.nom}</p>
-              <img width={200} height={200} src={`http://airneis.ddns.net:3000/img/${image.source}`} alt={`image-${index}`} />
-              <p className='m-2 text-primary'>Prix : {image.prix} €</p>
-              <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
+          <div className="cat">
+            <div className="content-img">
+              {images.map((image, index) => (
+                <div
+                  className={`articles ${selectedImages.includes(image) ? 'selected' : ''}`}
+                  key={index}
+                  onClick={() => handleImageClick(index)}
+                >
+                  <p className='text-center'>{image.nom}</p>
+                  <img width={200} height={200} src={`http://airneis.ddns.net:3000/img/${image.source}`} alt={`image-${index}`} />
+                  <p className='m-2 text-primary'>Prix : {image.prix} €</p>
+                  <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="d-flex justify-content-center my-3">
-        <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
-        <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
-      </div>
-      <div className="d-flex justify-content-center my-3">
-      <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'> Ajouter des nouveaux articles </NavLink>
-      </div> 
+          </div>
+          <div className="d-flex justify-content-center my-3">
+            <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
+            <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
+          </div>
+          <div className="d-flex justify-content-center my-3">
+            <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'> Ajouter des nouveaux articles </NavLink>
+          </div>
+        </>
+        ) : (
+        <>
+          <Connexion/>
+        </>
+        )}
     </>
   );
 }

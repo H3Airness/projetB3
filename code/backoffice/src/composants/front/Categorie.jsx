@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../context/authContext";
+import Connexion from "./Connexion";
 
 const Categorie = () => {
+    const { isLoggedIn } = useContext(AuthContext);
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -28,56 +31,64 @@ const Categorie = () => {
     };
 
     return ( <>
-        <div className="ContactTitre">
-            <span>Gestion Catégorie</span>
-            <br/>
-            <Link to={`/AjouterCategorie`} className="btn btn-success">Ajouter une nouvelle catégorie</Link>
-        </div>
+        {isLoggedIn ? (
+            <>
+                <div className="ContactTitre">
+                    <span>Gestion Catégorie</span>
+                    <br/>
+                    <Link to={`/AjouterCategorie`} className="btn btn-success">Ajouter une nouvelle catégorie</Link>
+                </div>
 
-        <div className="tableau_contact">
-            <table className='table table-bordered'>
-                <thead>
-                    <tr>
-                        <th>Icon de la catégorie</th>
-                        <th>Bannière de la catégorie</th>
-                        <th>Nom de la catégorie</th>
-                        <th>Id de la catégorie</th>
-                        <th>Date d'ajout</th>
-                        <th>Modifier</th>
-                        <th>Supprimer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {categories.map(categorie => (
-                        <tr key={categorie.id_categorie}>
-                        <td>
-                            <center>
-                            <img width={100} src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={`image-${categorie.nom}`} />
-                            </center>
-                        </td>
-                        <td>
-                            <center>
-                            <img width={400} src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={`image-${categorie.nom}`} />
-                            </center>
-                        </td>
-                        <td>{categorie.nom}</td>
-                        <td>{categorie.id_categorie}</td>
-                        <td>{categorie.date}</td>
-                        <td>
-                            <center>
-                                <Link to={`/modifierCategorie/${categorie.id_categorie}`} className="btn btn-warning">Modifier</Link>
-                            </center>
-                        </td>
-                        <td>
-                            <center>
-                            <a className="btn btn-danger" href="" onClick={() => handleDelete(categorie.id_categorie)}>Supprimer</a>
-                            </center>
-                        </td>
-                        </tr>
-                    ))}                      
-                </tbody>
-            </table>
-        </div>
+                <div className="tableau_contact">
+                    <table className='table table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>Icon de la catégorie</th>
+                                <th>Bannière de la catégorie</th>
+                                <th>Nom de la catégorie</th>
+                                <th>Id de la catégorie</th>
+                                <th>Date d'ajout</th>
+                                <th>Modifier</th>
+                                <th>Supprimer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {categories.map(categorie => (
+                                <tr key={categorie.id_categorie}>
+                                    <td>
+                                        <center>
+                                        <img width={100} src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={`image-${categorie.nom}`} />
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                        <img width={400} src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={`image-${categorie.nom}`} />
+                                        </center>
+                                    </td>
+                                    <td>{categorie.nom}</td>
+                                    <td>{categorie.id_categorie}</td>
+                                    <td>{categorie.date}</td>
+                                    <td>
+                                        <center>
+                                            <Link to={`/modifierCategorie/${categorie.id_categorie}`} className="btn btn-warning">Modifier</Link>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                        <a className="btn btn-danger" href="" onClick={() => handleDelete(categorie.id_categorie)}>Supprimer</a>
+                                        </center>
+                                    </td>
+                                </tr>
+                            ))}                      
+                        </tbody>
+                    </table>
+                </div>
+            </>
+            ) : (
+            <>
+                <Connexion/>
+            </>
+        )}
     </> );
 }
 

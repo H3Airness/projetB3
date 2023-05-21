@@ -1,12 +1,15 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import Menu from './composants/Menu'
+import { AuthProvider } from './composants/context/authContext';
 
 function App() {
 
   return (<>
-      <Menu/>
-      <Outlet />
+      <AuthProvider>
+          <Menu/>
+          <Outlet />
+      </AuthProvider>
     </>
   )
 }
