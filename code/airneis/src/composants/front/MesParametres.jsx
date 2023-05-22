@@ -20,12 +20,17 @@ function MesParametres() {
 
   const fetchAccountInfo = async () => {
     try {
-      const response = await axios.post('http://airneis.ddns.net:3000/compte.php', { accountId });
-      if (response.data.status === "success") {
-        setAccountInfo(response.data.accountInfo);
-        localStorage.setItem('accountInfo', JSON.stringify(response.data.accountInfo));
-      } else {
-        console.error(response.data.message);
+      if (isLoggedIn) {
+        const response = await axios.post('http://airneis.ddns.net:3000/compte.php', {
+          accountId,
+          isLoggedIn: isLoggedIn, // Utilisation de la variable isLoggedIn
+        });
+        if (response.data.status === "success") {
+          setAccountInfo(response.data.accountInfo);
+          localStorage.setItem('accountInfo', JSON.stringify(response.data.accountInfo));
+        } else {
+          console.error(response.data.message);
+        }
       }
       setLoading(false);
     } catch (error) {
