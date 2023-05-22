@@ -87,7 +87,7 @@ function ModifierCategorie() {
                 <div className='mb-4'>
                   <label htmlFor="icon">Icon actuelle:</label>
                   <center>
-                    <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
+                    <img src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
                   </center>
                   <input type="file" id="icon" name="icon" />  
                   <input type="hidden" name="nom" id="nom" value={categorie.nom} />       
@@ -104,7 +104,7 @@ function ModifierCategorie() {
                 <div className='mb-4'>
                   <label htmlFor="banniere">Bannière actuelle:</label>
                   <center>
-                    <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
+                    <img src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
                   </center>
                   <input type="file" id="banniere" name="banniere" />
                   <input type="hidden" name="nom" id="nom" value={categorie.nom} />        
