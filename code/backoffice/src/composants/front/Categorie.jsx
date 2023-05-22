@@ -57,12 +57,12 @@ const Categorie = () => {
                                 <tr key={categorie.id_categorie}>
                                     <td>
                                         <center>
-                                        <img width={100} src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={`image-${categorie.nom}`} />
+                                        <img width={100} src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}icon.jpg`} alt={`image-${categorie.nom}`} />
                                         </center>
                                     </td>
                                     <td>
                                         <center>
-                                        <img width={400} src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={`image-${categorie.nom}`} />
+                                        <img width={400} src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}banniere.jpg`} alt={`image-${categorie.nom}`} />
                                         </center>
                                     </td>
                                     <td>{categorie.nom}</td>
