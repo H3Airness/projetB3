@@ -85,7 +85,7 @@ const Recherche = () => {
               <Link to={`/Produit/${resultat.id}`}>
                 <img
                   className="card-img-top"
-                  src={`http://airneis.ddns.net:3000/img/${resultat.source}`}
+                  src={`http://airneis.ddns.net:3000/img_produit/${resultat.id}`}
                   alt={resultat.nom}
                   style={{ objectFit: "cover", height: "300px" }}
                 />

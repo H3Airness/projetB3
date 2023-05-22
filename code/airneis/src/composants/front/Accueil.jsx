@@ -35,7 +35,7 @@ const Accueil = () => {
             <div className="col mb-5 mt-5 img1 img2" key={categorie.nom}>
               <center>
                 <Link to={`/Categorie/${categorie.id_categorie}`}>
-                  <img width={100} src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={`image-${categorie.nom}`} />
+                  <img width={100} src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}icon.jpg`} alt={`image-${categorie.nom}`} />
                   <p className='categorie'>{categorie.nom}</p>
                 </Link>
               </center>
@@ -50,7 +50,7 @@ const Accueil = () => {
           {images.map((image, index) => (
             <div className="col mb-5 mt-5 img1 img2" key={index}>
               <Link to={`/Produit/${image.id}`}>
-                <img width={400} src={`http://airneis.ddns.net:3000/img/${image.source}`} alt={`image-${index}`} />
+                <img width={400} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
               </Link>
             </div>
           ))}

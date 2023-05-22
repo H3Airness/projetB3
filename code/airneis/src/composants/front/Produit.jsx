@@ -37,7 +37,7 @@ function Produit() {
       {categories.length > 0 && categories[0] && (
         <>
           <img
-            src={`http://airneis.ddns.net:3000/img/${categories[0].nom}/banniere.jpg`}
+            src={`http://airneis.ddns.net:3000/img_categorie/${categories[0].id_categorie}banniere.jpg`}
             alt={categories[0].nom}
             style={{ width: '100%' }}
           />
@@ -48,7 +48,7 @@ function Produit() {
           <center>
             <h1>{produit.nom}</h1>
             <p>{produit.description}</p>
-            <img src={`http://airneis.ddns.net:3000/img/${produit.source}`} alt={produit.titre} />
+            <img src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`} alt={produit.titre} />
             <p>{produit.prix}€</p>
             <button className="btn btn-primary" onClick={() => ajouter(produit) }>
               <span>Ajouter au panier</span>
