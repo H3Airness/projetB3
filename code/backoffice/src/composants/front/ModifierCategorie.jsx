@@ -18,13 +18,26 @@ function ModifierCategorie() {
       .catch(error => console.log(error));
   }, []);
 
-  const handleSubmitName = e => {
+  const handleSubmitName = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData)
-      .then(response => setResponseName(response.data))
-      .catch(error => console.log(error));
-  }
+
+    try {
+      const [responseDossier, responseNom] = await Promise.all([
+        axios.post(`http://airneis.ddns.net:3000/categorie/modifier_dossier_categorie.php`, formData),
+        axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData)
+      ]);
+
+      setResponseName(responseNom.data);
+      // Vous pouvez également utiliser setResponseDossier pour gérer la réponse du premier appel d'API (modifier_dossier_categorie.php)
+
+      // Gérer les réponses
+      console.log(responseDossier.data);
+      console.log(responseNom.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmitIcon = e => {
     e.preventDefault();
@@ -32,7 +45,7 @@ function ModifierCategorie() {
     axios.post(`http://airneis.ddns.net:3000/categorie/modifier_icon_categorie.php`, formData)
       .then(response => setResponseIcon(response.data))
       .catch(error => console.log(error));
-  }
+  };
 
   const handleSubmitBanniere = e => {
     e.preventDefault();
@@ -40,8 +53,8 @@ function ModifierCategorie() {
     axios.post(`http://airneis.ddns.net:3000/categorie/modifier_banniere_categorie.php`, formData)
       .then(response => setResponseBanniere(response.data))
       .catch(error => console.log(error));
-  }  
- 
+  };
+
   return (
     <>
       {isLoggedIn ? (
