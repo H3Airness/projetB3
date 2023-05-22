@@ -9,7 +9,13 @@ function MesParametres() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAccountInfo();
+    const storedAccountInfo = localStorage.getItem('accountInfo');
+    if (storedAccountInfo) {
+      setAccountInfo(JSON.parse(storedAccountInfo));
+      setLoading(false);
+    } else {
+      fetchAccountInfo();
+    }
   }, []);
 
   const fetchAccountInfo = async () => {
@@ -17,6 +23,7 @@ function MesParametres() {
       const response = await axios.post('http://airneis.ddns.net:3000/compte.php', { accountId });
       if (response.data.status === "success") {
         setAccountInfo(response.data.accountInfo);
+        localStorage.setItem('accountInfo', JSON.stringify(response.data.accountInfo));
       } else {
         console.error(response.data.message);
       }
@@ -24,6 +31,11 @@ function MesParametres() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('accountInfo');
+    // Ajoutez ici votre code de déconnexion ou de nettoyage supplémentaire
   };
 
   if (loading) {
@@ -37,6 +49,7 @@ function MesParametres() {
           <h1 className="text-center">Récapitulatif de votre compte</h1>
           <p>Nom: {accountInfo.nom}</p>
           <p>E-mail: {accountInfo.email}</p>
+          <button onClick={handleLogout}>Se déconnecter</button>
         </>
       ) : (
         <>
