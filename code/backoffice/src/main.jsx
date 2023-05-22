@@ -16,6 +16,7 @@ import ModifierCategorie from './composants/front/ModifierCategorie';
 import AjouterCategorie from './composants/front/AjouterCategorie';
 import Carousel from './composants/front/Carousel';
 import AjoutCarousel from './composants/front/AjouterCarousel';
+import ModifierCarousel from './composants/front/ModifierCarousel';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='AjouterCategorie' element={<AjouterCategorie/>} />
         <Route path='carousel' element={<Carousel/>} />
         <Route path='ajoutCarousel' element={<AjoutCarousel/>} />
+        <Route path='modifierCarousel/:id' element={<ModifierCarousel/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

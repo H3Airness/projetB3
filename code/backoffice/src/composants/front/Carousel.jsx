@@ -15,28 +15,20 @@ const Carousel = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) {
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
             try {
-                // Requête GET pour vérifier si l'ID correspond à un chiffre dans la table "produit"
-                const response = await axios.get(`http://airneis.ddns.net:3000/categorie/verifier_id_suppression.php?id=${id}`);
-
-                if (response.data.error) {
-                    // L'ID correspond à un chiffre dans la table "produit", afficher l'erreur
-                    alert(response.data.error);
-                } else {
-                    axios.delete(`http://airneis.ddns.net:3000/categorie/categorie_suppression.php?id=${id}`)
-                        .then(response => {
-                            if (response.status === 204) {
-                                alert('La catégorie a été supprimée avec succès.');
-                                // Actualiser la liste des catégories après la suppression
-                                setCategories(categories.filter(categorie => categorie.id_categorie !== id));
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            alert('Une erreur s\'est produite lors de la suppression de la catégorie.');
-                        });
-                }
+                axios.delete(`http://airneis.ddns.net:3000/carousel/carousel_suppression.php?id=${id}`)
+                .then(response => {
+                    if (response.status === 204) {
+                        alert('La catégorie a été supprimée avec succès.');
+                        // Actualiser la liste des catégories après la suppression
+                        setCategories(categories.filter(categorie => categorie.id_categorie !== id));
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Une erreur s\'est produite lors de la suppression de la catégorie.');
+                });
             } catch (error) {
                 console.log(error);
                 alert('Une erreur s\'est produite lors de la vérification de la catégorie.');
@@ -49,7 +41,7 @@ const Carousel = () => {
             {isLoggedIn ? (
                 <>
                     <div className="ContactTitre">
-                        <span>Gestion Catégorie</span>
+                        <span>Gestion du carousel</span>
                         <br />
                         <Link to={`/AjoutCarousel`} className="btn btn-success">Ajouter une nouvelle image</Link>
                     </div>
@@ -77,7 +69,7 @@ const Carousel = () => {
                                         <td>{image.date}</td>
                                         <td>
                                             <center>
-                                                <Link to={`/modifierCategorie/${image.id}`} className="btn btn-warning">Modifier</Link>
+                                                <Link to={`/modifierCarousel/${image.id}`} className="btn btn-warning">Modifier</Link>
                                             </center>
                                         </td>
                                         <td>
