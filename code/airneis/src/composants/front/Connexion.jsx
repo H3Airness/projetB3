@@ -5,10 +5,10 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
 function Connexion() {
-  const [response, setResponse] = useState("");
+  const [response, setFormResponse] = useState("");
   const navigate = useNavigate();
 
-  const authContext = useContext(AuthContext); // Utiliser le contexte AuthContext
+  const authContext = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,15 +19,15 @@ function Connexion() {
 
     async function postData() {
       try {
-        const response = await axios.post(
+        const postResponse = await axios.post( // Renommez la variable locale de la réponse
           "http://airneis.ddns.net:3000/connexion.php",
           formType,
           {}
         );
-        setResponse(response.data);
-        if (response.data.status === "success") {
+        setFormResponse(postResponse.data); // Utilisez la nouvelle variable locale
+        if (postResponse.data.status === "success") { // Utilisez la nouvelle variable locale
           navigate("/");
-          authContext.login(); 
+          authContext.login(postResponse.data.accountId); // Utilisez la nouvelle variable locale
         }
       } catch (error) {
         console.log(error);
