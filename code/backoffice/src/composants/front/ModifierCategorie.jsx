@@ -18,25 +18,12 @@ function ModifierCategorie() {
       .catch(error => console.log(error));
   }, []);
 
-  const handleSubmitName = async (e) => {
+  const handleSubmitName = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-
-    try {
-      const [responseDossier, responseNom] = await Promise.all([
-        axios.post(`http://airneis.ddns.net:3000/categorie/modifier_dossier_categorie.php`, formData),
-        axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData)
-      ]);
-
-      setResponseName(responseNom.data);
-      // Vous pouvez également utiliser setResponseDossier pour gérer la réponse du premier appel d'API (modifier_dossier_categorie.php)
-
-      // Gérer les réponses
-      console.log(responseDossier.data);
-      console.log(responseNom.data);
-    } catch (error) {
-      console.log(error);
-    }
+    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData)
+      .then(response => setResponseName(response.data))
+      .catch(error => console.log(error));
   };
 
   const handleSubmitIcon = e => {
@@ -90,7 +77,7 @@ function ModifierCategorie() {
                     <img src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
                   </center>
                   <input type="file" id="icon" name="icon" />  
-                  <input type="hidden" name="nom" id="nom" value={categorie.nom} />       
+                  <input type="hidden" name="id" id="id" value={categorie.id_categorie} />       
                 </div>
                 <input value="Modifier l'icône" type="submit" />
               </form>
@@ -107,7 +94,7 @@ function ModifierCategorie() {
                     <img src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
                   </center>
                   <input type="file" id="banniere" name="banniere" />
-                  <input type="hidden" name="nom" id="nom" value={categorie.nom} />        
+                  <input type="hidden" name="id" id="id" value={categorie.id_categorie} />        
                 </div>
                 <input value="Modifier la bannière" type="submit" />
               </form>

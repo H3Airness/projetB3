@@ -34,15 +34,6 @@ function AjouterCategorie() {
             'Content-Type': 'multipart/form-data'
           }
         });
-  
-        // Requête vers la deuxième API
-        const response2 = await axios.post('http://airneis.ddns.net:3000/categorie/banniere_categorie.php', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-  
-        // Traiter les réponses des deux API
         setResponse('Données envoyées avec succès');
       }
     } catch (error) {
