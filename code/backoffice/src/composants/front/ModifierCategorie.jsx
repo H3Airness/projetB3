@@ -6,7 +6,9 @@ import Connexion from "./Connexion";
 
 function ModifierCategorie() {
   const { isLoggedIn } = useContext(AuthContext);
-  const [response, setResponse] = useState('');
+  const [responseName, setResponseName] = useState('');
+  const [responseIcon, setResponseIcon] = useState('');
+  const [responseBanniere, setResponseBanniere] = useState('');
   const { categorie } = useParams();
   const [categories, setCategories] = useState([]);
 
@@ -16,75 +18,109 @@ function ModifierCategorie() {
       .catch(error => console.log(error));
   }, []);
 
-  const handleSubmit = e => {
+  const handleSubmitName = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    
-    // Ajouter l'image à FormData
-    formData.append('image', image);
-    
-    let formType = {};
-    formData.forEach((value, key) => formType[key] = formData.get(key));
-    
-    async function postData() {
-      try {
-        const response = await axios.post('/public', formType, {});
-        setResponse(response.data);
-        if (response.data.status === 'success') {
-          navigate('/');
-        } 
-      } catch (error) {
-        console.log(error);
-      }
+
+    try {
+      const [responseDossier, responseNom] = await Promise.all([
+        axios.post(`http://airneis.ddns.net:3000/categorie/modifier_dossier_categorie.php`, formData),
+        axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData)
+      ]);
+
+      setResponseName(responseNom.data);
+      // Vous pouvez également utiliser setResponseDossier pour gérer la réponse du premier appel d'API (modifier_dossier_categorie.php)
+
+      // Gérer les réponses
+      console.log(responseDossier.data);
+      console.log(responseNom.data);
+    } catch (error) {
+      console.log(error);
     }
-    
-    postData();
-  }
- 
-return (
-  <>
-    {isLoggedIn ? (
-      <>
-        {categories.map((categorie) => (
-          <div className="categorie-card">
-            <div className="card-header">
-              <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier la catégorie: {categorie.nom}</div>
+  };
+
+  const handleSubmitIcon = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_icon_categorie.php`, formData)
+      .then(response => setResponseIcon(response.data))
+      .catch(error => console.log(error));
+  };
+
+  const handleSubmitBanniere = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_banniere_categorie.php`, formData)
+      .then(response => setResponseBanniere(response.data))
+      .catch(error => console.log(error));
+  };
+
+  return (
+    <>
+      {isLoggedIn ? (
+        <>
+          {categories.map((categorie) => (
+            <div className="categorie-card" key={categorie.id_categorie}>
+              <div className="card-header">
+                <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier la catégorie: {categorie.nom}</div>
+              </div>
+
+              <form onSubmit={handleSubmitName} method="post">
+                {responseName && <p className='ReponseFormulaire text-center mt-3'>{responseName.message}</p>}
+
+                <div className="card-group mb-4">
+                  <label htmlFor="nom">Modifier le nom de la catégorie:</label>
+                  <input required name="nom" id="nom" type="text" placeholder={categorie.nom} defaultValue={categorie.nom} />
+
+                  <input type="hidden" name="id" value={categorie.id_categorie} />
+                  <input type="hidden" name="ancienNom" value={categorie.nom} />
+                </div>
+                <input value="Modifier le nom de la catégorie" type="submit" />
+              </form>
+
+              <br/>
+              <hr/>
+              <br/>
+
+              <form onSubmit={handleSubmitIcon}>
+                {responseIcon && <p className='ReponseFormulaire text-center mt-3'>{responseIcon.message}</p>}
+                <div className='mb-4'>
+                  <label htmlFor="icon">Icon actuelle:</label>
+                  <center>
+                    <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
+                  </center>
+                  <input type="file" id="icon" name="icon" />  
+                  <input type="hidden" name="nom" id="nom" value={categorie.nom} />       
+                </div>
+                <input value="Modifier l'icône" type="submit" />
+              </form>
+
+              <br/>
+              <hr/>
+              <br/>
+
+              <form onSubmit={handleSubmitBanniere}>
+                {responseBanniere && <p className='ReponseFormulaire text-center mt-3'>{responseBanniere.message}</p>}
+                <div className='mb-4'>
+                  <label htmlFor="banniere">Bannière actuelle:</label>
+                  <center>
+                    <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
+                  </center>
+                  <input type="file" id="banniere" name="banniere" />
+                  <input type="hidden" name="nom" id="nom" value={categorie.nom} />        
+                </div>
+                <input value="Modifier la bannière" type="submit" />
+              </form>
             </div>
-            <form onSubmit={handleSubmit}>
-              {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
-
-              <div className="card-group mb-4">
-                <label htmlFor="nom">Modifier le nom de la catégorie:</label>
-                <input required={categorie.nom} name="nom" id="nom" type="text" placeholder={categorie.nom}/>
-              </div>
-
-              <div className='mb-4'>
-                <label htmlFor="nom">Icon actuelle:</label>
-                <center>
-                  <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/icon.jpg`} alt={categorie.nom} style={{ width: '100px' }} />
-                </center>
-                <input type="file" id='ImageArticle'/>        
-              </div>
-
-              <div className='mb-4'>
-                <label htmlFor="nom">Bannière Actuelle:</label>
-                <center>
-                  <img src={`http://airneis.ddns.net:3000/img/${categorie.nom}/banniere.jpg`} alt={categorie.nom} style={{ width: '500px' }} />
-                </center>
-                <input type="file" id='ImageArticle'/>        
-              </div>
-              <input value="Modifier" type="submit" />
-            </form>
-          </div>
-        ))}
-        <div className="d-flex justify-content-center my-3">
-          <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaire de Catégorie </NavLink>
-        </div> 
-      </>
+          ))}
+          <div className="d-flex justify-content-center my-3">
+            <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaires de catégorie </NavLink>
+          </div> 
+        </>
       ) : (
-      <>
-        <Connexion/>
-      </>
+        <>
+          <Connexion/>
+        </>
       )}  
     </>
   );

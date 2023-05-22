@@ -21,7 +21,7 @@ function Connexion() {
     async function postData() {
       try {
         const response = await axios.post(
-          "http://airneis.ddns.net:3000/connexion.php",
+          "http://airneis.ddns.net:3000/connexion_backoffice.php",
           formType,
           {}
         );
@@ -69,8 +69,8 @@ function Connexion() {
             </p>
           )}
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input required="" name="email" id="email" type="text" />
+            <label htmlFor="email">Nom d'utilisateur:</label>
+            <input required="" name="nom" id="nom" type="text" />
           </div>
           <div className="form-group">
             <label htmlFor="password">Mot de passe:</label>
