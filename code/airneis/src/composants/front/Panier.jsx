@@ -23,7 +23,7 @@ const Panier = () => {
                       <img
                         className="rounded d-block"
                         width={150}
-                        src={`http://airneis.ddns.net:3000/img/${produit.source}`}
+                        src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
                         alt={produit.nom}
                       />
                     </td>
