@@ -5,14 +5,13 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [accountId, setAccountId] = useState(null); // Nouvelle variable d'état pour l'ID du compte
+  const [accountId, setAccountId] = useState(null);
 
   useEffect(() => {
     const isLoggedInCookie = Cookies.get('isLoggedIn');
 
     if (isLoggedInCookie) {
       setIsLoggedIn(true);
-      // Récupérer l'ID du compte depuis les cookies ou votre source de données
       const accountIdCookie = Cookies.get('accountId');
       setAccountId(accountIdCookie);
     }
@@ -21,8 +20,8 @@ export const AuthProvider = ({ children }) => {
   const login = (accountId) => {
     setIsLoggedIn(true);
     setAccountId(accountId);
-    Cookies.set('isLoggedIn', true, { expires: 1 / 24 }); // 1h
-    Cookies.set('accountId', accountId, { expires: 1 / 24 }); // Stocker l'ID du compte dans les cookies
+    Cookies.set('isLoggedIn', 'true', { expires: 1, path: '/' });
+    Cookies.set('accountId', accountId, { expires: 1, path: '/' });
     console.log('ID du compte:', accountId);
   };
 
@@ -39,3 +38,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
