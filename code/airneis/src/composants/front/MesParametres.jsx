@@ -1,42 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../context/authContext';
 import Connexion from './Connexion';
 
 function MesParametres() {
-  const [user, setUser] = useState(null);
+  const { isLoggedIn, userInfo, fetchUserInfo } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('http://airneis.ddns.net:3000/compte.php');
-        if (response.data.status === 'success') {
-          setUser(response.data);
-        } else {
-          console.log(response.data.message);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+    if (isLoggedIn) {
+      fetchUserInfo();
+    }
+  }, [isLoggedIn, fetchUserInfo]);
 
   return (
-    <div>
-      {user ? (
+    <>
+      {isLoggedIn ? (
         <>
-          <h1>Récapitulatif de votre compte</h1>
-          <p>Nom: {user.nom}</p>
-          <p>Email: {user.email}</p>
-          <p>Mot de passe: {user.password}</p>
+          <h1 className="text-center">Récapitulatif de votre compte</h1>
+          <p>Email : {userInfo.email}</p>
+          <p>Nom : {userInfo.nom}</p>
         </>
       ) : (
         <>
-          <Connexion/>
+          <Connexion />
         </>
       )}
-    </div>
+    </>
   );
 }
 
