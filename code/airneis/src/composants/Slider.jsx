@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Carousel from 'better-react-carousel';
+import axios from 'axios';
 
 const Gallery = () => {
   const [autoplay, setAutoplay] = useState(true);
-  const images = [
-    { src: 'http://airneis.ddns.net:3000/img/canva/img1.jpg', alt: 'image 1' },
-    { src: 'http://airneis.ddns.net:3000/img/canva/img2.jpg', alt: 'image 2' },
-    { src: 'http://airneis.ddns.net:3000/img/canva/img3.jpg', alt: 'image 3' },
-    { src: 'http://airneis.ddns.net:3000/img/canva/img4.jpg', alt: 'image 4' },
-    { src: 'http://airneis.ddns.net:3000/img/canva/img5.jpg', alt: 'image 5' },
-    { src: 'http://airneis.ddns.net:3000/img/canva/img6.jpg', alt: 'image 6' },
-    { src: 'http://airneis.ddns.net:3000/img/canva/img7.jpg', alt: 'image 7' },
-  ];
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://airneis.ddns.net:3000/carousel/affichage_carousel.php')
+      .then(response => setImages(response.data))
+      .catch(error => console.log(error));
+  }, []);
 
   const handleInteraction = () => {
     setAutoplay(false);
@@ -21,7 +20,7 @@ const Gallery = () => {
     <Carousel cols={1} rows={1} gap={10} loop autoplay={autoplay ? 3000 : false} showDots dotColor={"#000000"} dotColorActive={"#333333"} onClick={handleInteraction}>
       {images.map((image, index) => (
         <Carousel.Item key={index}>
-          <img src={image.src} alt={image.alt} style={{ width: '100%' }} />
+          <img src={`http://airneis.ddns.net:3000/img/carousel/${image.id}.jpg`} alt={image.id} style={{ width: '100%' }} />
         </Carousel.Item>
       ))}
     </Carousel>
