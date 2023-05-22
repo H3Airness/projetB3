@@ -16,11 +16,10 @@ const Categorie = () => {
 
       const handleDelete = (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) {
-            axios.delete(`http://airneis.ddns.net:3000/categorie/back_categorie_suppression.php?id=${id}`)
+            axios.delete(`http://airneis.ddns.net:3000/categorie/categorie_suppression.php?id=${id}`)
             .then(response => {
                 if (response.status === 204) {
-                    setDonnees(donnees.filter(donnee => donnee.id !== id));
-                    alert('La ligne a été supprimée avec succès.');
+                    alert('La catégorie a été supprimée avec succès.');
                 }
             })
             .catch(error => {
