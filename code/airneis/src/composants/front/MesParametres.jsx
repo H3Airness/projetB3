@@ -8,8 +8,10 @@ function MesParametres() {
   const [accountInfo, setAccountInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     const storedAccountInfo = localStorage.getItem('accountInfo');
@@ -48,15 +50,28 @@ function MesParametres() {
 
   const handleEditPassword = () => {
     setIsEditMode(true);
+    setOldPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setPasswordError('');
   };
 
   const handleSubmitPassword = (e) => {
     e.preventDefault();
-    // Logique de soumission du nouveau mot de passe
-    setIsEditMode(false); // Fin de l'édition
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Les mots de passe ne correspondent pas");
+    } else {
+      // Logique de soumission du nouveau mot de passe
+      setIsEditMode(false);
+      setPasswordError('');
+    }
   };
 
-  const handleChangePassword = (e) => {
+  const handleChangeOldPassword = (e) => {
+    setOldPassword(e.target.value);
+  };
+
+  const handleChangeNewPassword = (e) => {
     setNewPassword(e.target.value);
   };
 
@@ -67,10 +82,6 @@ function MesParametres() {
   if (loading) {
     return <div>Chargement...</div>;
   }
-
-  const maskPassword = (password) => {
-    return isEditMode ? password : '•'.repeat(Math.min(password.length, 6));
-  };
 
   return (
     <>
@@ -86,27 +97,21 @@ function MesParametres() {
               <label>E-mail:</label>
               <p>{accountInfo.email}</p>
             </div>
-            <div className="form-group">
-              <label>Mot de passe:</label>
-              <div className="password-container">
-                <p className="form-control password">{maskPassword(accountInfo.password)}</p>
-                {!isEditMode && (
-                  <button className="btn btn-primary" onClick={handleEditPassword}>
-                    Modifier le mot de passe
-                  </button>
-                )}
-              </div>
-            </div>
-            {isEditMode && (
+            {isEditMode ? (
               <form onSubmit={handleSubmitPassword}>
                 <div className="form-group">
-                  <label>Nouveau mot de passe:</label>
-                  <input type="password" className="form-control" value={newPassword} onChange={handleChangePassword} />
+                  <label>Ancien mot de passe:</label>
+                  <input type="password" className="form-control" value={oldPassword} onChange={handleChangeOldPassword} />
                 </div>
                 <div className="form-group">
-                  <label>Confirmer le nouveau mot de passe:</label>
+                  <label>Nouveau mot de passe:</label>
+                  <input type="password" className="form-control" value={newPassword} onChange={handleChangeNewPassword} />
+                </div>
+                <div className="form-group">
+                  <label>Confirmez le nouveau mot de passe:</label>
                   <input type="password" className="form-control" value={confirmPassword} onChange={handleChangeConfirmPassword} />
                 </div>
+                {passwordError && <p className="error-message">{passwordError}</p>}
                 <div className="button-group">
                   <button type="submit" className="btn btn-primary">Valider</button>
                   <button className="btn btn-danger" onClick={handleLogout}>
@@ -114,6 +119,15 @@ function MesParametres() {
                   </button>
                 </div>
               </form>
+            ) : (
+              <div className="button-group">
+                <button className="btn btn-primary" onClick={handleEditPassword}>
+                  Modifier le mot de passe
+                </button>
+                <button className="btn btn-danger" onClick={handleLogout}>
+                  Déconnexion
+                </button>
+              </div>
             )}
           </div>
         </div>
