@@ -2,6 +2,7 @@ import { AuthContext } from "../context/authContext";
 import React, { useContext, useState, useEffect } from "react";
 import Connexion from "./Connexion";
 import axios from 'axios';
+import PasswordInput from "./HidePassword";
 
 function MesParametres() {
   const { isLoggedIn, accountId, logout } = useContext(AuthContext);
@@ -43,11 +44,7 @@ function MesParametres() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('accountInfo');
-    logout(); // Appel de la fonction de déconnexion fournie par le contexte
-  };
-
+ 
   const handleEditPassword = () => {
     setIsEditMode(true);
     setOldPassword('');
@@ -107,26 +104,26 @@ function MesParametres() {
           <div className="sidebar">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
             <div className="form-group">
-              <label>Nom:</label>
+              <label className="label-nom">Nom:</label>
               <p className="form-control">{accountInfo.nom}</p>
             </div>
             <div className="form-group">
-              <label>E-mail:</label>
+              <label className="label-email">E-mail:</label>
               <p className="form-control">{accountInfo.email}</p>
             </div>
             {isEditMode ? (
               <form onSubmit={handleSubmitPassword}>
                 <div className="form-group">
-                  <label>Ancien mot de passe:</label>
-                  <input type="password" className="form-control" value={oldPassword} onChange={handleChangeOldPassword} />
+                  <label className="label-mdp">Ancien mot de passe:</label>
+                  <PasswordInput value={oldPassword} onChange={handleChangeOldPassword} />
                 </div>
                 <div className="form-group">
-                  <label>Nouveau mot de passe:</label>
-                  <input type="password" className="form-control" value={newPassword} onChange={handleChangeNewPassword} />
+                  <label className="label-mdp">Nouveau mot de passe:</label>
+                  <PasswordInput value={newPassword} onChange={handleChangeNewPassword} />
                 </div>
                 <div className="form-group">
-                  <label>Répéter le nouveau mot de passe:</label>
-                  <input type="password" className="form-control" value={confirmPassword} onChange={handleChangeConfirmPassword} />
+                  <label className="label-mdp">Répéter le nouveau mot de passe:</label>
+                  <PasswordInput value={confirmPassword} onChange={handleChangeConfirmPassword} />
                 </div>
                 {passwordError && <p className="error-message">{passwordError}</p>}
                 <div className="button-group">
@@ -136,8 +133,8 @@ function MesParametres() {
               </form>
             ) : (
               <div className="button-group">
-                <label>Mot de passe:</label>
-                <p className="form-control password">••••••</p>
+                <label className="label-mdp">Mot de passe:</label>
+                <p className="form-control password">••••••••</p>
                 <button className="btn btn-primary" onClick={handleEditPassword}>
                   Modifier le mot de passe
                 </button>
