@@ -9,6 +9,7 @@ function MesParametres() {
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     const storedAccountInfo = localStorage.getItem('accountInfo');
@@ -59,6 +60,10 @@ function MesParametres() {
     setNewPassword(e.target.value);
   };
 
+  const handleChangeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
   if (loading) {
     return <div>Chargement...</div>;
   }
@@ -73,25 +78,43 @@ function MesParametres() {
         <div className="mon-compte-container">
           <div className="sidebar">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
-            <p>Nom: {accountInfo.nom}</p>
-            <p>E-mail: {accountInfo.email}</p>
-            <div className="password-container">
-              <p className="password">Mot de passe: {maskPassword(accountInfo.password)}</p>
-              {!isEditMode && (
-                <button className="bouton-edition" onClick={handleEditPassword}>
-                  Modifier le mot de passe
-                </button>
-              )}
+            <div className="form-group">
+              <label>Nom:</label>
+              <p>{accountInfo.nom}</p>
+            </div>
+            <div className="form-group">
+              <label>E-mail:</label>
+              <p>{accountInfo.email}</p>
+            </div>
+            <div className="form-group">
+              <label>Mot de passe:</label>
+              <div className="password-container">
+                <p className="form-control password">{maskPassword(accountInfo.password)}</p>
+                {!isEditMode && (
+                  <button className="btn btn-primary" onClick={handleEditPassword}>
+                    Modifier le mot de passe
+                  </button>
+                )}
+              </div>
             </div>
             {isEditMode && (
               <form onSubmit={handleSubmitPassword}>
-                <input type="password" value={newPassword} onChange={handleChangePassword} />
-                <button type="submit">Valider</button>
+                <div className="form-group">
+                  <label>Nouveau mot de passe:</label>
+                  <input type="password" className="form-control" value={newPassword} onChange={handleChangePassword} />
+                </div>
+                <div className="form-group">
+                  <label>Confirmer le nouveau mot de passe:</label>
+                  <input type="password" className="form-control" value={confirmPassword} onChange={handleChangeConfirmPassword} />
+                </div>
+                <div className="button-group">
+                  <button type="submit" className="btn btn-primary">Valider</button>
+                  <button className="btn btn-danger" onClick={handleLogout}>
+                    Déconnexion
+                  </button>
+                </div>
               </form>
             )}
-            <button className="bouton-deconnexion" onClick={handleLogout}>
-              Déconnexion
-            </button>
           </div>
         </div>
       ) : (
