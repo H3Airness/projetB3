@@ -56,14 +56,31 @@ function MesParametres() {
     setPasswordError('');
   };
 
-  const handleSubmitPassword = (e) => {
+  const handleSubmitPassword = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       setPasswordError("Les mots de passe ne correspondent pas");
+    } else if (oldPassword === '' || newPassword === '' || confirmPassword === '') {
+      setPasswordError("Veuillez remplir tous les champs");
     } else {
-      // Logique de soumission du nouveau mot de passe
-      setIsEditMode(false);
-      setPasswordError('');
+      try {
+        const response = await axios.post('http://airneis.ddns.net:3000/edit-password.php', {
+          accountId,
+          oldPassword,
+          newPassword,
+        });
+        if (response.data.status === "success") {
+          // Mot de passe modifié avec succès
+          alert("Mot de passe modifié avec succès");
+          setIsEditMode(false);
+          setPasswordError('');
+        } else {
+          // Erreur lors de la modification du mot de passe
+          setPasswordError(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -91,11 +108,11 @@ function MesParametres() {
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
             <div className="form-group">
               <label>Nom:</label>
-              <p>{accountInfo.nom}</p>
+              <p className="form-control">{accountInfo.nom}</p>
             </div>
             <div className="form-group">
               <label>E-mail:</label>
-              <p>{accountInfo.email}</p>
+              <p className="form-control">{accountInfo.email}</p>
             </div>
             {isEditMode ? (
               <form onSubmit={handleSubmitPassword}>
@@ -108,24 +125,21 @@ function MesParametres() {
                   <input type="password" className="form-control" value={newPassword} onChange={handleChangeNewPassword} />
                 </div>
                 <div className="form-group">
-                  <label>Confirmez le nouveau mot de passe:</label>
+                  <label>Répéter le nouveau mot de passe:</label>
                   <input type="password" className="form-control" value={confirmPassword} onChange={handleChangeConfirmPassword} />
                 </div>
                 {passwordError && <p className="error-message">{passwordError}</p>}
                 <div className="button-group">
                   <button type="submit" className="btn btn-primary">Valider</button>
-                  <button className="btn btn-danger" onClick={handleLogout}>
-                    Déconnexion
-                  </button>
+                  <button className="btn btn-primary" onClick={() => setIsEditMode(false)}>Annuler</button>
                 </div>
               </form>
             ) : (
               <div className="button-group">
+                <label>Mot de passe:</label>
+                <p className="form-control password">••••••</p>
                 <button className="btn btn-primary" onClick={handleEditPassword}>
                   Modifier le mot de passe
-                </button>
-                <button className="btn btn-danger" onClick={handleLogout}>
-                  Déconnexion
                 </button>
               </div>
             )}

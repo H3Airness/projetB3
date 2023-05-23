@@ -497,3 +497,7 @@ a:link {
 .info-value {
   flex-grow: 1;
 }
+
+.button-group button {
+  margin-right: 20px;
+}
