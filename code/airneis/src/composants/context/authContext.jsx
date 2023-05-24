@@ -20,8 +20,8 @@ export const AuthProvider = ({ children }) => {
   const login = (accountId) => {
     setIsLoggedIn(true);
     setAccountId(accountId);
-    Cookies.set('isLoggedIn', 'true', { expires: 1, path: '/' });
-    Cookies.set('accountId', accountId, { expires: 1, path: '/' });
+    Cookies.set('isLoggedIn', 'true', { expires: 1 });
+    Cookies.set('accountId', accountId, { expires: 1 });
     console.log('ID du compte:', accountId);
   };
 
