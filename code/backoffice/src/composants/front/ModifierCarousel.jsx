@@ -25,6 +25,8 @@ function ModifierCategorie() {
               <div className="card-header">
                 <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier l'image:</div>
 
+                <hr/>
+
                 <form onSubmit={handleSubmitIcon}>
                   {responseIcon && <p className='ReponseFormulaire text-center mt-3'>{responseIcon.message}</p>}
                   <div className='mb-4'>

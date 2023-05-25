@@ -40,17 +40,20 @@ function AjouterCarousel() {
               <div className="card">
                 <div className="card-header">
                   <div className="card-title text-center display-5 mb-5 ContactTitre">Ajouter une image:</div>
+
+                  <hr/>
+                
+                  <form onSubmit={handleSubmit}>
+                  {response && <p className='ReponseFormulaire text-center mt-3'>{response}</p>}
+
+                    <div className='mb-4'>
+                      <label htmlFor="image">Image:</label>
+                      <input type="file" id="image" onChange={handleImageChange} />
+                    </div>
+
+                    <input value="Ajouter" type="submit" />
+                  </form>
                 </div>
-                <form onSubmit={handleSubmit}>
-                {response && <p className='ReponseFormulaire text-center mt-3'>{response}</p>}
-
-                  <div className='mb-4'>
-                    <label htmlFor="image">Icon (de préférence en 300x300 au format jpg):</label>
-                    <input type="file" id="image" onChange={handleImageChange} />
-                  </div>
-
-                  <input value="Ajouter" type="submit" />
-                </form>
               </div>
 
               <div className="d-flex justify-content-center my-3">
