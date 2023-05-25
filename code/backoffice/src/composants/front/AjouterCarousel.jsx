@@ -37,7 +37,7 @@ function AjouterCarousel() {
     <> 
       {isLoggedIn ? (
             <>
-              <div className="categorie-card">
+              <div className="card">
                 <div className="card-header">
                   <div className="card-title text-center display-5 mb-5 ContactTitre">Ajouter une image:</div>
                 </div>
