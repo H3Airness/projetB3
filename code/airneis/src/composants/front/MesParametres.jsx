@@ -1,21 +1,21 @@
 import { AuthContext } from "../context/authContext";
 import React, { useContext, useState, useEffect } from "react";
 import Connexion from "./Connexion";
-import axios from 'axios';
+import axios from "axios";
 import PasswordInput from "./HidePassword";
 
 function MesParametres() {
-  const { isLoggedIn, accountId, logout } = useContext(AuthContext);
+  const { isLoggedIn, accountId } = useContext(AuthContext);
   const [accountInfo, setAccountInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
-    const storedAccountInfo = localStorage.getItem('accountInfo');
+    const storedAccountInfo = localStorage.getItem("accountInfo");
     if (storedAccountInfo) {
       setAccountInfo(JSON.parse(storedAccountInfo));
       setLoading(false);
@@ -27,13 +27,19 @@ function MesParametres() {
   const fetchAccountInfo = async () => {
     try {
       if (isLoggedIn) {
-        const response = await axios.post('http://airneis.ddns.net:3000/compte.php', {
-          accountId,
-          isLoggedIn: isLoggedIn,
-        });
+        const response = await axios.post(
+          "http://airneis.ddns.net:3000/compte.php",
+          {
+            accountId,
+            isLoggedIn: isLoggedIn,
+          }
+        );
         if (response.data.status === "success") {
           setAccountInfo(response.data.accountInfo);
-          localStorage.setItem('accountInfo', JSON.stringify(response.data.accountInfo));
+          localStorage.setItem(
+            "accountInfo",
+            JSON.stringify(response.data.accountInfo)
+          );
         } else {
           console.error(response.data.message);
         }
@@ -44,33 +50,39 @@ function MesParametres() {
     }
   };
 
- 
   const handleEditPassword = () => {
     setIsEditMode(true);
-    setOldPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
-    setPasswordError('');
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setPasswordError("");
   };
 
   const handleSubmitPassword = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       setPasswordError("Les mots de passe ne correspondent pas");
-    } else if (oldPassword === '' || newPassword === '' || confirmPassword === '') {
+    } else if (
+      oldPassword === "" ||
+      newPassword === "" ||
+      confirmPassword === ""
+    ) {
       setPasswordError("Veuillez remplir tous les champs");
     } else {
       try {
-        const response = await axios.post('http://airneis.ddns.net:3000/edit-password.php', {
-          accountId,
-          oldPassword,
-          newPassword,
-        });
+        const response = await axios.post(
+          "http://airneis.ddns.net:3000/edit-password.php",
+          {
+            accountId,
+            isLoggedIn: isLoggedIn,
+            oldPassword,
+            newPassword,
+          }
+        );
         if (response.data.status === "success") {
-          // Mot de passe modifié avec succès
           alert("Mot de passe modifié avec succès");
           setIsEditMode(false);
-          setPasswordError('');
+          setPasswordError("");
         } else {
           // Erreur lors de la modification du mot de passe
           setPasswordError(response.data.message);
@@ -115,27 +127,50 @@ function MesParametres() {
               <form onSubmit={handleSubmitPassword}>
                 <div className="form-group">
                   <label className="label-mdp">Ancien mot de passe:</label>
-                  <PasswordInput value={oldPassword} onChange={handleChangeOldPassword} />
+                  <PasswordInput
+                    value={oldPassword}
+                    onChange={handleChangeOldPassword}
+                  />
                 </div>
                 <div className="form-group">
                   <label className="label-mdp">Nouveau mot de passe:</label>
-                  <PasswordInput value={newPassword} onChange={handleChangeNewPassword} />
+                  <PasswordInput
+                    value={newPassword}
+                    onChange={handleChangeNewPassword}
+                  />
                 </div>
                 <div className="form-group">
-                  <label className="label-mdp">Répéter le nouveau mot de passe:</label>
-                  <PasswordInput value={confirmPassword} onChange={handleChangeConfirmPassword} />
+                  <label className="label-mdp">
+                    Répéter le nouveau mot de passe:
+                  </label>
+                  <PasswordInput
+                    value={confirmPassword}
+                    onChange={handleChangeConfirmPassword}
+                  />
                 </div>
-                {passwordError && <p className="error-message">{passwordError}</p>}
+                {passwordError && (
+                  <p className="error-message">{passwordError}</p>
+                )}
                 <div className="button-group">
-                  <button type="submit" className="btn btn-primary">Valider</button>
-                  <button className="btn btn-primary" onClick={() => setIsEditMode(false)}>Annuler</button>
+                  <button type="submit" className="btn btn-primary">
+                    Valider
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setIsEditMode(false)}
+                  >
+                    Annuler
+                  </button>
                 </div>
               </form>
             ) : (
               <div className="button-group">
                 <label className="label-mdp">Mot de passe:</label>
                 <p className="form-control password">••••••••</p>
-                <button className="btn btn-primary" onClick={handleEditPassword}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleEditPassword}
+                >
                   Modifier le mot de passe
                 </button>
               </div>
@@ -145,6 +180,8 @@ function MesParametres() {
       ) : (
         <Connexion />
       )}
+      <button className="btn btn-primary d-flex">Mes commandes</button>{" "}
+      {/* Bouton "Mes commandes" */}
     </>
   );
 }
