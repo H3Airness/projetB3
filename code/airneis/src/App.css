@@ -459,6 +459,8 @@ a:link {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .sidebar {
@@ -552,7 +554,7 @@ a:link {
   scale: 1.08;
 }
 
-#commandes {
+.commandes {
   max-width: 200px;
   margin-top: 20px;
 }

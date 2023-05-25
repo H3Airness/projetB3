@@ -164,25 +164,29 @@ function MesParametres() {
                 </div>
               </form>
             ) : (
-              <div className="button-group">
-                <label className="label-mdp">Mot de passe:</label>
-                <p className="form-control password">••••••••</p>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleEditPassword}
-                >
-                  Modifier le mot de passe
-                </button>
-              </div>
+              <>
+                <div className="button-group">
+                  <label className="label-mdp">Mot de passe:</label>
+                  <p className="form-control password">••••••••</p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleEditPassword}
+                  >
+                    Modifier le mot de passe
+                  </button>
+                </div>
+                <div className="button-group">
+                  <button className="btn btn-primary commandes">
+                    Mes commandes
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>
       ) : (
         <Connexion />
       )}
-      <button id="commandes" className="btn btn-primary">Mes commandes</button>{" "}
-      {/* Bouton "Mes commandes" */}
-      
     </>
   );
 }
