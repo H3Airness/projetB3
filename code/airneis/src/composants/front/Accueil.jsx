@@ -46,7 +46,7 @@ const Accueil = () => {
 
 
       <div className="cat">
-        <div className="content-img">
+        <div className="highlander">
           {images.map((image, index) => (
             <div className="col mb-5 mt-5 img1 img2" key={index}>
               <Link to={`/Produit/${image.id}`}>

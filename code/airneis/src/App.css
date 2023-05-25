@@ -524,3 +524,10 @@ a:link {
   color: red;
   font-weight: bold;
 }
+
+
+.highlander {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 30px;
+}
