@@ -180,8 +180,9 @@ function MesParametres() {
       ) : (
         <Connexion />
       )}
-      <button className="btn btn-primary d-flex">Mes commandes</button>{" "}
+      <button id="commandes" className="btn btn-primary">Mes commandes</button>{" "}
       {/* Bouton "Mes commandes" */}
+      
     </>
   );
 }

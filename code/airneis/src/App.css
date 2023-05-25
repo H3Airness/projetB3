@@ -518,11 +518,13 @@ a:link {
 .success-message {
   color: green;
   font-weight: bold;
+  text-align  : center;
 }
 
 .error-message {
   color: red;
   font-weight: bold;
+  text-align  : center;
 }
 
 .highlander {
@@ -537,6 +539,20 @@ a:link {
   min-height: 330px;
 }
 
+#rounded-img:hover {
+  scale: 1.01;
+  transition:0.2s ease-in-out, width 0.8s ease-in-out;
+}
+
 #icon-cat {
   min-height: 100px;
+}
+
+#icon-cat:hover {
+  scale: 1.08;
+}
+
+#commandes {
+  max-width: 200px;
+  margin-top: 20px;
 }
