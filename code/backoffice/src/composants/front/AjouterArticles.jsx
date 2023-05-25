@@ -53,35 +53,36 @@ return (
   <>
     {isLoggedIn ? (
       <>
-        <div className="articles-card my-5">
-          <div className="articles-card-header">
-            <div className="card-title text-center display-5 mb-5">Ajouter un article</div>
-          </div>
-          <form onSubmit={handleSubmit}>
-            {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
-              <div className="articles-card-group">
-                <input required="" name="nom" id="nom" type="text" placeholder="Titre de l'article"/>
-              </div>
-              <div className="articles-card-group">
-                <textarea name="description" id="description" rows="4" placeholder="Description de l'article"></textarea>
-              </div>
-              <div className="articles-card-group">
-                <input type="number" name="prix" id="prix" min="0" step="0.01" placeholder="Prix de l'article" required />
-              </div>    
-              <div className="custom-select">
-                <label htmlFor="choix-item">Selectionnez une catégorie:</label>
-                <select name="select" id="choix-item">
-                  <option value="chaise">Chaise</option>
-                  <option value="table">Table</option>
-                  <option value="lit">Lit</option>
-                  <option value="armoire">Armoire</option>
-                  <option value="bureau">Bureau</option>
-                  <option value="fauteuil">Fauteuil</option>
-                </select>
-                <input type="file" onChange={handleImageChange} id='ImageArticle'/>        
-              </div>
-              <input value="Ajouter" type="submit" />
-            </form>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title text-center display-5 mb-5 ContactTitre">Ajouter un article</div>
+          
+            <form onSubmit={handleSubmit}>
+              {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
+                <div className="mb-4">
+                  <input required="" name="nom" id="nom" type="text" placeholder="Titre de l'article"/>
+                </div>
+                <div className="articles-card-group">
+                  <textarea name="description" id="description" rows="4" placeholder="Description de l'article"></textarea>
+                </div>
+                <div className="articles-card-group">
+                  <input type="number" name="prix" id="prix" min="0" step="0.01" placeholder="Prix de l'article" required />
+                </div>    
+                <div className="custom-select">
+                  <label htmlFor="choix-item">Selectionnez une catégorie:</label>
+                  <select name="select" id="choix-item">
+                    <option value="chaise">Chaise</option>
+                    <option value="table">Table</option>
+                    <option value="lit">Lit</option>
+                    <option value="armoire">Armoire</option>
+                    <option value="bureau">Bureau</option>
+                    <option value="fauteuil">Fauteuil</option>
+                  </select>
+                  <input type="file" onChange={handleImageChange} id='ImageArticle'/>        
+                </div>
+                <input value="Ajouter" type="submit" />
+              </form>
+            </div>
           </div>
           <div className="d-flex justify-content-center my-3">
             <NavLink to="/articles" className='boutonBackOfficeArticles btn btn-success'> Revenir aux articles </NavLink>

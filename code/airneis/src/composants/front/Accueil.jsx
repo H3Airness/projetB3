@@ -25,8 +25,8 @@ const Accueil = () => {
         <Gallery />
       </div>
       <div className="info-airneis mt-5">
-        <p> VENANT DES HAUTES TERRES D'ÉCOSSE</p>
-        <p> NOS MEUBLES SONT IMMORTELS</p>
+        <p>VENANT DES HAUTES TERRES D'ÉCOSSE</p>
+        <p>NOS MEUBLES SONT IMMORTELS</p>
       </div>
 
       <div className="cat">
@@ -44,6 +44,11 @@ const Accueil = () => {
         </div>
       </div>
 
+      <br/>
+
+      <div className="info-airneis mt-5">
+        <p>Les Highlanders du moment 🔥</p>
+      </div>
 
       <div className="cat">
         <div className="content-img">
@@ -51,6 +56,7 @@ const Accueil = () => {
             <div className="col mb-5 mt-5 img1 img2" key={index}>
               <Link to={`/Produit/${image.id}`}>
                 <img width={400} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
+                <p className='categorie'>{image.nom}</p>
               </Link>
             </div>
           ))}

@@ -47,7 +47,7 @@ function ModifierCategorie() {
       {isLoggedIn ? (
         <>
           {categories.map((categorie) => (
-            <div className="categorie-card" key={categorie.id_categorie}>
+            <div className="card" key={categorie.id_categorie}>
               <div className="card-header">
                 <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier la catégorie: {categorie.nom}</div>
               </div>
