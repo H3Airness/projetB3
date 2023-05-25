@@ -459,6 +459,8 @@ a:link {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .sidebar {
@@ -518,9 +520,41 @@ a:link {
 .success-message {
   color: green;
   font-weight: bold;
+  text-align  : center;
 }
 
 .error-message {
   color: red;
   font-weight: bold;
+  text-align  : center;
+}
+
+.highlander {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 30px;
+}
+
+#rounded-img {
+  border: 2px solid rgb(199, 196, 196);
+  border-radius: 3%;
+  min-height: 330px;
+}
+
+#rounded-img:hover {
+  scale: 1.01;
+  transition:0.2s ease-in-out, width 0.8s ease-in-out;
+}
+
+#icon-cat {
+  min-height: 100px;
+}
+
+#icon-cat:hover {
+  scale: 1.08;
+}
+
+.commandes {
+  max-width: 200px;
+  margin-top: 20px;
 }
