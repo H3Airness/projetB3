@@ -525,9 +525,18 @@ a:link {
   font-weight: bold;
 }
 
-
 .highlander {
   display: flex;
   flex-wrap: wrap;
   padding: 0 30px;
+}
+
+#rounded-img {
+  border: 2px solid rgb(199, 196, 196);
+  border-radius: 3%;
+  min-height: 330px;
+}
+
+#icon-cat {
+  min-height: 100px;
 }

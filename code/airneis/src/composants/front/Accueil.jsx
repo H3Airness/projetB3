@@ -32,10 +32,10 @@ const Accueil = () => {
       <div className="cat">
         <div className="content-img">
           {categories.map((categorie) => (
-            <div className="col mb-5 mt-5 img1 img2" key={categorie.nom}>
+            <div className="mb-5 mt-5 img1 img2" key={categorie.nom}>
               <center>
                 <Link to={`/Categorie/${categorie.id_categorie}`}>
-                  <img width={100} src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}icon.jpg`} alt={`image-${categorie.nom}`} />
+                  <img id='icon-cat' width={100} src={`http://airneis.ddns.net:3000/img_categorie/${categorie.id_categorie}icon.jpg`} alt={`image-${categorie.nom}`} />
                   <p className='categorie'>{categorie.nom}</p>
                 </Link>
               </center>
@@ -51,11 +51,11 @@ const Accueil = () => {
       </div>
 
       <div className="cat">
-        <div className="highlander">
+        <div className="highlander" >
           {images.map((image, index) => (
             <div className="col mb-5 mt-5 img1 img2" key={index}>
               <Link to={`/Produit/${image.id}`}>
-                <img width={400} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
+                <img id='rounded-img'  width={400} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
                 <p className='categorie'>{image.nom}</p>
               </Link>
             </div>
