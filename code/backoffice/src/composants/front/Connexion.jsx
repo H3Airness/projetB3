@@ -59,7 +59,7 @@ function Connexion() {
       </center>
 
       <div className="login-card">
-        <div className="card-header">
+        <div className="card-connexion">
           <div className="log">Connexion</div>
         </div>
         <form onSubmit={handleSubmit}>
