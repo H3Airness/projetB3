@@ -106,27 +106,33 @@ const Articles = () => {
           </div>
 
           <div className="cat">
-            <div className="content-img">
-              {images.map((image, index) => (
-                <div
-                  className={`articles ${selectedImages.includes(image) ? 'selected' : ''}`}
-                  key={index}
-                  onClick={() => handleImageClick(index)}
-                >
-                  <p className='text-center'>{image.nom}</p>
-                  <img width={200} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
-                  <p className='m-2 text-primary'>Prix : {image.prix} €</p>
-                  <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+  <div className="content-img">
+    {images.map((image, index) => (
+      <div
+        className={`articles ${selectedImages.includes(image) ? 'selected' : ''}`}
+        key={index}
+        onClick={() => handleImageClick(index)}
+      >
+        <p className='text-center'>{image.nom}</p>
+        <img width={200} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
+        <center>
+          <NavLink to={`/modifierProduit/${image.id}`} className="btn btn-warning mb-4 modif-article">Modifier</NavLink>
+        </center>
+        <p className='m-2 text-primary'>Prix : {image.prix} €</p>
+        <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+  
+
           <div className="d-flex justify-content-center my-3">
             <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
             <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
           </div>
           <div className="d-flex justify-content-center my-3">
-            <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'> Ajouter des nouveaux articles </NavLink>
+            <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'>Ajouter un nouveau Produit</NavLink>
           </div>
         </>
         ) : (

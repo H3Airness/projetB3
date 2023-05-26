@@ -7,11 +7,21 @@ import Connexion from "./Connexion";
 function ModifierProduit() {
   const { isLoggedIn } = useContext(AuthContext);
   const [responseName, setResponseName] = useState('');
-  const [responseIcon, setResponseIcon] = useState('');
-  const [responseBanniere, setResponseBanniere] = useState('');
+  const [responseDescription, setResponseDescription] = useState('');
+  const [responsePrix, setResponsePrix] = useState('');
+  const [responseCategorie, setResponseCategorie] = useState('');
+  const [responseImage, setResponseImage] = useState('');
+  const [responseStock, setResponseStock] = useState('');
   const { id } = useParams();
+  const [categorie, setCategorie] = useState([]);
   const [categories, setCategories] = useState([]);
   const [produit, setProduct] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://airneis.ddns.net:3000/categorie/categorie_acceuil.php')
+      .then(response => setCategories(response.data))
+      .catch(error => console.log(error));
+  }, []);
 
   useEffect(() => {
     fetch(`http://airneis.ddns.net:3000/produit.php?id=${id}`)
@@ -23,7 +33,7 @@ function ModifierProduit() {
           axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${data.categorie}`)
           .then(response => {
             console.log(response.data);
-            setCategories(response.data);
+            setCategorie(response.data);
           })
             .catch(error => console.log(error));
         }
@@ -43,7 +53,43 @@ function ModifierProduit() {
       .catch(error => console.log(error));
   };
 
-  const handleSubmitIcon = e => {
+  const handleSubmitDescription = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(response => setResponseDescription(response.data))
+      .catch(error => console.log(error));
+  };
+
+  const handleSubmitPrix = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(response => setResponsePrix(response.data))
+      .catch(error => console.log(error));
+  };
+
+  const handleSubmitCategorie = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(response => setResponseCategorie(response.data))
+      .catch(error => console.log(error));
+  };
+
+  const handleSubmitImage = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
     axios.post(`http://airneis.ddns.net:3000/categorie/modifier_icon_categorie.php`, formData, {
@@ -51,19 +97,19 @@ function ModifierProduit() {
         'Content-Type': 'multipart/form-data'
       }
     })
-      .then(response => setResponseIcon(response.data))
+      .then(response => setResponseImage(response.data))
       .catch(error => console.log(error));
   };
 
-  const handleSubmitBanniere = e => {
+  const handleSubmitStock = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_banniere_categorie.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
-      .then(response => setResponseBanniere(response.data))
+      .then(response => setResponseStock(response.data))
       .catch(error => console.log(error));
   };
 
@@ -71,7 +117,7 @@ function ModifierProduit() {
     <>
       {isLoggedIn ? (
         <>
-          {categories.length > 0 && categories[0] && (
+          {categorie.length > 0 && categorie[0] && (
             <div className="card" key={produit.id}>
               <div className="card-header">
                 <div className="card-title text-center display-5 mb-5 ContactTitre">Modifier le produit: {produit.nom}</div>
@@ -82,47 +128,95 @@ function ModifierProduit() {
                   {responseName && <p className='ReponseFormulaire text-center mt-3'>{responseName.message}</p>}
 
                   <div className="card-group mb-4">
-                    <label htmlFor="nom">Modifier le nom de du produit:</label>
+                    <label htmlFor="nom">Modifier le nom du produit:</label>
                     <input required name="nom" id="nom" type="text" placeholder={produit.nom} defaultValue={produit.nom} />
 
                     <input type="hidden" name="id" value={produit.id} />
-                    <input type="hidden" name="ancienNom" value={produit.nom} />
                   </div>
-                  <input value="Modifier le nom de la catégorie" type="submit" />
+                  <input value="Modifier le nom" type="submit" />
                 </form>
 
                 <br/>
                 <hr/>
                 <br/>
 
-                <form onSubmit={handleSubmitIcon}>
-                  {responseIcon && <p className='ReponseFormulaire text-center mt-3'>{responseIcon.message}</p>}
+                <form onSubmit={handleSubmitDescription} method="post">
+                  {responseDescription && <p className='ReponseFormulaire text-center mt-3'>{responseDescription.message}</p>}
+
+                  <div className="card-group mb-4">
+                    <label htmlFor="description">Modifier la description du produit:</label>
+                    <input required name="description" id="description" type="text" placeholder={produit.description} defaultValue={produit.description} />
+
+                    <input type="hidden" name="id" value={produit.id} />
+                  </div>
+                  <input value="Modifier la descritpion" type="submit" />
+                </form>
+
+                <br/>
+                <hr/>
+                <br/>
+
+                <form onSubmit={handleSubmitPrix} method="post">
+                  {responsePrix && <p className='ReponseFormulaire text-center mt-3'>{responsePrix.message}</p>}
+
+                  <div className="card-group mb-4">
+                    <label htmlFor="prix">Modifier le prix du produit:</label>
+                    <input type="number" name="prix" id="prix" min="0" step="0.01" placeholder={produit.prix} defaultValue={produit.prix} required/>
+
+                    <input type="hidden" name="id" value={produit.id} />
+                  </div>
+                  <input value="Modifier le prix" type="submit" />
+                </form>
+
+                <br/>
+                <hr/>
+                <br/>
+
+                <form onSubmit={handleSubmitCategorie}>
+                  {responseCategorie && <p className='ReponseFormulaire text-center mt-3'>{responseCategorie.message}</p>}
                   <div className='mb-4'>
-                    <label htmlFor="icon">Image actuelle:</label>
-                    <center>
-                      <img src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.nom} style={{ width: '100px' }} />
-                    </center>
-                    <input type="file" id="icon" name="icon" />  
+                    <label htmlFor="choix-item">Selectionnez une catégorie: &emsp;</label>
+                    <select name="select" id="categorie" required defaultValue={categorie.nom}>
+                      {categories.map(categories => (
+                        <option value={categories.id_categorie} key={categories.id_categorie}>{categories.nom}</option>
+                      ))}
+                    </select> 
                     <input type="hidden" name="id" id="id" value={produit.id} />       
                   </div>
-                  <input value="Modifier l'icône" type="submit" />
+                  <input value="Modifier la catégorie" type="submit" />
                 </form>
 
                 <br/>
                 <hr/>
                 <br/>
 
-                <form onSubmit={handleSubmitBanniere}>
-                  {responseBanniere && <p className='ReponseFormulaire text-center mt-3'>{responseBanniere.message}</p>}
+                <form onSubmit={handleSubmitImage}>
+                  {responseImage && <p className='ReponseFormulaire text-center mt-3'>{responseImage.message}</p>}
                   <div className='mb-4'>
-                    <label htmlFor="banniere">Bannière actuelle:</label>
+                    <label htmlFor="image">Image actuelle:</label>
                     <center>
-                      <img src={`http://airneis.ddns.net:3000/img_categorie/${produit.id}banniere.jpg`} alt={produit.nom} style={{ width: '500px' }} />
+                      <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
-                    <input type="file" id="banniere" name="banniere" />
-                    <input type="hidden" name="id" id="id" value={produit.id} />        
+                    <input type="file" id="image" name="image" />  
+                    <input type="hidden" name="id" id="id" value={produit.id} />       
                   </div>
-                  <input value="Modifier la bannière" type="submit" />
+                  <input value="Modifier l'image" type="submit" />
+                </form>
+
+                <br/>
+                <hr/>
+                <br/>
+
+                <form onSubmit={handleSubmitStock} method="post">
+                  {responseStock && <p className='ReponseFormulaire text-center mt-3'>{responseStock.message}</p>}
+
+                  <div className="card-group mb-4">
+                    <label htmlFor="stock">Modifier le stock du produit:</label>
+                    <input type="number" name="stock" id="stock" min="0" placeholder={produit.stock} defaultValue={produit.stock} required/>
+
+                    <input type="hidden" name="id" value={produit.id} />
+                  </div>
+                  <input value="Modifier le stock" type="submit" />
                 </form>
               </div>
             </div>

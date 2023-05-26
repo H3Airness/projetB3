@@ -90,13 +90,13 @@ return (
                 </div>
 
                 <div className="articles-card-group mb-4">
-                  <label htmlFor="nom">Description:</label>
+                  <label htmlFor="description">Description:</label>
                   <br/>
                   <textarea name="description" id="description" rows="4" placeholder="Description de l'article" className="form-textarea" required onChange={handleDescriptionChange}></textarea>
                 </div>
 
                 <div className="articles-card-group mb-4">
-                  <label htmlFor="nom">Prix:</label>
+                  <label htmlFor="prix">Prix:</label>
                   <input type="number" name="prix" id="prix" min="0" step="0.01" placeholder="Prix de l'article" required onChange={handlePrixChange}/>
                 </div> 
 
