@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { AuthContext } from "../context/authContext";
 import Connexion from "./Connexion";
@@ -9,6 +10,7 @@ const Articles = () => {
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://airneis.ddns.net:3000/articles.php')
@@ -76,7 +78,7 @@ const Articles = () => {
             // Stocker le message dans la variable d'état "message"
             setMessage(message);
             // Faire défiler la page jusqu'à l'élément message
-            document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
             // Afficher le message dans la console du navigateur
             console.log(message);
   
@@ -89,6 +91,24 @@ const Articles = () => {
         }
     }    
   }
+
+  const handleModif = () => {
+  
+    if (selectedImages.length < 1 ) {
+      setMessage("Selectionnez une image pour modifier un article !");
+      // Faire défiler la page jusqu'à l'élément message
+      document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
+    }
+    else if(selectedImages.length > 1) {
+      setMessage("Selectionnez seulement une image !");
+      // Faire défiler la page jusqu'à l'élément message
+      document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
+    }
+    else {
+      const selecteudImage = selectedImages[0];
+      navigate(`/modifierProduit/${selecteudImage.id}`);
+      }
+  } ;
   
   
   
@@ -115,12 +135,8 @@ const Articles = () => {
                 >
                   <p className='text-center'>{image.nom}</p>
                   <img width={200} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
-                  
                   <p className='m-2 text-primary'>Prix : {image.prix} €</p>
                   <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
-                  <center>
-                    <NavLink to={`/modifierProduit/${image.id}`} className="btn btn-warning mb-4 modif-article">Modifier</NavLink>
-                  </center>
                 </div>
               ))}
             </div>
@@ -131,6 +147,7 @@ const Articles = () => {
             <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
           </div>
           <div className="d-flex justify-content-center my-3">
+            <button onClick={handleModif} className="btn btn-warning mb-4 modif-article">Modifier</button>
             <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'>Ajouter un nouveau Produit</NavLink>
           </div>
         </>

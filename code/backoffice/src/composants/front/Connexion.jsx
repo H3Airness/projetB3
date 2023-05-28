@@ -27,7 +27,7 @@ function Connexion() {
         );
         setResponse(response.data);
         if (response.data.status === "success") {
-          setTimeout(() => {}, 3000);
+          setTimeout(() => {navigate("/")}, 3000);
           alert("test");
           authContext.login(); 
         }
