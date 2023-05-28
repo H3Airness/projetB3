@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import Connexion from "./Connexion";
@@ -8,7 +7,6 @@ import Connexion from "./Connexion";
 const AjouterArticles = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const [response, setResponse] = useState('');
-  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [nom, setNom] = useState('');
   const [description, setDescription] = useState('');

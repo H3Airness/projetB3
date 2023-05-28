@@ -44,7 +44,7 @@ function ModifierProduit() {
   const handleSubmitName = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -56,7 +56,7 @@ function ModifierProduit() {
   const handleSubmitDescription = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -68,7 +68,7 @@ function ModifierProduit() {
   const handleSubmitPrix = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -80,7 +80,7 @@ function ModifierProduit() {
   const handleSubmitCategorie = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -92,7 +92,7 @@ function ModifierProduit() {
   const handleSubmitImage = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_icon_categorie.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -104,7 +104,7 @@ function ModifierProduit() {
   const handleSubmitStock = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/categorie/modifier_nom_categorie.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -176,12 +176,12 @@ function ModifierProduit() {
                   {responseCategorie && <p className='ReponseFormulaire text-center mt-3'>{responseCategorie.message}</p>}
                   <div className='mb-4'>
                     <label htmlFor="choix-item">Selectionnez une catégorie: &emsp;</label>
-                    <select name="select" id="categorie" required defaultValue={categorie.nom}>
+                    <select name="select" id="categorie" required placeholder={produit.categorie} defaultValue={produit.categorie}>
                       {categories.map(categories => (
                         <option value={categories.id_categorie} key={categories.id_categorie}>{categories.nom}</option>
                       ))}
                     </select> 
-                    <input type="hidden" name="id" id="id" value={produit.id} />       
+                    <input type="hidden" name="id" value={produit.id} />       
                   </div>
                   <input value="Modifier la catégorie" type="submit" />
                 </form>
@@ -198,7 +198,7 @@ function ModifierProduit() {
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
                     <input type="file" id="image" name="image" />  
-                    <input type="hidden" name="id" id="id" value={produit.id} />       
+                    <input type="hidden" name="id" value={produit.id} />      
                   </div>
                   <input value="Modifier l'image" type="submit" />
                 </form>
@@ -218,11 +218,12 @@ function ModifierProduit() {
                   </div>
                   <input value="Modifier le stock" type="submit" />
                 </form>
+
               </div>
             </div>
           )}
           <div className="d-flex justify-content-center my-3">
-            <NavLink to="/categorie" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaires de produit </NavLink>
+            <NavLink to="/articles" className='boutonBackOfficeArticles btn btn-success'> Revenir aux gestionnaires de produit </NavLink>
           </div> 
         </>
       ) : (
