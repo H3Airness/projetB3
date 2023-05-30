@@ -142,12 +142,10 @@ const Articles = () => {
             </div>
           </div>
 
-          <div className="d-flex justify-content-center my-3">
+          <div className="d-flex justify-content-center my-3 mx-5">
             <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
             <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
-          </div>
-          <div className="d-flex justify-content-center my-3">
-            <button onClick={handleModif} className="btn btn-warning mb-4 modif-article">Modifier</button>
+            <button onClick={handleModif} className="boutonBackOfficeArticles btn btn-warning">Modifier</button>
             <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'>Ajouter un nouveau Produit</NavLink>
           </div>
         </>
