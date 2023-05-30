@@ -62,7 +62,6 @@ const Accueil = () => {
           ))}
         </div>
       </div>
-
     </>
   );
 }

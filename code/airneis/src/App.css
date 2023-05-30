@@ -253,7 +253,7 @@ input[type="submit"]:hover {
   }
 
   .Min-heightConteiner-footer{
-    min-height: calc(40vh - 66px - 220px);
+    min-height: calc(50vh - 66px - 220px);
   }
 
 .Min-heightConteinerPanier{
