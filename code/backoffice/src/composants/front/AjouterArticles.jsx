@@ -3,17 +3,20 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import Connexion from "./Connexion";
+import { useNavigate } from "react-router-dom";
 
 const AjouterArticles = () => {
   const { isLoggedIn } = useContext(AuthContext);
-  const [response, setResponse] = useState('');
   const [categories, setCategories] = useState([]);
   const [nom, setNom] = useState('');
   const [description, setDescription] = useState('');
   const [prix, setPrix] = useState('');
   const [categorie, setCategorie] = useState('');
   const [image, setImage] = useState(null);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const [stock, setStock] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://airneis.ddns.net:3000/categorie/categorie_acceuil.php')
@@ -38,7 +41,21 @@ const AjouterArticles = () => {
             'Content-Type': 'multipart/form-data'
           }
         });
-        setResponse('Produit ajouté avec succès');
+        if (response.data.status === "error")
+        {
+          const error = response.data.error;
+          setError(error);
+          document.getElementById('error').scrollIntoView({ behavior: 'smooth' });
+        }
+        if (response.data.status === "success")
+        {
+          const message = response.data.message;
+          setMessage(message);
+          document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            navigate('/articles');
+          }, 2000);
+       }
       }
     catch (error) {
     console.log(error);
@@ -81,7 +98,6 @@ return (
             <hr/>
           
             <form onSubmit={handleSubmit}>
-              {response && <p className='ReponseFormulaire text-center mt-3'>{response.message}</p>}
                 <div className="mb-4">
                   <label htmlFor="nom">Nom:</label>
                   <input name="nom" id="nom" type="text" placeholder="Titre de l'article" required onChange={handleNomChange}/>
@@ -123,6 +139,12 @@ return (
           </div>
           <div className="d-flex justify-content-center my-3">
             <NavLink to="/articles" className='boutonBackOfficeArticles btn btn-success'> Revenir aux articles </NavLink>
+          </div>
+          <div className='mt-4'id='message'>
+            {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
+          </div>
+          <div className='mt-4'id='error'>
+            {error && <p className='alert alert-danger text-center' id='error'>{error}</p>}
           </div>
         </>
         ) : (

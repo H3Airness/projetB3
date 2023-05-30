@@ -10,6 +10,7 @@ const Articles = () => {
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const Articles = () => {
           // Stocker le message dans la variable d'état "message"
           setMessage(message);
           // Faire défiler la page jusqu'à l'élément message
-          document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
           // Reresh la page
           setTimeout(() => {
             window.location.reload();
@@ -75,16 +76,18 @@ const Articles = () => {
           .then(response => {
             // Récupérer le message envoyé par le serveur
             const message = response.data.message;
-            // Stocker le message dans la variable d'état "message"
             setMessage(message);
-            // Faire défiler la page jusqu'à l'élément message
-            document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
-            // Afficher le message dans la console du navigateur
+            document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
             console.log(message);
-  
             setTimeout(() => {
               window.location.reload();
             }, 1000);
+            if (response.data.status === "error")
+            {
+              const error = response.data.error;
+              setError(error);
+              document.getElementById('error').scrollIntoView({ behavior: 'smooth' });
+            }
             
           })
           .catch(error => console.log(error));
@@ -97,12 +100,12 @@ const Articles = () => {
     if (selectedImages.length < 1 ) {
       setMessage("Selectionnez une image pour modifier un article !");
       // Faire défiler la page jusqu'à l'élément message
-      document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
     }
     else if(selectedImages.length > 1) {
       setMessage("Selectionnez seulement une image !");
       // Faire défiler la page jusqu'à l'élément message
-      document.getElementById('aimant').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
     }
     else {
       const selecteudImage = selectedImages[0];
@@ -121,10 +124,6 @@ const Articles = () => {
             <p>SELECTION DES ARTICLES</p>
           </div>
 
-          <div className='mt-4'>
-            {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
-          </div>
-
           <div className="cat">
             <div className="content-img">
               {images.map((image, index) => (
@@ -134,7 +133,7 @@ const Articles = () => {
                   onClick={() => handleImageClick(index)}
                 >
                   <p className='text-center'>{image.nom}</p>
-                  <img width={200} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
+                  <img className="rounded mx-auto d-block" width={200} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
                   <p className='m-2 text-primary'>Prix : {image.prix} €</p>
                   <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
                 </div>
@@ -148,6 +147,14 @@ const Articles = () => {
             <button onClick={handleModif} className="boutonBackOfficeArticles btn btn-warning">Modifier</button>
             <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'>Ajouter un nouveau Produit</NavLink>
           </div>
+
+          <div className='mt-4'id='message'>
+            {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
+          </div>
+          <div className='mt-4'id='error'>
+            {error && <p className='alert alert-danger text-center' id='error'>{error}</p>}
+          </div>
+          
         </>
         ) : (
         <>
