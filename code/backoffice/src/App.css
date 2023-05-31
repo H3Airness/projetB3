@@ -116,8 +116,9 @@ input[type="submit"]:hover {
 .logo-airneis-connexion{
   margin-right: 20px;
   margin-bottom: 30px;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 50px;
 }
 
 
@@ -196,7 +197,7 @@ input[type="submit"]:hover {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-end;
-    padding: 0 20px;
+    justify-content: center;
     margin-top: 50px;
   }
 
@@ -398,7 +399,7 @@ tfoot {
 }
 
 .articles{
-  width: 250px;
+  width: 400px;
   margin-left: 5px;
   margin-bottom: 5px;
   border: #2e2b2b solid 3px;

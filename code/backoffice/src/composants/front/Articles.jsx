@@ -41,18 +41,22 @@ const Articles = () => {
   const handleSubmit = () => {
     const data = { images: selectedImages };
   
-    if(selectedImages < 1) {
+    if(selectedImages < 1) 
+    {
       alert("Veuillez choisir au moins un article !");
-    } else {
+    } else 
+    {
       axios.post('http://airneis.ddns.net:3000/update_features.php', data)
         .then(response => {
-          // Récupérer le message envoyé par le serveur
+          if (response.data.status === "error")
+          {
+            const error = response.data.error;
+            setError(error);
+            document.getElementById('error').scrollIntoView({ behavior: 'smooth' });
+          }
           const message = response.data.message;
-          // Stocker le message dans la variable d'état "message"
           setMessage(message);
-          // Faire défiler la page jusqu'à l'élément message
           document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
-          // Reresh la page
           setTimeout(() => {
             window.location.reload();
           }, 3000);
@@ -76,17 +80,20 @@ const Articles = () => {
           .then(response => {
             // Récupérer le message envoyé par le serveur
             const message = response.data.message;
-            setMessage(message);
-            document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
-            console.log(message);
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
+
+            if (response.data.status === "success")
+            {
+              setMessage(message);
+              console.log(message);
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            }
+
             if (response.data.status === "error")
             {
               const error = response.data.error;
               setError(error);
-              document.getElementById('error').scrollIntoView({ behavior: 'smooth' });
             }
             
           })
@@ -98,14 +105,14 @@ const Articles = () => {
   const handleModif = () => {
   
     if (selectedImages.length < 1 ) {
-      setMessage("Selectionnez une image pour modifier un article !");
+      setError("Selectionnez une image pour modifier un article !");
       // Faire défiler la page jusqu'à l'élément message
-      document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('aimant').scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
     else if(selectedImages.length > 1) {
-      setMessage("Selectionnez seulement une image !");
+      setError("Selectionnez seulement une image !");
       // Faire défiler la page jusqu'à l'élément message
-      document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('aimant').scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
     else {
       const selecteudImage = selectedImages[0];
@@ -120,7 +127,7 @@ const Articles = () => {
       {isLoggedIn ? (
         <>
           <div className="info-airneis mt-5">
-            <p id='aimant'>ESPACE ADMINISTRATION AIRNEIS</p>
+            <p>ESPACE ADMINISTRATION AIRNEIS</p>
             <p>SELECTION DES ARTICLES</p>
           </div>
 
@@ -133,13 +140,22 @@ const Articles = () => {
                   onClick={() => handleImageClick(index)}
                 >
                   <p className='text-center'>{image.nom}</p>
-                  <img className="rounded mx-auto d-block" width={200} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
+                  <img className="rounded mx-auto d-block" width={250} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
                   <p className='m-2 text-primary'>Prix : {image.prix} €</p>
                   <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
                 </div>
               ))}
             </div>
           </div>
+          
+          <div>      
+            <div className='mt-4'id='message'>
+              {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
+            </div>
+            <div className='mt-4'id='error'>
+              {error && <p className='alert alert-danger text-center' id='error'>{error}</p>}
+            </div>
+          </div>  
 
           <div className="d-flex justify-content-center my-3 mx-5">
             <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
@@ -147,14 +163,6 @@ const Articles = () => {
             <button onClick={handleModif} className="boutonBackOfficeArticles btn btn-warning">Modifier</button>
             <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'>Ajouter un nouveau Produit</NavLink>
           </div>
-
-          <div className='mt-4'id='message'>
-            {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
-          </div>
-          <div className='mt-4'id='error'>
-            {error && <p className='alert alert-danger text-center' id='error'>{error}</p>}
-          </div>
-          
         </>
         ) : (
         <>
