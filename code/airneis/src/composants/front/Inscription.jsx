@@ -3,8 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function Inscription() {
-  const [response, setResponse] = useState("");
   const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,9 +17,16 @@ function Inscription() {
     async function postData() {
       try {
         const response = await axios.post('http://airneis.ddns.net:3000/inscription.php', formType, {});
-        setResponse(response.data);
         if (response.data.status === "success") {
-          navigate("/connexion");
+          const message = response.data.message;
+          setMessage(message);
+          setTimeout(() => {
+           navigate('/connexion');
+          }, 3000);
+        }  
+        if (response.data.status === "error") {
+          const error = response.data.error;
+          setError(error);
         }
       } catch (error) {
         console.log(error);
@@ -49,11 +57,14 @@ function Inscription() {
           <div className="log">Inscription</div>
         </div>
         <form onSubmit={handleSubmit}>
-          {response && (
-            <p className="ReponseFormulaire text-center mt-3">
-              {response.message}
-            </p>
-          )}
+        <div>      
+            <div className='mt-4'id='message'>
+              {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
+            </div>
+            <div className='mt-4'id='error'>
+              {error && <p className='alert alert-danger text-center' id='error'>{error}</p>}
+            </div>
+          </div> 
           <div className="form-group">
             <label htmlFor="nom">Nom:</label>
             <input required="" name="nom" id="nom" type="text" />
