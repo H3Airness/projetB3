@@ -6,8 +6,9 @@ import { AuthContext } from "../context/authContext";
 
 
 function Connexion() {
-  const [response, setResponse] = useState("");
   const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const authContext = useContext(AuthContext); // Utiliser le contexte AuthContext
 
@@ -25,9 +26,16 @@ function Connexion() {
           formType,
           {}
         );
-        setResponse(response.data);
-        if (response.data.status === "success") {
-          authContext.login(); 
+        if (response.data.status === "success") { 
+          const message = response.data.message;
+          setMessage(message);
+          setTimeout(() => {
+            authContext.login(response.data.accountId);
+          }, 2000);
+        }
+        if (response.data.status === "error") {
+          const error = response.data.error;
+          setError(error);
         }
       } catch (error) {
         console.log(error);
@@ -62,11 +70,14 @@ function Connexion() {
           <div className="log">Connexion</div>
         </div>
         <form onSubmit={handleSubmit}>
-          {response && (
-            <p className="ReponseFormulaire text-center mt-3">
-              {response.message}
-            </p>
-          )}
+        <div>      
+            <div className='mt-4'id='message'>
+              {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
+            </div>
+            <div className='mt-4'id='error'>
+              {error && <p className='alert alert-danger text-center' id='error'>{error}</p>}
+            </div>
+        </div> 
           <div className="form-group">
             <label htmlFor="email">Nom d'utilisateur:</label>
             <input required="" name="nom" id="nom" type="text" />

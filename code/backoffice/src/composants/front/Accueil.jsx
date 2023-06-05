@@ -1,43 +1,11 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from "axios";
 import Connexion from "./Connexion";
 
 const Accueil = () => {
     const { isLoggedIn } = useContext(AuthContext);
-    const [response, setResponse] = useState("");
-    const navigate = useNavigate();
-  
-    const authContext = useContext(AuthContext); // Utiliser le contexte AuthContext
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-  
-      let formType = {};
-      formData.forEach((value, key) => (formType[key] = formData.get(key)));
-  
-      async function postData() {
-        try {
-          const response = await axios.post(
-            "http://airneis.ddns.net:3000/connexion.php",
-            formType,
-            {}
-          );
-          setResponse(response.data);
-          if (response.data.status === "success") {
-            navigate("/");
-            authContext.login(); 
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-  
-      postData();
-    };
-
+    
     return ( <>
         {isLoggedIn ? (
             <>
