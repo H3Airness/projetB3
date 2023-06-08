@@ -23,7 +23,7 @@ const Livraison = () => {
     <>
       <h1 className="mb-4 text-center">Paiement</h1>
       <div className="rounded flex-column Min-heightConteinerPanier">
-        <div className="bg-body rounded divLivraisonArticles">
+        <div className="bg-body rounded mb-2 divLivraisonArticles">
           <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
           <table className="table">
             <tbody className="vertical-align">
@@ -31,12 +31,7 @@ const Livraison = () => {
                 return (
                   <tr key={produit.id}>
                     <td>
-                      <img
-                        className="rounded d-block"
-                        width={150}
-                        src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                        alt={produit.nom}
-                      />
+                      <img className="rounded d-block" width={100} src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`} alt={produit.nom}/>
                     </td>
 
                     <td>
@@ -54,17 +49,8 @@ const Livraison = () => {
               })}
             </tbody>
           </table>
-        <br />
+        <br/>
         </div>
-        <p>Livraison : 10€</p>
-          <div className="TotalPayer">
-            <h6>
-              Total :{" "}
-              {new Intl.NumberFormat("fr-FR", {
-                style: "currency",
-                currency: "EUR",
-              }).format(getTotalPanier() + 10)}
-            </h6>
             <div>
               <input
                 type="text"
@@ -84,14 +70,23 @@ const Livraison = () => {
             <button className="btn btn-primary" onClick={handlePayer}>
               Payer
             </button>
-          </div>
-        <p className="fw-bold">
-          Montant à payer :&nbsp;
+        <p>
+          Montant des articles: &nbsp;
           {new Intl.NumberFormat("fr-FR", {
           style: "currency",
           currency: "EUR",
           }).format(getTotalPanier())}
         </p>
+        <p>Livraison : 10€</p>
+          <div className="fw-bold TotalPayer">
+            <h6>
+              Total :{" "}
+              {new Intl.NumberFormat("fr-FR", {
+                style: "currency",
+                currency: "EUR",
+              }).format(getTotalPanier() + 10)}
+            </h6>
+          </div>
       </div>
     </>
   );
