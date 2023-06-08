@@ -23,7 +23,7 @@ const Livraison = () => {
     <>
       <h1 className="mb-4 text-center">Paiement</h1>
       <div className="rounded flex-column Min-heightConteinerPanier">
-        <div className="shadow p-1 mb-4 bg-body rounded divArticles">
+        <div className="bg-body rounded divLivraisonArticles">
           <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
           <table className="table">
             <tbody className="vertical-align">
@@ -35,7 +35,7 @@ const Livraison = () => {
                         className="rounded d-block"
                         width={150}
                         src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                        alt={'Auccun article selectionné !'}
+                        alt={produit.nom}
                       />
                     </td>
 

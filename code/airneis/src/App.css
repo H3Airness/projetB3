@@ -263,7 +263,7 @@ input[type="submit"]:hover {
   width: 1000px;
   margin: auto;
   margin-bottom: 10px;
-  height: 100%;
+  height: auto;
   padding: 30px;
   padding-bottom: 0;
 
@@ -352,11 +352,8 @@ input[type="submit"]:hover {
   overflow: auto;
 }
 
-.divArticlesL{
-  width: 500px;
-  margin-right: 50px;
-  height: 20vh;
-  overflow: auto;
+.divLivraisonArticles{
+  width: 700px;
 }
 
 .divPrixArticles{
