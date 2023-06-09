@@ -1,10 +1,22 @@
 import { useContext } from "react";
 import { dataContext } from "../context/dataContext";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Panier = () => {
   const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } = useContext(dataContext);
   console.log("Contenu du panier:", panier);
+  const navigate = useNavigate();
+
+  const handlePayer = () => {
+    if(panier.length === 0)
+    {
+      alert("Votre panier est vide !");
+    }
+    else
+    {
+      navigate('/Livraison');
+    }
+  }
 
   return (
     <>
@@ -79,9 +91,7 @@ const Panier = () => {
           <p>Livraison: 10€</p>
           <div className="TotalPayer">
             <h6>Total: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(getTotalPanier() + 10)}</h6>
-            <NavLink to="/Livraison">
-                <button className="btn btn-primary">Payer</button>
-            </NavLink>
+                <button className="btn btn-primary" onClick={handlePayer}>Payer</button>
           </div>
         </div>
       </div>

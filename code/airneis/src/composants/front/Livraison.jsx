@@ -1,10 +1,22 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { dataContext } from "../context/dataContext";
+import { AuthContext } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Livraison = () => {
   const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
   const [adresse, setAdresse] = useState("");
   const [numeroCarte, setNumeroCarte] = useState("");
+  const { accountId } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const data = { userId: accountId };
+  
+  useEffect(() => {
+    axios.post('http://airneis.ddns.net:3000/catch_info.php', data)
+      .then(response => setAdresse(response.data))
+      .catch(error => console.log(error));
+  }, []);
 
   const handleAdresseChange = (e) => {
     setAdresse(e.target.value);
@@ -19,6 +31,12 @@ const Livraison = () => {
     // ...
   };
 
+    useEffect(() => {
+    if (panier.length === 0) {
+      navigate("/panier");
+    }
+  }, []);
+
   return (
     <>
       <h1 className="mb-4 text-center">Paiement</h1>
@@ -32,6 +50,10 @@ const Livraison = () => {
                   <tr key={produit.id}>
                     <td>
                       <img className="rounded d-block" width={100} src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`} alt={produit.nom}/>
+                    </td>
+
+                    <td>
+                      <p>{produit.nom}</p>
                     </td>
 
                     <td>
