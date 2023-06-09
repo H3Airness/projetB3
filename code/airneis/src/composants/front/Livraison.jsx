@@ -11,12 +11,6 @@ const Livraison = () => {
   const { accountId } = useContext(AuthContext);
   const navigate = useNavigate();
   const data = { userId: accountId };
-  
-  useEffect(() => {
-    axios.post('http://airneis.ddns.net:3000/catch_info.php', data)
-      .then(response => setAdresse(response.data))
-      .catch(error => console.log(error));
-  }, []);
 
   const handleAdresseChange = (e) => {
     setAdresse(e.target.value);
@@ -27,9 +21,21 @@ const Livraison = () => {
   };
 
   const handlePayer = () => {
-    // Logique de traitement du paiement avec l'adresse et le numéro de carte
-    // ...
+    //Pour payer
   };
+
+
+  useEffect(() => {
+    axios.post('http://airneis.ddns.net:3000/catch_info.php', data)
+      .then(response => {
+        if (response.data.adresse) {
+          setAdresse(response.data.adresse);
+        }
+      })
+      .catch(error => console.log(error));
+  }, []);
+  
+  
 
     useEffect(() => {
     if (panier.length === 0) {
@@ -100,6 +106,8 @@ const Livraison = () => {
           }).format(getTotalPanier())}
         </p>
         <p>Livraison : 10€</p>
+        <p>ID: {accountId}</p>
+        <p>adresse : {adresse}</p>
           <div className="fw-bold TotalPayer">
             <h6>
               Total :{" "}
