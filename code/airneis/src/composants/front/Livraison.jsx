@@ -77,26 +77,6 @@ const Livraison = () => {
             </tbody>
           </table>
         <br/>
-        </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Adresse de livraison"
-                value={adresse}
-                onChange={handleAdresseChange}
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Numéro de carte bancaire"
-                value={numeroCarte}
-                onChange={handleNumeroCarteChange}
-              />
-            </div>
-            <button className="btn btn-primary" onClick={handlePayer}>
-              Payer
-            </button>
         <p>
           Montant des articles: &nbsp;
           {new Intl.NumberFormat("fr-FR", {
@@ -114,6 +94,39 @@ const Livraison = () => {
               }).format(getTotalPanier() + 10)}
             </h6>
           </div>
+        </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Adresse de livraison"
+                value={adresse}
+                onChange={handleAdresseChange}
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Code postal"
+                onChange={handleAdresseChange}
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Numéro de carte bancaire"
+                value={numeroCarte}
+                onChange={handleNumeroCarteChange}
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Cryptogramme visuel"
+                value={numeroCarte}
+                onChange={handleNumeroCarteChange}
+              />
+            </div>
+            <button className="btn btn-primary my-3" onClick={handlePayer}>Payer</button>
       </div>
     </>
   );
