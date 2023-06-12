@@ -30,7 +30,7 @@ function Connexion() {
           setMessage(message);
           setTimeout(() => {
            navigate('/');
-          }, 2000);
+          }, 1000);
           authContext.login(response.data.accountId);
         }
         if (response.data.status === "error") {

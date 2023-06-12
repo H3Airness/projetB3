@@ -28,9 +28,8 @@ const Livraison = () => {
   useEffect(() => {
     axios.post('http://airneis.ddns.net:3000/catch_info.php', data)
       .then(response => {
-        if (response.data.adresse) {
-          setAdresse(response.data.adresse);
-        }
+        console.log(response.data); // Afficher la réponse dans les logs
+        setAdresse(response.data.adresse);
       })
       .catch(error => console.log(error));
   }, []);
@@ -106,8 +105,6 @@ const Livraison = () => {
           }).format(getTotalPanier())}
         </p>
         <p>Livraison : 10€</p>
-        <p>ID: {accountId}</p>
-        <p>adresse : {adresse}</p>
           <div className="fw-bold TotalPayer">
             <h6>
               Total :{" "}

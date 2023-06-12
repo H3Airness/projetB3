@@ -31,7 +31,7 @@ function Connexion() {
           setMessage(message);
           setTimeout(() => {
             authContext.login(response.data.accountId);
-          }, 2000);
+          }, 1000);
         }
         if (response.data.status === "error") {
           const error = response.data.error;
