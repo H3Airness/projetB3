@@ -94,7 +94,17 @@ const Recherche = () => {
                 <div className="card-body">
                   <h5 className="card-title">{resultat.nom}</h5>
                   <p className="card-text text-primary">{resultat.prix} €</p>
-                  <button className="btn btn-primary" onClick={() => ajouter(resultat) }>Ajouter au panier</button>
+                  <center>
+                    {resultat.stock > 0 ? (
+                      <button className="btn btn-primary" onClick={() => ajouter(resultat) }>
+                        <span>Ajouter au panier</span>
+                      </button>
+                    ) : (
+                      <button className="btn btn-danger">
+                        <span>Stock épuisé</span>
+                      </button>
+                    )}
+                  </center>
                 </div>
               </div>
             </div>

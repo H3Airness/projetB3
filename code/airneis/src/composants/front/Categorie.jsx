@@ -62,14 +62,18 @@ function Categorie() {
 
                 <div className="card-body">
                   <h5 className="card-title">{produit.nom}</h5>
-                  <p className="card-text">{produit.description}</p>
                   <p className="card-text">{produit.prix}€</p>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => ajouter(produit)}
-                  >
-                    Ajouter au panier
-                  </button>
+                  <center>
+                    {produit.stock > 0 ? (
+                      <button className="btn btn-primary" onClick={() => ajouter(produit) }>
+                        <span>Ajouter au panier</span>
+                      </button>
+                    ) : (
+                      <button className="btn btn-danger">
+                        <span>Stock épuisé</span>
+                      </button>
+                    )}
+                  </center>
                 </div>
               </div>
             </div>

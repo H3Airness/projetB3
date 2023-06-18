@@ -555,3 +555,20 @@ a:link {
   max-width: 200px;
   margin-top: 20px;
 }
+
+.description {
+  margin-right: 30px;
+  max-width: 600px;
+}
+
+.prix {
+  font-family: "Acme";
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.titreProduit {
+  font-family: "Acme";
+  font-size: 30px;
+  font-weight: bold;
+}

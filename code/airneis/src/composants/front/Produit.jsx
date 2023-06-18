@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { dataContext } from "../context/dataContext"
@@ -36,24 +36,53 @@ function Produit() {
     <>
       {categories.length > 0 && categories[0] && (
         <>
+        <Link to={`/Categorie/${categories[0].id_categorie}`}>
           <img
+            className='mb-5'
             src={`http://airneis.ddns.net:3000/img_categorie/${categories[0].id_categorie}banniere.jpg`}
             alt={categories[0].nom}
             style={{ width: '100%' }}
           />
-          <div className="ContactTitre">
-            <p>{categories[0].nom}</p>
+        </Link>
+
+
+          <div className="cat">
+
+            <div>
+              <img className='mb-5' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`} alt={produit.titre} style={{ width: '500px' }}/>
+            </div>
+
+            <div className='description'>
+              <div className="cat d-flex justify-content-between">
+                <div className="prix">{produit.prix}€</div>
+                <div className="titreProduit">{produit.nom}</div>
+              </div>
+
+              <div className="d-flex justify-content-end">
+                {produit.stock > 0 ? (
+                  <p className='text-success'>En stock</p>
+                ) : (
+                  <p className='text-danger'>Stock épuisé</p>
+                )}
+              </div>
+              
+              <p>{produit.description}</p>
+              <center>
+                {produit.stock > 0 ? (
+                  <button className="btn btn-primary" onClick={() => ajouter(produit) }>
+                    <span>Ajouter au panier</span>
+                  </button>
+                ) : (
+                  <button className="btn btn-danger">
+                    <span>Stock épuisé</span>
+                  </button>
+                )}
+              </center>
+            </div>
+
           </div>
 
-          <center>
-            <h1>{produit.nom}</h1>
-            <p>{produit.description}</p>
-            <img src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`} alt={produit.titre} />
-            <p>{produit.prix}€</p>
-            <button className="btn btn-primary" onClick={() => ajouter(produit) }>
-              <span>Ajouter au panier</span>
-            </button>
-          </center>
+          <p className='mt-5 info-airneis'>Produit similaires</p>
         </>
       )}
     </>

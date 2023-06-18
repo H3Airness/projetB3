@@ -421,7 +421,6 @@ tfoot {
   margin-left: 10px;
 }
 
-/* The container must be positioned relative: */
 .custom-select {
   position: relative;
   font-family: Arial;
@@ -444,4 +443,3 @@ tfoot {
   border: 1px solid #ccc;
   padding: 12px 20px;
 }
-
