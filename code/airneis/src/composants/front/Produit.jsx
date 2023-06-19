@@ -1,13 +1,23 @@
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
-import { dataContext } from "../context/dataContext"
+import { dataContext } from "../context/dataContext";
+
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
 
 function Produit() {
   const { id } = useParams();
   const [categories, setCategories] = useState([]);
   const [produit, setProduct] = useState(null);
-  const {ajouter} = useContext(dataContext)
+  const [produits, setProducts] = useState([]);
+  const { ajouter } = useContext(dataContext);
 
   useEffect(() => {
     fetch(`http://airneis.ddns.net:3000/produit.php?id=${id}`)
@@ -17,16 +27,26 @@ function Produit() {
         setProduct(data);
         if (data && data.categorie) {
           axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${data.categorie}`)
-          .then(response => {
-            console.log(response.data);
-            setCategories(response.data);
-          })
+            .then(response => {
+              console.log(response.data);
+              setCategories(response.data);
+            })
             .catch(error => console.log(error));
         }
       })
       .catch(error => console.error(error));
   }, [id]);
-  
+
+  useEffect(() => {
+    axios.get(`http://airneis.ddns.net:3000/categorie/categorie.php?categorie=${produit?.categorie}`)
+      .then(response => {
+        console.log(response.data);
+        const shuffledProducts = shuffleArray(response.data);
+        const filteredProducts = shuffledProducts.filter(p => p.id !== produit.id);
+        setProducts(filteredProducts.slice(0, 3));
+      })
+      .catch(error => console.error(error));
+  }, [produit]);
 
   if (!produit) {
     return <p>Chargement...</p>;
@@ -36,20 +56,23 @@ function Produit() {
     <>
       {categories.length > 0 && categories[0] && (
         <>
-        <Link to={`/Categorie/${categories[0].id_categorie}`}>
-          <img
-            className='mb-5'
-            src={`http://airneis.ddns.net:3000/img_categorie/${categories[0].id_categorie}banniere.jpg`}
-            alt={categories[0].nom}
-            style={{ width: '100%' }}
-          />
-        </Link>
+          <Link to={`/Categorie/${categories[0].id_categorie}`}>
+            <img
+              className='mb-5'
+              src={`http://airneis.ddns.net:3000/img_categorie/${categories[0].id_categorie}banniere.jpg`}
+              alt={categories[0].nom}
+              style={{ width: '100%' }}
+            />
+          </Link>
 
-
-          <div className="cat">
-
+          <div className="cat d-flex justify-content-center">
             <div>
-              <img className='mb-5' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`} alt={produit.titre} style={{ width: '500px' }}/>
+              <img
+                className='mb-5'
+                src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                alt={produit.titre}
+                style={{ width: '500px' }}
+              />
             </div>
 
             <div className='description'>
@@ -65,11 +88,11 @@ function Produit() {
                   <p className='text-danger'>Stock épuisé</p>
                 )}
               </div>
-              
+
               <p>{produit.description}</p>
               <center>
                 {produit.stock > 0 ? (
-                  <button className="btn btn-primary" onClick={() => ajouter(produit) }>
+                  <button className="btn btn-primary" onClick={() => ajouter(produit)}>
                     <span>Ajouter au panier</span>
                   </button>
                 ) : (
@@ -79,10 +102,44 @@ function Produit() {
                 )}
               </center>
             </div>
-
           </div>
 
           <p className='mt-5 info-airneis'>Produit similaires</p>
+
+          <div className="container mt-4">
+            <div className="row justify-content-center">
+              {produits.map(produit => (
+                <div className="col-md-4 mb-3" key={produit.id}>
+                  <div className="card">
+                    <Link to={`/Produit/${produit.id}`}>
+                      <img
+                        className="card-img-top"
+                        src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                        alt={produit.titre}
+                        style={{ objectFit: 'cover', height: '300px' }}
+                      />
+                    </Link>
+
+                    <div className="card-body">
+                      <h5 className="card-title">{produit.nom}</h5>
+                      <p className="card-text">{produit.prix}€</p>
+                      <center>
+                        {produit.stock > 0 ? (
+                          <button className="btn btn-primary" onClick={() => ajouter(produit)}>
+                            <span>Ajouter au panier</span>
+                          </button>
+                        ) : (
+                          <button className="btn btn-danger">
+                            <span>Stock épuisé</span>
+                          </button>
+                        )}
+                      </center>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </>
       )}
     </>
