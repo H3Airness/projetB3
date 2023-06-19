@@ -1,9 +1,12 @@
 import { useContext } from "react";
+import Connexion from "./Connexion";
 import { dataContext } from "../context/dataContext";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 const Panier = () => {
   const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } = useContext(dataContext);
+  const { isLoggedIn } = useContext(AuthContext);
   console.log("Contenu du panier:", panier);
   const navigate = useNavigate();
 
@@ -11,6 +14,10 @@ const Panier = () => {
     if(panier.length === 0)
     {
       alert("Votre panier est vide !");
+    }
+    if(!isLoggedIn)
+    {
+      alert("Veuillez vous connecter !")
     }
     else
     {
@@ -95,7 +102,7 @@ const Panier = () => {
           </div>
         </div>
       </div>
-    </>
+  </>
   );
 };
 

@@ -4,6 +4,7 @@ import Gallery from '../Slider';
 import { Link } from 'react-router-dom';
 
 const Accueil = () => {
+  
   const [images, setImages] = useState([]);
   const [categories, setCategories] = useState([]);
 
