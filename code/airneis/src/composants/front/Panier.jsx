@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import Connexion from "./Connexion";
 import { dataContext } from "../context/dataContext";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
