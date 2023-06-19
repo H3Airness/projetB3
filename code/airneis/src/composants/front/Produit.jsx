@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { dataContext } from "../context/dataContext";
+import Carousel from 'better-react-carousel';
 
 function shuffleArray(array) {
   const newArray = [...array];
@@ -18,6 +19,7 @@ function Produit() {
   const [produit, setProduct] = useState(null);
   const [produits, setProducts] = useState([]);
   const { ajouter } = useContext(dataContext);
+  const [autoplay, setAutoplay] = useState(true);
 
   useEffect(() => {
     fetch(`http://airneis.ddns.net:3000/produit.php?id=${id}`)
@@ -48,6 +50,10 @@ function Produit() {
       .catch(error => console.error(error));
   }, [produit]);
 
+  const handleInteraction = () => {
+    setAutoplay(false);
+  };
+
   if (!produit) {
     return <p>Chargement...</p>;
   }
@@ -66,13 +72,18 @@ function Produit() {
           </Link>
 
           <div className="cat d-flex justify-content-center">
-            <div>
-              <img
-                className='mb-5'
-                src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                alt={produit.titre}
-                style={{ width: '500px' }}
-              />
+            <div className='photo'>
+              <Carousel cols={1} rows={1} gap={10} loop autoplay={autoplay ? 5000 : false} showDots dotColor="#000000" dotColorActive="#333333" onClick={handleInteraction}>
+                <Carousel.Item>
+                  <img className="rounded mx-auto d-block imgproduit" width="70%" style={{ minWidth: '100px' }} src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.titre}/>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img className="rounded mx-auto d-block imgproduit" width="70%" style={{ minWidth: '100px' }} src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-2.jpg`} alt={produit.titre}/>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img className="rounded mx-auto d-block imgproduit" width="70%" style={{ minWidth: '100px' }} src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-3.jpg`} alt={produit.titre}/>
+                </Carousel.Item>
+              </Carousel>
             </div>
 
             <div className='description'>
