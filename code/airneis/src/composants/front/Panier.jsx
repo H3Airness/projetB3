@@ -10,29 +10,26 @@ const Panier = () => {
   const navigate = useNavigate();
 
   const handlePayer = () => {
-    if(!isLoggedIn)
-    {
-      alert("Veuillez vous connecter !")
+    if (!isLoggedIn) {
+      alert("Veuillez vous connecter !");
+    } else {
+      navigate("/Livraison");
     }
-    else
-    {
-      navigate('/Livraison');
-    }
-  }
+  };
 
   return (
     <>
       <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
       <div className="rounded Min-heightConteinerPanier">
         <div className="shadow p-1 mb-4 bg-body rounded divArticles">
-          <h3 className="text-center mb-5">
-            Vos articles
-          </h3>
+          <h3 className="text-center mb-5">Vos articles</h3>
 
           {panier.length === 0 ? (
             <center>
               <p>Votre panier est vide. ☹️</p>
-              <NavLink to="/recherche" className='btn btn-success'> Voir notre catalogue </NavLink>
+              <NavLink to="/recherche" className="btn btn-success">
+                Voir notre catalogue
+              </NavLink>
             </center>
           ) : null}
 
@@ -61,13 +58,17 @@ const Panier = () => {
                       <span className="mx-2">{produit.quantite}</span>
                       <button
                         className="btn btn-sm btn-primary"
+                        disabled={produit.quantite >= produit.stock}
                         onClick={() => ajouter(produit)}
                       >
                         +
                       </button>
+                      {produit.quantite >= produit.stock && (
+                        <p className="text-danger">Quantité en stock insuffisante</p>
+                      )}
                     </td>
 
-                    <td> 
+                    <td>
                       {new Intl.NumberFormat("fr-FR", {
                         style: "currency",
                         currency: "EUR",
@@ -96,20 +97,29 @@ const Panier = () => {
             <div>
               <p>
                 Tarif {nombreProduits > 1 && `pour (${nombreProduits} articles)`}:&nbsp;
-                {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(getTotalPanier())}
+                {new Intl.NumberFormat("fr-FR", {
+                  style: "currency",
+                  currency: "EUR",
+                }).format(getTotalPanier())}
               </p>
               <p>Livraison: 10€</p>
               <div className="TotalPayer">
-                <h6>Total: {new Intl.NumberFormat("fr-FR", { style: 'currency', currency: 'EUR' }).format(getTotalPanier() + 10)}</h6>
-                <button className="btn btn-primary" onClick={handlePayer}>Passer la commande</button>
+                <h6>
+                  Total:{" "}
+                  {new Intl.NumberFormat("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                  }).format(getTotalPanier() + 10)}
+                </h6>
               </div>
             </div>
-          ) : (
-            <button className="btn btn-secondary float-end">Passer la commande</button>
-          )}
+          ) : null}
+          <button className="btn btn-primary float-end" onClick={handlePayer} disabled={panier.length <= 0}>
+            Passer la commande
+          </button>
         </div>
       </div>
-  </>
+    </>
   );
 };
 

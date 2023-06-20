@@ -8,18 +8,21 @@ export function DataContextProvider({ children }) {
   const [nombreProduits, setNombreProduits] = useState(0);
 
   function ajouter(produit) {
-    const nouveauPanier = { ...panier }; // on fait une copie de l'objet panier pour ne pas modifier l'original directement
-    if (nouveauPanier[produit.id]) { // si le produit est déjà dans le panier, on augmente sa quantité
-      nouveauPanier[produit.id].quantite += 1;
-    } else { // sinon, on ajoute une nouvelle entrée pour le produit dans le panier
-      nouveauPanier[produit.id] = { ...produit, quantite: 0 };
-      nouveauPanier[produit.id].quantite += 1;
+    const nouveauPanier = { ...panier };
+    if (nouveauPanier[produit.id]) {
+      // Le produit existe déjà dans le panier
+      if (nouveauPanier[produit.id].quantite < produit.stock) {
+        // Vérifier si la quantité ajoutée ne dépasse pas le stock disponible
+        nouveauPanier[produit.id].quantite += 1;
+        setPanier(nouveauPanier);
+        setNombreProduits(nombreProduits + 1);
+      }
+    } else {
+      // Le produit n'existe pas dans le panier
+      nouveauPanier[produit.id] = { ...produit, quantite: 1 };
+      setPanier(nouveauPanier);
+      setNombreProduits(nombreProduits + 1);
     }
-
-    console.log("Produit ajouté :", produit);
-    console.log("Prix du produit :", produit.prix);
-    setPanier(nouveauPanier);
-    setNombreProduits(nombreProduits + 1);
   }
   
 

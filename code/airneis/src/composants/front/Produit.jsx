@@ -140,7 +140,7 @@ function Produit() {
                             <span>Ajouter au panier</span>
                           </button>
                         ) : (
-                          <button className="btn btn-danger">
+                          <button className="btn btn-danger" disabled>
                             <span>Stock épuisé</span>
                           </button>
                         )}

@@ -13,7 +13,7 @@ const NotFound = () => {
         </div>
 
         <center>
-          <NavLink to="/recherche" className='btn btn-warning'> Retourner sur le catalogue </NavLink>
+          <NavLink to="/" className='btn btn-warning'> Retourner à l'accueil </NavLink>
         </center>
     </> 
     );
