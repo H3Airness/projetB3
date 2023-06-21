@@ -21,11 +21,10 @@ function AjouterCarousel() {
             'Content-Type': 'multipart/form-data'
           }
         });
-        setResponse('Image ajoutée avec succès');
+        setResponse(response.data);
       }
     catch (error) {
     console.log(error);
-    setResponse('Erreur lors de l\'envoi des données');
     }
   };
   
@@ -44,7 +43,7 @@ function AjouterCarousel() {
                   <hr/>
                 
                   <form onSubmit={handleSubmit}>
-                  {response && <p className='ReponseFormulaire text-center mt-3'>{response}</p>}
+                  {response && <p className={`ReponseFormulaire text-center mt-3 ${response.status === 'success' ? 'success' : 'error'}`}>{response.message}</p>}
 
                     <div className='mb-4'>
                       <label htmlFor="image">Image:</label>

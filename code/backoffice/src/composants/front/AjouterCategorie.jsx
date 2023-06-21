@@ -6,6 +6,7 @@ import Connexion from "./Connexion";
 
 function AjouterCategorie() {
   const { isLoggedIn } = useContext(AuthContext);
+  const [responsenom, setResponsenom] = useState('');
   const [response, setResponse] = useState('');
   const [nom, setNom] = useState('');
   const [icon, setIcon] = useState(null);
@@ -21,24 +22,22 @@ function AjouterCategorie() {
   
     try {
       // Requête GET pour vérifier le nom de catégorie
-      const response = await axios.get(`http://airneis.ddns.net:3000/categorie/verifier_categorie.php?nom=${nom}`);
+      const responsenom = await axios.get(`http://airneis.ddns.net:3000/categorie/verifier_categorie.php?nom=${nom}`);
   
-      if (response.data.error) {
+      if (responsenom.data.error) {
         // Le nom de catégorie existe déjà, afficher l'erreur
-        setResponse(response.data.error);
+        setResponsenom(responsenom.data.error);
       } else {
         // Le nom de catégorie n'existe pas, procéder aux requêtes d'envoi des images
-        // Requête vers la première API
-        const response1 = await axios.post('http://airneis.ddns.net:3000/categorie/creation_categorie.php', formData, {
+        const response = await axios.post('http://airneis.ddns.net:3000/categorie/creation_categorie.php', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
-        setResponse('Données envoyées avec succès');
+        setResponse(response.data);
       }
     } catch (error) {
       console.log(error);
-      setResponse('Erreur lors de l\'envoi des données');
     }
   };
   
@@ -67,7 +66,8 @@ function AjouterCategorie() {
                   <hr/>
                 
                   <form onSubmit={handleSubmit}>
-                  {response && <p className='ReponseFormulaire text-center mt-3'>{response}</p>}
+                    {response && <p className={`ReponseFormulaire text-center mt-3 ${response.status === 'success' ? 'success' : 'error'}`}>{response.message}</p>}
+                    {responsenom && <p className='ReponseFormulaire text-center mt-3'>{responsenom}</p>}
 
                     <div className="card-group mb-4">
                       <label htmlFor="nom">Nom de la catégorie:</label>

@@ -6,14 +6,14 @@ import Connexion from "./Connexion";
 
 function ModifierCategorie() {
   const { isLoggedIn } = useContext(AuthContext);
-  const [responseIcon, setResponseIcon] = useState('');
+  const [responseImage, setResponseImage] = useState('');
   const { id } = useParams();
 
-  const handleSubmitIcon = e => {
+  const handleSubmitImage = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
     axios.post(`http://airneis.ddns.net:3000/carousel/modifier_carousel.php`, formData)
-      .then(response => setResponseIcon(response.data))
+      .then(response => setResponseImage(response.data))
       .catch(error => console.log(error));
   };
 
@@ -27,16 +27,16 @@ function ModifierCategorie() {
 
                 <hr/>
 
-                <form onSubmit={handleSubmitIcon}>
-                  {responseIcon && <p className={`ReponseFormulaire text-center mt-3 ${responseIcon.status === 'success' ? 'success' : 'error'}`}>{responseIcon.message}</p>}
+                <form onSubmit={handleSubmitImage}>
+                  {responseImage && <p className={`ReponseFormulaire text-center mt-3 ${responseImage.status === 'success' ? 'success' : 'error'}`}>{responseImage.message}</p>}
 
                   <div className='mb-4'>
-                    <label htmlFor="icon">Image actuelle:</label>
+                    <label htmlFor="icon">Image actuelle <small>(Upload limité à <strong>5Mo</strong> max)</small>:</label>
                     <center>
                       <img className='mb-4' src={`http://airneis.ddns.net:3000/img/carousel/${id}.jpg`} alt={id} style={{ width: '500px' }} />
                     </center>
                     <input type="file" id="image" name="image" />  
-                    <input type="hidden" name="id" id="id" value={id} />       
+                    <input type="hidden" name='id' id="id" value={id} />       
                   </div>
                   <input value="Modifier l'image" type="submit" />
                 </form>

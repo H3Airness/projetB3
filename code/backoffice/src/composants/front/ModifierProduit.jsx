@@ -228,7 +228,7 @@ function ModifierProduit() {
                   {responseImage && <p className={`ReponseFormulaire text-center mt-3 ${responseImage.status === 'success' ? 'success' : 'error'}`}>{responseImage.message}</p>}
                   
                   <div className='mb-4'>
-                    <label htmlFor="image">Image principale actuelle <small>(affiché comme image de référence du produit sur le site)</small>:</label>
+                    <label htmlFor="image">Image principale actuelle <small>(Upload limité à <strong>5Mo</strong> max)</small>:</label>
                     <center>
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
@@ -246,7 +246,7 @@ function ModifierProduit() {
                   {responseImage2 && <p className={`ReponseFormulaire text-center mt-3 ${responseImage2.status === 'success' ? 'success' : 'error'}`}>{responseImage2.message}</p>}
 
                   <div className='mb-4'>
-                    <label htmlFor="image">Seconde image actuelle:</label>
+                    <label htmlFor="image">Seconde image actuelle <small>(Upload limité à <strong>5Mo</strong> max)</small>:</label>
                     <center>
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-2.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
@@ -264,7 +264,7 @@ function ModifierProduit() {
                   {responseImage3 && <p className={`ReponseFormulaire text-center mt-3 ${responseImage3.status === 'success' ? 'success' : 'error'}`}>{responseImage3.message}</p>}
 
                   <div className='mb-4'>
-                    <label htmlFor="image">Troisième image actuelle:</label>
+                    <label htmlFor="image">Troisième image actuelle <small>(Upload limité à <strong>5Mo</strong> max)</small>:</label>
                     <center>
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-3.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
