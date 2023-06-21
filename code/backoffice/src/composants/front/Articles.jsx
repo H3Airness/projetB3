@@ -142,7 +142,16 @@ const Articles = () => {
                   <p className='text-center'>{image.nom}</p>
                   <img className="rounded mx-auto d-block" width={250} height={200} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
                   <p className='m-2 text-primary'>Prix : {image.prix} €</p>
-                  <p className='m-2 text-secondary font-weight-bold'>{image.description}</p>
+                  <p className='m-2 text-primary'>Stock : {image.stock}</p>
+
+                  {image.stock == 1 ? (
+                    <p className='m-2 text-danger'>Plus que 1 produit en stock !</p>
+                  ) : null }
+
+                  {image.stock == 0 ? (
+                    <p className='m-2 text-danger'>Stock épuisé</p>
+                  ) : null}
+
                 </div>
               ))}
             </div>

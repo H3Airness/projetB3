@@ -93,11 +93,17 @@ function Produit() {
               </div>
 
               <div className="d-flex justify-content-end">
-                {produit.stock > 0 ? (
+                {produit.stock > 1 ? (
                   <p className='text-success'>En stock</p>
-                ) : (
+                ) : null}
+
+                {produit.stock == 1 ? (
+                  <p className='text-danger'>Plus que 1 produit en stock !</p>
+                ) : null }
+
+                {produit.stock == 0 ? (
                   <p className='text-danger'>Stock épuisé</p>
-                )}
+                ) : null }
               </div>
 
               <p>{produit.description}</p>
@@ -107,7 +113,7 @@ function Produit() {
                     <span>Ajouter au panier</span>
                   </button>
                 ) : (
-                  <button className="btn btn-danger">
+                  <button className="btn btn-danger" disabled>
                     <span>Stock épuisé</span>
                   </button>
                 )}
