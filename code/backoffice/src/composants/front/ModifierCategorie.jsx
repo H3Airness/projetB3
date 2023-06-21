@@ -54,7 +54,7 @@ function ModifierCategorie() {
                 <hr/>
               
                 <form onSubmit={handleSubmitName} method="post">
-                  {responseName && <p className='ReponseFormulaire text-center mt-3'>{responseName.message}</p>}
+                  {responseName && <p className={`ReponseFormulaire text-center mt-3 ${responseName.status === 'success' ? 'success' : 'error'}`}>{responseName.message}</p>}
 
                   <div className="card-group mb-4">
                     <label htmlFor="nom">Modifier le nom de la catégorie:</label>
@@ -71,7 +71,8 @@ function ModifierCategorie() {
                 <br/>
 
                 <form onSubmit={handleSubmitIcon}>
-                  {responseIcon && <p className='ReponseFormulaire text-center mt-3'>{responseIcon.message}</p>}
+                  {responseIcon && <p className={`ReponseFormulaire text-center mt-3 ${responseIcon.status === 'success' ? 'success' : 'error'}`}>{responseIcon.message}</p>}
+                  
                   <div className='mb-4'>
                     <label htmlFor="icon">Icon actuelle:</label>
                     <center>
@@ -88,7 +89,8 @@ function ModifierCategorie() {
                 <br/>
 
                 <form onSubmit={handleSubmitBanniere}>
-                  {responseBanniere && <p className='ReponseFormulaire text-center mt-3'>{responseBanniere.message}</p>}
+                  {responseBanniere && <p className={`ReponseFormulaire text-center mt-3 ${responseBanniere.status === 'success' ? 'success' : 'error'}`}>{responseBanniere.message}</p>}
+
                   <div className='mb-4'>
                     <label htmlFor="banniere">Bannière actuelle:</label>
                     <center>

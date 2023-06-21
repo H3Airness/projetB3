@@ -11,6 +11,8 @@ function ModifierProduit() {
   const [responsePrix, setResponsePrix] = useState('');
   const [responseCategorie, setResponseCategorie] = useState('');
   const [responseImage, setResponseImage] = useState('');
+  const [responseImage2, setResponseImage2] = useState('');
+  const [responseImage3, setResponseImage3] = useState('');
   const [responseStock, setResponseStock] = useState('');
   const { id } = useParams();
   const [categorie, setCategorie] = useState([]);
@@ -27,7 +29,6 @@ function ModifierProduit() {
     fetch(`http://airneis.ddns.net:3000/produit.php?id=${id}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data.categorie);
         setProduct(data);
         if (data && data.categorie) {
           axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${data.categorie}`)
@@ -44,7 +45,7 @@ function ModifierProduit() {
   const handleSubmitName = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -56,7 +57,7 @@ function ModifierProduit() {
   const handleSubmitDescription = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -68,7 +69,7 @@ function ModifierProduit() {
   const handleSubmitPrix = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -80,7 +81,7 @@ function ModifierProduit() {
   const handleSubmitCategorie = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -92,7 +93,7 @@ function ModifierProduit() {
   const handleSubmitImage = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img1.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -101,10 +102,42 @@ function ModifierProduit() {
       .catch(error => console.log(error));
   };
 
+  const handleSubmitImage2 = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img2.php`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(response => setResponseImage2(response.data))
+      .catch(error => console.log(error));
+  };
+
+  const handleSubmitImage3 = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img3.php`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(response => setResponseImage3(response.data))
+      .catch(error => console.log(error));
+  };
+
   const handleSubmitStock = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/modifier_produit.php`, formData, {
+    const stockValue = formData.get('stock');
+
+    // Vérifier si la valeur du stock est zéro
+  if (stockValue === '0') {
+    // Modifier la valeur du stock à "0.0"
+    formData.set('stock', '0.0');
+  }
+
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -125,8 +158,8 @@ function ModifierProduit() {
                 <hr/>
               
                 <form onSubmit={handleSubmitName} method="post">
-                  {responseName && <p className='ReponseFormulaire text-center mt-3'>{responseName.message}</p>}
-
+                  {responseName && <p className={`ReponseFormulaire text-center mt-3 ${responseName.status === 'success' ? 'success' : 'error'}`}>{responseName.message}</p>}
+                  
                   <div className="card-group mb-4">
                     <label htmlFor="nom">Modifier le nom du produit:</label>
                     <input required name="nom" id="nom" type="text" placeholder={produit.nom} defaultValue={produit.nom} />
@@ -141,11 +174,11 @@ function ModifierProduit() {
                 <br/>
 
                 <form onSubmit={handleSubmitDescription} method="post">
-                  {responseDescription && <p className='ReponseFormulaire text-center mt-3'>{responseDescription.message}</p>}
-
+                  {responseDescription && <p className={`ReponseFormulaire text-center mt-3 ${responseDescription.status === 'success' ? 'success' : 'error'}`}>{responseDescription.message}</p>}
+                  
                   <div className="card-group mb-4">
                     <label htmlFor="description">Modifier la description du produit:</label>
-                    <input required name="description" id="description" type="text" placeholder={produit.description} defaultValue={produit.description} />
+                    <textarea required name="description" id="description" type="text" className="form-textarea" placeholder={produit.description} defaultValue={produit.description} />
 
                     <input type="hidden" name="id" value={produit.id} />
                   </div>
@@ -157,7 +190,7 @@ function ModifierProduit() {
                 <br/>
 
                 <form onSubmit={handleSubmitPrix} method="post">
-                  {responsePrix && <p className='ReponseFormulaire text-center mt-3'>{responsePrix.message}</p>}
+                  {responsePrix && <p className={`ReponseFormulaire text-center mt-3 ${responsePrix.status === 'success' ? 'success' : 'error'}`}>{responsePrix.message}</p>}
 
                   <div className="card-group mb-4">
                     <label htmlFor="prix">Modifier le prix du produit:</label>
@@ -173,10 +206,11 @@ function ModifierProduit() {
                 <br/>
 
                 <form onSubmit={handleSubmitCategorie}>
-                  {responseCategorie && <p className='ReponseFormulaire text-center mt-3'>{responseCategorie.message}</p>}
+                  {responseCategorie && <p className={`ReponseFormulaire text-center mt-3 ${responseCategorie.status === 'success' ? 'success' : 'error'}`}>{responseCategorie.message}</p>}
+                  
                   <div className='mb-4'>
                     <label htmlFor="choix-item">Selectionnez une catégorie: &emsp;</label>
-                    <select name="select" id="categorie" required placeholder={produit.categorie} defaultValue={produit.categorie}>
+                    <select name="categorie" id="categorie" required placeholder={produit.categorie} defaultValue={produit.categorie}>
                       {categories.map(categories => (
                         <option value={categories.id_categorie} key={categories.id_categorie}>{categories.nom}</option>
                       ))}
@@ -190,10 +224,11 @@ function ModifierProduit() {
                 <hr/>
                 <br/>
 
-                <form onSubmit={handleSubmitImage}>
-                  {responseImage && <p className='ReponseFormulaire text-center mt-3'>{responseImage.message}</p>}
+                <form onSubmit={handleSubmitImage} encType="multipart/form-data">
+                  {responseImage && <p className={`ReponseFormulaire text-center mt-3 ${responseImage.status === 'success' ? 'success' : 'error'}`}>{responseImage.message}</p>}
+                  
                   <div className='mb-4'>
-                    <label htmlFor="image">Image actuelle:</label>
+                    <label htmlFor="image">Image principale actuelle <small>(affiché comme image de référence du produit sur le site)</small>:</label>
                     <center>
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
@@ -207,8 +242,44 @@ function ModifierProduit() {
                 <hr/>
                 <br/>
 
+                <form onSubmit={handleSubmitImage2}>
+                  {responseImage2 && <p className={`ReponseFormulaire text-center mt-3 ${responseImage2.status === 'success' ? 'success' : 'error'}`}>{responseImage2.message}</p>}
+
+                  <div className='mb-4'>
+                    <label htmlFor="image">Seconde image actuelle:</label>
+                    <center>
+                      <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-2.jpg`} alt={produit.nom} style={{ width: '200px' }} />
+                    </center>
+                    <input type="file" id="image2" name="image2"/>  
+                    <input type="hidden" name="id" value={produit.id}/>      
+                  </div>
+                  <input value="Modifier l'image" type="submit"/>
+                </form>
+
+                <br/>
+                <hr/>
+                <br/>
+
+                <form onSubmit={handleSubmitImage3}>
+                  {responseImage3 && <p className={`ReponseFormulaire text-center mt-3 ${responseImage3.status === 'success' ? 'success' : 'error'}`}>{responseImage3.message}</p>}
+
+                  <div className='mb-4'>
+                    <label htmlFor="image">Troisième image actuelle:</label>
+                    <center>
+                      <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-3.jpg`} alt={produit.nom} style={{ width: '200px' }} />
+                    </center>
+                    <input type="file" id="image3" name="image3"/>  
+                    <input type="hidden" name="id" value={produit.id} />      
+                  </div>
+                  <input value="Modifier l'image" type="submit" />
+                </form>
+
+                <br/>
+                <hr/>
+                <br/>
+
                 <form onSubmit={handleSubmitStock} method="post">
-                  {responseStock && <p className='ReponseFormulaire text-center mt-3'>{responseStock.message}</p>}
+                  {responseStock && <p className={`ReponseFormulaire text-center mt-3 ${responseStock.status === 'success' ? 'success' : 'error'}`}>{responseStock.message}</p>}
 
                   <div className="card-group mb-4">
                     <label htmlFor="stock">Modifier le stock du produit:</label>

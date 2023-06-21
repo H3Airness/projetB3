@@ -1,6 +1,6 @@
 import { useParams, NavLink } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { AuthContext } from "../context/authContext";
 import Connexion from "./Connexion";
 
@@ -28,7 +28,8 @@ function ModifierCategorie() {
                 <hr/>
 
                 <form onSubmit={handleSubmitIcon}>
-                  {responseIcon && <p className='ReponseFormulaire text-center mt-3'>{responseIcon.message}</p>}
+                  {responseIcon && <p className={`ReponseFormulaire text-center mt-3 ${responseIcon.status === 'success' ? 'success' : 'error'}`}>{responseIcon.message}</p>}
+
                   <div className='mb-4'>
                     <label htmlFor="icon">Image actuelle:</label>
                     <center>

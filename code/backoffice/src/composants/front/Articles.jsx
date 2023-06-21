@@ -76,7 +76,7 @@ const Articles = () => {
     else
     {
       if(window.confirm("Êtes-vous sûr de vouloir supprimer les articles sélectionnés ?")) {
-        axios.post('http://airneis.ddns.net:3000/delete_articles.php', data)
+        axios.post('http://airneis.ddns.net:3000/produit/delete_articles.php', data)
           .then(response => {
             // Récupérer le message envoyé par le serveur
             const message = response.data.message;
