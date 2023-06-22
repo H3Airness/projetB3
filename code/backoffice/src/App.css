@@ -415,6 +415,16 @@ tfoot {
   transition: 0.1s;
 }
 
+.img{
+  width: 100%;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border: red solid 2px;
+  border-radius: 6px;
+  transition: 0.1s;
+  padding: 10px;
+}
+
 .articles:hover{
   border-color: rgb(196, 196, 101);
 }

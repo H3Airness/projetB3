@@ -33,7 +33,6 @@ function ModifierProduit() {
         if (data && data.categorie) {
           axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${data.categorie}`)
           .then(response => {
-            console.log(response.data);
             setCategorie(response.data);
           })
             .catch(error => console.log(error));
@@ -228,11 +227,11 @@ function ModifierProduit() {
                   {responseImage && <p className={`ReponseFormulaire text-center mt-3 ${responseImage.status === 'success' ? 'success' : 'error'}`}>{responseImage.message}</p>}
                   
                   <div className='mb-4'>
-                    <label htmlFor="image">Image principale actuelle <small>(Upload limité à <strong>5Mo</strong> max)</small>:</label>
+                    <label htmlFor="image">Image principale actuelle <small>(Upload limité à <strong className='text-danger'>5Mo</strong> au format <strong className='text-danger'>jpg</strong>)</small>:</label>
                     <center>
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
-                    <input type="file" id="image" name="image" />  
+                    <input type="file" id="image" name="image" accept=".jpg"/>  
                     <input type="hidden" name="id" value={produit.id} />      
                   </div>
                   <input value="Modifier l'image" type="submit" />
@@ -246,11 +245,11 @@ function ModifierProduit() {
                   {responseImage2 && <p className={`ReponseFormulaire text-center mt-3 ${responseImage2.status === 'success' ? 'success' : 'error'}`}>{responseImage2.message}</p>}
 
                   <div className='mb-4'>
-                    <label htmlFor="image">Seconde image actuelle <small>(Upload limité à <strong>5Mo</strong> max)</small>:</label>
+                    <label htmlFor="image">Seconde image actuelle <small>(Upload limité à <strong className='text-danger'>5Mo</strong> au format <strong className='text-danger'>jpg</strong>)</small>:</label>
                     <center>
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-2.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
-                    <input type="file" id="image2" name="image2"/>  
+                    <input type="file" id="image2" name="image2" accept=".jpg"/>  
                     <input type="hidden" name="id" value={produit.id}/>      
                   </div>
                   <input value="Modifier l'image" type="submit"/>
@@ -264,11 +263,11 @@ function ModifierProduit() {
                   {responseImage3 && <p className={`ReponseFormulaire text-center mt-3 ${responseImage3.status === 'success' ? 'success' : 'error'}`}>{responseImage3.message}</p>}
 
                   <div className='mb-4'>
-                    <label htmlFor="image">Troisième image actuelle <small>(Upload limité à <strong>5Mo</strong> max)</small>:</label>
+                    <label htmlFor="image">Troisième image actuelle <small>(Upload limité à <strong className='text-danger'>5Mo</strong> au format <strong className='text-danger'>jpg</strong>)</small>:</label>
                     <center>
                       <img className='mb-3' src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-3.jpg`} alt={produit.nom} style={{ width: '200px' }} />
                     </center>
-                    <input type="file" id="image3" name="image3"/>  
+                    <input type="file" id="image3" name="image3" accept=".jpg"/>  
                     <input type="hidden" name="id" value={produit.id} />      
                   </div>
                   <input value="Modifier l'image" type="submit" />

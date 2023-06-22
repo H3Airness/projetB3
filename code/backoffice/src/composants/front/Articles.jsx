@@ -75,7 +75,7 @@ const Articles = () => {
     }
     else
     {
-      if(window.confirm("Êtes-vous sûr de vouloir supprimer les articles sélectionnés ?")) {
+      if(window.confirm("Êtes-vous sûr de vouloir supprimer le ou les article(s) sélectionné(s) ?")) {
         axios.post('http://airneis.ddns.net:3000/produit/delete_articles.php', data)
           .then(response => {
             // Récupérer le message envoyé par le serveur
@@ -167,9 +167,25 @@ const Articles = () => {
           </div>  
 
           <div className="d-flex justify-content-center my-3 mx-5">
-            <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
+            {selectedImages.length > 1 ? (
+              <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer des articles</button>
+            ) : null}
+
+            {selectedImages.length === 1 ? (
+              <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger'>Supprimer un article</button>
+            ) : null}
+
+            {selectedImages.length === 0 ? (
+              <button onClick={handleDelete} className='boutonBackOfficeArticles btn btn-danger' disabled >Supprimer </button>
+            ) : null}
+
             <button onClick={handleSubmit} className='boutonBackOfficeArticles btn btn-primary'>Mettre en exposition</button>
-            <button onClick={handleModif} className="boutonBackOfficeArticles btn btn-warning">Modifier</button>
+
+            {selectedImages.length === 1 ? (
+              <button onClick={handleModif} className="boutonBackOfficeArticles btn btn-warning">Modifier</button>
+            ) : (
+              <button onClick={handleModif} className="boutonBackOfficeArticles btn btn-warning" disabled >Modifier</button>
+            )}
             <NavLink to="/ajouter-articles" className='boutonBackOfficeArticles btn btn-success'>Ajouter un nouveau Produit</NavLink>
           </div>
         </>
