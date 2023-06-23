@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import axios from 'axios';
 
@@ -21,7 +21,7 @@ const Gallery = () => {
     <Image
       source={{ uri: `http://airneis.ddns.net:3000/img/carousel/${item.id}.jpg` }}
       alt={item.id}
-      style={{ width: '100%', height: 200 }}
+      style={{ width: Dimensions.get('window').width, height: 200 }}
     />
   );
 
@@ -29,8 +29,8 @@ const Gallery = () => {
     <Carousel
       data={images}
       renderItem={renderCarouselItem}
-      sliderWidth={300}
-      itemWidth={300}
+      sliderWidth={Dimensions.get('window').width}
+      itemWidth={Dimensions.get('window').width}
       loop={true}
       autoplay={autoplay}
       autoplayInterval={3000}

@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, Image, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { dataContext } from "./context/dataContext";
+import MenuNavigation from "./front/MenuNavigation";
 
 const Menu = () => {
   const { nombreProduits } = useContext(dataContext);
   const navigation = useNavigation();
+  const [statusBarHeight, setStatusBarHeight] = useState(0);
+
+  useEffect(() => {
+    setStatusBarHeight(StatusBar.currentHeight);
+  }, []);
 
   return (
-    <View style={{ backgroundColor: "grey"}}>
+    <View style={{ backgroundColor: '#4e4d4d', marginTop: statusBarHeight}}>
       <View
         style={{
           flexDirection: "row",
@@ -19,34 +25,34 @@ const Menu = () => {
         }}
       >
         <TouchableOpacity
-          onPress={() => navigation.navigate("Accueil")}
+          onPress={() => navigation.navigate("accueil")}
           style={{ flexDirection: "row", alignItems: "center" }}
         >
           <Image
-            source={{ uri: "http://airneis.ddns.net:3000/img/logo.svg" }}
-            style={{ width: 30, height: 30, marginRight: 5 }}
+            source={require('../../assets/icon.png')}
+            style={{ width: 40, height: 40, marginLeft: 20, marginRight: 16, marginBottom:5, marginTop:5 }}
           />
-          <Text style={{ color: "white", fontSize: 16 }}>Àirneis</Text>
+          <Text style={{ fontFamily: 'marck', color: "white", fontSize: 25 }}> Àirneis</Text>
         </TouchableOpacity>
 
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Recherche")}
+            onPress={() => navigation.navigate("recherche")}
             style={{ marginRight: 10 }}
           >
             <Image
               source={{ uri: "http://airneis.ddns.net:3000/img/icon_recherche.png" }}
-              style={{ width: 20, height: 20 }}
+              style={{ marginTop: 10, width: 30, height: 30 }}
             />
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("Panier")}
+            onPress={() => navigation.navigate("panier")}
             style={{ position: "relative" }}
           >
             <Image
               source={{ uri: "http://airneis.ddns.net:3000/img/icon_panier.png" }}
-              style={{ width: 20, height: 20 }}
+              style={{ marginTop: 10, width: 30, height: 30 }}
             />
             {nombreProduits > 0 && (
               <View
@@ -66,6 +72,11 @@ const Menu = () => {
               </View>
             )}
           </TouchableOpacity>
+          <View>
+                
+                <MenuNavigation/>
+
+          </View>
         </View>
       </View>
     </View>
