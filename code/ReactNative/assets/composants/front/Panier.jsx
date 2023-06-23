@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/authContext';
 import { dataContext } from '../context/dataContext';
+import { styles } from '../../../Styles';
 
 const Panier = () => {
   const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } =
@@ -21,8 +22,8 @@ const Panier = () => {
 
   return (
     <>
-      <Text style={styles.heading}>Récapitulatif de mon Panier</Text>
-      <View style={styles.container}>
+      <Text style={styles.headingPanier}>Récapitulatif de mon Panier</Text>
+      <View style={styles.containerPanier}>
         <View style={styles.articleContainer}>
           {panier.length === 0 ? (
             <View style={styles.emptyCartContainer}>
@@ -118,128 +119,6 @@ const Panier = () => {
       </View>
     </>
   );
-};
-
-const styles = {
-  heading: {
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#fff',
-  },
-  articleContainer: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-  articleHeading: {
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  emptyCartContainer: {
-    alignItems: 'center',
-  },
-  catalogueButton: {
-    marginTop: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    backgroundColor: '#007bff',
-    borderRadius: 5,
-  },
-  catalogueButtonText: {
-    color: '#fff',
-  },
-  table: {
-    marginTop: 10,
-  },
-  tableRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  productImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 5,
-  },
-  productDetails: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  quantityButton: {
-    padding: 5,
-    borderWidth: 1,
-    borderColor: '#007bff',
-    borderRadius: 5,
-  },
-  quantityText: {
-    marginHorizontal: 10,
-  },
-  stockErrorText: {
-    color: 'red',
-  },
-  productPrice: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  deleteButton: {
-    padding: 5,
-    borderWidth: 1,
-    borderColor: 'red',
-    borderRadius: 5,
-  },
-  deleteButtonText: {
-    color: 'red',
-  },
-  priceContainer: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: '#f8f9fa',
-  },
-  priceHeading: {
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  totalPrice: {
-    marginTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-  },
-  totalPriceText: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  orderButton: {
-    marginTop: 10,
-    paddingVertical: 10,
-    backgroundColor: '#007bff',
-    borderRadius: 5,
-  },
-  orderButtonText: {
-    color: '#fff',
-    textAlign: 'center',
-  },
 };
 
 export default Panier;

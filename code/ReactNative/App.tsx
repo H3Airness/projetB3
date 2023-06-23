@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { DataContextProvider } from './assets/composants/context/dataContext';
 import Menu from './assets/composants/Menu';
 import { loadFonts } from './fonts';
-import { AuthProvider } from './assets/composants/context/authContext'; // Import du AuthProvider
+import { AuthProvider } from './assets/composants/context/authContext';
 
 import Accueil from './assets/composants/front/Accueil';
 import Categorie from './assets/composants/front/Categorie';
@@ -12,6 +12,8 @@ import Produit from './assets/composants/front/Produit';
 import Panier from './assets/composants/front/Panier';
 import Recherche from './assets/composants/front/Recherche';
 import CGU from './assets/composants/front/CGU';
+import MentionLegale from './assets/composants/front/MentionLegale';
+import Contact from './assets/composants/front/Contact';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +38,8 @@ function App() {
             <Stack.Screen name="panier" component={Panier} />
             <Stack.Screen name="recherche" component={Recherche} />
             <Stack.Screen name="cgu" component={CGU} />
+            <Stack.Screen name="mentionlegale" component={MentionLegale} />
+            <Stack.Screen name="contact" component={Contact} />
           </Stack.Navigator>
         </NavigationContainer>
       </DataContextProvider>

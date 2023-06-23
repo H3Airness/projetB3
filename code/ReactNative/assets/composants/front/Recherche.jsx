@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, Image } from 'react-native';
 import axios from 'axios';
 import { dataContext } from '../context/dataContext';
+import { styles } from '../../../Styles';
 
 const Recherche = () => {
   const [recherche, setRecherche] = useState('');
@@ -56,11 +57,11 @@ const Recherche = () => {
               style={styles.addButton}
               onPress={() => ajouter(item)}
             >
-              <Text style={styles.buttonText}>Ajouter au panier</Text>
+              <Text style={styles.buttonTextRecherche}>Ajouter au panier</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity style={styles.disabledButton} disabled>
-              <Text style={styles.buttonText}>Stock épuisé</Text>
+              <Text style={styles.buttonTextRecherche}>Stock épuisé</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -73,10 +74,10 @@ const Recherche = () => {
       <View style={styles.headingContainer}>
         <Text style={styles.heading}></Text>
       </View>
-      <View style={styles.container}>
+      <View style={styles.containerRecherche}>
         <View style={styles.searchContainer}>
           <TextInput
-            style={styles.input}
+            style={styles.inputRecherche}
             placeholder="Rechercher des produits"
             value={recherche}
             onChangeText={handleChange}
@@ -100,97 +101,6 @@ const Recherche = () => {
       />
     </>
   );
-};
-
-const styles = {
-  headingContainer: {
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  heading: {
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  container: {
-    padding: 16,
-    backgroundColor: '#FFF',
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#DDD',
-    paddingHorizontal: 8,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-  },
-  searchButton: {
-    marginLeft: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: '#007BFF',
-    borderRadius: 4,
-  },
-  searchButtonText: {
-    color: '#FFF',
-  },
-  alertContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  alertText: {
-    color: 'red',
-  },
-  listContainer: {
-    paddingBottom: 16,
-  },
-  card: {
-    flex: 0.5,
-    marginBottom: 16,
-    marginRight: 8,
-    marginLeft: 8,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  cardImage: {
-    width: '100%',
-    height: 200,
-  },
-  cardBody: {
-    padding: 8,
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  cardPrice: {
-    fontSize: 14,
-    color: 'blue',
-  },
-  buttonContainer: {
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  addButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: '#007BFF',
-    borderRadius: 4,
-  },
-  disabledButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: '#CCC',
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: '#FFF',
-  },
 };
 
 export default Recherche;

@@ -56,7 +56,7 @@ const Categorie = () => {
         </View>
       ))}
 
-      <View style={styles.container}>
+      <View style={styles.containerCategorie}>
         <View style={styles.row}>
           {produits.map(produit => (
             <TouchableOpacity

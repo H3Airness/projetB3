@@ -17,9 +17,17 @@ const MenuNavigation = () => {
     setMenuOpen(false);
   };
 
-  const handleMenuItemPress = () => {
+  const handleMenuItemPress = (menuItem) => {
     setMenuOpen(false);
-    // Ajoutez le code pour naviguer vers la page appropriée en fonction de l'élément de menu sélectionné
+    if (menuItem === 'CGU') {
+      navigation.navigate('cgu');
+    }
+    if (menuItem === 'MentionLegale') {
+      navigation.navigate('mentionlegale');
+    }
+    if (menuItem === 'Contact') {
+      navigation.navigate('contact');
+    }
   };
 
   useEffect(() => {
@@ -30,7 +38,6 @@ const MenuNavigation = () => {
     };
 
     const handleMenuClick = () => {
-      // Prevent the menu from closing when clicked inside
     };
 
     const subscription = navigation.addListener('blur', () => {
@@ -73,13 +80,14 @@ const MenuNavigation = () => {
                 <Text style={styles.menuLink}>Déconnexion</Text>
               </TouchableOpacity>
             )}
-            <TouchableOpacity style={styles.menuItem} onPress={handleMenuItemPress }>
+            <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('CGU')}>
               <Text style={styles.menuLink}>CGU</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem} onPress={handleMenuItemPress}>
+
+            <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('MentionLegale')}>
               <Text style={styles.menuLink}>Mentions légales</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem} onPress={handleMenuItemPress}>
+            <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('Contact')}>
               <Text style={styles.menuLink}>Contact</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.menuItem} onPress={handleMenuItemPress}>
