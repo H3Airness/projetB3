@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Carousel from 'react-native-snap-carousel';
@@ -21,7 +21,6 @@ function Produit() {
   const { params } = useRoute();
   const { id } = params;
 
-  const [categories, setCategories] = useState([]);
   const [produit, setProduct] = useState(null);
   const [produits, setProducts] = useState([]);
   const { ajouter } = useContext(dataContext);
@@ -34,15 +33,6 @@ function Produit() {
       .then((data) => {
         console.log(data.categorie);
         setProduct(data);
-        if (data && data.categorie) {
-          axios
-            .get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${data.categorie}`)
-            .then((response) => {
-              console.log(response.data);
-              setCategories(response.data);
-            })
-            .catch((error) => console.log(error));
-        }
       })
       .catch((error) => console.error(error));
   }, [id]);
@@ -68,16 +58,9 @@ function Produit() {
   }
 
   return (
-    <View>
-      {categories.length > 0 && categories[0] && (
+    <ScrollView style={styles.background}>
+      <View>
         <>
-          <TouchableOpacity onPress={() => navigation.navigate('Categorie', { categorie: categories[0].id_categorie })}>
-            <Image
-              source={{ uri: `http://airneis.ddns.net:3000/img_categorie/${categories.id_categorie}banniere.jpg` }}
-              style={styles.banniereImage}
-            />
-          </TouchableOpacity>
-
           <View style={styles.catContainer}>
             <View style={{ alignItems: 'center' }}>
               <Carousel
@@ -88,11 +71,11 @@ function Produit() {
                 ]}
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={handleInteraction}>
-                    <Image source={{ uri: item.source }} style={{ width: Dimensions.get('window').width-100, height: Dimensions.get('window').width-100 }} />
+                    <Image source={{ uri: item.source }} style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').width }} />
                   </TouchableOpacity>
                 )}
-                sliderWidth={300}
-                itemWidth={200}
+                sliderWidth={Dimensions.get('window').width}
+                itemWidth={Dimensions.get('window').width}
                 autoplay={autoplay}
                 autoplayInterval={5000}
                 loop
@@ -102,26 +85,27 @@ function Produit() {
             </View>
 
             <View style={styles.descriptionContainer}>
-              <View style={styles.catInfoContainer}>
-                <View style={styles.prix}><Text>{produit.prix}€</Text></View>
-                <View style={styles.titreProduit}><Text>{produit.nom}</Text></View>
+              <View style={styles.titreProduit}>
+                <Text style={styles.titre}>{produit.nom}</Text>
+                <Text style={styles.prix}>{produit.prix}€</Text>
               </View>
 
-              <View style={styles.stockContainer}>
+
+              <View>
                 {produit.stock > 1 ? (
-                  <Text>En stock</Text>
+                  <Text style={{ color: 'green' }}>En stock</Text>
                 ) : null}
 
-                {produit.stock === 1 ? (
-                  <Text >Plus que 1 produit en stock !</Text>
+                {produit.stock == 1 ? (
+                  <Text style={{ color: 'red' }}>Plus que 1 produit en stock !</Text>
                 ) : null}
 
-                {produit.stock === 0 ? (
-                  <Text>Stock épuisé</Text>
+                {produit.stock == 0 ? (
+                  <Text style={{ color: 'red' }}>Stock épuisé</Text>
                 ) : null}
               </View>
 
-              <Text>{produit.description}</Text>
+              <Text style={styles.descriptionProduit}>{produit.description}</Text>
 
               <View style={styles.buttonContainer}>
                 {produit.stock > 0 ? (
@@ -137,7 +121,7 @@ function Produit() {
             </View>
           </View>
 
-          <Text style={{marginTop: 100}}>Produits similaires</Text>
+          <Text style={styles.produitsSimilaires}>Produits similaires</Text>
 
           <View style={styles.container}>
             <View style={styles.row}>
@@ -146,7 +130,7 @@ function Produit() {
                   <TouchableOpacity onPress={() => navigation.navigate('produit', { id: produit.id })}>
                     <Image
                       source={{ uri: `http://airneis.ddns.net:3000/img_produit/${produit.id}` }}
-                      style={{ width: '100%' }}
+                      style={styles.produitImage}
                       alt={produit.titre}
                     />
                   </TouchableOpacity>
@@ -170,8 +154,8 @@ function Produit() {
             </View>
           </View>
         </>
-      )}
-    </View>
+      </View>
+    </ScrollView>
   );
 }
 

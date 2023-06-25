@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, FlatList, Image } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import { dataContext } from '../context/dataContext';
 import { styles } from '../../../Styles';
 
 const Recherche = () => {
+  const navigation = useNavigation();
   const [recherche, setRecherche] = useState('');
   const [donnees, setDonnees] = useState([]);
   const [resultats, setResultats] = useState([]);
@@ -48,32 +50,27 @@ const Recherche = () => {
           resizeMode="cover"
         />
       </TouchableOpacity>
-      <View style={styles.cardBody}>
-        <Text style={styles.cardTitle}>{item.nom}</Text>
-        <Text style={styles.cardPrice}>{item.prix} €</Text>
-        <View style={styles.buttonContainer}>
-          {item.stock > 0 ? (
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={() => ajouter(item)}
-            >
-              <Text style={styles.buttonTextRecherche}>Ajouter au panier</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={styles.disabledButton} disabled>
-              <Text style={styles.buttonTextRecherche}>Stock épuisé</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+      <View style={styles.produitInfo}>
+        <Text style={styles.produitTitre}>{item.nom}</Text>
+        <Text style={styles.produitPrix}>{item.prix}€</Text>
+        {item.stock > 0 ? (
+          <TouchableOpacity
+            onPress={() => ajouter(item)}
+            style={styles.ajouterButton}
+          >
+            <Text style={styles.ajouterButtonText}>Ajouter au panier</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.disabledButton} disabled>
+            <Text style={styles.stockEpuiseButtonText}>Stock épuisé</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
 
   return (
     <>
-      <View style={styles.headingContainer}>
-        <Text style={styles.heading}></Text>
-      </View>
       <View style={styles.containerRecherche}>
         <View style={styles.searchContainer}>
           <TextInput

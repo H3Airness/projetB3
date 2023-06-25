@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/authContext';
 import { dataContext } from '../context/dataContext';
@@ -22,6 +22,7 @@ const Panier = () => {
 
   return (
     <>
+    <ScrollView>
       <Text style={styles.headingPanier}>Récapitulatif de mon Panier</Text>
       <View style={styles.containerPanier}>
         <View style={styles.articleContainer}>
@@ -117,6 +118,7 @@ const Panier = () => {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </>
   );
 };

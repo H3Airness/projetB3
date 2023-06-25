@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
   },
   produitInfo: {
     padding: 10,
+    backgroundColor: 'white',
   },
   produitTitre: {
     fontSize: 16,
@@ -44,9 +45,10 @@ export const styles = StyleSheet.create({
   },
   ajouterButtonContainer: {
     marginTop: 10,
+
   },
   ajouterButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#007bff',
     paddingVertical: 8,
     borderRadius: 5,
     alignItems: 'center',
@@ -64,6 +66,7 @@ export const styles = StyleSheet.create({
   stockEpuiseButtonText: {
     color: 'white',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 
   containerCgu: {
@@ -129,7 +132,7 @@ export const styles = StyleSheet.create({
   },
   card: {
     flex: 0.5,
-    marginBottom: 16,
+    marginTop: 16,
     marginRight: 8,
     marginLeft: 8,
     backgroundColor: 'white',
@@ -291,11 +294,17 @@ export const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
-
-  contactTitre: {
+  Contact: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+  },
+  contactTitre: {
+    marginTop: 20,
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
   },
   catContact: {
     flexDirection: 'row',
@@ -304,6 +313,8 @@ export const styles = StyleSheet.create({
   },
   contactLog: {
     fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 17,
     marginBottom: 10,
   },
   iconContact: {
@@ -313,7 +324,9 @@ export const styles = StyleSheet.create({
   },
   contactCard: {
     flex: 1,
+    marginTop: 40,
     marginLeft: 20,
+    marginRight: 20,
   },
   cardHeader: {
     backgroundColor: '#eaeaea',
@@ -340,5 +353,144 @@ export const styles = StyleSheet.create({
   reponseFormulaire: {
     textAlign: 'center',
     marginTop: 10,
+  },
+  descriptionContainer: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+  },
+  titreProduit: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  titre: {
+    flex: 1,
+    textAlign: 'left',
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  prix: {
+    flex: 0,
+    textAlign: 'right',
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  descriptionProduit: {
+    marginTop: 20,
+    fontWeight: 'bold',
+  },
+
+  buttonContainer: {
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 20,
+    fontWeight: 'bold',
+  },
+
+  produitsSimilaires: {
+    marginTop: 40,
+    marginBottom: 20,
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+
+
+  background: {
+    backgroundColor: 'white',
+  },
+
+  loginCard: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
+
+  loginTitre: {
+    marginTop: 20,
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+
+  compteNav: {
+    color: 'blue',
+    textAlign: 'center',
+  },
+
+  textCenter: {
+    marginTop: 50,
+  },
+
+  boutonConnexion: {
+    backgroundColor: 'blue',
+    marginTop: 20,
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+
+
+
+  menuNavigation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconContainer: {
+    padding: 10,
+  },
+  menuIcon: {
+    width: 30,
+    height: 30,
+  },
+  menu: {
+    position: 'absolute',
+    top: 50,
+    right: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    padding: 10,
+    zIndex: 1,
+  },
+  openMenu: {
+    display: 'flex',
+    backgroundColor: '#2e2b2b',
+  },
+  menuItem: {
+    marginBottom: 10,
+  },
+  menuLink: {
+    fontSize: 16,
+    color: 'white',
+  },
+  containerPropos: {
+    flex: 1,
+    padding: 16,
+  },
+  centerPropos: {
+    alignItems: 'center',
+  },
+  logoPropos: {
+    width: 80,
+    height: 80,
+    marginBottom: 10,
+  },
+  titrePropos: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  btnPropos: {
+    backgroundColor: 'green',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  btnTextPropos: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });

@@ -1,0 +1,120 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { styles } from '../../../Styles';
+
+const Inscription = () => {
+  const navigation = useNavigation();
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('nom', nom);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('password2', confirmPassword);
+
+    try {
+      const response = await axios.post('http://airneis.ddns.net:3000/inscription.php', formData, {});
+
+      if (response.data.status === 'success') {
+        const message = response.data.message;
+        setMessage(message);
+        setTimeout(() => {
+          navigation.navigate('/connexion');
+        }, 3000);
+      } else if (response.data.status === 'error') {
+        const error = response.data.error;
+        setError(error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [nom, setNom] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  return (
+    <View>
+      <View style={styles.loginCard}>
+        <View>
+          <View style={styles.log}>
+            <Text style={styles.loginTitre}>Inscription</Text>
+          </View>
+        </View>
+        <View>
+          <View style={styles.message}>
+            {message && <Text style={styles.successText}>{message}</Text>}
+          </View>
+          <View style={styles.error}>
+            {error && <Text style={styles.errorText}>{error}</Text>}
+          </View>
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Nom:</Text>
+          <TextInput
+            style={styles.input}
+            value={nom}
+            onChangeText={setNom}
+            placeholder="Nom"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Email:</Text>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Mot de passe:</Text>
+          <TextInput
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Mot de passe"
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Confirmer mot de passe:</Text>
+          <TextInput
+            style={styles.input}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            placeholder="Confirmer mot de passe"
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmit}>
+            <Text style={styles.ajouterButtonText}>S'inscrire</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.textCenter}>
+          <TouchableOpacity onPress={() => navigation.navigate('connexion')}>
+            <Text style={styles.compteNav}>Vous avez déjà un compte ?</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default Inscription;
