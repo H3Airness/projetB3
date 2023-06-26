@@ -17,8 +17,15 @@ const Connexion = () => {
     formData.append('email', email);
     formData.append('password', password);
 
+    console.log('formData:', formData);
+
     try {
-      const response = await axios.post('http://airneis.ddns.net:3000/connexion.php', formData, {});
+      const response = await axios.post('http://airneis.ddns.net:3000/connexion.php', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        mode: 'cors',
+      });
 
       if (response.data.status === 'success') {
         const message = response.data.message;

@@ -17,7 +17,13 @@ const Inscription = () => {
     formData.append('password2', confirmPassword);
 
     try {
-      const response = await axios.post('http://airneis.ddns.net:3000/inscription.php', formData, {});
+      const response = await axios.post('http://airneis.ddns.net:3000/inscription.php', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        mode: 'cors',
+
+      });
 
       if (response.data.status === 'success') {
         const message = response.data.message;

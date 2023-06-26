@@ -176,8 +176,11 @@ export const styles = StyleSheet.create({
   },
 
   headingPanier: {
+    marginTop: 20,
     marginBottom: 10,
     textAlign: 'center',
+    backgroundColor: 'white',
+    fontSize: 20,
   },
   containerPanier: {
     flex: 1,
@@ -462,7 +465,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   menuLink: {
-    fontSize: 16,
+    fontSize: 22,
     color: 'white',
   },
   containerPropos: {

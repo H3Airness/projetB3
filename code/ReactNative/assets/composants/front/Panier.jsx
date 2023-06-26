@@ -22,7 +22,7 @@ const Panier = () => {
 
   return (
     <>
-    <ScrollView>
+    <ScrollView style={styles.background}>
       <Text style={styles.headingPanier}>Récapitulatif de mon Panier</Text>
       <View style={styles.containerPanier}>
         <View style={styles.articleContainer}>
