@@ -57,7 +57,7 @@ const Accueil = () => {
             <div className="col mb-5 mt-5 img1 img2" key={index}>
               <Link to={`/Produit/${image.id}`}>
                 <img id='rounded-img'  width={400} height={400} src={`http://airneis.ddns.net:3000/img_produit/${image.id}`} alt={`image-${index}`} />
-                <p className='categorie'>{image.nom}	&emsp; -	&emsp;{image.prix}€</p>
+                
               </Link>
             </div>
           ))}
