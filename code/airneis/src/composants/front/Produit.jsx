@@ -89,7 +89,7 @@ function Produit() {
             <div className='description'>
               <div className="cat d-flex justify-content-between">
                 <div className="prix">{produit.prix}€</div>
-                <div className="titreProduit">{produit.nom}</div>
+                <div className="titreProduit">&ensp;&ensp;{produit.nom}</div>
               </div>
 
               <div className="d-flex justify-content-end">
