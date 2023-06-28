@@ -1,48 +1,48 @@
 import axios from "axios";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
-function Connexion() {
+function Connexion({ previousLocation }) {
   const navigate = useNavigate();
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const location = useLocation();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const authContext = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
 
     let formType = {};
     formData.forEach((value, key) => (formType[key] = formData.get(key)));
 
-    async function postData() {
-      try {
-        const response = await axios.post( 
-          "http://airneis.ddns.net:3000/connexion.php",
-          formType,
-          {}
-        );
-        if (response.data.status === "success") { 
-          const message = response.data.message;
-          setMessage(message);
-          setTimeout(() => {
-           navigate('/');
-          }, 1000);
-          authContext.login(response.data.accountId);
-        }
-        if (response.data.status === "error") {
-          const error = response.data.error;
-          setError(error);
-        }
-      } catch (error) {
-        console.log(error);
+    try {
+      const response = await axios.post(
+        "http://airneis.ddns.net:3000/connexion.php",
+        formType,
+        {}
+      );
+      if (response.data.status === "success") {
+        const message = response.data.message;
+        setMessage(message);
+        setTimeout(() => {
+          if (previousLocation) {
+            navigate(previousLocation);
+          } else {
+            navigate("/");
+          }
+        }, 2000);
+        authContext.login(response.data.accountId);
       }
+      if (response.data.status === "error") {
+        const error = response.data.error;
+        setError(error);
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    postData();
   };
 
   return (
@@ -68,14 +68,22 @@ function Connexion() {
           <div className="log">Connexion</div>
         </div>
         <form onSubmit={handleSubmit}>
-          <div>      
-            <div className='mt-4'id='message'>
-              {message && <p className='alert alert-success text-center' id='message'>{message}</p>}
+          <div>
+            <div className="mt-4" id="message">
+              {message && (
+                <p className="alert alert-success text-center" id="message">
+                  {message}
+                </p>
+              )}
             </div>
-            <div className='mt-4'id='error'>
-              {error && <p className='alert alert-danger text-center' id='error'>{error}</p>}
+            <div className="mt-4" id="error">
+              {error && (
+                <p className="alert alert-danger text-center" id="error">
+                  {error}
+                </p>
+              )}
             </div>
-          </div> 
+          </div>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input required="" name="email" id="email" type="text" />

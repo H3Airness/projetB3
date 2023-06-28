@@ -45,7 +45,6 @@ export function DataContextProvider({ children }) {
   }
 
   function getTotalProduit(produit) {
-    console.log("Prix du produit:", (produit.prix));
     const prix = parseFloat(produit.prix) || 0;
     return prix * produit.quantite;
   }

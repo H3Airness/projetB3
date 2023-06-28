@@ -1,20 +1,13 @@
 import { useContext } from "react";
 import { dataContext } from "../context/dataContext";
 import { useNavigate, NavLink } from "react-router-dom";
-import { AuthContext } from "../context/authContext";
 
 const Panier = () => {
   const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } = useContext(dataContext);
-  const { isLoggedIn } = useContext(AuthContext);
-  console.log("Contenu du panier:", panier);
   const navigate = useNavigate();
 
   const handlePayer = () => {
-    if (!isLoggedIn) {
-      alert("Veuillez vous connecter !");
-    } else {
-      navigate("/Livraison");
-    }
+    navigate("/Livraison");
   };
 
   return (
