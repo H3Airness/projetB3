@@ -107,9 +107,9 @@ const UserAdresses = ({ accountId }) => {
         setEditModeLivraison(false);
         setAccountInfo({
           ...accountInfo,
-          adresse_livraison: formDataLivraison.adresseLivraison,
-          code_postal_livraison: formDataLivraison.codePostalLivraison,
-          ville_livraison: formDataLivraison.villeLivraison,
+          adresse1: formDataLivraison.adresseLivraison,
+          code_postal: formDataLivraison.codePostalLivraison,
+          ville: formDataLivraison.villeLivraison,
           pays: formDataLivraison.pays,
         });
         setSuccessMessageLivraison('Les informations de livraison ont été mises à jour avec succès.');
