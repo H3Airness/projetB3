@@ -9,6 +9,7 @@ function MesParametres() {
   const [accountInfo, setAccountInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isAddressMode, setIsAddressMode] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -52,10 +53,16 @@ function MesParametres() {
 
   const handleEditPassword = () => {
     setIsEditMode(true);
+    setIsAddressMode(false);
     setOldPassword("");
     setNewPassword("");
     setConfirmPassword("");
     setPasswordError("");
+  };
+
+  const handleAddresses = () => {
+    setIsAddressMode(true);
+    setIsEditMode(false);
   };
 
   const handleSubmitPassword = async (e) => {
@@ -84,7 +91,6 @@ function MesParametres() {
           setIsEditMode(false);
           setPasswordError("");
         } else {
-          // Erreur lors de la modification du mot de passe
           setPasswordError(response.data.message);
         }
       } catch (error) {
@@ -115,15 +121,10 @@ function MesParametres() {
         <div className="mon-compte-container">
           <div className="sidebar">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
-            <div className="form-group">
-              <label className="label-nom">Nom:</label>
-              <p className="form-control">{accountInfo.nom}</p>
-            </div>
-            <div className="form-group">
-              <label className="label-email">E-mail:</label>
-              <p className="form-control">{accountInfo.email}</p>
-            </div>
-            {isEditMode ? (
+            {isAddressMode ? (
+              // Remplacez ceci par votre code pour la partie "Mes adresses"
+              <div>Mes adresses</div>
+            ) : isEditMode ? (
               <form onSubmit={handleSubmitPassword}>
                 <div className="form-group">
                   <label className="label-mdp">Ancien mot de passe:</label>
@@ -165,6 +166,14 @@ function MesParametres() {
               </form>
             ) : (
               <>
+                <div className="form-group">
+                  <label className="label-nom">Nom:</label>
+                  <p className="form-control">{accountInfo.nom}</p>
+                </div>
+                <div className="form-group">
+                  <label className="label-email">E-mail:</label>
+                  <p className="form-control">{accountInfo.email}</p>
+                </div>
                 <div className="button-group">
                   <label className="label-mdp">Mot de passe:</label>
                   <p className="form-control password">••••••••</p>
@@ -176,8 +185,12 @@ function MesParametres() {
                   </button>
                 </div>
                 <div className="button-group">
-                  <button className="btn btn-primary commandes">
+                  <br/>
+                  <button className="btn btn-primary">
                     Mes commandes
+                  </button>
+                  <button className="btn btn-primary" onClick={handleAddresses}>
+                    Mes adresses
                   </button>
                 </div>
               </>
