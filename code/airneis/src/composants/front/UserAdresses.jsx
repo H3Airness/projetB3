@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../context/authContext";
 
-const UserAdresses = ({ accountId }) => {
+function UserAdresses () {
   const [loading, setLoading] = useState(true);
+  const { accountId } = useContext(AuthContext);
   const [accountInfo, setAccountInfo] = useState(null);
   const [editModeLivraison, setEditModeLivraison] = useState(false);
   const [formDataLivraison, setFormDataLivraison] = useState({
@@ -176,19 +178,19 @@ const UserAdresses = ({ accountId }) => {
           <form onSubmit={handleSubmitLivraison}>
             <div>
               <label>Adresse:</label>
-              <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} onChange={handleInputChangeLivraison} />
+              <input type='text' name='adresseLivraison' value={formDataLivraison.AdresseLivraison} defaultValue={accountInfo.adresse1} onChange={handleInputChangeLivraison} />
             </div>
             <div>
               <label>Code postal:</label>
-              <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} />
+              <input type='text' name='codePostalLivraison' value={formDataLivraison.code_postal} defaultValue={accountInfo.code_postal} onChange={handleInputChangeLivraison} />
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} onChange={handleInputChangeLivraison} />
+              <input type='text' name='villeLivraison' value={formDataLivraison.ville} defaultValue={accountInfo.ville} onChange={handleInputChangeLivraison} />
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='pays' value={formDataLivraison.pays} onChange={handleInputChangeLivraison} />
+              <input type='text' name='pays' value={formDataLivraison.pays} defaultValue={accountInfo.pays} onChange={handleInputChangeLivraison} />
             </div>
             <br />
             <div className='text-center'>
@@ -230,9 +232,9 @@ const UserAdresses = ({ accountId }) => {
         <div>
           <div>
             <h3>Adresse de livraison</h3>
-            <p>Adresse: {accountInfo.adresse_livraison}</p>
-            <p>Code postal: {accountInfo.code_postal_livraison}</p>
-            <p>Ville: {accountInfo.ville_livraison}</p>
+            <p>Adresse: {accountInfo.adresse1}</p>
+            <p>Code postal: {accountInfo.code_postal}</p>
+            <p>Ville: {accountInfo.ville}</p>
             <p>Pays: {accountInfo.pays}</p>
             <div className='text-center'>
               <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
