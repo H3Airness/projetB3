@@ -5,13 +5,13 @@ const UserAdresses = ({ accountId }) => {
   const [loading, setLoading] = useState(true);
   const [accountInfo, setAccountInfo] = useState(null);
   const [editModeLivraison, setEditModeLivraison] = useState(false);
-  const [editModeFacturation, setEditModeFacturation] = useState(false);
   const [formDataLivraison, setFormDataLivraison] = useState({
     adresseLivraison: '',
     codePostalLivraison: '',
     villeLivraison: '',
     pays: '',
   });
+  const [editModeFacturation, setEditModeFacturation] = useState(false);
   const [formDataFacturation, setFormDataFacturation] = useState({
     adresseFacturation: '',
     codePostalFacturation: '',
@@ -97,7 +97,7 @@ const UserAdresses = ({ accountId }) => {
           ville_livraison: formDataLivraison.villeLivraison,
           pays: formDataLivraison.pays,
         });
-        setSuccessMessageLivraison('Les informations de livraison ont été mises à jour avec succès');
+        setSuccessMessageLivraison('Les informations de livraison ont été mises à jour avec succès.');
         setTimeout(() => {
           setSuccessMessageLivraison(null);
         }, 2000);
@@ -129,7 +129,7 @@ const UserAdresses = ({ accountId }) => {
           ville_facturation: formDataFacturation.villeFacturation,
           pays_facturation: formDataFacturation.paysFacturation,
         });
-        setSuccessMessageFacturation('Les informations de facturation ont été mises à jour avec succès');
+        setSuccessMessageFacturation('Les informations de facturation ont été mises à jour avec succès.');
         setTimeout(() => {
           setSuccessMessageFacturation(null);
         }, 2000);
@@ -152,6 +152,8 @@ const UserAdresses = ({ accountId }) => {
   return (
     <div>
       <h2 className='text-center'>Carnet d'adresses</h2>
+      {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
+      {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
       <br />
       <div>
         <h3>Adresse de livraison</h3>
@@ -184,7 +186,7 @@ const UserAdresses = ({ accountId }) => {
             <p>Code postal: {accountInfo.code_postal_livraison}</p>
             <p>Ville: {accountInfo.ville_livraison}</p>
             <p>Pays: {accountInfo.pays}</p>
-            <button onClick={handleEditLivraison} className='btn btn-primary'>Modifier mon adresse de livraison</button>
+            <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
           </div>
         )}
       </div>
@@ -219,12 +221,10 @@ const UserAdresses = ({ accountId }) => {
             <p>Code postal: {accountInfo.code_postal_facturation}</p>
             <p>Ville: {accountInfo.ville_facturation}</p>
             <p>Pays: {accountInfo.pays_facturation}</p>
-            <button onClick={handleEditFacturation} className='btn btn-primary'>Modifier mon adresse de facturation</button>
+            <button className='btn btn-primary' onClick={handleEditFacturation}>Modifier mon adresse de facturation</button>
           </div>
         )}
       </div>
-      {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
-      {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
     </div>
   );
 };
