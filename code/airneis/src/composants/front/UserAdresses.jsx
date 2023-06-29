@@ -257,7 +257,7 @@ const UserAdresses = ({ accountId }) => {
         </div>
       )}
       <div className='text-right'>
-        <Link to='/mesParametres' className='btn btn-secondary'>Retour</Link>
+        <Link to='/' className='btn btn-secondary'>Retour</Link>
       </div>
     </div>
   );
