@@ -51,21 +51,35 @@ const UserAdresses = ({ accountId }) => {
 
   const handleEditLivraison = () => {
     setEditModeLivraison(true);
+    setEditModeFacturation(false); // Assure que seule la partie Livraison est en mode édition
     setFormDataLivraison({
       adresseLivraison: accountInfo.adresse_livraison,
       codePostalLivraison: accountInfo.code_postal_livraison,
       villeLivraison: accountInfo.ville_livraison,
       pays: accountInfo.pays,
     });
+    setFormDataFacturation({
+      adresseFacturation: '',
+      codePostalFacturation: '',
+      villeFacturation: '',
+      paysFacturation: '',
+    });
   };
 
   const handleEditFacturation = () => {
     setEditModeFacturation(true);
+    setEditModeLivraison(false); // Assure que seule la partie Facturation est en mode édition
     setFormDataFacturation({
       adresseFacturation: accountInfo.adresse_facturation,
       codePostalFacturation: accountInfo.code_postal_facturation,
       villeFacturation: accountInfo.ville_facturation,
       paysFacturation: accountInfo.pays_facturation,
+    });
+    setFormDataLivraison({
+      adresseLivraison: '',
+      codePostalLivraison: '',
+      villeLivraison: '',
+      pays: '',
     });
   };
 
@@ -155,9 +169,9 @@ const UserAdresses = ({ accountId }) => {
       {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
       {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
       <br />
-      <div>
-        <h3>Adresse de livraison</h3>
-        {editModeLivraison ? (
+      {editModeLivraison && (
+        <div>
+          <h3>Adresse de livraison</h3>
           <form onSubmit={handleSubmitLivraison}>
             <div>
               <label>Adresse:</label>
@@ -175,24 +189,17 @@ const UserAdresses = ({ accountId }) => {
               <label>Pays:</label>
               <input type='text' name='pays' value={formDataLivraison.pays} onChange={handleInputChangeLivraison} />
             </div>
-            <div>
+            <br />
+            <div className='text-center'>
               <button type='submit' className='btn btn-primary'>Enregistrer</button>
               <button type='button' className='btn btn-secondary' onClick={handleCancelLivraison}>Annuler</button>
             </div>
           </form>
-        ) : (
-          <div>
-            <p>Adresse: {accountInfo.adresse_livraison}</p>
-            <p>Code postal: {accountInfo.code_postal_livraison}</p>
-            <p>Ville: {accountInfo.ville_livraison}</p>
-            <p>Pays: {accountInfo.pays}</p>
-            <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
-          </div>
-        )}
-      </div>
-      <div>
-        <h3>Adresse de facturation</h3>
-        {editModeFacturation ? (
+        </div>
+      )}
+      {editModeFacturation && (
+        <div>
+          <h3>Adresse de facturation</h3>
           <form onSubmit={handleSubmitFacturation}>
             <div>
               <label>Adresse:</label>
@@ -210,21 +217,44 @@ const UserAdresses = ({ accountId }) => {
               <label>Pays:</label>
               <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} />
             </div>
-            <div>
+            <br />
+            <div className='text-center'>
               <button type='submit' className='btn btn-primary'>Enregistrer</button>
               <button type='button' className='btn btn-secondary' onClick={handleCancelFacturation}>Annuler</button>
             </div>
           </form>
-        ) : (
+        </div>
+      )}
+      {!editModeLivraison && !editModeFacturation && (
+        <div>
           <div>
-            <p>Adresse: {accountInfo.adresse_facturation}</p>
-            <p>Code postal: {accountInfo.code_postal_facturation}</p>
-            <p>Ville: {accountInfo.ville_facturation}</p>
-            <p>Pays: {accountInfo.pays_facturation}</p>
-            <button className='btn btn-primary' onClick={handleEditFacturation}>Modifier mon adresse de facturation</button>
+            <h3>Adresse de livraison</h3>
+            <p>Adresse: {accountInfo.adresse_livraison}</p>
+            <p>Code postal: {accountInfo.code_postal_livraison}</p>
+            <p>Ville: {accountInfo.ville_livraison}</p>
+            <p>Pays: {accountInfo.pays}</p>
+            <div className='text-center'>
+              <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
+            </div>
           </div>
-        )}
-      </div>
+          <div>
+            <h3>Adresse de facturation</h3>
+            {accountInfo.adresse_facturation ? (
+              <div>
+                <p>Adresse: {accountInfo.adresse_facturation}</p>
+                <p>Code postal: {accountInfo.code_postal_facturation}</p>
+                <p>Ville: {accountInfo.ville_facturation}</p>
+                <p>Pays: {accountInfo.pays_facturation}</p>
+                <div className='text-center'>
+                  <button className='btn btn-primary' onClick={handleEditFacturation}>Modifier mon adresse de facturation</button>
+                </div>
+              </div>
+            ) : (
+              <p>Aucune information de facturation n'est disponible pour ce compte.</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
