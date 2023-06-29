@@ -186,7 +186,7 @@ function MesParametres() {
                 <div className="button-group">
                   <br/>
                   <button className="btn btn-primary">
-                    Mes commandes
+                    Mes moyens de paiements
                   </button>
                   <button className="btn btn-primary" onClick={handleAddresses}>
                     Mes adresses
