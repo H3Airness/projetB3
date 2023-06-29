@@ -197,19 +197,19 @@ function UserAdresses () {
           <form onSubmit={handleSubmitLivraison}>
             <div>
               <label>Adresse:</label>
-              <input type='text' name='adresseLivraison' value={formDataLivraison.AdresseLivraison} defaultValue={accountInfo.adresse1} onChange={handleInputChangeLivraison} />
+              <input type='text' name='adresseLivraison' value={formDataLivraison.AdresseLivraison} defaultValue={accountInfo.adresse1} onChange={handleInputChangeLivraison} required/>
             </div>
             <div>
               <label>Code postal:</label>
-              <input type='text' name='codePostalLivraison' value={formDataLivraison.code_postal} defaultValue={accountInfo.code_postal} onChange={handleInputChangeLivraison} />
+              <input type='text' name='codePostalLivraison' value={formDataLivraison.code_postal} defaultValue={accountInfo.code_postal} onChange={handleInputChangeLivraison} required/>
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeLivraison' value={formDataLivraison.ville} defaultValue={accountInfo.ville} onChange={handleInputChangeLivraison} />
+              <input type='text' name='villeLivraison' value={formDataLivraison.ville} defaultValue={accountInfo.ville} onChange={handleInputChangeLivraison} required/>
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='pays' value={formDataLivraison.pays} defaultValue={accountInfo.pays} onChange={handleInputChangeLivraison} />
+              <input type='text' name='pays' value={formDataLivraison.pays} defaultValue={accountInfo.pays} onChange={handleInputChangeLivraison} required/>
             </div>
             <br />
             <div className='text-center'>
@@ -225,19 +225,19 @@ function UserAdresses () {
           <form onSubmit={handleSubmitFacturation}>
             <div>
               <label>Adresse:</label>
-              <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} defaultValue={accountFac.adresse_facturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} defaultValue={accountFac.adresse_facturation} onChange={handleInputChangeFacturation} required />
             </div>
             <div>
               <label>Code postal:</label>
-              <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} defaultValue={accountFac.code_postal_facturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} defaultValue={accountFac.code_postal_facturation} onChange={handleInputChangeFacturation} required />
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} defaultValue={accountFac.ville_facturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} defaultValue={accountFac.ville_facturation} onChange={handleInputChangeFacturation} required/>
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} defaultValue={accountFac.pays_facturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} defaultValue={accountFac.pays_facturation} onChange={handleInputChangeFacturation}required />
             </div>
             <br />
             <div className='text-center'>
