@@ -4,13 +4,22 @@ import axios from 'axios';
 const UserAdresses = ({ accountId }) => {
   const [loading, setLoading] = useState(true);
   const [accountInfo, setAccountInfo] = useState(null);
-  const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
+  const [editModeLivraison, setEditModeLivraison] = useState(false);
+  const [editModeFacturation, setEditModeFacturation] = useState(false);
+  const [formDataLivraison, setFormDataLivraison] = useState({
     adresseLivraison: '',
     codePostalLivraison: '',
     villeLivraison: '',
     pays: '',
   });
+  const [formDataFacturation, setFormDataFacturation] = useState({
+    adresseFacturation: '',
+    codePostalFacturation: '',
+    villeFacturation: '',
+    paysFacturation: '',
+  });
+  const [successMessageLivraison, setSuccessMessageLivraison] = useState(null);
+  const [successMessageFacturation, setSuccessMessageFacturation] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,13 +41,17 @@ const UserAdresses = ({ accountId }) => {
     fetchData();
   }, [accountId]);
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleInputChangeLivraison = (e) => {
+    setFormDataLivraison({ ...formDataLivraison, [e.target.name]: e.target.value });
   };
 
-  const handleEdit = () => {
-    setEditMode(true);
-    setFormData({
+  const handleInputChangeFacturation = (e) => {
+    setFormDataFacturation({ ...formDataFacturation, [e.target.name]: e.target.value });
+  };
+
+  const handleEditLivraison = () => {
+    setEditModeLivraison(true);
+    setFormDataLivraison({
       adresseLivraison: accountInfo.adresse_livraison,
       codePostalLivraison: accountInfo.code_postal_livraison,
       villeLivraison: accountInfo.ville_livraison,
@@ -46,30 +59,48 @@ const UserAdresses = ({ accountId }) => {
     });
   };
 
-  const handleCancel = () => {
-    setEditMode(false);
+  const handleEditFacturation = () => {
+    setEditModeFacturation(true);
+    setFormDataFacturation({
+      adresseFacturation: accountInfo.adresse_facturation,
+      codePostalFacturation: accountInfo.code_postal_facturation,
+      villeFacturation: accountInfo.ville_facturation,
+      paysFacturation: accountInfo.pays_facturation,
+    });
   };
 
-  const handleSubmit = async (e) => {
+  const handleCancelLivraison = () => {
+    setEditModeLivraison(false);
+  };
+
+  const handleCancelFacturation = () => {
+    setEditModeFacturation(false);
+  };
+
+  const handleSubmitLivraison = async (e) => {
     e.preventDefault();
     try {
       // Update account data
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_livraison.php', {
         accountId,
-        adresseLivraison: formData.adresseLivraison,
-        codePostalLivraison: formData.codePostalLivraison,
-        villeLivraison: formData.villeLivraison,
-        pays: formData.pays,
+        adresseLivraison: formDataLivraison.adresseLivraison,
+        codePostalLivraison: formDataLivraison.codePostalLivraison,
+        villeLivraison: formDataLivraison.villeLivraison,
+        pays: formDataLivraison.pays,
       });
       if (response.data.status === 'success') {
-        setEditMode(false);
+        setEditModeLivraison(false);
         setAccountInfo({
           ...accountInfo,
-          adresse_livraison: formData.adresseLivraison,
-          code_postal_livraison: formData.codePostalLivraison,
-          ville_livraison: formData.villeLivraison,
-          pays: formData.pays,
+          adresse_livraison: formDataLivraison.adresseLivraison,
+          code_postal_livraison: formDataLivraison.codePostalLivraison,
+          ville_livraison: formDataLivraison.villeLivraison,
+          pays: formDataLivraison.pays,
         });
+        setSuccessMessageLivraison('Les informations de livraison ont été mises à jour avec succès');
+        setTimeout(() => {
+          setSuccessMessageLivraison(null);
+        }, 2000);
       } else {
         console.error('Erreur lors de la mise à jour des informations de livraison: ', response.data.message);
       }
@@ -78,12 +109,44 @@ const UserAdresses = ({ accountId }) => {
     }
   };
 
+  const handleSubmitFacturation = async (e) => {
+    e.preventDefault();
+    try {
+      // Update account data
+      const response = await axios.post('http://airneis.ddns.net:3000/update_info_facturation.php', {
+        accountId,
+        adresseFacturation: formDataFacturation.adresseFacturation,
+        codePostalFacturation: formDataFacturation.codePostalFacturation,
+        villeFacturation: formDataFacturation.villeFacturation,
+        paysFacturation: formDataFacturation.paysFacturation,
+      });
+      if (response.data.status === 'success') {
+        setEditModeFacturation(false);
+        setAccountInfo({
+          ...accountInfo,
+          adresse_facturation: formDataFacturation.adresseFacturation,
+          code_postal_facturation: formDataFacturation.codePostalFacturation,
+          ville_facturation: formDataFacturation.villeFacturation,
+          pays_facturation: formDataFacturation.paysFacturation,
+        });
+        setSuccessMessageFacturation('Les informations de facturation ont été mises à jour avec succès');
+        setTimeout(() => {
+          setSuccessMessageFacturation(null);
+        }, 2000);
+      } else {
+        console.error('Erreur lors de la mise à jour des informations de facturation: ', response.data.message);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour des informations de facturation: ', error);
+    }
+  };
+
   if (loading) {
-    return <div>Chargement...</div>
+    return <div>Chargement...</div>;
   }
 
   if (!accountInfo) {
-    return <div>Impossible de charger les informations du compte</div>
+    return <div>Impossible de charger les informations du compte</div>;
   }
 
   return (
@@ -92,27 +155,27 @@ const UserAdresses = ({ accountId }) => {
       <br />
       <div>
         <h3>Adresse de livraison</h3>
-        {editMode ? (
-          <form onSubmit={handleSubmit}>
+        {editModeLivraison ? (
+          <form onSubmit={handleSubmitLivraison}>
             <div>
               <label>Adresse:</label>
-              <input type='text' name='adresseLivraison' value={formData.adresseLivraison} onChange={handleInputChange} />
+              <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} onChange={handleInputChangeLivraison} />
             </div>
             <div>
               <label>Code postal:</label>
-              <input type='text' name='codePostalLivraison' value={formData.codePostalLivraison} onChange={handleInputChange} />
+              <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} />
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeLivraison' value={formData.villeLivraison} onChange={handleInputChange} />
+              <input type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} onChange={handleInputChangeLivraison} />
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='pays' value={formData.pays} onChange={handleInputChange} />
+              <input type='text' name='pays' value={formDataLivraison.pays} onChange={handleInputChangeLivraison} />
             </div>
             <div>
-              <button type='submit'>Enregistrer</button>
-              <button type='button' onClick={handleCancel}>Annuler</button>
+              <button type='submit' className='btn btn-primary'>Enregistrer</button>
+              <button type='button' className='btn btn-secondary' onClick={handleCancelLivraison}>Annuler</button>
             </div>
           </form>
         ) : (
@@ -121,23 +184,47 @@ const UserAdresses = ({ accountId }) => {
             <p>Code postal: {accountInfo.code_postal_livraison}</p>
             <p>Ville: {accountInfo.ville_livraison}</p>
             <p>Pays: {accountInfo.pays}</p>
-            <button onClick={handleEdit}>Modifier mon adresse de livraison</button>
+            <button onClick={handleEditLivraison} className='btn btn-primary'>Modifier mon adresse de livraison</button>
           </div>
         )}
       </div>
       <div>
         <h3>Adresse de facturation</h3>
-        {accountInfo.adresse_facturation ? (
+        {editModeFacturation ? (
+          <form onSubmit={handleSubmitFacturation}>
+            <div>
+              <label>Adresse:</label>
+              <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} />
+            </div>
+            <div>
+              <label>Code postal:</label>
+              <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} />
+            </div>
+            <div>
+              <label>Ville:</label>
+              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} />
+            </div>
+            <div>
+              <label>Pays:</label>
+              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} />
+            </div>
+            <div>
+              <button type='submit' className='btn btn-primary'>Enregistrer</button>
+              <button type='button' className='btn btn-secondary' onClick={handleCancelFacturation}>Annuler</button>
+            </div>
+          </form>
+        ) : (
           <div>
             <p>Adresse: {accountInfo.adresse_facturation}</p>
             <p>Code postal: {accountInfo.code_postal_facturation}</p>
             <p>Ville: {accountInfo.ville_facturation}</p>
             <p>Pays: {accountInfo.pays_facturation}</p>
+            <button onClick={handleEditFacturation} className='btn btn-primary'>Modifier mon adresse de facturation</button>
           </div>
-        ) : (
-          <p>Aucune information de facturation n'est disponible pour ce compte.</p>
         )}
       </div>
+      {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
+      {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
     </div>
   );
 };
