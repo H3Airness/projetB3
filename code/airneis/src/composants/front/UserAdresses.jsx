@@ -7,6 +7,7 @@ function UserAdresses () {
   const [loading, setLoading] = useState(true);
   const { accountId } = useContext(AuthContext);
   const [accountInfo, setAccountInfo] = useState(null);
+  const [accountFac, setAccountFac] = useState(null);
   const [editModeLivraison, setEditModeLivraison] = useState(false);
   const [formDataLivraison, setFormDataLivraison] = useState({
     adresseLivraison: '',
@@ -31,6 +32,26 @@ function UserAdresses () {
         const accountRes = await axios.get(`http://airneis.ddns.net:3000/info_livraison.php?accountId=${accountId}`);
         if (accountRes.data.status === 'success') {
           setAccountInfo(accountRes.data.accountLivraison);
+          setLoading(false);
+        } else {
+          console.error('Erreur lors de la récupération des données du compte: ', accountRes.data.message);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données du compte: ', error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [accountId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch account data
+        const accountRes = await axios.get(`http://airneis.ddns.net:3000/info_facturation.php?accountId=${accountId}`);
+        if (accountRes.data.status === 'success') {
+          setAccountFac(accountRes.data.accountLivraison);
           setLoading(false);
         } else {
           console.error('Erreur lors de la récupération des données du compte: ', accountRes.data.message);
@@ -73,10 +94,10 @@ function UserAdresses () {
     setEditModeFacturation(true);
     setEditModeLivraison(false); // Assure que seule la partie Facturation est en mode édition
     setFormDataFacturation({
-      adresseFacturation: accountInfo.adresse_facturation,
-      codePostalFacturation: accountInfo.code_postal_facturation,
-      villeFacturation: accountInfo.ville_facturation,
-      paysFacturation: accountInfo.pays_facturation,
+      adresseFacturation: accountFac.adresse_facturation,
+      codePostalFacturation: accountFac.code_postal_facturation,
+      villeFacturation: accountFac.ville_facturation,
+      paysFacturation: accountFac.pays_facturation,
     });
     setFormDataLivraison({
       adresseLivraison: '',
@@ -139,8 +160,8 @@ function UserAdresses () {
       });
       if (response.data.status === 'success') {
         setEditModeFacturation(false);
-        setAccountInfo({
-          ...accountInfo,
+        setAccountFac({
+          ...accountFac,
           adresse_facturation: formDataFacturation.adresseFacturation,
           code_postal_facturation: formDataFacturation.codePostalFacturation,
           ville_facturation: formDataFacturation.villeFacturation,
@@ -162,9 +183,7 @@ function UserAdresses () {
     return <div>Chargement...</div>;
   }
 
-  if (!accountInfo) {
-    return <div>Impossible de charger les informations du compte</div>;
-  }
+ 
 
   return (
     <div>
@@ -206,19 +225,19 @@ function UserAdresses () {
           <form onSubmit={handleSubmitFacturation}>
             <div>
               <label>Adresse:</label>
-              <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} defaultValue={accountFac.adresse_facturation} onChange={handleInputChangeFacturation} />
             </div>
             <div>
               <label>Code postal:</label>
-              <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} defaultValue={accountFac.code_postal_facturation} onChange={handleInputChangeFacturation} />
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} defaultValue={accountFac.ville_facturation} onChange={handleInputChangeFacturation} />
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} />
+              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} defaultValue={accountFac.pays_facturation} onChange={handleInputChangeFacturation} />
             </div>
             <br />
             <div className='text-center'>
@@ -242,12 +261,12 @@ function UserAdresses () {
           </div>
           <div>
             <h3>Adresse de facturation</h3>
-            {accountInfo.adresse_facturation ? (
+            {accountFac.adresse_facturation ? (
               <div>
-                <p>Adresse: {accountInfo.adresse_facturation}</p>
-                <p>Code postal: {accountInfo.code_postal_facturation}</p>
-                <p>Ville: {accountInfo.ville_facturation}</p>
-                <p>Pays: {accountInfo.pays_facturation}</p>
+                <p>Adresse: {accountFac.adresse_facturation}</p>
+                <p>Code postal: {accountFac.code_postal_facturation}</p>
+                <p>Ville: {accountFac.ville_facturation}</p>
+                <p>Pays: {accountFac.pays_facturation}</p>
                 <div className='text-center'>
                   <button className='btn btn-primary' onClick={handleEditFacturation}>Modifier mon adresse de facturation</button>
                 </div>
