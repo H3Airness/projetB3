@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const UserAdresses = ({ accountId }) => {
   const [loading, setLoading] = useState(true);
@@ -255,6 +256,9 @@ const UserAdresses = ({ accountId }) => {
           </div>
         </div>
       )}
+      <div className='text-right'>
+        <Link to='/mesParametres' className='btn btn-secondary'>Retour</Link>
+      </div>
     </div>
   );
 };
