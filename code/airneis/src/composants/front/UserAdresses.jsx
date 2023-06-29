@@ -56,9 +56,9 @@ function UserAdresses () {
     setEditModeLivraison(true);
     setEditModeFacturation(false); // Assure que seule la partie Livraison est en mode édition
     setFormDataLivraison({
-      adresseLivraison: accountInfo.adresse_livraison,
-      codePostalLivraison: accountInfo.code_postal_livraison,
-      villeLivraison: accountInfo.ville_livraison,
+      adresseLivraison: accountInfo.adresse1,
+      codePostalLivraison: accountInfo.code_postal,
+      villeLivraison: accountInfo.ville,
       pays: accountInfo.pays,
     });
     setFormDataFacturation({
