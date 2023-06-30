@@ -20,6 +20,8 @@ function UserAdresses() {
   });
   const [editModeFacturation, setEditModeFacturation] = useState(false);
   const [formDataFacturation, setFormDataFacturation] = useState({
+    nomFacturation:'',
+    prenomFacturation:'',
     adresseFacturation: '',
     codePostalFacturation: '',
     villeFacturation: '',
@@ -89,6 +91,8 @@ function UserAdresses() {
       pays: accountInfo.pays,
     });
     setFormDataFacturation({
+      nomFacturation:'',
+      prenomFacturation:'',
       adresseFacturation: '',
       codePostalFacturation: '',
       villeFacturation: '',
@@ -100,6 +104,8 @@ function UserAdresses() {
     setEditModeFacturation(true);
     setEditModeLivraison(false); // Assure que seule la partie Facturation est en mode édition
     setFormDataFacturation({
+      nomFacturation: accountFac.nom_facturation,
+      prenomFacturation: accountFac.prenom_facturation,
       adresseFacturation: accountFac.adresse_facturation,
       codePostalFacturation: accountFac.code_postal_facturation,
       villeFacturation: accountFac.ville_facturation,
@@ -168,6 +174,8 @@ function UserAdresses() {
       // Update account data
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_facturation.php', {
         accountId,
+        nomFacturation: formDataFacturation.nomFacturation,
+        prenomFacturation: formDataFacturation.prenomFacturation,
         adresseFacturation: formDataFacturation.adresseFacturation,
         codePostalFacturation: formDataFacturation.codePostalFacturation,
         villeFacturation: formDataFacturation.villeFacturation,
@@ -177,6 +185,8 @@ function UserAdresses() {
         setEditModeFacturation(false);
         setAccountFac({
           ...accountFac,
+          nom_facturation: formDataFacturation.nomFacturation,
+          prenom_facturation: formDataFacturation.prenomFacturation,
           adresse_facturation: formDataFacturation.adresseFacturation,
           code_postal_facturation: formDataFacturation.codePostalFacturation,
           ville_facturation: formDataFacturation.villeFacturation,
@@ -249,6 +259,14 @@ function UserAdresses() {
           <h3>Adresse de facturation</h3>
           <form onSubmit={handleSubmitFacturation}>
             <div>
+              <label>Nom:</label>
+              <input type='text' name='nomFacturation' value={formDataFacturation.nomFacturation} defaultValue={accountFac.nom_facturation} onChange={handleInputChangeFacturation} required />
+            </div>
+            <div>
+              <label>Prenom:</label>
+              <input type='text' name='prenomFacturation' value={formDataFacturation.prenomFacturation} defaultValue={accountFac.prenom_facturation} onChange={handleInputChangeFacturation} required />
+            </div>
+            <div>
               <label>Adresse:</label>
               <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} defaultValue={accountFac.adresse_facturation} onChange={handleInputChangeFacturation} required />
             </div>
@@ -302,6 +320,8 @@ function UserAdresses() {
             <h3>Adresse de facturation</h3>
             {accountFac.adresse_facturation ? (
               <div>
+                <p>Nom: {accountFac.nom_facturation}</p>
+                <p>Prénom: {accountFac.prenom_facturation}</p>
                 <p>Adresse: {accountFac.adresse_facturation}</p>
                 <p>Code postal: {accountFac.code_postal_facturation}</p>
                 <p>Ville: {accountFac.ville_facturation}</p>
