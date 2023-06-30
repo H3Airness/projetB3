@@ -354,6 +354,7 @@ input[type="submit"]:hover {
 
 .divLivraisonArticles{
   width: 700px;
+  justify-content: center;
 }
 
 .divPrixArticles{
