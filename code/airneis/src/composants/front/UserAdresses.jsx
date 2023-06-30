@@ -9,6 +9,7 @@ function UserAdresses() {
   const [accountInfo, setAccountInfo] = useState({});
   const [accountFac, setAccountFac] = useState({});
   const [editModeLivraison, setEditModeLivraison] = useState(false);
+  const [selectedAdresse, setSelectedAdresse] = useState(null);
   const [formDataLivraison, setFormDataLivraison] = useState({
     nomAdresse: '',
     nom: '',
@@ -139,6 +140,7 @@ function UserAdresses() {
       // Update account data
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_livraison.php', {
         accountId,
+        id: selectedAdresse.id,
         nomAdresse: formDataLivraison.nomAdresse,
         nom: formDataLivraison.nom,
         prenom: formDataLivraison.prenom,
@@ -209,6 +211,12 @@ function UserAdresses() {
     }
   };
 
+  const handleAdresseSelect = (e) => {
+    const selectedId = e.target.value;
+    const selectedAddress = accountInfo.find((adresse) => adresse.id === selectedId);
+    setSelectedAdresse(selectedAddress);
+  };
+
   if (loading) {
     return <div>Chargement...</div>;
   }
@@ -225,35 +233,35 @@ function UserAdresses() {
           <form onSubmit={handleSubmitLivraison}>
             <div>
               <label>Nom de l'adresse:</label>
-              <input type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} defaultValue={accountInfo.nom_adresse} onChange={handleInputChangeLivraison} required />
+              <input type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} defaultValue={selectedAdresse.nom_adresse} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Nom:</label>
-              <input type='text' name='nom' value={formDataLivraison.nom} defaultValue={accountInfo.nom} onChange={handleInputChangeLivraison} required />
+              <input type='text' name='nom' value={formDataLivraison.nom} defaultValue={selectedAdresse.nom} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Prénom:</label>
-              <input type='text' name='prenom' value={formDataLivraison.prenom} defaultValue={accountInfo.prenom} onChange={handleInputChangeLivraison} required />
+              <input type='text' name='prenom' value={formDataLivraison.prenom} defaultValue={selectedAdresse.prenom} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Adresse:</label>
-              <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} defaultValue={accountInfo.adresse1} onChange={handleInputChangeLivraison} required />
+              <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} defaultValue={selectedAdresse.adresse1} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Adresse 2 (optionnel):</label>
-              <input type='text' name='adresseLivraison2' value={formDataLivraison.adresseLivraison2} defaultValue={accountInfo.adresse2} onChange={handleInputChangeLivraison} />
+              <input type='text' name='adresseLivraison2' value={formDataLivraison.adresseLivraison2} defaultValue={selectedAdresse.adresse2} onChange={handleInputChangeLivraison} />
             </div>
             <div>
               <label>Code postal:</label>
-              <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} defaultValue={accountInfo.code_postal} onChange={handleInputChangeLivraison} required />
+              <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} defaultValue={selectedAdresse.code_postal} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} defaultValue={accountInfo.ville} onChange={handleInputChangeLivraison} required />
+              <input type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} defaultValue={selectedAdresse.ville} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='pays' value={formDataLivraison.pays} defaultValue={accountInfo.pays} onChange={handleInputChangeLivraison} required />
+              <input type='text' name='pays' value={formDataLivraison.pays} defaultValue={selectedAdresse.pays} onChange={handleInputChangeLivraison} required />
             </div>
             <br />
             <div className='text-center'>
@@ -303,19 +311,30 @@ function UserAdresses() {
         <div>
           <div>
             <h3>Adresse de livraison</h3>
-            {accountInfo.adresse1 ? (
+            {accountInfo.length > 0 ? (
               <div>
-                <p>Nom de l'adresse: {accountInfo.nom_adresse}</p>
-                <p>Nom: {accountInfo.nom}</p>
-                <p>Prénom: {accountInfo.prenom}</p>
-                <p>Adresse: {accountInfo.adresse1}</p>
-                {accountInfo.adresse2 && <p>Adresse 2 (facultatif): {accountInfo.adresse2}</p>} {/* Affichage Adresse 2 si disponible */}
-                <p>Code postal: {accountInfo.code_postal}</p>
-                <p>Ville: {accountInfo.ville}</p>
-                <p>Pays: {accountInfo.pays}</p>
-                <div className='text-center'>
-                  <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
-                </div>
+                <label htmlFor="adresse-select">Sélectionnez une adresse :</label>
+                <select id="adresse-select" value={selectedAdresse ? selectedAdresse.id : ""} onChange={handleAdresseSelect}>
+                  <option value="">Choisir une adresse</option>
+                  {accountInfo.map((adresse) => (
+                    <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
+                  ))}
+                </select>
+                {selectedAdresse ? (
+                  <div>
+                    <p>Nom: {selectedAdresse.nom}</p>
+                    <p>Prénom: {selectedAdresse.prenom}</p>
+                    <p>Adresse: {selectedAdresse.adresse1}</p>
+                    <p>Code postal: {selectedAdresse.code_postal}</p>
+                    <p>Ville: {selectedAdresse.ville}</p>
+                    <p>Pays: {selectedAdresse.pays}</p>
+                    <div className='text-center'>
+                      <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
+                    </div>
+                  </div>
+                ) : (
+                  <p>Veuillez sélectionner une adresse.</p>
+                )}
               </div>
             ) : (
               <div>

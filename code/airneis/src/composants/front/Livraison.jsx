@@ -11,7 +11,7 @@ const Livraison = () => {
   const [adresse, setAdresse] = useState("");
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const [accountLivraison, setAccountLivraison] = useState([]);
-  const [selectedAdresse, setSelectedAdresse] = useState(null); // Adresse sélectionnée
+  const [selectedAdresse, setSelectedAdresse] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
