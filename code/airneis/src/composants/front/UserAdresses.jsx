@@ -3,13 +3,16 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../context/authContext";
 
-function UserAdresses () {
+function UserAdresses() {
   const [loading, setLoading] = useState(true);
   const { accountId } = useContext(AuthContext);
   const [accountInfo, setAccountInfo] = useState(null);
   const [accountFac, setAccountFac] = useState(null);
   const [editModeLivraison, setEditModeLivraison] = useState(false);
   const [formDataLivraison, setFormDataLivraison] = useState({
+    nomAdresse: '',
+    nom: '',
+    prenom: '',
     adresseLivraison: '',
     codePostalLivraison: '',
     villeLivraison: '',
@@ -77,6 +80,9 @@ function UserAdresses () {
     setEditModeLivraison(true);
     setEditModeFacturation(false); // Assure que seule la partie Livraison est en mode édition
     setFormDataLivraison({
+      nomAdresse: accountInfo.nom_adresse,
+      nom: accountInfo.nom,
+      prenom: accountInfo.prenom,
       adresseLivraison: accountInfo.adresse1,
       codePostalLivraison: accountInfo.code_postal,
       villeLivraison: accountInfo.ville,
@@ -100,6 +106,9 @@ function UserAdresses () {
       paysFacturation: accountFac.pays_facturation,
     });
     setFormDataLivraison({
+      nomAdresse: '',
+      nom: '',
+      prenom: '',
       adresseLivraison: '',
       codePostalLivraison: '',
       villeLivraison: '',
@@ -121,6 +130,9 @@ function UserAdresses () {
       // Update account data
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_livraison.php', {
         accountId,
+        nomAdresse: formDataLivraison.nomAdresse,
+        nom: formDataLivraison.nom,
+        prenom: formDataLivraison.prenom,
         adresseLivraison: formDataLivraison.adresseLivraison,
         codePostalLivraison: formDataLivraison.codePostalLivraison,
         villeLivraison: formDataLivraison.villeLivraison,
@@ -130,6 +142,9 @@ function UserAdresses () {
         setEditModeLivraison(false);
         setAccountInfo({
           ...accountInfo,
+          nom_adresse: formDataLivraison.nomAdresse,
+          nom: formDataLivraison.nom,
+          prenom: formDataLivraison.prenom,
           adresse1: formDataLivraison.adresseLivraison,
           code_postal: formDataLivraison.codePostalLivraison,
           ville: formDataLivraison.villeLivraison,
@@ -183,8 +198,6 @@ function UserAdresses () {
     return <div>Chargement...</div>;
   }
 
- 
-
   return (
     <div>
       <h2 className='text-center'>Carnet d'adresses</h2>
@@ -196,20 +209,32 @@ function UserAdresses () {
           <h3>Adresse de livraison</h3>
           <form onSubmit={handleSubmitLivraison}>
             <div>
+              <label>Nom de l'adresse:</label>
+              <input type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} defaultValue={accountInfo.nom_adresse} onChange={handleInputChangeLivraison} required />
+            </div>
+            <div>
+              <label>Nom:</label>
+              <input type='text' name='nom' value={formDataLivraison.nom} defaultValue={accountInfo.nom} onChange={handleInputChangeLivraison} required />
+            </div>
+            <div>
+              <label>Prénom:</label>
+              <input type='text' name='prenom' value={formDataLivraison.prenom} defaultValue={accountInfo.prenom} onChange={handleInputChangeLivraison} required />
+            </div>
+            <div>
               <label>Adresse:</label>
-              <input type='text' name='adresseLivraison' value={formDataLivraison.AdresseLivraison} defaultValue={accountInfo.adresse1} onChange={handleInputChangeLivraison} required/>
+              <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} defaultValue={accountInfo.adresse1} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Code postal:</label>
-              <input type='text' name='codePostalLivraison' value={formDataLivraison.code_postal} defaultValue={accountInfo.code_postal} onChange={handleInputChangeLivraison} required/>
+              <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} defaultValue={accountInfo.code_postal} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeLivraison' value={formDataLivraison.ville} defaultValue={accountInfo.ville} onChange={handleInputChangeLivraison} required/>
+              <input type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} defaultValue={accountInfo.ville} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='pays' value={formDataLivraison.pays} defaultValue={accountInfo.pays} onChange={handleInputChangeLivraison} required/>
+              <input type='text' name='pays' value={formDataLivraison.pays} defaultValue={accountInfo.pays} onChange={handleInputChangeLivraison} required />
             </div>
             <br />
             <div className='text-center'>
@@ -233,11 +258,11 @@ function UserAdresses () {
             </div>
             <div>
               <label>Ville:</label>
-              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} defaultValue={accountFac.ville_facturation} onChange={handleInputChangeFacturation} required/>
+              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} defaultValue={accountFac.ville_facturation} onChange={handleInputChangeFacturation} required />
             </div>
             <div>
               <label>Pays:</label>
-              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} defaultValue={accountFac.pays_facturation} onChange={handleInputChangeFacturation}required />
+              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} defaultValue={accountFac.pays_facturation} onChange={handleInputChangeFacturation} required />
             </div>
             <br />
             <div className='text-center'>
@@ -251,13 +276,27 @@ function UserAdresses () {
         <div>
           <div>
             <h3>Adresse de livraison</h3>
-            <p>Adresse: {accountInfo.adresse1}</p>
-            <p>Code postal: {accountInfo.code_postal}</p>
-            <p>Ville: {accountInfo.ville}</p>
-            <p>Pays: {accountInfo.pays}</p>
-            <div className='text-center'>
-              <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
-            </div>
+            {accountInfo.adresse1 ? (
+              <div>
+                <p>Nom de l'adresse: {accountInfo.nom_adresse}</p>
+                <p>Nom: {accountInfo.nom}</p>
+                <p>Prénom: {accountInfo.prenom}</p>
+                <p>Adresse: {accountInfo.adresse1}</p>
+                <p>Code postal: {accountInfo.code_postal}</p>
+                <p>Ville: {accountInfo.ville}</p>
+                <p>Pays: {accountInfo.pays}</p>
+                <div className='text-center'>
+                  <button className='btn btn-primary' onClick={handleEditLivraison}>Modifier mon adresse de livraison</button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p>Aucune adresse de livraison n'est disponible pour ce compte.</p>
+                <div className='text-center'>
+                  <button className='btn btn-primary' onClick={handleEditLivraison}>Ajouter une adresse de livraison</button>
+                </div>
+              </div>
+            )}
           </div>
           <div>
             <h3>Adresse de facturation</h3>
@@ -272,7 +311,12 @@ function UserAdresses () {
                 </div>
               </div>
             ) : (
-              <p>Aucune information de facturation n'est disponible pour ce compte.</p>
+              <div>
+                <p>Aucune adresse de facturation n'est disponible pour ce compte.</p>
+                <div className='text-center'>
+                  <button className='btn btn-primary' onClick={handleEditFacturation}>Ajouter une adresse de facturation</button>
+                </div>
+              </div>
             )}
           </div>
         </div>
@@ -282,6 +326,6 @@ function UserAdresses () {
       </div>
     </div>
   );
-};
+}
 
 export default UserAdresses;
