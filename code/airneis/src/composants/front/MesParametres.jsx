@@ -7,7 +7,7 @@ import UserAdresses from "./UserAdresses";
 
 function MesParametres() {
   const { isLoggedIn, accountId } = useContext(AuthContext);
-  const [accountInfo, setAccountInfo] = useState(null);
+  const [accountInfo, setAccountInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAddressMode, setIsAddressMode] = useState(false); 

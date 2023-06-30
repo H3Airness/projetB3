@@ -6,14 +6,15 @@ import { AuthContext } from "../context/authContext";
 function UserAdresses() {
   const [loading, setLoading] = useState(true);
   const { accountId } = useContext(AuthContext);
-  const [accountInfo, setAccountInfo] = useState(null);
-  const [accountFac, setAccountFac] = useState(null);
+  const [accountInfo, setAccountInfo] = useState({});
+  const [accountFac, setAccountFac] = useState({});
   const [editModeLivraison, setEditModeLivraison] = useState(false);
   const [formDataLivraison, setFormDataLivraison] = useState({
     nomAdresse: '',
     nom: '',
     prenom: '',
     adresseLivraison: '',
+    adresseLivraison2: '', // Champ Adresse 2 ajouté
     codePostalLivraison: '',
     villeLivraison: '',
     pays: '',
@@ -86,6 +87,7 @@ function UserAdresses() {
       nom: accountInfo.nom,
       prenom: accountInfo.prenom,
       adresseLivraison: accountInfo.adresse1,
+      adresseLivraison2: accountInfo.adresse2, // Champ Adresse 2 ajouté
       codePostalLivraison: accountInfo.code_postal,
       villeLivraison: accountInfo.ville,
       pays: accountInfo.pays,
@@ -116,6 +118,7 @@ function UserAdresses() {
       nom: '',
       prenom: '',
       adresseLivraison: '',
+      adresseLivraison2: '', // Champ Adresse 2 ajouté
       codePostalLivraison: '',
       villeLivraison: '',
       pays: '',
@@ -140,6 +143,7 @@ function UserAdresses() {
         nom: formDataLivraison.nom,
         prenom: formDataLivraison.prenom,
         adresseLivraison: formDataLivraison.adresseLivraison,
+        adresseLivraison2: formDataLivraison.adresseLivraison2, // Champ Adresse 2 inclus
         codePostalLivraison: formDataLivraison.codePostalLivraison,
         villeLivraison: formDataLivraison.villeLivraison,
         pays: formDataLivraison.pays,
@@ -152,6 +156,7 @@ function UserAdresses() {
           nom: formDataLivraison.nom,
           prenom: formDataLivraison.prenom,
           adresse1: formDataLivraison.adresseLivraison,
+          adresse2: formDataLivraison.adresseLivraison2, // Champ Adresse 2 inclus
           code_postal: formDataLivraison.codePostalLivraison,
           ville: formDataLivraison.villeLivraison,
           pays: formDataLivraison.pays,
@@ -235,6 +240,10 @@ function UserAdresses() {
               <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} defaultValue={accountInfo.adresse1} onChange={handleInputChangeLivraison} required />
             </div>
             <div>
+              <label>Adresse 2 (optionnel):</label>
+              <input type='text' name='adresseLivraison2' value={formDataLivraison.adresseLivraison2} defaultValue={accountInfo.adresse2} onChange={handleInputChangeLivraison} />
+            </div>
+            <div>
               <label>Code postal:</label>
               <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} defaultValue={accountInfo.code_postal} onChange={handleInputChangeLivraison} required />
             </div>
@@ -300,6 +309,7 @@ function UserAdresses() {
                 <p>Nom: {accountInfo.nom}</p>
                 <p>Prénom: {accountInfo.prenom}</p>
                 <p>Adresse: {accountInfo.adresse1}</p>
+                {accountInfo.adresse2 && <p>Adresse 2 (facultatif): {accountInfo.adresse2}</p>} {/* Affichage Adresse 2 si disponible */}
                 <p>Code postal: {accountInfo.code_postal}</p>
                 <p>Ville: {accountInfo.ville}</p>
                 <p>Pays: {accountInfo.pays}</p>
