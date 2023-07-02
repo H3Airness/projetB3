@@ -82,7 +82,6 @@ function UserAdresses() {
     setEditModeLivraison(true);
     setEditModeFacturation(false);
   
-    // Récupérer les informations de l'adresse sélectionnée
     const selectedAdresse = accountInfo.find((adresse) => adresse.id === selectedAdresseId);
   
     setFormDataLivraison({
@@ -341,36 +340,45 @@ function UserAdresses() {
                     <p>Code postal: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</p>
                     <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
                     <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
+                    <center>
+                      <button type='button' className='btn btn-primary' onClick={handleEditLivraison}>Ajouter</button>
+                      <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
+                    </center>
                   </div>
                 )}
               </div>
             ) : (
+              <div>
               <p>Aucune adresse de livraison disponible pour ce compte.</p>
-            )}
-            <br />
-            <div className='text-center'>
-              <button type='button' className='btn btn-primary' onClick={handleEditLivraison}>Modifier</button>
+              <center>
+                <button type='button' className='btn btn-primary' onClick={handleEditLivraison}>Ajouter</button>
+              </center>
             </div>
+            )}
           </div>
           <br />
           <div>
             <h3>Adresse de facturation</h3>
-            {Object.keys(accountFac).length > 0 ? (
+            {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
               <div>
-                <p>Nom: {accountFac.nom_facturation}</p>
-                <p>Prénom: {accountFac.prenom_facturation}</p>
-                <p>Adresse: {accountFac.adresse_facturation}</p>
-                <p>Code postal: {accountFac.code_postal_facturation}</p>
-                <p>Ville: {accountFac.ville_facturation}</p>
-                <p>Pays: {accountFac.pays_facturation}</p>
-              </div>
-            ) : (
-              <p>Aucune adresse de facturation disponible pour ce compte.</p>
-            )}
-            <br />
-            <div className='text-center'>
-              <button type='button' className='btn btn-primary' onClick={handleEditFacturation}>Modifier</button>
+              <p>Nom: {accountFac.nom_facturation}</p>
+              <p>Prénom: {accountFac.prenom_facturation}</p>
+              <p>Adresse: {accountFac.adresse_facturation}</p>
+              <p>Code postal: {accountFac.code_postal_facturation}</p>
+              <p>Ville: {accountFac.ville_facturation}</p>
+              <p>Pays: {accountFac.pays_facturation}</p>
+              <center>
+                <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
+              </center>
             </div>
+            ) : (
+              <div>
+              <p>Aucune adresse de facturation disponible pour ce compte.</p>
+              <center>
+                <button type='button' className='btn btn-primary align-item-center' onClick={handleEditFacturation}>Ajouter</button>
+              </center>
+            </div>
+            )}
           </div>
         </div>
       )}
