@@ -83,7 +83,7 @@ function UserAdresses() {
     setEditModeFacturation(false);
   
     // Récupérer les informations de l'adresse sélectionnée
-    const selectedAdresse = accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId);
+    const selectedAdresse = accountInfo.find((adresse) => adresse.id === selectedAdresseId);
   
     setFormDataLivraison({
       nomAdresse: selectedAdresse.nom_adresse,
@@ -144,7 +144,7 @@ function UserAdresses() {
     try {
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_livraison.php', {
         accountId,
-        adresseId: selectedAdresseId, // Utilisation de l'ID de l'adresse sélectionnée
+        id : selectedAdresseId,
         nomAdresse: formDataLivraison.nomAdresse,
         nom: formDataLivraison.nom,
         prenom: formDataLivraison.prenom,
@@ -157,7 +157,7 @@ function UserAdresses() {
       if (response.data.status === 'success') {
         setEditModeLivraison(false);
         const updatedAccountInfo = accountInfo.map((adresse) => {
-          if (adresse.id_adresse === selectedAdresseId) {
+          if (adresse.id === selectedAdresseId) {
             return {
               ...adresse,
               nom_adresse: formDataLivraison.nomAdresse,
@@ -239,7 +239,7 @@ function UserAdresses() {
               <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
                 <option value="">Sélectionner une adresse</option>
                 {accountInfo.map((adresse) => (
-                  <option key={adresse.id_adresse} value={adresse.id_adresse}>{adresse.nom_adresse}</option>
+                  <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
                 ))}
               </select>
             </div>
@@ -328,19 +328,19 @@ function UserAdresses() {
                 <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
                   <option value="">Sélectionner une adresse</option>
                   {accountInfo.map((adresse) => (
-                    <option key={adresse.id_adresse} value={adresse.id_adresse}>{adresse.nom_adresse}</option>
+                    <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
                   ))}
                 </select>
                 {selectedAdresseId !== "" && (
                   <div>
-                    <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).nom_adresse}</p>
-                    <p>Nom: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).nom}</p>
-                    <p>Prénom: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).prenom}</p>
-                    <p>Adresse: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).adresse1}</p>
-                    <p>Adresse 2: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).adresse2}</p>
-                    <p>Code postal: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).code_postal}</p>
-                    <p>Ville: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).ville}</p>
-                    <p>Pays: {accountInfo.find((adresse) => adresse.id_adresse === selectedAdresseId).pays}</p>
+                    <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</p>
+                    <p>Nom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</p>
+                    <p>Prénom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</p>
+                    <p>Adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</p>
+                    <p>Adresse 2: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</p>
+                    <p>Code postal: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</p>
+                    <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
+                    <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
                   </div>
                 )}
               </div>
