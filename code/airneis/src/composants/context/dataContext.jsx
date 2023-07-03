@@ -10,15 +10,12 @@ export function DataContextProvider({ children }) {
   function ajouter(produit) {
     const nouveauPanier = { ...panier };
     if (nouveauPanier[produit.id]) {
-      // Le produit existe déjà dans le panier
       if (nouveauPanier[produit.id].quantite < produit.stock) {
-        // Vérifier si la quantité ajoutée ne dépasse pas le stock disponible
         nouveauPanier[produit.id].quantite += 1;
         setPanier(nouveauPanier);
         setNombreProduits(nombreProduits + 1);
       }
     } else {
-      // Le produit n'existe pas dans le panier
       nouveauPanier[produit.id] = { ...produit, quantite: 1 };
       setPanier(nouveauPanier);
       setNombreProduits(nombreProduits + 1);
@@ -28,9 +25,9 @@ export function DataContextProvider({ children }) {
 
   function retirer(produit) {
     const nouveauPanier = { ...panier };
-    if (nouveauPanier[produit.id].quantite > 1) { // si le produit a une quantité supérieure à 1, on la diminue
+    if (nouveauPanier[produit.id].quantite > 1) {
       nouveauPanier[produit.id].quantite -= 1;
-    } else { // sinon, on le retire complètement du panier
+    } else {
       delete nouveauPanier[produit.id];
     }
     setPanier(nouveauPanier);
@@ -39,9 +36,9 @@ export function DataContextProvider({ children }) {
 
   function supprimer(produit) {
     const nouveauPanier = { ...panier };
-    delete nouveauPanier[produit.id]; // on supprime complètement le produit du panier
+    delete nouveauPanier[produit.id];
     setPanier(nouveauPanier);
-    setNombreProduits(nombreProduits - produit.quantite); // on soustrait la quantité du produit supprimé du nombre total de produits dans le panier
+    setNombreProduits(nombreProduits - produit.quantite);
   }
 
   function getTotalProduit(produit) {

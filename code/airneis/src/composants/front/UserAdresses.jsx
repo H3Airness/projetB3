@@ -247,6 +247,41 @@ function UserAdresses() {
     }
   };
 
+  const handleDeleteFacturation = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://airneis.ddns.net:3000/update_info_facturation.php', {
+        accountId,
+        nomFacturation: '',
+        prenomFacturation: '',
+        adresseFacturation: '',
+        codePostalFacturation: null,
+        villeFacturation: '',
+        paysFacturation: '',
+      });
+      if (response.data.status === 'success') {
+        setEditModeFacturation(false);
+        setAccountFac({
+          ...accountFac,
+          nom_facturation: formDataFacturation.nomFacturation,
+          prenom_facturation: formDataFacturation.prenomFacturation,
+          adresse_facturation: formDataFacturation.adresseFacturation,
+          code_postal_facturation: formDataFacturation.codePostalFacturation,
+          ville_facturation: formDataFacturation.villeFacturation,
+          pays_facturation: formDataFacturation.paysFacturation,
+        });
+        setSuccessMessageFacturation('Les informations de facturation ont été mises à jour avec succès.');
+        setTimeout(() => {
+          setSuccessMessageFacturation(null);
+        }, 2000);
+      } else {
+        console.error('Erreur lors de la mise à jour des informations de facturation: ', response.data.message);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour des informations de facturation: ', error);
+    }
+  };
+
   const handleDeleteAdresse = async () => {
     try {
       await axios.delete(`http://airneis.ddns.net:3000/delete_info_livraison.php?id=${selectedAdresseId}`);
@@ -380,7 +415,7 @@ function UserAdresses() {
               </div>
             ) : (
               <div>
-              <p>Aucune adresse de livraison disponible pour ce compte.</p>
+              <p>Aucune adresse de livraison enregistrée</p>
             </div>
             )}
           </div>
@@ -400,11 +435,12 @@ function UserAdresses() {
               <p>Pays: {accountFac.pays_facturation}</p>
               <center>
                 <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
+                <button type='button' className='btn btn-danger' onClick={handleDeleteFacturation}>Supprimer</button>
               </center>
             </div>
             ) : (
               <div>
-              <p>Aucune adresse de facturation disponible pour ce compte.</p>
+              <p>Aucune adresse de facturation enregistrée.</p>
               <center>
                 <button type='button' className='btn btn-primary align-item-center' onClick={handleEditFacturation}>Ajouter</button>
               </center>
