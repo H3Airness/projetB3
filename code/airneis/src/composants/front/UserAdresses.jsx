@@ -104,6 +104,34 @@ function UserAdresses() {
       paysFacturation: '',
     });
   };
+
+  const handleAjoutLivraison = () => {
+    setEditModeLivraison(true);
+    setEditModeFacturation(false);
+    setSelectedAdresseId("");
+  
+    const selectedAdresse = accountInfo.find((adresse) => adresse.id === selectedAdresseId);
+  
+    setFormDataLivraison({
+      nomAdresse: '',
+      nom: '',
+      prenom: '',
+      adresseLivraison: '',
+      adresseLivraison2: '',
+      codePostalLivraison: '',
+      villeLivraison: '',
+      pays: '',
+    });
+  
+    setFormDataFacturation({
+      nomFacturation: '',
+      prenomFacturation: '',
+      adresseFacturation: '',
+      codePostalFacturation: '',
+      villeFacturation: '',
+      paysFacturation: '',
+    });
+  };
   
   const handleEditFacturation = () => {
     setEditModeFacturation(true);
@@ -143,7 +171,7 @@ function UserAdresses() {
     try {
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_livraison.php', {
         accountId,
-        id : selectedAdresseId,
+        id: selectedAdresseId === "" ? null : selectedAdresseId,
         nomAdresse: formDataLivraison.nomAdresse,
         nom: formDataLivraison.nom,
         prenom: formDataLivraison.prenom,
@@ -219,6 +247,18 @@ function UserAdresses() {
     }
   };
 
+  const handleDeleteAdresse = async () => {
+    try {
+      await axios.delete(`http://airneis.ddns.net:3000/delete_info_livraison.php?id=${selectedAdresseId}`);
+      const updatedAccountInfo = accountInfo.filter((adresse) => adresse.id !== selectedAdresseId);
+      setAccountInfo(updatedAccountInfo);
+      setSelectedAdresseId("");
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'adresse: ', error);
+    }
+  };
+  
+
   if (loading) {
     return <div>Chargement...</div>;
   }
@@ -233,15 +273,6 @@ function UserAdresses() {
         <div>
           <h3>Adresse de livraison</h3>
           <form onSubmit={handleSubmitLivraison}>
-            <div>
-              <label>Choisir l'adresse :</label>
-              <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
-                <option value="">Sélectionner une adresse</option>
-                {accountInfo.map((adresse) => (
-                  <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
-                ))}
-              </select>
-            </div>
             <div>
               <label>Nom de l'adresse:</label>
               <input type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} onChange={handleInputChangeLivraison} required />
@@ -341,8 +372,8 @@ function UserAdresses() {
                     <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
                     <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
                     <center>
-                      <button type='button' className='btn btn-primary' onClick={handleEditLivraison}>Ajouter</button>
                       <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
+                      <button type='button' className='btn btn-danger' onClick={handleDeleteAdresse}>Supprimer</button>
                     </center>
                   </div>
                 )}
@@ -350,12 +381,12 @@ function UserAdresses() {
             ) : (
               <div>
               <p>Aucune adresse de livraison disponible pour ce compte.</p>
-              <center>
-                <button type='button' className='btn btn-primary' onClick={handleEditLivraison}>Ajouter</button>
-              </center>
             </div>
             )}
           </div>
+          <center>
+                <button type='button' className='btn btn-primary' onClick={handleAjoutLivraison}>Ajouter</button>
+              </center>
           <br />
           <div>
             <h3>Adresse de facturation</h3>
