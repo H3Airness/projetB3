@@ -25,6 +25,7 @@ const Livraison = () => {
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const [accountInfo, setAccountInfo] = useState([]);
   const [accountFac, setAccountFac] = useState({});
+  const [isAdresseSelected, setIsAdresseSelected] = useState(false);
   const [editModeLivraison, setEditModeLivraison] = useState(false);
   const [formDataLivraison, setFormDataLivraison] = useState({
     nomAdresse: '',

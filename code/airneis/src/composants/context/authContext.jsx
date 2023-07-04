@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
 
 export const AuthContext = createContext();
 
@@ -8,27 +7,27 @@ export const AuthProvider = ({ children }) => {
   const [accountId, setAccountId] = useState(null);
 
   useEffect(() => {
-    const isLoggedInCookie = Cookies.get('isLoggedIn');
+    const isLoggedInSession = sessionStorage.getItem('isLoggedIn');
 
-    if (isLoggedInCookie) {
+    if (isLoggedInSession) {
       setIsLoggedIn(true);
-      const accountIdCookie = Cookies.get('accountId');
-      setAccountId(accountIdCookie);
+      const accountIdSession = sessionStorage.getItem('accountId');
+      setAccountId(accountIdSession);
     }
   }, []);
 
   const login = (accountId) => {
     setIsLoggedIn(true);
     setAccountId(accountId);
-    Cookies.set('isLoggedIn', 'true', { expires: 1 , path: '/' });
-    Cookies.set('accountId', accountId, { expires: 1 / 24 , path: '/' });;
+    sessionStorage.setItem('isLoggedIn', 'true');
+    sessionStorage.setItem('accountId', accountId);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setAccountId(null);
-    Cookies.remove('isLoggedIn');
-    Cookies.remove('accountId');
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('accountId');
     localStorage.removeItem('accountInfo');
     window.location.reload();
   };
