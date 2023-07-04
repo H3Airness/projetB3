@@ -14,13 +14,6 @@ const Livraison = () => {
     navigate("/Paiement");
   };
 
-  useEffect(() => {
-    if (panier.length === 0) {
-      navigate("/panier");
-    }
-  }, []);
-
-
   const [loading, setLoading] = useState(true);
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const [accountInfo, setAccountInfo] = useState([]);
@@ -222,6 +215,7 @@ const Livraison = () => {
         setTimeout(() => {
           setSuccessMessageLivraison(null);
         }, 2000);
+        window.location.href = "/livraison";
       } else {
         console.error('Erreur lors de la mise à jour des informations de livraison: ', response.data.message);
       }
@@ -310,7 +304,15 @@ const Livraison = () => {
       console.error('Erreur lors de la suppression de l\'adresse: ', error);
     }
   };
-  
+
+  useEffect(() => {
+    window.onload = () => {
+      if (panier.length === 0) {
+        navigate("/panier");
+      }
+    };
+  }, [panier]);
+    
 
   if (loading) {
     return <div>Chargement...</div>;
@@ -379,166 +381,165 @@ const Livraison = () => {
                 </div>
               </div>
             </div>
-            
+                        
 
-            <div>
-      <h2 className='text-center'>Carnet d'adresses</h2>
-      {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
-      {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
-      <br />
-      {editModeLivraison && (
-        <div>
-          <h3>Adresse de livraison</h3>
-          <form onSubmit={handleSubmitLivraison}>
-            <div>
-              <label>Nom de l'adresse:</label>
-              <input type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} onChange={handleInputChangeLivraison} required />
-            </div>
-            <div>
-              <label>Nom:</label>
-              <input type='text' name='nom' value={formDataLivraison.nom} onChange={handleInputChangeLivraison} required />
-            </div>
-            <div>
-              <label>Prénom:</label>
-              <input type='text' name='prenom' value={formDataLivraison.prenom} onChange={handleInputChangeLivraison} required />
-            </div>
-            <div>
-              <label>Adresse:</label>
-              <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} onChange={handleInputChangeLivraison} required />
-            </div>
-            <div>
-              <label>Adresse 2 (optionnel):</label>
-              <input type='text' name='adresseLivraison2' value={formDataLivraison.adresseLivraison2} onChange={handleInputChangeLivraison} />
-            </div>
-            <div>
-              <label>Code postal:</label>
-              <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} required />
-            </div>
-            <div>
-              <label>Ville:</label>
-              <input type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} onChange={handleInputChangeLivraison} required />
-            </div>
-            <div>
-              <label>Pays:</label>
-              <input type='text' name='pays' value={formDataLivraison.pays} onChange={handleInputChangeLivraison} required />
-            </div>
-            <br />
-            <div className='text-center'>
-              <button type='submit' className='btn btn-primary'>Enregistrer</button>
-              <button type='button' className='btn btn-secondary' onClick={handleCancelLivraison}>Annuler</button>
-            </div>
-          </form>
-        </div>
-      )}
-      {editModeFacturation && (
-        <div>
-          <h3>Adresse de facturation</h3>
-          <form onSubmit={handleSubmitFacturation}>
-            <div>
-              <label>Nom:</label>
-              <input type='text' name='nomFacturation' value={formDataFacturation.nomFacturation} onChange={handleInputChangeFacturation} required />
-            </div>
-            <div>
-              <label>Prénom:</label>
-              <input type='text' name='prenomFacturation' value={formDataFacturation.prenomFacturation} onChange={handleInputChangeFacturation} required />
-            </div>
-            <div>
-              <label>Adresse:</label>
-              <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} required />
-            </div>
-            <div>
-              <label>Code postal:</label>
-              <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} required />
-            </div>
-            <div>
-              <label>Ville:</label>
-              <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} required />
-            </div>
-            <div>
-              <label>Pays:</label>
-              <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} required />
-            </div>
-            <br />
-            <div className='text-center'>
-              <button type='submit' className='btn btn-primary'>Enregistrer</button>
-              <button type='button' className='btn btn-secondary' onClick={handleCancelFacturation}>Annuler</button>
-            </div>
-          </form>
-        </div>
-      )}
-      {!editModeLivraison && !editModeFacturation && (
-        <div>
-          <div>
-            <h3>Adresse de livraison</h3>
-            {accountInfo.length > 0 ? (
-              <div>
-                <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
-                  <option value="">Sélectionner une adresse</option>
-                  {accountInfo.map((adresse) => (
-                    <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
-                  ))}
-                </select>
-                {selectedAdresseId !== "" && (
+            <div className="mon-compte-container">
+              <div className="sidebar">
+                <h2 className='text-center'>Carnet d'adresses</h2>
+                {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
+                {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
+                <br />
+                {editModeLivraison && (
                   <div>
-                    <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</p>
-                    <p>Nom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</p>
-                    <p>Prénom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</p>
-                    <p>Adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</p>
-                    <p>Adresse 2: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</p>
-                    <p>Code postal: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</p>
-                    <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
-                    <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
-                    <center>
-                      <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
-                      <button type='button' className='btn btn-danger' onClick={handleDeleteAdresse}>Supprimer</button>
-                    </center>
+                    <h3>Adresse de livraison</h3>
+                    <form onSubmit={handleSubmitLivraison}>
+                      <div>
+                        <label>Nom de l'adresse:</label>
+                        <input type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} onChange={handleInputChangeLivraison} required />
+                      </div>
+                      <div>
+                        <label>Nom:</label>
+                        <input type='text' name='nom' value={formDataLivraison.nom} onChange={handleInputChangeLivraison} required />
+                      </div>
+                      <div>
+                        <label>Prénom:</label>
+                        <input type='text' name='prenom' value={formDataLivraison.prenom} onChange={handleInputChangeLivraison} required />
+                      </div>
+                      <div>
+                        <label>Adresse:</label>
+                        <input type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} onChange={handleInputChangeLivraison} required />
+                      </div>
+                      <div>
+                        <label>Adresse 2 (optionnel):</label>
+                        <input type='text' name='adresseLivraison2' value={formDataLivraison.adresseLivraison2} onChange={handleInputChangeLivraison} />
+                      </div>
+                      <div>
+                        <label>Code postal:</label>
+                        <input type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} required />
+                      </div>
+                      <div>
+                        <label>Ville:</label>
+                        <input type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} onChange={handleInputChangeLivraison} required />
+                      </div>
+                      <div>
+                        <label>Pays:</label>
+                        <input type='text' name='pays' value={formDataLivraison.pays} onChange={handleInputChangeLivraison} required />
+                      </div>
+                      <br />
+                      <div className='text-center'>
+                        <button type='submit' className='btn btn-primary'>Enregistrer</button>
+                        <button type='button' className='btn btn-secondary' onClick={handleCancelLivraison}>Annuler</button>
+                      </div>
+                    </form>
                   </div>
                 )}
+                {editModeFacturation && (
+                  <div>
+                    <h3>Adresse de facturation</h3>
+                    <form onSubmit={handleSubmitFacturation}>
+                      <div>
+                        <label>Nom:</label>
+                        <input type='text' name='nomFacturation' value={formDataFacturation.nomFacturation} onChange={handleInputChangeFacturation} required />
+                      </div>
+                      <div>
+                        <label>Prénom:</label>
+                        <input type='text' name='prenomFacturation' value={formDataFacturation.prenomFacturation} onChange={handleInputChangeFacturation} required />
+                      </div>
+                      <div>
+                        <label>Adresse:</label>
+                        <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} required />
+                      </div>
+                      <div>
+                        <label>Code postal:</label>
+                        <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} required />
+                      </div>
+                      <div>
+                        <label>Ville:</label>
+                        <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} required />
+                      </div>
+                      <div>
+                        <label>Pays:</label>
+                        <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} required />
+                      </div>
+                      <br />
+                      <div className='text-center'>
+                        <button type='submit' className='btn btn-primary'>Enregistrer</button>
+                        <button type='button' className='btn btn-secondary' onClick={handleCancelFacturation}>Annuler</button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+                {!editModeLivraison && !editModeFacturation && (
+                  <div>
+                    <div>
+                      <h3>Adresse de livraison</h3>
+                      {accountInfo.length > 0 ? (
+                        <div>
+                          <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
+                            <option value="">Sélectionner une adresse</option>
+                            {accountInfo.map((adresse) => (
+                              <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
+                            ))}
+                          </select>
+                          {selectedAdresseId !== "" && (
+                            <div>
+                              <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</p>
+                              <p>Nom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</p>
+                              <p>Prénom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</p>
+                              <p>Adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</p>
+                              <p>Adresse 2: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</p>
+                              <p>Code postal: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</p>
+                              <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
+                              <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
+                              <center>
+                                <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
+                                <button type='button' className='btn btn-danger' onClick={handleDeleteAdresse}>Supprimer</button>
+                              </center>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div>
+                        <p>Aucune adresse de livraison enregistrée</p>
+                      </div>
+                      )}
+                    </div>
+                    <center>
+                          <button type='button' className='btn btn-primary' onClick={handleAjoutLivraison}>Ajouter</button>
+                        </center>
+                    <br />
+                    <div>
+                      <h3>Adresse de facturation</h3>
+                      {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
+                        <div>
+                        <p>Nom: {accountFac.nom_facturation}</p>
+                        <p>Prénom: {accountFac.prenom_facturation}</p>
+                        <p>Adresse: {accountFac.adresse_facturation}</p>
+                        <p>Code postal: {accountFac.code_postal_facturation}</p>
+                        <p>Ville: {accountFac.ville_facturation}</p>
+                        <p>Pays: {accountFac.pays_facturation}</p>
+                        <center>
+                          <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
+                          <button type='button' className='btn btn-danger' onClick={handleDeleteFacturation}>Supprimer</button>
+                        </center>
+                      </div>
+                      ) : (
+                        <div>
+                        <p>Aucune adresse de facturation enregistrée.</p>
+                        <center>
+                          <button type='button' className='btn btn-primary align-item-center' onClick={handleEditFacturation}>Ajouter</button>
+                        </center>
+                      </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+                <br />
+                <div className='text-center'>
+                  <Link to='/Panier'>Retour</Link>
+                </div>
               </div>
-            ) : (
-              <div>
-              <p>Aucune adresse de livraison enregistrée</p>
             </div>
-            )}
-          </div>
-          <center>
-                <button type='button' className='btn btn-primary' onClick={handleAjoutLivraison}>Ajouter</button>
-              </center>
-          <br />
-          <div>
-            <h3>Adresse de facturation</h3>
-            {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
-              <div>
-              <p>Nom: {accountFac.nom_facturation}</p>
-              <p>Prénom: {accountFac.prenom_facturation}</p>
-              <p>Adresse: {accountFac.adresse_facturation}</p>
-              <p>Code postal: {accountFac.code_postal_facturation}</p>
-              <p>Ville: {accountFac.ville_facturation}</p>
-              <p>Pays: {accountFac.pays_facturation}</p>
-              <center>
-                <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
-                <button type='button' className='btn btn-danger' onClick={handleDeleteFacturation}>Supprimer</button>
-              </center>
-            </div>
-            ) : (
-              <div>
-              <p>Aucune adresse de facturation enregistrée.</p>
-              <center>
-                <button type='button' className='btn btn-primary align-item-center' onClick={handleEditFacturation}>Ajouter</button>
-              </center>
-            </div>
-            )}
-          </div>
-        </div>
-      )}
-      <br />
-      <div className='text-center'>
-        <Link to='/Panier'>Retour</Link>
-      </div>
-    </div>
-
-
-
 
             <button className="btn btn-primary my-3" onClick={handlePayer}>
               Payer

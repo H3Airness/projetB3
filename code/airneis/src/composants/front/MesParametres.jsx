@@ -3,14 +3,15 @@ import React, { useContext, useState, useEffect } from "react";
 import Connexion from "./Connexion";
 import axios from "axios";
 import PasswordInput from "./HidePassword";
-import UserAdresses from "./UserAdresses";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function MesParametres() {
   const { isLoggedIn, accountId } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [accountInfo, setAccountInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAddressMode, setIsAddressMode] = useState(false); 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -54,7 +55,6 @@ function MesParametres() {
 
   const handleEditPassword = () => {
     setIsEditMode(true);
-    setIsAddressMode(false);
     setOldPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -62,8 +62,8 @@ function MesParametres() {
   };
 
   const handleAddresses = () => {
-    setIsAddressMode(true);
     setIsEditMode(false);
+    navigate("/userAdresses");
   };
 
   const handleSubmitPassword = async (e) => {
@@ -121,9 +121,7 @@ function MesParametres() {
         <div className="mon-compte-container">
           <div className="sidebar">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
-            {isAddressMode ? (
-              <UserAdresses accountId={accountId} />
-            ) : isEditMode ? (
+            {isEditMode ? (
               <form onSubmit={handleSubmitPassword}>
                 <div className="form-group">
                   <label className="label-mdp">Ancien mot de passe:</label>
@@ -197,7 +195,9 @@ function MesParametres() {
           </div>
         </div>
       ) : (
-        <Connexion />
+        <>
+          <Connexion previousLocation={location.pathname} />
+        </>
       )}
     </>
   );

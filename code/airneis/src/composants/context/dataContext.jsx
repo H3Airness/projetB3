@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 
 export const dataContext = React.createContext();
@@ -6,6 +6,21 @@ export const dataContext = React.createContext();
 export function DataContextProvider({ children }) {
   const [panier, setPanier] = useState({});
   const [nombreProduits, setNombreProduits] = useState(0);
+
+  useEffect(() => {
+    const panierSession = sessionStorage.getItem("panier");
+    const nombreProduitsSession = sessionStorage.getItem("nombreProduits");
+
+    if (panierSession && nombreProduitsSession) {
+      setPanier(JSON.parse(panierSession));
+      setNombreProduits(Number(nombreProduitsSession));
+    }
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("panier", JSON.stringify(panier));
+    sessionStorage.setItem("nombreProduits", nombreProduits.toString());
+  }, [panier, nombreProduits]);
 
   function ajouter(produit) {
     const nouveauPanier = { ...panier };
