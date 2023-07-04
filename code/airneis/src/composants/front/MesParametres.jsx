@@ -119,8 +119,9 @@ function MesParametres() {
     <>
       {isLoggedIn ? (
         <div className="mon-compte-container">
-          <div className="sidebar">
+          <div className="sidebar-param">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
+            <hr />
             {isEditMode ? (
               <form onSubmit={handleSubmitPassword}>
                 <div className="form-group">
@@ -150,14 +151,14 @@ function MesParametres() {
                   <p className="error-message">{passwordError}</p>
                 )}
                 <div className="button-group">
-                  <button type="submit" className="btn btn-primary">
-                    Valider
+                  <button type="submit" className="btn-custom">
+                    Valider ✔️
                   </button>
                   <button
-                    className="btn btn-primary"
+                    className="btn-custom"
                     onClick={() => setIsEditMode(false)}
                   >
-                    Annuler
+                    Annuler 
                   </button>
                 </div>
               </form>
@@ -175,18 +176,20 @@ function MesParametres() {
                   <label className="label-mdp">Mot de passe:</label>
                   <p className="form-control password">••••••••</p>
                   <button
-                    className="btn btn-primary"
+                    className="btn-custom"
                     onClick={handleEditPassword}
                   >
                     Modifier le mot de passe
                   </button>
                 </div>
+                <br />
+                <hr />
                 <div className="button-group">
                   <br/>
-                  <button className="btn btn-primary">
+                  <button className="btn-custom">
                     Mes moyens de paiements
                   </button>
-                  <button className="btn btn-primary" onClick={handleAddresses}>
+                  <button className="btn-custom" onClick={handleAddresses}>
                     Mes adresses
                   </button>
                 </div>

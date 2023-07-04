@@ -206,7 +206,10 @@ function UserAdresses() {
         setTimeout(() => {
           setSuccessMessageLivraison(null);
         }, 3000);
-        window.location.reload();
+        
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       } else {
         console.error('Erreur lors de la mise à jour des informations de livraison: ', response.data.message);
       }
@@ -306,8 +309,9 @@ function UserAdresses() {
       {isLoggedIn ? (
 
         <div className="mon-compte-container">
-          <div className="sidebar">
+          <div className="sidebar-param">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
+            <hr />
             <div>
               <h2 className='text-center'>Carnet d'adresses</h2>
               {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
@@ -351,8 +355,8 @@ function UserAdresses() {
                     </div>
                     <br />
                     <div className='text-center'>
-                      <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                      <button type='button' className='btn btn-secondary' onClick={handleCancelLivraison}>Annuler</button>
+                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer</button>
+                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelLivraison}>Annuler</button>
                     </div>
                   </form>
                 </div>
@@ -387,8 +391,8 @@ function UserAdresses() {
                     </div>
                     <br />
                     <div className='text-center'>
-                      <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                      <button type='button' className='btn btn-secondary' onClick={handleCancelFacturation}>Annuler</button>
+                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer</button>
+                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelFacturation}>Annuler</button>
                     </div>
                   </form>
                 </div>
@@ -406,7 +410,7 @@ function UserAdresses() {
                           ))}
                         </select>
                         {selectedAdresseId !== "" && (
-                          <div>
+                          <div className="adresse-container">
                             <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</p>
                             <p>Nom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</p>
                             <p>Prénom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</p>
@@ -416,8 +420,8 @@ function UserAdresses() {
                             <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
                             <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
                             <center>
-                              <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
-                              <button type='button' className='btn btn-danger' onClick={handleDeleteAdresse}>Supprimer</button>
+                              <button type='button' className='btn-custom' onClick={handleEditLivraison}>Modifier</button>
+                              <button type='button' className='btn-custom' onClick={handleDeleteAdresse}>Supprimer</button>
                             </center>
                           </div>
                         )}
@@ -429,7 +433,7 @@ function UserAdresses() {
                     )}
                   </div>
                   <center>
-                        <button type='button' className='btn btn-primary' onClick={handleAjoutLivraison}>Ajouter</button>
+                        <button type='button' className='btn-custom' onClick={handleAjoutLivraison}>Ajouter une adresse</button>
                       </center>
                   <br />
                   <div>
@@ -443,15 +447,17 @@ function UserAdresses() {
                       <p>Ville: {accountFac.ville_facturation}</p>
                       <p>Pays: {accountFac.pays_facturation}</p>
                       <center>
-                        <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
-                        <button type='button' className='btn btn-danger' onClick={handleDeleteFacturation}>Supprimer</button>
+                        <div className='d-flex justify-content-center'>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleEditFacturation}>Modifier</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleDeleteFacturation}>Supprimer</button>
+                        </div>
                       </center>
                     </div>
                     ) : (
                       <div>
                       <p>Aucune adresse de facturation enregistrée.</p>
                       <center>
-                        <button type='button' className='btn btn-primary align-item-center' onClick={handleEditFacturation}>Ajouter</button>
+                        <button type='button' className='btn-custom align-item-center' onClick={handleEditFacturation}>Ajouter une adresse</button>
                       </center>
                     </div>
                     )}
@@ -460,7 +466,9 @@ function UserAdresses() {
               )}
               <br />
               <div className='text-center'>
+                <button className='btn-custom'>
                 <Link to='/mesParametres'>Retour</Link>
+                </button>
               </div>
             </div>
           </div>
