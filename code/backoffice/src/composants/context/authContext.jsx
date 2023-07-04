@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
 
 export const AuthContext = createContext();
 
@@ -7,21 +6,21 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const isLoggedInCookie = Cookies.get('isLoggedIn');
+    const isLoggedInSession = sessionStorage.getItem('isLoggedIn');
 
-    if (isLoggedInCookie) {
+    if (isLoggedInSession) {
       setIsLoggedIn(true);
     }
   }, []);
 
   const login = () => {
     setIsLoggedIn(true);
-    Cookies.set('isLoggedIn', true, { expires: 1 / 24 }); // 1h
+    sessionStorage.setItem('isLoggedIn', 'true');
   };
 
   const logout = () => {
     setIsLoggedIn(false);
-    Cookies.remove('isLoggedIn');
+    sessionStorage.removeItem('isLoggedIn');
   };
 
   return (
