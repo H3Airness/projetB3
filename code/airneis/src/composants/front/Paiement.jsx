@@ -191,71 +191,67 @@ const Paiement = () => {
             </center>
           </>
           ) : (
-            
-            <div className="rounded flex-column Min-heightConteinerPanier">
-              <div className="d-flex align-items-center justify-content-center">
-                <div className="rounded mb-2 divLivraisonArticles">
-                  <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
-                  <table className="table">
-                    <tbody className="vertical-align">
-                      {panier.map((produit) => {
-                        return (
-                          <tr key={produit.id}>
-                            <td>
-                              <img
-                                className="rounded img-liv"
-                                width={100}
-                                src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                                alt={produit.nom}
-                              />
-                            </td>
-  
-                            <td>
-                              <span>{produit.nom}</span>
-                            </td>
-  
-                            <td>
-                              <span className="mx-2">{produit.quantite}</span>
-                            </td>
-  
-                            <td>
-                              {new Intl.NumberFormat("fr-FR", {
-                                style: "currency",
-                                currency: "EUR",
-                              }).format(getTotalProduit(produit))}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                  <br />
-                  
-                  <p>
-                    Montant des articles: &nbsp; <strong>
+          <div className="rounded flex-column Min-heightConteinerPanier">
+            <div className="d-flex align-items-center justify-content-center">
+              <div className="bg-body rounded mb-2 divLivraisonArticles">
+                <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
+                <table className="table">
+                  <tbody className="vertical-align">
+                    {panier.map((produit) => {
+                      return (
+                        <tr key={produit.id}>
+                          <td>
+                            <img
+                              className="rounded d-block"
+                              width={100}
+                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                              alt={produit.nom}
+                            />
+                          </td>
+
+                          <td>
+                            <p>{produit.nom}</p>
+                          </td>
+
+                          <td>
+                            <span className="mx-2">{produit.quantite}</span>
+                          </td>
+
+                          <td>
+                            {new Intl.NumberFormat("fr-FR", {
+                              style: "currency",
+                              currency: "EUR",
+                            }).format(getTotalProduit(produit))}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <br />
+                <p>
+                  Montant des articles: &nbsp;
+                  {new Intl.NumberFormat("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                  }).format(getTotalPanier())}
+                </p>
+                <p>Livraison : 10€</p>
+                <div className="fw-bold TotalPayer ml-2">
+                  <h6>
+                    Total :{" "}
                     {new Intl.NumberFormat("fr-FR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(getTotalPanier())}
-                    </strong>
-                  </p>
-                  <p>Livraison :<strong> 10€</strong></p>
-                  
-                  <div className="fw-bold TotalPayer ml-2">
-                    <h6>
-                      Total :{" "}
-                      {new Intl.NumberFormat("fr-FR", {
-                        style: "currency",
-                        currency: "EUR",
-                      }).format(getTotalPanier() + 10)}
-                    </h6>
-                  </div>
+                    }).format(getTotalPanier() + 10)}
+                  </h6>
                 </div>
               </div>
-              <br />      
+            </div>
+                        
 
             <div className="mon-compte-container">
-              <div className="sidebar-paiement">
+              <div className="sidebar">
                 <h2 className='text-center'>Moyen de Paiement</h2>
                 {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
                 <br />
@@ -290,10 +286,10 @@ const Paiement = () => {
                 {!editModePaiement && (
                   <div>
                     <div>
-                      <h5>Veillez choisir un moyen de paiement</h5>
+                      <h3>Moyen de paiement</h3>
                       {accountPaiement.length > 0 ? (
                         <div>
-                          <select value={selectedPaiementId} onChange={(e) => setSelectedPaiementId(e.target.value)}>
+                          <select value={selectedPaiementId} onChange={(e) => setSelectedPaiementId(e.target.value)} className="custom-select-liv">
                             <option value="">Sélectionner un moyen de Paiement</option>
                             {accountPaiement.map((paiement) => (
                               <option key={paiement.id} value={paiement.id}>{paiement.nom}</option>
@@ -301,14 +297,13 @@ const Paiement = () => {
                           </select>
                           {selectedPaiementId !== "" && (
                             <div>
-                              <p>Nom sur la carte: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</p>
-                              <p>Numéro de carte: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</p>
-                              <p>Date d’expiration: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</p>
-                              <p>CVV: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</p>
+                              <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
+                              <p>Numéro de carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</strong></p>
+                              <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
+                              <p>CVV: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</strong></p>
                               <center>
-                                <button type='button' className='btn-custom' onClick={handleEditPaiement}>Modifier</button>
-                                &emsp;
-                                <button type='button' className='btn-custom' onClick={handleDeletePaiement}>Supprimer</button>
+                                <button type='button' className='btn-custom btn-custom-right' onClick={handleEditPaiement}>Modifier ⚙️</button>
+                                <button type='button' className='btn-custom btn-custom-right' onClick={handleDeletePaiement}>Supprimer ⛒</button>
                               </center>
                             </div>
                           )}
@@ -319,9 +314,10 @@ const Paiement = () => {
                       </div>
                       )}
                     </div>
+                    <br />
                     <center>
-                          <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
-                        </center>
+                        <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
+                      </center>
                     <br />
                   </div>
                 )}
@@ -332,7 +328,7 @@ const Paiement = () => {
                 <p className="text-center erreurPanier">{errorMessage}</p>
               )}
               <div className="d-flex justify-content-between">
-                <NavLink to='/Livraison' className='btn btn-light my-3'>
+                <NavLink to='/Livraison' className='btn-custom link-custom my-3'>
                   Retour
                 </NavLink>
                 &emsp;

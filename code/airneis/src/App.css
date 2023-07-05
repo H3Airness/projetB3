@@ -374,9 +374,8 @@ input[type="submit"]:focus {
 
 .divLivraisonArticles{
   width: 700px;
-  
   margin-top: 10px;
-  margin-left: 10px !important;
+  background: linear-gradient(135deg, #ffffff8b 0%, #ffffff 74%);
 }
 
 .divPrixArticles{
@@ -886,4 +885,11 @@ a:link {
 .btn-confirmer:hover {
   filter: sepia(20%);
   transform: scale(1.01);
+}
+
+.erreurPanier {
+  padding: 10px;
+  background-color: rgb(184, 0, 0);
+  color: white;
+  border-radius: 10px;
 }
