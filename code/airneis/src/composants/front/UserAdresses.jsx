@@ -433,6 +433,7 @@ function UserAdresses() {
                     )}
                   </div>
                   <center>
+                    <br />
                         <button type='button' className='btn-custom' onClick={handleAjoutLivraison}>Ajouter une adresse</button>
                       </center>
                   <br />
@@ -466,9 +467,7 @@ function UserAdresses() {
               )}
               <br />
               <div className='text-center'>
-                <button className='btn-custom'>
-                <Link to='/mesParametres'>Retour</Link>
-                </button>
+              <Link to='/mesParametres' className='btn-custom link-custom'>Retour</Link>
               </div>
             </div>
           </div>

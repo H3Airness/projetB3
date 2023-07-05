@@ -607,7 +607,8 @@ a:link {
 }
 
 .btn-custom-right {
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .sidebar-param {
@@ -640,3 +641,11 @@ a:link {
   font-weight: 400;
 }
 
+.link-custom {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-custom:hover {
+  color: inherit;
+}
