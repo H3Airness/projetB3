@@ -158,7 +158,7 @@ function MesParametres() {
                     className="btn-custom"
                     onClick={() => setIsEditMode(false)}
                   >
-                    Annuler 
+                    Annuler ❌
                   </button>
                 </div>
               </form>

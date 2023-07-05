@@ -356,7 +356,7 @@ function UserAdresses() {
                     <br />
                     <div className='text-center'>
                       <button type='submit' className='btn-custom btn-custom-right'>Enregistrer</button>
-                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelLivraison}>Annuler</button>
+                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelLivraison}>Annuler ❌</button>
                     </div>
                   </form>
                 </div>
@@ -392,7 +392,7 @@ function UserAdresses() {
                     <br />
                     <div className='text-center'>
                       <button type='submit' className='btn-custom btn-custom-right'>Enregistrer</button>
-                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelFacturation}>Annuler</button>
+                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelFacturation}>Annuler ❌</button>
                     </div>
                   </form>
                 </div>
@@ -420,8 +420,8 @@ function UserAdresses() {
                             <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
                             <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
                             <center>
-                              <button type='button' className='btn-custom' onClick={handleEditLivraison}>Modifier</button>
-                              <button type='button' className='btn-custom' onClick={handleDeleteAdresse}>Supprimer</button>
+                              <button type='button' className='btn-custom' onClick={handleEditLivraison}>Modifier ⚙️</button>
+                              <button type='button' className='btn-custom' onClick={handleDeleteAdresse}>Supprimer ⛒</button>
                             </center>
                           </div>
                         )}
@@ -448,8 +448,8 @@ function UserAdresses() {
                       <p>Pays: {accountFac.pays_facturation}</p>
                       <center>
                         <div className='d-flex justify-content-center'>
-                        <button type='button' className='btn-custom btn-custom-right' onClick={handleEditFacturation}>Modifier</button>
-                        <button type='button' className='btn-custom btn-custom-right' onClick={handleDeleteFacturation}>Supprimer</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleEditFacturation}>Modifier ⚙️</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleDeleteFacturation}>Supprimer ⛒</button>
                         </div>
                       </center>
                     </div>
