@@ -19,23 +19,54 @@ const Paiement = () => {
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
 
+  const handleChangePaiement = (e) => {
+    setSelectedPaiementId(e.target.value);
+  };
+
   const handlePayer = async () => {
     if (selectedPaiementId) {
       const Paiement = accountPaiement;
       moyenPaiement(Paiement);
+
+      const selectedPaiement = accountPaiement.find(
+        (paiement) => paiement.id === selectedPaiementId
+      );
   
       try {
-        const response = await axios.post('http://airneis.ddns.net:3000/update_info_paiement.php', {
+
+        console.log("Données envoyées : ", {
           accountId,
-  
-          nomAdresseLivraison: adresseLivraison.nomAdresse,
-          nomLivraison: adresseLivraison.nom,
-          prenomLivraison: adresseLivraison.prenom,
+          nomAdresseLivraison: adresseLivraison.nomAdresseLivraison,
+          nomLivraison: adresseLivraison.nomLivraison,
+          prenomLivraison: adresseLivraison.prenomLivraison,
           adresseLivraison: adresseLivraison.adresseLivraison,
           adresseLivraison2: adresseLivraison.adresseLivraison2,
           codePostalLivraison: adresseLivraison.codePostalLivraison,
           villeLivraison: adresseLivraison.villeLivraison,
-          paysLivraison: adresseLivraison.pays,
+          paysLivraison: adresseLivraison.paysLivraison,
+          nomFacturation: adresseFacturation.nomFacturation,
+          prenomFacturation: adresseFacturation.prenomFacturation,
+          adresseFacturation: adresseFacturation.adresseFacturation,
+          codePostalFacturation: adresseFacturation.codePostalFacturation,
+          villeFacturation: adresseFacturation.villeFacturation,
+          paysFacturation: adresseFacturation.paysFacturation,
+          nomPaiement: selectedPaiement.nom,
+          numeroPaiement: selectedPaiement.numero,
+          datePaiement: selectedPaiement.date,
+          cvvPaiement: selectedPaiement.cvv,
+        });
+
+        const response = await axios.post('http://airneis.ddns.net:3000/commande.php', {
+          accountId,
+  
+          nomAdresseLivraison: adresseLivraison.nomAdresseLivraison,
+          nomLivraison: adresseLivraison.nomLivraison,
+          prenomLivraison: adresseLivraison.prenomLivraison,
+          adresseLivraison: adresseLivraison.adresseLivraison,
+          adresseLivraison2: adresseLivraison.adresseLivraison2,
+          codePostalLivraison: adresseLivraison.codePostalLivraison,
+          villeLivraison: adresseLivraison.villeLivraison,
+          paysLivraison: adresseLivraison.paysLivraison,
   
           nomFacturation: adresseFacturation.nomFacturation,
           prenomFacturation: adresseFacturation.prenomFacturation,
@@ -44,17 +75,18 @@ const Paiement = () => {
           villeFacturation: adresseFacturation.villeFacturation,
           paysFacturation: adresseFacturation.paysFacturation,
   
-          nomPaiement: formDataPaiement.nom,
-          numeroPaiement: formDataPaiement.numero,
-          datePaiement: formDataPaiement.date,
-          cvvPaiement: formDataPaiement.cvv,
+          nomPaiement: selectedPaiement.nom,
+          numeroPaiement: selectedPaiement.numero,
+          datePaiement: selectedPaiement.date,
+          cvvPaiement: selectedPaiement.cvv,
         });
         
         if (response.data.status === 'success') {
+          console.log('La commande a été créée avec succès');
           navigate("/ConfirmationCommande");
         }
       } catch (error) {
-        //Faire les messages d'erreur
+        console.log(error.response);
       }
     } else {
       setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
@@ -289,7 +321,7 @@ const Paiement = () => {
                       <h3>Moyen de paiement</h3>
                       {accountPaiement.length > 0 ? (
                         <div>
-                          <select value={selectedPaiementId} onChange={(e) => setSelectedPaiementId(e.target.value)} className="custom-select-liv">
+                          <select value={selectedPaiementId} onChange={(e) => handleChangePaiement(e)} className="custom-select-liv">
                             <option value="">Sélectionner un moyen de Paiement</option>
                             {accountPaiement.map((paiement) => (
                               <option key={paiement.id} value={paiement.id}>{paiement.nom}</option>
