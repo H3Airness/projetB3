@@ -403,12 +403,12 @@ function UserAdresses() {
                     <h3>Adresse de livraison</h3>
                     {accountInfo.length > 0 ? (
                       <div>
-                        <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
-                          <option value="">Sélectionner une adresse</option>
-                          {accountInfo.map((adresse) => (
+                          <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)} className="custom-select">
+                            <option value="">Sélectionner une adresse</option>
+                            {accountInfo.map((adresse) => (
                             <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
-                          ))}
-                        </select>
+                             ))}
+                            </select>
                         {selectedAdresseId !== "" && (
                           <div className="adresse-container">
                             <p>Nom de l'adresse: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse} </strong></p>

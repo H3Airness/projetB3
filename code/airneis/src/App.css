@@ -654,3 +654,17 @@ a:link {
 .link-custom:hover {
   color: inherit;
 }
+
+.custom-select {
+  width: 27%;
+  height: 35px; 
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+  padding: 5px;
+  font-size: 1em;
+}
+
+.custom-select:focus {
+  border-color: #707070;
+  outline: none;
+}
