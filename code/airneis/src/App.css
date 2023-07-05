@@ -275,15 +275,17 @@ input[type="submit"]:focus {
   }
 
 .Min-heightConteinerPanier{
-  background-color: #e3dfdd;
+  background: linear-gradient(135deg, #dfdada8b 0%, #ede5d8 74%); 
   display: flex;
   justify-content: center;
   width: 1000px;
   margin: auto;
   margin-bottom: 10px;
   height: auto;
-  padding: 30px;
   padding-bottom: 0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 }
 
@@ -736,5 +738,66 @@ a:link {
   border-radius: 6px; 
   cursor: not-allowed; 
   font-size: 1.1em; 
+}
+
+.custom-button {
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #887373;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #d2caca;
+}
+
+.custom-button:disabled {
+  background-color: #ffffff;
+  cursor: not-allowed;
+}
+
+
+.suprimer-panier{
+  width: auto; 
+  background-color: #ffffff; 
+  border: 1px solid #ef403a; 
+  border-radius: 6px; 
+  transition: all 0.3s ease; 
+  scale: 1.2;
+}
+.suprimer-panier:hover{
+  scale: 1.1;
+}
+
+.command-btn {
+  float: right;
+  padding: 8px 16px;
+  font-size: 1em;
+  background-color: #6f6060;
+  color: #fdfdfd;
+  border: 2px solid #6f6060;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.command-btn:hover {
+  background-color: #4c4646; 
+  color: #fdfdfd;
+  border-color: #4c4646;
+}
+
+.command-btn-disabled {
+  background-color: #ccc;
+  color: #888;
+  border-color: #aaa;
+  cursor: not-allowed;
 }
 

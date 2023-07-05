@@ -65,11 +65,11 @@ function Categorie() {
                   <p className="card-text">{produit.prix}€</p>
                   <center>
                     {produit.stock > 0 ? (
-                      <button className="btn btn-primary" onClick={() => ajouter(produit) }>
+                      <button className="add-to-cart-btn" style={{width:"60%"}} onClick={() => ajouter(produit)}>
                         <span>Ajouter au panier</span>
                       </button>
                     ) : (
-                      <button className="btn btn-danger" disabled>
+                      <button className="out-of-stock-btn" style={{width:"40%"}} disabled>
                         <span>Stock épuisé</span>
                       </button>
                     )}
