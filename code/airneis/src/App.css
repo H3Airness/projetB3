@@ -856,3 +856,33 @@ a:link {
 .btn-continuer:hover {
   filter: sepia(40%);
 }
+
+.sidebar-paiement {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff8b 0%, #ffffff 74%);
+  border-radius: 8px;
+  margin-right: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-confirmer {
+  padding: 10px 20px;
+  width: 250px;
+    font-size: 1rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #c28b60 8%, #ebb051 74%);
+    border: 2px solid #ffffff00;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-confirmer:hover {
+  filter: sepia(20%);
+  transform: scale(1.01);
+}

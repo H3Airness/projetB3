@@ -158,67 +158,71 @@ const Paiement = () => {
             </center>
           </>
           ) : (
-          <div className="rounded flex-column Min-heightConteinerPanier">
-            <div className="d-flex align-items-center justify-content-center">
-              <div className="bg-body rounded mb-2 divLivraisonArticles">
-                <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
-                <table className="table">
-                  <tbody className="vertical-align">
-                    {panier.map((produit) => {
-                      return (
-                        <tr key={produit.id}>
-                          <td>
-                            <img
-                              className="rounded d-block"
-                              width={100}
-                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                              alt={produit.nom}
-                            />
-                          </td>
-
-                          <td>
-                            <p>{produit.nom}</p>
-                          </td>
-
-                          <td>
-                            <span className="mx-2">{produit.quantite}</span>
-                          </td>
-
-                          <td>
-                            {new Intl.NumberFormat("fr-FR", {
-                              style: "currency",
-                              currency: "EUR",
-                            }).format(getTotalProduit(produit))}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-                <br />
-                <p>
-                  Montant des articles: &nbsp;
-                  {new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(getTotalPanier())}
-                </p>
-                <p>Livraison : 10€</p>
-                <div className="fw-bold TotalPayer ml-2">
-                  <h6>
-                    Total :{" "}
+            
+            <div className="rounded flex-column Min-heightConteinerPanier">
+              <div className="d-flex align-items-center justify-content-center">
+                <div className="rounded mb-2 divLivraisonArticles">
+                  <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
+                  <table className="table">
+                    <tbody className="vertical-align">
+                      {panier.map((produit) => {
+                        return (
+                          <tr key={produit.id}>
+                            <td>
+                              <img
+                                className="rounded img-liv"
+                                width={100}
+                                src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                                alt={produit.nom}
+                              />
+                            </td>
+  
+                            <td>
+                              <span>{produit.nom}</span>
+                            </td>
+  
+                            <td>
+                              <span className="mx-2">{produit.quantite}</span>
+                            </td>
+  
+                            <td>
+                              {new Intl.NumberFormat("fr-FR", {
+                                style: "currency",
+                                currency: "EUR",
+                              }).format(getTotalProduit(produit))}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                  <br />
+                  
+                  <p>
+                    Montant des articles: &nbsp; <strong>
                     {new Intl.NumberFormat("fr-FR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(getTotalPanier() + 10)}
-                  </h6>
+                    }).format(getTotalPanier())}
+                    </strong>
+                  </p>
+                  <p>Livraison :<strong> 10€</strong></p>
+                  
+                  <div className="fw-bold TotalPayer ml-2">
+                    <h6>
+                      Total :{" "}
+                      {new Intl.NumberFormat("fr-FR", {
+                        style: "currency",
+                        currency: "EUR",
+                      }).format(getTotalPanier() + 10)}
+                    </h6>
+                  </div>
                 </div>
               </div>
-            </div>
-                        
+              <br />      
 
             <div className="mon-compte-container">
-              <div className="sidebar">
+              <div className="sidebar-paiement">
                 <h2 className='text-center'>Moyen de Paiement</h2>
                 {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
                 <br />
@@ -243,8 +247,8 @@ const Paiement = () => {
                       </div>
                       <br />
                       <div className='text-center'>
-                        <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                        <button type='button' className='btn btn-secondary' onClick={handleCancelPaiement}>Annuler</button>
+                        <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelPaiement}>Annuler ❌</button>
                       </div>
                     </form>
                   </div>
@@ -253,7 +257,7 @@ const Paiement = () => {
                 {!editModePaiement && (
                   <div>
                     <div>
-                      <h3>Moyen de paiement</h3>
+                      <h5>Veillez choisir un moyen de paiement</h5>
                       {accountPaiement.length > 0 ? (
                         <div>
                           <select value={selectedPaiementId} onChange={(e) => setSelectedPaiementId(e.target.value)}>
@@ -269,9 +273,9 @@ const Paiement = () => {
                               <p>Date d’expiration: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</p>
                               <p>CVV: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</p>
                               <center>
-                                <button type='button' className='btn btn-warning' onClick={handleEditPaiement}>Modifier</button>
+                                <button type='button' className='btn-custom' onClick={handleEditPaiement}>Modifier</button>
                                 &emsp;
-                                <button type='button' className='btn btn-danger my-3' onClick={handleDeletePaiement}>Supprimer</button>
+                                <button type='button' className='btn-custom' onClick={handleDeletePaiement}>Supprimer</button>
                               </center>
                             </div>
                           )}
@@ -283,7 +287,7 @@ const Paiement = () => {
                       )}
                     </div>
                     <center>
-                          <button type='button' className='btn btn-primary' onClick={handleAjoutPaiement}>Ajouter</button>
+                          <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
                         </center>
                     <br />
                   </div>
@@ -299,7 +303,7 @@ const Paiement = () => {
                   Retour
                 </NavLink>
                 &emsp;
-                <button className="btn btn-primary my-3" onClick={handlePayer}>
+                <button className="btn-confirmer" onClick={handlePayer}>
                   Confirmer ma commande
                 </button>
               </div>
