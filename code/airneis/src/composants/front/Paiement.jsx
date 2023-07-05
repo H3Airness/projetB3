@@ -276,8 +276,8 @@ const Paiement = () => {
                       </div>
                       <br />
                       <div className='text-center'>
-                        <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                        <button type='button' className='btn btn-secondary' onClick={handleCancelPaiement}>Annuler</button>
+                        <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelPaiement}>Annuler ❌</button>
                       </div>
                     </form>
                   </div>
@@ -289,7 +289,7 @@ const Paiement = () => {
                       <h3>Moyen de paiement</h3>
                       {accountPaiement.length > 0 ? (
                         <div>
-                          <select value={selectedPaiementId} onChange={(e) => setSelectedPaiementId(e.target.value)}>
+                          <select value={selectedPaiementId} onChange={(e) => setSelectedPaiementId(e.target.value)} className="custom-select-liv">
                             <option value="">Sélectionner un moyen de Paiement</option>
                             {accountPaiement.map((paiement) => (
                               <option key={paiement.id} value={paiement.id}>{paiement.nom}</option>
@@ -297,14 +297,13 @@ const Paiement = () => {
                           </select>
                           {selectedPaiementId !== "" && (
                             <div>
-                              <p>Nom sur la carte: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</p>
-                              <p>Numéro de carte: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</p>
-                              <p>Date d’expiration: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</p>
-                              <p>CVV: {accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</p>
+                              <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
+                              <p>Numéro de carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</strong></p>
+                              <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
+                              <p>CVV: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</strong></p>
                               <center>
-                                <button type='button' className='btn btn-warning' onClick={handleEditPaiement}>Modifier</button>
-                                &emsp;
-                                <button type='button' className='btn btn-danger my-3' onClick={handleDeletePaiement}>Supprimer</button>
+                                <button type='button' className='btn-custom btn-custom-right' onClick={handleEditPaiement}>Modifier ⚙️</button>
+                                <button type='button' className='btn-custom btn-custom-right' onClick={handleDeletePaiement}>Supprimer ⛒</button>
                               </center>
                             </div>
                           )}
@@ -315,9 +314,10 @@ const Paiement = () => {
                       </div>
                       )}
                     </div>
+                    <br />
                     <center>
-                          <button type='button' className='btn btn-primary' onClick={handleAjoutPaiement}>Ajouter</button>
-                        </center>
+                        <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
+                      </center>
                     <br />
                   </div>
                 )}
@@ -328,11 +328,11 @@ const Paiement = () => {
                 <p className="text-center erreurPanier">{errorMessage}</p>
               )}
               <div className="d-flex justify-content-between">
-                <NavLink to='/Livraison' className='btn btn-light my-3'>
+                <NavLink to='/Livraison' className='btn-custom link-custom my-3'>
                   Retour
                 </NavLink>
                 &emsp;
-                <button className="btn btn-primary my-3" onClick={handlePayer}>
+                <button className="btn-confirmer" onClick={handlePayer}>
                   Confirmer ma commande
                 </button>
               </div>
