@@ -11,8 +11,13 @@ const Livraison = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedAdresseId, setSelectedAdresseId] = useState("");
   const { adresseLivraisonSelectionner, adresseLivraisonFacturation } = useContext(InfoCommandeContext);
 
+  const handleChangeAdresse = (e) => {
+    setSelectedAdresseId(e.target.value);
+  };
+  
   const handlePayer = () => {
     if (selectedAdresseId &&
       (accountFac.nom_facturation ||
@@ -22,9 +27,29 @@ const Livraison = () => {
         accountFac.code_postal_facturation ||
         accountFac.ville_facturation)
     ){
-      const adresseLivraison = accountInfo
-      const adresseFacturation = accountFac
+      const selectedAdresse = accountInfo.find(
+        (adresse) => adresse.id === selectedAdresseId
+      );
 
+      const adresseLivraison = {
+        nomAdresseLivraison: selectedAdresse.nom_adresse,
+        nomLivraison: selectedAdresse.nom,
+        prenomLivraison: selectedAdresse.prenom,
+        adresseLivraison: selectedAdresse.adresse1,
+        adresseLivraison2: selectedAdresse.adresse2,
+        codePostalLivraison: selectedAdresse.code_postal,
+        villeLivraison: selectedAdresse.code_postal,
+        paysLivraison: selectedAdresse.pays,
+      };
+
+      const adresseFacturation = {
+        nomFacturation: accountFac.nom_facturation,
+        prenomFacturation: accountFac.prenom_facturation,
+        adresseFacturation: accountFac.adresse_facturation,
+        codePostalFacturation: accountFac.code_postal_facturation,
+        villeFacturation: accountFac.ville_facturation,
+        paysFacturation: accountFac.pays_facturation,
+      };
     
       adresseLivraisonSelectionner(adresseLivraison);
       adresseLivraisonFacturation(adresseFacturation);
@@ -60,7 +85,6 @@ const Livraison = () => {
   });
   const [successMessageLivraison, setSuccessMessageLivraison] = useState(null);
   const [successMessageFacturation, setSuccessMessageFacturation] = useState(null);
-  const [selectedAdresseId, setSelectedAdresseId] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -495,7 +519,7 @@ const Livraison = () => {
                       <h3>Adresse de livraison</h3>
                       {accountInfo.length > 0 ? (
                         <div>
-                          <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)} className="custom-select-liv">
+                          <select value={selectedAdresseId} onChange={(e) => handleChangeAdresse(e)} className="custom-select-liv">
                             <option value="">Sélectionner une adresse</option>
                             {accountInfo.map((adresse) => (
                               <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
