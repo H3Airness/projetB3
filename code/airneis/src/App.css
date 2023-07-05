@@ -696,3 +696,45 @@ a:link {
   color: transparent;
   text-shadow: 0 0 0 #000;
 }
+
+.add-to-cart-btn {
+  width: 100%;
+  background-color: #fbb769; 
+  color: #212529; 
+  padding: 4px 20px;
+  border: 2px solid #c4c4c45d; 
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease; 
+  font-size: 1.1em; 
+}
+
+.add-to-cart-btn:hover {
+  scale: 1.01;
+  background-color: #fbb769; 
+  color: #492b10; 
+  border-color: #ebac64; 
+}
+
+
+.add-to-cart-btn:active {
+  transform: scale(0.95); 
+}
+
+.price-text {
+  font-size: 1.2em; 
+  color: #252528;
+  transition: all 0.3s ease;
+}
+
+.out-of-stock-btn {
+  width: 50%; 
+  background-color: #d9534f; 
+  color: #ffffff; 
+  padding: 4px 20px;
+  border: none; 
+  border-radius: 6px; 
+  cursor: not-allowed; 
+  font-size: 1.1em; 
+}
+

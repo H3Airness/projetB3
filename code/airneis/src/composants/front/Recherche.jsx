@@ -63,7 +63,7 @@ const Recherche = () => {
                     type="submit"
                     className="btn btn-primary"
                     style={{ marginLeft: "10px", marginTop: "5px" }}
-                  >
+                  ><img style={{width:"24px"}} src="http://airneis.ddns.net:3000/img/icon_recherche.png"></img>
                     Rechercher
                   </button>
                 </div>
@@ -93,14 +93,14 @@ const Recherche = () => {
 
                 <div className="card-body">
                   <h5 className="card-title">{resultat.nom}</h5>
-                  <p className="card-text text-primary">{resultat.prix} €</p>
+                  <p className="price-text">{resultat.prix} €</p>
                   <center>
                     {resultat.stock > 0 ? (
-                      <button className="btn btn-primary" onClick={() => ajouter(resultat) }>
-                        <span>Ajouter au panier</span>
+                      <button className="add-to-cart-btn" onClick={() => ajouter(resultat) }>
+                        <span>Ajouter au panier 🛒</span>
                       </button>
                     ) : (
-                      <button className="btn btn-danger" disabled>
+                      <button className="out-of-stock-btn" disabled>
                         <span>Stock épuisé</span>
                       </button>
                     )}
