@@ -355,7 +355,7 @@ function UserAdresses() {
                     </div>
                     <br />
                     <div className='text-center'>
-                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer</button>
+                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
                       <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelLivraison}>Annuler ❌</button>
                     </div>
                   </form>
@@ -391,7 +391,7 @@ function UserAdresses() {
                     </div>
                     <br />
                     <div className='text-center'>
-                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer</button>
+                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
                       <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelFacturation}>Annuler ❌</button>
                     </div>
                   </form>
