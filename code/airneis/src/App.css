@@ -658,13 +658,14 @@ a:link {
 .custom-select {
   width: 27%;
   height: 35px; 
-  border: 1px solid #ccc;
-  border-radius: 5px; 
+  border: 2px solid #3c3333;
+  border-radius: 9px; 
   padding: 5px;
-  font-size: 1em;
+  font-size: 1.2em;
+  margin-bottom: 20px;
 }
 
 .custom-select:focus {
-  border-color: #707070;
-  outline: none;
+  border-color: #8b744c;
+
 }
