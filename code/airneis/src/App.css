@@ -621,7 +621,7 @@ a:link {
   flex-direction: column;
   width: 65%;
   padding: 20px;
-  background: linear-gradient(135deg, #dfdada8b 0%, #ece7df 74%); /* Dégradé du beige clair au bleu pastel */
+  background: linear-gradient(135deg, #dfdada8b 0%, #ede5d8 74%); 
   border-radius: 8px;
   margin-right: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -658,14 +658,28 @@ a:link {
 .custom-select {
   width: 27%;
   height: 35px; 
-  border: 2px solid #3c3333;
+  border: none;
   border-radius: 9px; 
-  padding: 5px;
+  padding: 5px 10px;
   font-size: 1.2em;
   margin-bottom: 20px;
+  background: #faf7f4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  transition: all 0.3s ease;
+  color: #6f6060; 
 }
 
 .custom-select:focus {
   border-color: #8b744c;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+  outline: none;
+}
 
+
+.custom-select::-ms-expand {
+  display: none;
+}
+.custom-select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
 }
