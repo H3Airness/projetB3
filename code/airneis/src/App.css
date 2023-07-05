@@ -8,6 +8,11 @@
   src: url('http://airneis.ddns.net:3001/Acme-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'Arvo';
+  src: url('http://airneis.ddns.net:3001/Arvo-Regular.ttf');
+}
+
 html, body {
   margin: 0;
   padding: 0;

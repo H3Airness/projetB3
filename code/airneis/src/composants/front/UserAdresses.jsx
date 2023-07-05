@@ -411,14 +411,14 @@ function UserAdresses() {
                         </select>
                         {selectedAdresseId !== "" && (
                           <div className="adresse-container">
-                            <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</p>
-                            <p>Nom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</p>
-                            <p>Prénom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</p>
-                            <p>Adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</p>
-                            <p>Adresse 2: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</p>
-                            <p>Code postal: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</p>
-                            <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
-                            <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
+                            <p>Nom de l'adresse: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse} </strong></p>
+                            <p>Nom: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</strong> </p>
+                            <p>Prénom: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</strong></p>
+                            <p>Adresse: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</strong></p>
+                            <p>Adresse 2: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</strong></p>
+                            <p>Code postal:<strong> {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</strong></p>
+                            <p>Ville: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</strong></p>
+                            <p>Pays: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</strong></p>
                             <center>
                               <button type='button' className='btn-custom' onClick={handleEditLivraison}>Modifier ⚙️</button>
                               <button type='button' className='btn-custom' onClick={handleDeleteAdresse}>Supprimer ⛒</button>
@@ -436,17 +436,19 @@ function UserAdresses() {
                     <br />
                         <button type='button' className='btn-custom' onClick={handleAjoutLivraison}>Ajouter une adresse</button>
                       </center>
+                      
                   <br />
                   <div>
+                    <hr />
                     <h3>Adresse de facturation</h3>
                     {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
                       <div>
-                      <p>Nom: {accountFac.nom_facturation}</p>
-                      <p>Prénom: {accountFac.prenom_facturation}</p>
-                      <p>Adresse: {accountFac.adresse_facturation}</p>
-                      <p>Code postal: {accountFac.code_postal_facturation}</p>
-                      <p>Ville: {accountFac.ville_facturation}</p>
-                      <p>Pays: {accountFac.pays_facturation}</p>
+                      <p>Nom: <strong>{accountFac.nom_facturation}</strong></p>
+                      <p>Prénom: <strong>{accountFac.prenom_facturation}</strong></p>
+                      <p>Adresse: <strong>{accountFac.adresse_facturation}</strong></p>
+                      <p>Code postal: <strong>{accountFac.code_postal_facturation}</strong></p>
+                      <p>Ville: <strong>{accountFac.ville_facturation}</strong></p>
+                      <p>Pays: <strong>{accountFac.pays_facturation}</strong></p>
                       <center>
                         <div className='d-flex justify-content-center'>
                         <button type='button' className='btn-custom btn-custom-right' onClick={handleEditFacturation}>Modifier ⚙️</button>
