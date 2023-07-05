@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { InfoCommandeContext } from "../context/infoCommandeContext";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 
@@ -9,16 +10,34 @@ const Livraison = () => {
   const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [errorMessage, setErrorMessage] = useState("");
+  const { adresseLivraisonSelectionner, adresseLivraisonFacturation } = useContext(InfoCommandeContext);
 
   const handlePayer = () => {
-    navigate("/Paiement");
+    if (selectedAdresseId &&
+      (accountFac.nom_facturation ||
+        accountFac.prenom_facturation ||
+        accountFac.pays_facturation ||
+        accountFac.adresse_facturation ||
+        accountFac.code_postal_facturation ||
+        accountFac.ville_facturation)
+    ){
+      const adresseLivraison = accountInfo
+      const adresseFacturation = accountFac
+
+    
+      adresseLivraisonSelectionner(adresseLivraison);
+      adresseLivraisonFacturation(adresseFacturation);
+      navigate("/Paiement");
+    } else {
+      setErrorMessage("Veuillez renseigner une adresse de livraison et une adresse de facturation");
+    }
   };
 
   const [loading, setLoading] = useState(true);
-  const { accountId, isLoggedIn } = useContext(AuthContext);
+  const {accountId, isLoggedIn} = useContext(AuthContext);
   const [accountInfo, setAccountInfo] = useState([]);
   const [accountFac, setAccountFac] = useState({});
-  const [isAdresseSelected, setIsAdresseSelected] = useState(false);
   const [editModeLivraison, setEditModeLivraison] = useState(false);
   const [formDataLivraison, setFormDataLivraison] = useState({
     nomAdresse: '',
@@ -41,7 +60,7 @@ const Livraison = () => {
   });
   const [successMessageLivraison, setSuccessMessageLivraison] = useState(null);
   const [successMessageFacturation, setSuccessMessageFacturation] = useState(null);
-  const [selectedAdresseId, setSelectedAdresseId] = useState(""); // Nouvel état pour stocker l'ID de l'adresse sélectionnée
+  const [selectedAdresseId, setSelectedAdresseId] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -304,16 +323,7 @@ const Livraison = () => {
       console.error('Erreur lors de la suppression de l\'adresse: ', error);
     }
   };
-
-  useEffect(() => {
-    window.onload = () => {
-      if (panier.length === 0) {
-        navigate("/panier");
-      }
-    };
-  }, [panier]);
-    
-
+ 
   if (loading) {
     return <div>Chargement...</div>;
   }
@@ -324,6 +334,16 @@ const Livraison = () => {
       {isLoggedIn ? (
         <>
           <h1 className="mb-4 text-center">Livraison</h1>
+          {panier.length === 0 ? (
+            <>
+            <center>
+              <p>Votre panier est vide. ☹️</p>
+              <NavLink to="/recherche" className="btn btn-success">
+                Voir notre catalogue
+              </NavLink>
+            </center>
+          </>
+          ) : (
           <div className="rounded flex-column Min-heightConteinerPanier">
             <div className="d-flex align-items-center justify-content-center">
               <div className="bg-body rounded mb-2 divLivraisonArticles">
@@ -493,7 +513,8 @@ const Livraison = () => {
                               <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
                               <center>
                                 <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
-                                <button type='button' className='btn btn-danger' onClick={handleDeleteAdresse}>Supprimer</button>
+                                &emsp;
+                                <button type='button' className='btn btn-danger my-3' onClick={handleDeleteAdresse}>Supprimer</button>
                               </center>
                             </div>
                           )}
@@ -520,6 +541,7 @@ const Livraison = () => {
                         <p>Pays: {accountFac.pays_facturation}</p>
                         <center>
                           <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
+                          &emsp;
                           <button type='button' className='btn btn-danger' onClick={handleDeleteFacturation}>Supprimer</button>
                         </center>
                       </div>
@@ -534,17 +556,24 @@ const Livraison = () => {
                     </div>
                   </div>
                 )}
-                <br />
-                <div className='text-center'>
-                  <Link to='/Panier'>Retour</Link>
-                </div>
               </div>
             </div>
-
-            <button className="btn btn-primary my-3" onClick={handlePayer}>
-              Payer
-            </button>
+            <div className="item-align-center">
+              {errorMessage && (
+                <p className="text-center erreurPanier">{errorMessage}</p>
+              )}
+              <div className="d-flex justify-content-between">
+                <NavLink to='/Panier' className='btn btn-light my-3'>
+                  Retour
+                </NavLink>
+                &emsp;
+                <button className="btn btn-primary my-3" onClick={handlePayer}>
+                  Payer
+                </button>
+              </div>
+            </div>
           </div>
+          )}
         </>
       ) : (
         <>

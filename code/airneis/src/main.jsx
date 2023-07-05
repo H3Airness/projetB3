@@ -18,7 +18,7 @@ import MenuNavigation from './composants/front/MenuNavigation';
 import Produit from './composants/front/Produit';
 import Categorie from './composants/front/Categorie';
 import Livraison from './composants/front/Livraison';
-import Paiement from './composants/front/paiement';
+import Paiement from './composants/front/Paiement';
 import ConfirmationCommande from './composants/front/ConfirmationCommande';
 import MesParametres from './composants/front/MesParametres';
 import UserAdresses from './composants/front/UserAdresses';

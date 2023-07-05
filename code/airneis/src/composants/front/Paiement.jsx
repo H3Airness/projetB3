@@ -1,19 +1,26 @@
 import { useState, useContext, useEffect } from "react";
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { InfoCommandeContext } from "../context/infoCommandeContext";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 
 const Paiement = () => {
   const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
-  const [adresse, setAdresse] = useState("");
   const [numeroCarte, setNumeroCarte] = useState("");
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const data = { userId: accountId };
+  const { adresseLivraison, adresseFacturation } = useContext(InfoCommandeContext);
 
+  useEffect(() => {
+    console.log("Adresse de livraison :", adresseLivraison);
+    console.log("Adresse de facturation :", adresseFacturation);
+  }, [adresseLivraison, adresseFacturation]);
+  
+  
   const handleNumeroCarteChange = (e) => {
     setNumeroCarte(e.target.value);
   };
@@ -114,9 +121,13 @@ const Paiement = () => {
                 onChange={handleNumeroCarteChange}
               />
             </div>
-            <button className="btn btn-primary my-3" onClick={handlePayer}>
+            <br />
+            <button className="btn btn-primary" onClick={handlePayer}>
               Payer
             </button>
+            <NavLink to='/Livraison' className='btn btn-light my-3'>
+              Retour
+            </NavLink>
           </div>
         </>
       ) : (
