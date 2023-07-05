@@ -447,9 +447,9 @@ const Livraison = () => {
                       </div>
                       <br />
                       <div className='text-center'>
-                        <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                        <button type='button' className='btn btn-secondary' onClick={handleCancelLivraison}>Annuler</button>
-                      </div>
+                        <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelLivraison}>Annuler ❌</button>
+                    </div>
                     </form>
                   </div>
                 )}
@@ -483,8 +483,8 @@ const Livraison = () => {
                       </div>
                       <br />
                       <div className='text-center'>
-                        <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                        <button type='button' className='btn btn-secondary' onClick={handleCancelFacturation}>Annuler</button>
+                        <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelFacturation}>Annuler ❌</button>
                       </div>
                     </form>
                   </div>
@@ -495,7 +495,7 @@ const Livraison = () => {
                       <h3>Adresse de livraison</h3>
                       {accountInfo.length > 0 ? (
                         <div>
-                          <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
+                          <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)} className="custom-select-liv">
                             <option value="">Sélectionner une adresse</option>
                             {accountInfo.map((adresse) => (
                               <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
@@ -503,18 +503,17 @@ const Livraison = () => {
                           </select>
                           {selectedAdresseId !== "" && (
                             <div>
-                              <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</p>
-                              <p>Nom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</p>
-                              <p>Prénom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</p>
-                              <p>Adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</p>
-                              <p>Adresse 2: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</p>
-                              <p>Code postal: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</p>
-                              <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
-                              <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
+                              <p>Nom de l'adresse: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse} </strong></p>
+                              <p>Nom: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</strong> </p>
+                              <p>Prénom: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</strong></p>
+                              <p>Adresse: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</strong></p>
+                              <p>Adresse 2: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</strong></p>
+                              <p>Code postal:<strong> {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</strong></p>
+                              <p>Ville: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</strong></p>
+                              <p>Pays: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</strong></p>
                               <center>
-                                <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
-                                &emsp;
-                                <button type='button' className='btn btn-danger my-3' onClick={handleDeleteAdresse}>Supprimer</button>
+                                <button type='button' className='btn-custom btn-custom-right' onClick={handleEditLivraison}>Modifier ⚙️</button>
+                                <button type='button' className='btn-custom btn-custom-right' onClick={handleDeleteAdresse}>Supprimer ⛒</button>
                               </center>
                             </div>
                           )}
@@ -525,31 +524,33 @@ const Livraison = () => {
                       </div>
                       )}
                     </div>
+                    <br />
                     <center>
-                          <button type='button' className='btn btn-primary' onClick={handleAjoutLivraison}>Ajouter</button>
-                        </center>
+                      <button type='button' className='btn-custom ' onClick={handleAjoutLivraison}>Ajouter une adresse</button>
+                    </center>
                     <br />
                     <div>
                       <h3>Adresse de facturation</h3>
                       {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
                         <div>
-                        <p>Nom: {accountFac.nom_facturation}</p>
-                        <p>Prénom: {accountFac.prenom_facturation}</p>
-                        <p>Adresse: {accountFac.adresse_facturation}</p>
-                        <p>Code postal: {accountFac.code_postal_facturation}</p>
-                        <p>Ville: {accountFac.ville_facturation}</p>
-                        <p>Pays: {accountFac.pays_facturation}</p>
+                        <p>Nom: <strong>{accountFac.nom_facturation}</strong></p>
+                        <p>Prénom: <strong>{accountFac.prenom_facturation}</strong></p>
+                        <p>Adresse: <strong>{accountFac.adresse_facturation}</strong></p>
+                        <p>Code postal: <strong>{accountFac.code_postal_facturation}</strong></p>
+                        <p>Ville: <strong>{accountFac.ville_facturation}</strong></p>
+                        <p>Pays: <strong>{accountFac.pays_facturation}</strong></p>
                         <center>
-                          <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
-                          &emsp;
-                          <button type='button' className='btn btn-danger' onClick={handleDeleteFacturation}>Supprimer</button>
+                          <div className='d-flex justify-content-center'>
+                          <button type='button' className='btn-custom btn-custom-right' onClick={handleEditFacturation}>Modifier ⚙️</button>
+                          <button type='button' className='btn-custom btn-custom-right' onClick={handleDeleteFacturation}>Supprimer ⛒</button>
+                          </div>
                         </center>
                       </div>
                       ) : (
                         <div>
                         <p>Aucune adresse de facturation enregistrée.</p>
                         <center>
-                          <button type='button' className='btn btn-primary align-item-center' onClick={handleEditFacturation}>Ajouter</button>
+                          <button type='button' className='btn-custom align-item-center' onClick={handleEditFacturation}>Ajouter une adresse</button>
                         </center>
                       </div>
                       )}
@@ -563,12 +564,11 @@ const Livraison = () => {
                 <p className="text-center erreurPanier">{errorMessage}</p>
               )}
               <div className="d-flex justify-content-between">
-                <NavLink to='/Panier' className='btn btn-light my-3'>
+                <NavLink to='/Panier' className='btn-custom link-custom'>
                   Retour
                 </NavLink>
-                &emsp;
-                <button className="btn btn-primary my-3" onClick={handlePayer}>
-                  Payer
+                <button className="btn-continuer" onClick={handlePayer}>
+                  CONTINUER
                 </button>
               </div>
             </div>
