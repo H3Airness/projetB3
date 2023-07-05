@@ -109,11 +109,11 @@ function Produit() {
               <p>{produit.description}</p>
               <center>
                 {produit.stock > 0 ? (
-                  <button className="btn btn-primary" onClick={() => ajouter(produit)}>
+                  <button className="add-to-cart-btn" style={{width:"50%", filter:'brightness(108%)'}} onClick={() => ajouter(produit)}>
                     <span>Ajouter au panier</span>
                   </button>
                 ) : (
-                  <button className="btn btn-danger" disabled>
+                  <button className="out-of-stock-btn" disabled>
                     <span>Stock épuisé</span>
                   </button>
                 )}
@@ -142,11 +142,11 @@ function Produit() {
                       <p className="card-text">{produit.prix}€</p>
                       <center>
                         {produit.stock > 0 ? (
-                          <button className="btn btn-primary" onClick={() => ajouter(produit)}>
+                          <button className="add-to-cart-btn" style={{width:"70%"}} onClick={() => ajouter(produit)}>
                             <span>Ajouter au panier</span>
                           </button>
                         ) : (
-                          <button className="btn btn-danger" disabled>
+                          <button className="out-of-stock-btn" style={{width:"40%"}} disabled>
                             <span>Stock épuisé</span>
                           </button>
                         )}

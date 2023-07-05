@@ -3,7 +3,15 @@ import { dataContext } from "../context/dataContext";
 import { useNavigate, NavLink } from "react-router-dom";
 
 const Panier = () => {
-  const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } = useContext(dataContext);
+  const {
+    ajouter,
+    panier,
+    retirer,
+    supprimer,
+    nombreProduits,
+    getTotalProduit,
+    getTotalPanier,
+  } = useContext(dataContext);
   const navigate = useNavigate();
 
   const handlePayer = () => {
@@ -41,23 +49,25 @@ const Panier = () => {
                     </td>
 
                     <td>
-                      <button
-                        className="btn btn-sm btn-primary"
-                        disabled={produit.quantite === 1}
-                        onClick={() => retirer(produit)}
-                      >
-                        -
-                      </button>
-                      <span className="mx-2">{produit.quantite}</span>
-                      <button
-                        className="btn btn-sm btn-primary"
-                        disabled={produit.quantite >= produit.stock}
-                        onClick={() => ajouter(produit)}
-                      >
-                        +
-                      </button>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <button
+                          className="custom-button"
+                          disabled={produit.quantite === 1}
+                          onClick={() => retirer(produit)}
+                        >
+                          -
+                        </button>
+                        <span className="mx-2">{produit.quantite}</span>
+                        <button
+                          className="custom-button"
+                          disabled={produit.quantite >= produit.stock}
+                          onClick={() => ajouter(produit)}
+                        >
+                          +
+                        </button>
+                      </div>
                       {produit.quantite >= produit.stock && (
-                        <p className="text-danger">Quantité en stock insuffisante</p>
+                        <p className="text-danger">Stock insuffisant</p>
                       )}
                     </td>
 
@@ -71,9 +81,10 @@ const Panier = () => {
                     <td>
                       <button
                         onClick={() => supprimer(produit)}
-                        className="btn border-danger text-danger"
+                        className="suprimer-panier"
+                        title="Supprimer"
                       >
-                        Supprimer
+                        🗑️
                       </button>
                     </td>
                   </tr>
@@ -85,11 +96,14 @@ const Panier = () => {
 
         <div className="shadow p-3 bg-body rounded divPrixArticles">
           <h3 className="text-center">Total à payer</h3>
-          <br />
+          <hr />
+
           {panier.length > 0 ? (
             <div>
               <p>
-                Tarif {nombreProduits > 1 && `pour (${nombreProduits} articles)`}:&nbsp;
+                Tarif{" "}
+                {nombreProduits > 1 && `pour (${nombreProduits} articles)`}
+                :&nbsp;
                 {new Intl.NumberFormat("fr-FR", {
                   style: "currency",
                   currency: "EUR",
@@ -107,8 +121,14 @@ const Panier = () => {
               </div>
             </div>
           ) : null}
-          <button className="btn btn-primary float-end" onClick={handlePayer} disabled={panier.length <= 0}>
-            Passer la commande
+          <button
+            className={`command-btn ${
+              panier.length <= 0 ? "command-btn-disabled" : ""
+            }`}
+            onClick={handlePayer}
+            disabled={panier.length <= 0}
+          >
+            Passer la commande 💳
           </button>
         </div>
       </div>

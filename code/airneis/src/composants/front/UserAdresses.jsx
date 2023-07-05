@@ -206,7 +206,10 @@ function UserAdresses() {
         setTimeout(() => {
           setSuccessMessageLivraison(null);
         }, 3000);
-        window.location.reload();
+        
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       } else {
         console.error('Erreur lors de la mise à jour des informations de livraison: ', response.data.message);
       }
@@ -306,8 +309,9 @@ function UserAdresses() {
       {isLoggedIn ? (
 
         <div className="mon-compte-container">
-          <div className="sidebar">
+          <div className="sidebar-param">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
+            <hr />
             <div>
               <h2 className='text-center'>Carnet d'adresses</h2>
               {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
@@ -351,8 +355,8 @@ function UserAdresses() {
                     </div>
                     <br />
                     <div className='text-center'>
-                      <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                      <button type='button' className='btn btn-secondary' onClick={handleCancelLivraison}>Annuler</button>
+                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
+                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelLivraison}>Annuler ❌</button>
                     </div>
                   </form>
                 </div>
@@ -387,8 +391,8 @@ function UserAdresses() {
                     </div>
                     <br />
                     <div className='text-center'>
-                      <button type='submit' className='btn btn-primary'>Enregistrer</button>
-                      <button type='button' className='btn btn-secondary' onClick={handleCancelFacturation}>Annuler</button>
+                      <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
+                      <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelFacturation}>Annuler ❌</button>
                     </div>
                   </form>
                 </div>
@@ -399,25 +403,25 @@ function UserAdresses() {
                     <h3>Adresse de livraison</h3>
                     {accountInfo.length > 0 ? (
                       <div>
-                        <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)}>
-                          <option value="">Sélectionner une adresse</option>
-                          {accountInfo.map((adresse) => (
+                          <select value={selectedAdresseId} onChange={(e) => setSelectedAdresseId(e.target.value)} className="custom-select">
+                            <option value="">Sélectionner une adresse</option>
+                            {accountInfo.map((adresse) => (
                             <option key={adresse.id} value={adresse.id}>{adresse.nom_adresse}</option>
-                          ))}
-                        </select>
+                             ))}
+                            </select>
                         {selectedAdresseId !== "" && (
-                          <div>
-                            <p>Nom de l'adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</p>
-                            <p>Nom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</p>
-                            <p>Prénom: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</p>
-                            <p>Adresse: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</p>
-                            <p>Adresse 2: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</p>
-                            <p>Code postal: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</p>
-                            <p>Ville: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</p>
-                            <p>Pays: {accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</p>
+                          <div className="adresse-container">
+                            <p>Nom de l'adresse: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse} </strong></p>
+                            <p>Nom: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</strong> </p>
+                            <p>Prénom: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</strong></p>
+                            <p>Adresse: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</strong></p>
+                            <p>Adresse 2: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</strong></p>
+                            <p>Code postal:<strong> {accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</strong></p>
+                            <p>Ville: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</strong></p>
+                            <p>Pays: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</strong></p>
                             <center>
-                              <button type='button' className='btn btn-warning' onClick={handleEditLivraison}>Modifier</button>
-                              <button type='button' className='btn btn-danger' onClick={handleDeleteAdresse}>Supprimer</button>
+                              <button type='button' className='btn-custom' onClick={handleEditLivraison}>Modifier ⚙️</button>
+                              <button type='button' className='btn-custom' onClick={handleDeleteAdresse}>Supprimer ⛒</button>
                             </center>
                           </div>
                         )}
@@ -429,29 +433,34 @@ function UserAdresses() {
                     )}
                   </div>
                   <center>
-                        <button type='button' className='btn btn-primary' onClick={handleAjoutLivraison}>Ajouter</button>
+                    <br />
+                        <button type='button' className='btn-custom' onClick={handleAjoutLivraison}>Ajouter une adresse</button>
                       </center>
+                      
                   <br />
                   <div>
+                    <hr />
                     <h3>Adresse de facturation</h3>
                     {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
                       <div>
-                      <p>Nom: {accountFac.nom_facturation}</p>
-                      <p>Prénom: {accountFac.prenom_facturation}</p>
-                      <p>Adresse: {accountFac.adresse_facturation}</p>
-                      <p>Code postal: {accountFac.code_postal_facturation}</p>
-                      <p>Ville: {accountFac.ville_facturation}</p>
-                      <p>Pays: {accountFac.pays_facturation}</p>
+                      <p>Nom: <strong>{accountFac.nom_facturation}</strong></p>
+                      <p>Prénom: <strong>{accountFac.prenom_facturation}</strong></p>
+                      <p>Adresse: <strong>{accountFac.adresse_facturation}</strong></p>
+                      <p>Code postal: <strong>{accountFac.code_postal_facturation}</strong></p>
+                      <p>Ville: <strong>{accountFac.ville_facturation}</strong></p>
+                      <p>Pays: <strong>{accountFac.pays_facturation}</strong></p>
                       <center>
-                        <button type='button' className='btn btn-warning' onClick={handleEditFacturation}>Modifier</button>
-                        <button type='button' className='btn btn-danger' onClick={handleDeleteFacturation}>Supprimer</button>
+                        <div className='d-flex justify-content-center'>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleEditFacturation}>Modifier ⚙️</button>
+                        <button type='button' className='btn-custom btn-custom-right' onClick={handleDeleteFacturation}>Supprimer ⛒</button>
+                        </div>
                       </center>
                     </div>
                     ) : (
                       <div>
                       <p>Aucune adresse de facturation enregistrée.</p>
                       <center>
-                        <button type='button' className='btn btn-primary align-item-center' onClick={handleEditFacturation}>Ajouter</button>
+                        <button type='button' className='btn-custom align-item-center' onClick={handleEditFacturation}>Ajouter une adresse</button>
                       </center>
                     </div>
                     )}
@@ -460,7 +469,7 @@ function UserAdresses() {
               )}
               <br />
               <div className='text-center'>
-                <Link to='/mesParametres'>Retour</Link>
+              <Link to='/mesParametres' className='btn-custom link-custom'>Retour</Link>
               </div>
             </div>
           </div>
