@@ -11,24 +11,57 @@ const Paiement = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
-  const { moyenPaiement } = useContext(InfoCommandeContext);
-
-  const handlePayer = () => {
-    if (selectedPaiementId) {
-      const Paiement = accountPaiement    
-      moyenPaiement(Paiement);
-      navigate("/ConfirmationCommande");
-    } else {
-      setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
-    }
-  };
-
+  const { adresseLivraison, adresseFacturation, moyenPaiement } = useContext(InfoCommandeContext);
   const [loading, setLoading] = useState(true);
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const [accountPaiement, setAccountPaiement] = useState([]);
   const [successMessagePaiement, setSuccessMessagePaiement] = useState(null);
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
+
+  const handlePayer = async () => {
+    if (selectedPaiementId) {
+      const Paiement = accountPaiement;
+      moyenPaiement(Paiement);
+  
+      try {
+        const response = await axios.post('http://airneis.ddns.net:3000/update_info_paiement.php', {
+          accountId,
+  
+          nomAdresseLivraison: adresseLivraison.nomAdresse,
+          nomLivraison: adresseLivraison.nom,
+          prenomLivraison: adresseLivraison.prenom,
+          adresseLivraison: adresseLivraison.adresseLivraison,
+          adresseLivraison2: adresseLivraison.adresseLivraison2,
+          codePostalLivraison: adresseLivraison.codePostalLivraison,
+          villeLivraison: adresseLivraison.villeLivraison,
+          paysLivraison: adresseLivraison.pays,
+  
+          nomFacturation: adresseFacturation.nomFacturation,
+          prenomFacturation: adresseFacturation.prenomFacturation,
+          adresseFacturation: adresseFacturation.adresseFacturation,
+          codePostalFacturation: adresseFacturation.codePostalFacturation,
+          villeFacturation: adresseFacturation.villeFacturation,
+          paysFacturation: adresseFacturation.paysFacturation,
+  
+          nomPaiement: formDataPaiement.nom,
+          numeroPaiement: formDataPaiement.numero,
+          datePaiement: formDataPaiement.date,
+          cvvPaiement: formDataPaiement.cvv,
+        });
+        
+        if (response.data.status === 'success') {
+          navigate("/ConfirmationCommande");
+        }
+      } catch (error) {
+        //Faire les messages d'erreur
+      }
+    } else {
+      setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
+    }
+  };
+  
+
   const [formDataPaiement, setFormDataPaiement] = useState({
     nom: "",
     numero: "",

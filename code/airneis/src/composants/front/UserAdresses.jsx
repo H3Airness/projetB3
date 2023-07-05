@@ -420,8 +420,8 @@ function UserAdresses() {
                             <p>Ville: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</strong></p>
                             <p>Pays: <strong>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</strong></p>
                             <center>
-                              <button type='button' className='btn-custom' onClick={handleEditLivraison}>Modifier ⚙️</button>
-                              <button type='button' className='btn-custom' onClick={handleDeleteAdresse}>Supprimer ⛒</button>
+                              <button type='button' className='btn-custom btn-custom-right' onClick={handleEditLivraison}>Modifier ⚙️</button>
+                              <button type='button' className='btn-custom btn-custom-right' onClick={handleDeleteAdresse}>Supprimer ⛒</button>
                             </center>
                           </div>
                         )}

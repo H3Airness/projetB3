@@ -374,8 +374,9 @@ input[type="submit"]:focus {
 
 .divLivraisonArticles{
   width: 700px;
+  
   margin-top: 10px;
-  background: linear-gradient(135deg, #ffffff8b 0%, #ffffff 74%);
+  margin-left: 10px !important;
 }
 
 .divPrixArticles{
