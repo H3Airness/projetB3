@@ -18,6 +18,9 @@ const Paiement = () => {
   const [successMessagePaiement, setSuccessMessagePaiement] = useState(null);
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
+  const [commandeId, setCommandeId] = useState(null);
+  const totalPanierString = getTotalPanier().toString();
+
 
   const handleChangePaiement = (e) => {
     setSelectedPaiementId(e.target.value);
@@ -25,37 +28,11 @@ const Paiement = () => {
 
   const handlePayer = async () => {
     if (selectedPaiementId) {
-      const Paiement = accountPaiement;
-      moyenPaiement(Paiement);
-
       const selectedPaiement = accountPaiement.find(
         (paiement) => paiement.id === selectedPaiementId
       );
   
       try {
-
-        console.log("Données envoyées : ", {
-          accountId,
-          nomAdresseLivraison: adresseLivraison.nomAdresseLivraison,
-          nomLivraison: adresseLivraison.nomLivraison,
-          prenomLivraison: adresseLivraison.prenomLivraison,
-          adresseLivraison: adresseLivraison.adresseLivraison,
-          adresseLivraison2: adresseLivraison.adresseLivraison2,
-          codePostalLivraison: adresseLivraison.codePostalLivraison,
-          villeLivraison: adresseLivraison.villeLivraison,
-          paysLivraison: adresseLivraison.paysLivraison,
-          nomFacturation: adresseFacturation.nomFacturation,
-          prenomFacturation: adresseFacturation.prenomFacturation,
-          adresseFacturation: adresseFacturation.adresseFacturation,
-          codePostalFacturation: adresseFacturation.codePostalFacturation,
-          villeFacturation: adresseFacturation.villeFacturation,
-          paysFacturation: adresseFacturation.paysFacturation,
-          nomPaiement: selectedPaiement.nom,
-          numeroPaiement: selectedPaiement.numero,
-          datePaiement: selectedPaiement.date,
-          cvvPaiement: selectedPaiement.cvv,
-        });
-
         const response = await axios.post('http://airneis.ddns.net:3000/commande.php', {
           accountId,
   
@@ -79,10 +56,23 @@ const Paiement = () => {
           numeroPaiement: selectedPaiement.numero,
           datePaiement: selectedPaiement.date,
           cvvPaiement: selectedPaiement.cvv,
+  
+          totalPanier: totalPanierString,
         });
-        
+  
         if (response.data.status === 'success') {
+          const { commandeId } = response.data;
+  
+          const Paiement = {
+            nomPaiement: selectedPaiement.nom,
+            numeroPaiement: selectedPaiement.numero,
+            datePaiement: selectedPaiement.date,
+            cvvPaiement: selectedPaiement.cvv,
+            idCommande: commandeId,
+          };
+  
           console.log('La commande a été créée avec succès');
+          moyenPaiement(Paiement);
           navigate("/ConfirmationCommande");
         }
       } catch (error) {
@@ -92,7 +82,6 @@ const Paiement = () => {
       setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
     }
   };
-  
 
   const [formDataPaiement, setFormDataPaiement] = useState({
     nom: "",
