@@ -1,17 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
-import { InfoCommandeContext } from "../context/infoCommandeContext";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 
 const MoyenDePaiement = () => {
-  const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
-  const { adresseLivraison, adresseFacturation, moyenPaiement } = useContext(InfoCommandeContext);
   const [loading, setLoading] = useState(true);
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const [accountPaiement, setAccountPaiement] = useState([]);
@@ -22,78 +18,7 @@ const MoyenDePaiement = () => {
   const handleChangePaiement = (e) => {
     setSelectedPaiementId(e.target.value);
   };
-
-  const handlePayer = async () => {
-    if (selectedPaiementId) {
-      const Paiement = accountPaiement;
-      moyenPaiement(Paiement);
-
-      const selectedPaiement = accountPaiement.find(
-        (paiement) => paiement.id === selectedPaiementId
-      );
-  
-      try {
-
-        console.log("Données envoyées : ", {
-          accountId,
-          nomAdresseLivraison: adresseLivraison.nomAdresseLivraison,
-          nomLivraison: adresseLivraison.nomLivraison,
-          prenomLivraison: adresseLivraison.prenomLivraison,
-          adresseLivraison: adresseLivraison.adresseLivraison,
-          adresseLivraison2: adresseLivraison.adresseLivraison2,
-          codePostalLivraison: adresseLivraison.codePostalLivraison,
-          villeLivraison: adresseLivraison.villeLivraison,
-          paysLivraison: adresseLivraison.paysLivraison,
-          nomFacturation: adresseFacturation.nomFacturation,
-          prenomFacturation: adresseFacturation.prenomFacturation,
-          adresseFacturation: adresseFacturation.adresseFacturation,
-          codePostalFacturation: adresseFacturation.codePostalFacturation,
-          villeFacturation: adresseFacturation.villeFacturation,
-          paysFacturation: adresseFacturation.paysFacturation,
-          nomPaiement: selectedPaiement.nom,
-          numeroPaiement: selectedPaiement.numero,
-          datePaiement: selectedPaiement.date,
-          cvvPaiement: selectedPaiement.cvv,
-        });
-
-        const response = await axios.post('http://airneis.ddns.net:3000/commande.php', {
-          accountId,
-  
-          nomAdresseLivraison: adresseLivraison.nomAdresseLivraison,
-          nomLivraison: adresseLivraison.nomLivraison,
-          prenomLivraison: adresseLivraison.prenomLivraison,
-          adresseLivraison: adresseLivraison.adresseLivraison,
-          adresseLivraison2: adresseLivraison.adresseLivraison2,
-          codePostalLivraison: adresseLivraison.codePostalLivraison,
-          villeLivraison: adresseLivraison.villeLivraison,
-          paysLivraison: adresseLivraison.paysLivraison,
-  
-          nomFacturation: adresseFacturation.nomFacturation,
-          prenomFacturation: adresseFacturation.prenomFacturation,
-          adresseFacturation: adresseFacturation.adresseFacturation,
-          codePostalFacturation: adresseFacturation.codePostalFacturation,
-          villeFacturation: adresseFacturation.villeFacturation,
-          paysFacturation: adresseFacturation.paysFacturation,
-  
-          nomPaiement: selectedPaiement.nom,
-          numeroPaiement: selectedPaiement.numero,
-          datePaiement: selectedPaiement.date,
-          cvvPaiement: selectedPaiement.cvv,
-        });
-        
-        if (response.data.status === 'success') {
-          console.log('La commande a été créée avec succès');
-          navigate("/ConfirmationCommande");
-        }
-      } catch (error) {
-        console.log(error.response);
-      }
-    } else {
-      setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
-    }
-  };
-  
-
+ 
   const [formDataPaiement, setFormDataPaiement] = useState({
     nom: "",
     numero: "",
@@ -183,7 +108,7 @@ const MoyenDePaiement = () => {
         setTimeout(() => {
           setSuccessMessagePaiement(null);
         }, 2000);
-        window.location.href = "/Paiement";
+        window.location.reload();
       } else {
         console.error('Erreur lors de la mise à jour des informations de paiement: ', response.data.message);
       }
@@ -212,81 +137,14 @@ const MoyenDePaiement = () => {
     <>
       {isLoggedIn ? (
         <>
-          <h1 className="mb-4 text-center">Paiement</h1>
-          {panier.length === 0 ? (
-            <>
-            <center>
-              <p>Votre panier est vide. ☹️</p>
-              <NavLink to="/recherche" className="btn btn-success">
-                Voir notre catalogue
-              </NavLink>
-            </center>
-          </>
-          ) : (
-          <div className="rounded flex-column Min-heightConteinerPanier">
-            <div className="d-flex align-items-center justify-content-center">
-              <div className="bg-body rounded mb-2 divLivraisonArticles">
-                <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
-                <table className="table">
-                  <tbody className="vertical-align">
-                    {panier.map((produit) => {
-                      return (
-                        <tr key={produit.id}>
-                          <td>
-                            <img
-                              className="rounded d-block"
-                              width={100}
-                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                              alt={produit.nom}
-                            />
-                          </td>
-
-                          <td>
-                            <p>{produit.nom}</p>
-                          </td>
-
-                          <td>
-                            <span className="mx-2">{produit.quantite}</span>
-                          </td>
-
-                          <td>
-                            {new Intl.NumberFormat("fr-FR", {
-                              style: "currency",
-                              currency: "EUR",
-                            }).format(getTotalProduit(produit))}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-                <br />
-                <p>
-                  Montant des articles: &nbsp;
-                  {new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(getTotalPanier())}
-                </p>
-                <p>Livraison : 10€</p>
-                <div className="fw-bold TotalPayer ml-2">
-                  <h6>
-                    Total :{" "}
-                    {new Intl.NumberFormat("fr-FR", {
-                      style: "currency",
-                      currency: "EUR",
-                    }).format(getTotalPanier() + 10)}
-                  </h6>
-                </div>
-              </div>
-            </div>
-                        
-
-            <div className="mon-compte-container">
-              <div className="sidebar-paiement">
+          <div className="mon-compte-container">
+            <div className="sidebar-param">
+              <h1 className="sidebar-title">Récapitulatif de votre compte</h1>                       
+              <div>
                 <h2 className='text-center'>Moyen de Paiement</h2>
                 {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
                 <br />
+                <hr />
                 {editModePaiement && (
                   <div>
                     <form onSubmit={handleSubmitPaiement}>
@@ -354,23 +212,14 @@ const MoyenDePaiement = () => {
                   </div>
                 )}
               </div>
-            </div>
-            <div className="item-align-center">
-              {errorMessage && (
-                <p className="text-center erreurPanier">{errorMessage}</p>
-              )}
-              <div className="d-flex justify-content-between">
-                <NavLink to='/Livraison' className='btn-custom link-custom my-3'>
+              <hr />
+              <div className="d-flex">
+                <NavLink to='/MesParametres' className='btn-custom link-custom my-3'>
                   Retour
                 </NavLink>
-                &emsp;
-                <button className="btn-confirmer" onClick={handlePayer}>
-                  Confirmer ma commande
-                </button>
               </div>
             </div>
           </div>
-          )}
         </>
       ) : (
         <>
