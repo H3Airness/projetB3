@@ -1,13 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
-import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 
 const MoyenDePaiement = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const [accountPaiement, setAccountPaiement] = useState([]);
