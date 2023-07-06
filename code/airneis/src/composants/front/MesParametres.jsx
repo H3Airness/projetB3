@@ -186,11 +186,13 @@ function MesParametres() {
                 <hr />
                 <div className="button-group">
                   <br/>
-                  <button className="btn-custom">
                   <NavLink to='/moyen-de-paiement' className='link-custom my-3'>
+                  <button className="btn-custom">
+                  
                   Mes moyens de paiement
-                </NavLink>
+                
                   </button>
+                  </NavLink>
                   <button className="btn-custom" onClick={handleAddresses}>
                     Mes adresses
                   </button>
