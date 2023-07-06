@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { AuthContext } from "../context/authContext";
 import Connexion from "./Connexion";
 
@@ -311,12 +311,12 @@ function UserAdresses() {
         <div className="mon-compte-container">
           <div className="sidebar-param">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
-            <hr />
             <div>
               <h2 className='text-center'>Carnet d'adresses</h2>
               {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
               {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
               <br />
+              <hr />
               {editModeLivraison && (
                 <div>
                   <h3>Adresse de livraison</h3>
@@ -468,8 +468,11 @@ function UserAdresses() {
                 </div>
               )}
               <br />
-              <div className='text-center'>
-              <Link to='/mesParametres' className='btn-custom link-custom'>Retour</Link>
+              <hr />
+              <div className="d-flex">
+                <NavLink to='/MesParametres' className='btn-custom link-custom my-3'>
+                  Retour
+                </NavLink>
               </div>
             </div>
           </div>
