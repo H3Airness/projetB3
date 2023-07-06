@@ -318,16 +318,16 @@ const Paiement = () => {
                           </select>
                           {selectedPaiementId !== "" && (
                             <div>
-                              <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
-                              <p>Numéro de carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</strong></p>
-                              <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
-                              <p>CVV: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</strong></p>
-                              <center>
-                                <button type='button' className='btn-custom btn-custom-right' onClick={handleEditPaiement}>Modifier ⚙️</button>
-                                <button type='button' className='btn-custom btn-custom-right' onClick={handleDeletePaiement}>Supprimer ⛒</button>
-                              </center>
-                            </div>
-                          )}
+                            <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
+                            <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
+                            <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
+                            <p>CVV: <strong>{"***"}</strong></p>
+                            <center>
+                              <button type='button' className='btn-custom btn-custom-right' onClick={handleEditPaiement}>Modifier ⚙️</button>
+                              <button type='button' className='btn-custom btn-custom-right' onClick={handleDeletePaiement}>Supprimer ⛒</button>
+                            </center>
+                          </div>
+                        )}
                         </div>
                       ) : (
                         <div>
