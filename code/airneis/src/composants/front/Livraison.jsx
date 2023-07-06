@@ -428,7 +428,7 @@ const Livraison = () => {
                         
 
             <div className="mon-compte-container">
-              <div className="sidebar">
+              <div className="sidebar-liv">
                 <h2 className='text-center'>Carnet d'adresses</h2>
                 {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
                 {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}

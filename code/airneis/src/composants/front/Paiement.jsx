@@ -283,7 +283,7 @@ const Paiement = () => {
                         
 
             <div className="mon-compte-container">
-              <div className="sidebar">
+              <div className="sidebar-paiement">
                 <h2 className='text-center'>Moyen de Paiement</h2>
                 {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
                 <br />
