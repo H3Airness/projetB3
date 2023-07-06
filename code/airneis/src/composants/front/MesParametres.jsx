@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Connexion from "./Connexion";
 import axios from "axios";
 import PasswordInput from "./HidePassword";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 
 function MesParametres() {
   const { isLoggedIn, accountId } = useContext(AuthContext);
@@ -187,7 +187,9 @@ function MesParametres() {
                 <div className="button-group">
                   <br/>
                   <button className="btn-custom">
-                    Mes moyens de paiements
+                  <NavLink to='/moyen-de-paiement' className='link-custom my-3'>
+                  Mes moyens de paiement
+                </NavLink>
                   </button>
                   <button className="btn-custom" onClick={handleAddresses}>
                     Mes adresses
