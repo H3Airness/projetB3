@@ -22,7 +22,7 @@ const Panier = () => {
     <>
       <h1 className="mb-4 text-center">Récapitulatif de mon Panier</h1>
       <div className="rounded Min-heightConteinerPanier">
-        <div className="shadow p-1 mb-4 bg-body rounded divArticles">
+        <div className="shadow p-1 mb-1 bg-body rounded divArticles">
           <h3 className="text-center mb-5">Vos articles</h3>
 
           {panier.length === 0 ? (
