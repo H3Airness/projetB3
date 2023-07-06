@@ -18,7 +18,6 @@ const Paiement = () => {
   const [successMessagePaiement, setSuccessMessagePaiement] = useState(null);
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
-  const [commandeId, setCommandeId] = useState(null);
   const totalPanierString = getTotalPanier().toString();
 
 

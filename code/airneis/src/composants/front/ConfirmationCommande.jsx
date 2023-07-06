@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
 import { InfoCommandeContext } from "../context/infoCommandeContext";
+import Connexion from "./Connexion";
 
 function ConfirmationCommande() {
-  const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
+  const location = useLocation();
+  const { isLoggedIn } = useContext(AuthContext);
+  const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
   const { adresseLivraison, adresseFacturation, Paiement } = useContext(InfoCommandeContext);
 
   console.log("adresseLivraison:", InfoCommandeContext);
@@ -14,37 +17,123 @@ function ConfirmationCommande() {
 
   return (
     <>
-      <center>
-        <span>Page Confirmation Commande</span>
-        
+      {isLoggedIn ? (
+        <>
+          {panier.length === 0 ? (
+            <>
+            <center>
+              <p>Votre panier est vide. ☹️</p>
+              <NavLink to="/recherche" className="btn btn-success">
+                Voir notre catalogue
+              </NavLink>
+            </center>
+          </>
+          ) : (
+            <>
+              <h1 className="mb-4 text-center">Votre commande n°{Paiement.idCommande} est confirmée! ✅</h1>
+              <div className="rounded Min-heightConteinerPanier">
+                <div className="shadow p-1 mb-1 bg-body rounded divArticles">
 
-        <p>
-          nomAdresseLivraison: {adresseLivraison.nomAdresseLivraison}<br />
-          nomLivraison: {adresseLivraison.nomLivraison}<br />
-          prenomLivraison: {adresseLivraison.prenomLivraison}<br />
-          adresseLivraison: {adresseLivraison.adresseLivraison}<br />
-          adresseLivraison2: {adresseLivraison.adresseLivraison2}<br />
-          codePostalLivraison: {adresseLivraison.codePostalLivraison}<br />
-          villeLivraison: {adresseLivraison.villeLivraison}<br />
-          paysLivraison: {adresseLivraison.paysLivraison}<br />
+                  <table className="table">
+                    <tbody className="vertical-align">
+                      {panier.map((produit) => {
+                        return (
+                          <tr key={produit.id}>
+                            <td>
+                              <img
+                                className="rounded"
+                                width={150}
+                                src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                                alt={produit.nom}
+                              />
+                            </td>
 
-          nomFacturation: {adresseFacturation.nomFacturation}<br />
-          prenomFacturation: {adresseFacturation.prenomFacturation}<br />
-          adresseFacturation: {adresseFacturation.adresseFacturation}<br />
-          codePostalFacturation: {adresseFacturation.codePostalFacturation}<br />
-          villeFacturation: {adresseFacturation.villeFacturation}<br />
-          paysFacturation: {adresseFacturation.paysFacturation}<br />
+                            <td>
+                              <span>{produit.nom}</span>
+                            </td>
 
-          nomPaiement: {Paiement.nom}<br />
-          numeroPaiement: {Paiement.numero}<br />
-          datePaiement: {Paiement.date}<br />
-          cvvPaiement: {Paiement.cvv}<br />
+                            <td>
+                              <div style={{ display: "flex", alignItems: "center" }}>
+                                <span className="mx-2">{produit.quantite}</span>
+                              </div>
+                            </td>
 
-          totalPanier: {getTotalPanier()}<br />
-          
-          idCommande: {Paiement.idCommande}
-        </p>
-      </center>
+                            <td>
+                              {new Intl.NumberFormat("fr-FR", {
+                                style: "currency",
+                                currency: "EUR",
+                              }).format(getTotalProduit(produit))}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                  
+                  <br/>
+                  <center>
+                    <div>
+                      <p>
+                        Tarif{" "}
+                        {nombreProduits > 1 && `pour (${nombreProduits} articles)`}
+                        :&nbsp;
+                        {new Intl.NumberFormat("fr-FR", {
+                          style: "currency",
+                          currency: "EUR",
+                        }).format(getTotalPanier())}
+                      </p>
+                      <p>Livraison: 10€</p>
+                      <strong>
+                        <h6>
+                          Total:{" "}
+                          {new Intl.NumberFormat("fr-FR", {
+                            style: "currency",
+                            currency: "EUR",
+                          }).format(getTotalPanier() + 10)}
+                        </h6>
+                      </strong>
+                    </div>
+                  </center>
+                </div>
+                
+                <div className="shadow p-1 mb-1 bg-body rounded divPrixArticles">
+                  <h4>Adresse de livraison</h4>
+                  <h5>{adresseLivraison.nomAdresseLivraison}</h5>
+                  Nom: <strong>{adresseLivraison.nomLivraison}</strong><br />
+                  Prénom: <strong>{adresseLivraison.prenomLivraison}</strong><br />
+                  Adresse: <strong>{adresseLivraison.adresseLivraison}</strong><br />
+                  Adresse 2 (Optionnel): <strong>{adresseLivraison.adresseLivraison2}</strong><br />
+                  Code postal: <strong>{adresseLivraison.codePostalLivraison}</strong><br />
+                  Ville: <strong>{adresseLivraison.villeLivraison}</strong><br />
+                  Pays: <strong>{adresseLivraison.paysLivraison}</strong><br />
+
+                  <hr />
+
+                  <h4>Adresse de facturation</h4>
+                  Nom: <strong>{adresseFacturation.nomFacturation}</strong><br />
+                  Prénom: <strong>{adresseFacturation.prenomFacturation}</strong><br />
+                  Adresse: <strong>{adresseFacturation.adresseFacturation}</strong><br />
+                  Code postal: <strong>{adresseFacturation.codePostalFacturation}</strong><br />
+                  Ville: <strong>{adresseFacturation.villeFacturation}</strong><br />
+                  Pays: <strong>{adresseFacturation.paysFacturation}</strong><br />
+
+                  <hr />
+
+                  <h4>Moyen de paiement</h4>
+                  Nom sur la carte: <strong>{Paiement.nomPaiement}</strong><br />
+                  Numéro de carte: <strong>{Paiement.numeroPaiement}</strong><br />
+                  Date d'expiration: <strong>{Paiement.datePaiement}</strong><br />
+                  CVV: <strong>{Paiement.cvvPaiement}</strong><br />
+                </div>
+              </div>
+            </>
+          )}
+        </>
+        ) : (
+          <>
+            <Connexion previousLocation={location.pathname} />
+          </>
+        )}
     </>
   );
 };
