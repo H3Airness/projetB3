@@ -38,7 +38,7 @@ const Livraison = () => {
         adresseLivraison: selectedAdresse.adresse1,
         adresseLivraison2: selectedAdresse.adresse2,
         codePostalLivraison: selectedAdresse.code_postal,
-        villeLivraison: selectedAdresse.code_postal,
+        villeLivraison: selectedAdresse.ville,
         paysLivraison: selectedAdresse.pays,
       };
 
