@@ -16,7 +16,7 @@ const MoyenDePaiement = () => {
   const handleChangePaiement = (e) => {
     setSelectedPaiementId(e.target.value);
   };
- 
+
   const [formDataPaiement, setFormDataPaiement] = useState({
     nom: "",
     numero: "",
@@ -130,14 +130,13 @@ const MoyenDePaiement = () => {
     return <div>Chargement...</div>;
   }
 
-
   return (
     <>
       {isLoggedIn ? (
         <>
           <div className="mon-compte-container">
             <div className="sidebar-param">
-              <h1 className="sidebar-title">Récapitulatif de votre compte</h1>                       
+              <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
               <div>
                 <h2 className='text-center'>Moyen de Paiement</h2>
                 {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
@@ -186,9 +185,9 @@ const MoyenDePaiement = () => {
                           {selectedPaiementId !== "" && (
                             <div>
                               <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
-                              <p>Numéro de carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</strong></p>
+                              <p>Numéro de carte: <strong>{"**** **** **** **" + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
                               <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
-                              <p>CVV: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</strong></p>
+                              <p>CVV: <strong>{"***"}</strong></p>
                               <center>
                                 <button type='button' className='btn-custom btn-custom-right' onClick={handleEditPaiement}>Modifier ⚙️</button>
                                 <button type='button' className='btn-custom btn-custom-right' onClick={handleDeletePaiement}>Supprimer ⛒</button>
@@ -198,31 +197,23 @@ const MoyenDePaiement = () => {
                         </div>
                       ) : (
                         <div>
-                        <p>Aucun moyen de paiement enregistré</p>
-                      </div>
+                          <p>Aucun moyen de paiement enregistré</p>
+                        </div>
                       )}
                     </div>
                     <br />
                     <center>
-                        <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
-                      </center>
+                      <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
+                    </center>
                     <br />
                   </div>
                 )}
-              </div>
-              <hr />
-              <div className="d-flex">
-                <NavLink to='/MesParametres' className='btn-custom link-custom my-3'>
-                  Retour
-                </NavLink>
               </div>
             </div>
           </div>
         </>
       ) : (
-        <>
-          <Connexion previousLocation={location.pathname} />
-        </>
+        <Connexion redirection={location} />
       )}
     </>
   );
