@@ -826,12 +826,12 @@ a:link {
 }
 
 .custom-select-liv {
-  width: 33%;
+  width: 39%;
   height: 35px; 
   border: none;
   border-radius: 9px; 
   padding: 5px 10px;
-  font-size: 1.1em;
+  font-size: 1em;
   margin-bottom: 20px;
   background: #faf7f4;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
