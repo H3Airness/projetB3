@@ -95,6 +95,34 @@ function MesCommandes() {
                               </li>
                             ))}
                           </ul>
+                          <hr />
+                          <h4>Adresse de livraison</h4>
+                          <h5>{commande.nom_adresse_livraison}</h5>
+                          Nom: <strong>{commande.nom_livraison}</strong><br />
+                          Prénom: <strong>{commande.prenom_livraison}</strong><br />
+                          Adresse: <strong>{commande.adresse_livraison}</strong><br />
+                          Adresse 2 (Optionnel): <strong>{commande.adresse_livraison2}</strong><br />
+                          Code postal: <strong>{commande.code_postal_livraison}</strong><br />
+                          Ville: <strong>{commande.ville_livraison}</strong><br />
+                          Pays: <strong>{commande.pays_livraison}</strong><br />
+
+                          <hr />
+
+                          <h4>Adresse de facturation</h4>
+                          Nom: <strong>{commande.nom_facturation}</strong><br />
+                          Prénom: <strong>{commande.prenom_facturation}</strong><br />
+                          Adresse: <strong>{commande.adresse_facturation}</strong><br />
+                          Code postal: <strong>{commande.code_postal_facturation}</strong><br />
+                          Ville: <strong>{commande.ville_facturation}</strong><br />
+                          Pays: <strong>{commande.pays_facturation}</strong><br />
+
+                          <hr />
+
+                          <h4>Moyen de paiement</h4>
+                          Nom sur la carte: <strong>{commande.nom_paiement}</strong><br />
+                          Numéro de carte: <strong><span>{'**** **** **** ' + commande.numero_paiement.slice(-4)}</span></strong><br />
+                          Date d'expiration: <strong>{commande.date_paiement}</strong><br />
+                          CVV: <strong>***</strong><br />
                         </div>
                       </div>
                     )}

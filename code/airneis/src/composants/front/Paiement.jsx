@@ -20,6 +20,14 @@ const Paiement = () => {
   const [editModePaiement, setEditModePaiement] = useState(false);
   const totalPanierString = getTotalPanier().toString();
 
+  useEffect(() => {
+    if (!adresseLivraison || !adresseFacturation) {
+      const confirmation = window.confirm("Veuillez renseigner les adresses de livraison et de facturation.");
+      if (confirmation) {
+        navigate("/Livraison");
+      }
+    }
+  }, [adresseLivraison, adresseFacturation]);
 
   const handleChangePaiement = (e) => {
     setSelectedPaiementId(e.target.value);
@@ -197,169 +205,183 @@ const Paiement = () => {
     return <div>Chargement...</div>;
   }
 
-
-  return (
+return (
     <>
       {isLoggedIn ? (
         <>
-          <h1 className="mb-4 text-center">Paiement</h1>
           {panier.length === 0 ? (
             <>
-            <center>
-              <p>Votre panier est vide. ☹️</p>
-              <NavLink to="/recherche" className="btn btn-success">
-                Voir notre catalogue
-              </NavLink>
-            </center>
-          </>
+              <center>
+                <p>Votre panier est vide. ☹️</p>
+                <NavLink to="/recherche" className="btn btn-success">
+                  Voir notre catalogue
+                </NavLink>
+              </center>
+            </>
           ) : (
-          <div className="rounded flex-column Min-heightConteinerPanier">
-            <div className="d-flex align-items-center justify-content-center">
-              <div className="bg-body rounded mb-2 divLivraisonArticles">
-                <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
-                <table className="table">
-                  <tbody className="vertical-align">
-                    {panier.map((produit) => {
-                      return (
-                        <tr key={produit.id}>
-                          <td>
-                            <img
-                              className="rounded img-liv"
-                              width={100}
-                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                              alt={produit.nom}
-                            />
-                          </td>
+            <>
+              {adresseLivraison && adresseFacturation ? (
+                <>
+                  <h1 className="mb-4 text-center">Paiement</h1>
+                  <div className="rounded flex-column Min-heightConteinerPanier">
+                    <div className="d-flex align-items-center justify-content-center">
+                      <div className="bg-body rounded mb-2 divLivraisonArticles">
+                        <h3 className="text-center mb-5">Vos articles sélectionnés</h3>
+                        <table className="table">
+                          <tbody className="vertical-align">
+                            {panier.map((produit) => {
+                              return (
+                                <tr key={produit.id}>
+                                  <td>
+                                    <img
+                                      className="rounded img-liv"
+                                      width={100}
+                                      src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                                      alt={produit.nom}
+                                    />
+                                  </td>
 
-                          <td>
-                          <span>{produit.nom}</span>
-                          </td>
+                                  <td>
+                                  <span>{produit.nom}</span>
+                                  </td>
 
-                          <td>
-                            <span className="mx-2">{produit.quantite}</span>
-                          </td>
+                                  <td>
+                                    <span className="mx-2">{produit.quantite}</span>
+                                  </td>
 
-                          <td>
+                                  <td>
+                                    {new Intl.NumberFormat("fr-FR", {
+                                      style: "currency",
+                                      currency: "EUR",
+                                    }).format(getTotalProduit(produit))}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                        <br />
+                        <p>
+                          Montant des articles: &nbsp;
+                          {new Intl.NumberFormat("fr-FR", {
+                            style: "currency",
+                            currency: "EUR",
+                          }).format(getTotalPanier())}
+                        </p>
+                        <p>Livraison : 10€</p>
+                        <div className="fw-bold TotalPayer ml-2">
+                          <h6>
+                            Total :{" "}
                             {new Intl.NumberFormat("fr-FR", {
                               style: "currency",
                               currency: "EUR",
-                            }).format(getTotalProduit(produit))}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-                <br />
-                <p>
-                  Montant des articles: &nbsp;
-                  {new Intl.NumberFormat("fr-FR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(getTotalPanier())}
-                </p>
-                <p>Livraison : 10€</p>
-                <div className="fw-bold TotalPayer ml-2">
-                  <h6>
-                    Total :{" "}
-                    {new Intl.NumberFormat("fr-FR", {
-                      style: "currency",
-                      currency: "EUR",
-                    }).format(getTotalPanier() + 10)}
-                  </h6>
-                </div>
-              </div>
-            </div>
-                        
+                            }).format(getTotalPanier() + 10)}
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                                
 
-            <div className="mon-compte-container">
-              <div className="sidebar-paiement">
-                <h2 className='text-center'>Moyen de Paiement</h2>
-                {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
-                <br />
-                {editModePaiement && (
-                  <div>
-                    <form onSubmit={handleSubmitPaiement}>
-                      <div>
-                        <label>Nom sur la carte:</label>
-                        <input type='text' name='nom' value={formDataPaiement.nom} onChange={handleInputChangePaiement} required />
-                      </div>
-                      <div>
-                        <label>Numéro de carte:</label>
-                        <input type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} required />
-                      </div>
-                      <div>
-                        <label>Date d’expiration:</label>
-                        <input type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} required />
-                      </div>
-                      <div>
-                        <label>CVV:</label>
-                        <input type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} required />
-                      </div>
-                      <br />
-                      <div className='text-center'>
-                        <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
-                        <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelPaiement}>Annuler ❌</button>
-                      </div>
-                    </form>
-                  </div>
-                )}
-            
-                {!editModePaiement && (
-                  <div>
-                    <div>
-                      <h3>Moyen de paiement</h3>
-                      {accountPaiement.length > 0 ? (
-                        <div>
-                          <select value={selectedPaiementId} onChange={(e) => handleChangePaiement(e)} className="custom-select-liv">
-                            <option value="">Sélectionner un moyen de Paiement</option>
-                            {accountPaiement.map((paiement) => (
-                              <option key={paiement.id} value={paiement.id}>{paiement.nom}</option>
-                            ))}
-                          </select>
-                          {selectedPaiementId !== "" && (
-                            <div>
-                            <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
-                            <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
-                            <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
-                            <p>CVV: <strong>{"***"}</strong></p>
-                            <center>
-                              <button type='button' className='btn-custom btn-custom-right' onClick={handleEditPaiement}>Modifier ⚙️</button>
-                              <button type='button' className='btn-custom btn-custom-right' onClick={handleDeletePaiement}>Supprimer ⛒</button>
-                            </center>
+                    <div className="mon-compte-container">
+                      <div className="sidebar-paiement">
+                        <h2 className='text-center'>Moyen de Paiement</h2>
+                        {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
+                        <br />
+                        {editModePaiement && (
+                          <div>
+                            <form onSubmit={handleSubmitPaiement}>
+                              <div>
+                                <label>Nom sur la carte:</label>
+                                <input type='text' name='nom' value={formDataPaiement.nom} onChange={handleInputChangePaiement} required />
+                              </div>
+                              <div>
+                                <label>Numéro de carte:</label>
+                                <input type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} required />
+                              </div>
+                              <div>
+                                <label>Date d’expiration:</label>
+                                <input type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} required />
+                              </div>
+                              <div>
+                                <label>CVV:</label>
+                                <input type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} required />
+                              </div>
+                              <br />
+                              <div className='text-center'>
+                                <button type='submit' className='btn-custom btn-custom-right'>Enregistrer 💾</button>
+                                <button type='button' className='btn-custom btn-custom-right' onClick={handleCancelPaiement}>Annuler ❌</button>
+                              </div>
+                            </form>
                           </div>
                         )}
-                        </div>
-                      ) : (
-                        <div>
-                        <p>Aucun moyen de paiement enregistré</p>
+                    
+                        {!editModePaiement && (
+                          <div>
+                            <div>
+                              <h3>Moyen de paiement</h3>
+                              {accountPaiement.length > 0 ? (
+                                <div>
+                                  <select value={selectedPaiementId} onChange={(e) => handleChangePaiement(e)} className="custom-select-liv">
+                                    <option value="">Sélectionner un moyen de Paiement</option>
+                                    {accountPaiement.map((paiement) => (
+                                      <option key={paiement.id} value={paiement.id}>{paiement.nom}</option>
+                                    ))}
+                                  </select>
+                                  {selectedPaiementId !== "" && (
+                                    <div>
+                                    <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
+                                    <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
+                                    <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
+                                    <p>CVV: <strong>{"***"}</strong></p>
+                                    <center>
+                                      <button type='button' className='btn-custom btn-custom-right' onClick={handleEditPaiement}>Modifier ⚙️</button>
+                                      <button type='button' className='btn-custom btn-custom-right' onClick={handleDeletePaiement}>Supprimer ⛒</button>
+                                    </center>
+                                  </div>
+                                )}
+                                </div>
+                              ) : (
+                                <div>
+                                <p>Aucun moyen de paiement enregistré</p>
+                              </div>
+                              )}
+                            </div>
+                            <br />
+                            <center>
+                                <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
+                              </center>
+                            <br />
+                          </div>
+                        )}
                       </div>
-                      )}
                     </div>
-                    <br />
-                    <center>
-                        <button type='button' className='btn-custom' onClick={handleAjoutPaiement}>Ajouter un moyen de paiement</button>
-                      </center>
-                    <br />
+                    <div className="item-align-center">
+                      {errorMessage && (
+                        <p className="text-center erreurPanier">{errorMessage}</p>
+                      )}
+                      <div className="d-flex justify-content-between">
+                        <NavLink to='/Livraison' className='btn-custom link-custom my-3'>
+                          Retour
+                        </NavLink>
+                        &emsp;
+                        <button className="btn-confirmer" onClick={handlePayer}>
+                          Confirmer ma commande
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                )}
-              </div>
-            </div>
-            <div className="item-align-center">
-              {errorMessage && (
-                <p className="text-center erreurPanier">{errorMessage}</p>
+                </>
+              ) : (
+                <>
+                  <center>
+                    <p>Erreur aucune adresse de livraison et de facturation sélectionner</p>
+                    <NavLink to="/livraison" className="btn btn-success">
+                      Retourner à la page de livraison
+                    </NavLink>
+                  </center>
+                </>
               )}
-              <div className="d-flex justify-content-between">
-                <NavLink to='/Livraison' className='btn-custom link-custom my-3'>
-                  Retour
-                </NavLink>
-                &emsp;
-                <button className="btn-confirmer" onClick={handlePayer}>
-                  Confirmer ma commande
-                </button>
-              </div>
-            </div>
-          </div>
+            </>
           )}
         </>
       ) : (

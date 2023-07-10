@@ -124,9 +124,9 @@ function ConfirmationCommande() {
 
                   <h4>Moyen de paiement</h4>
                   Nom sur la carte: <strong>{Paiement.nomPaiement}</strong><br />
-                  Numéro de carte: <strong>{Paiement.numeroPaiement}</strong><br />
+                  Numéro de carte: <strong><span>{'**** **** **** ' + Paiement.numeroPaiement.slice(-4)}</span></strong><br />
                   Date d'expiration: <strong>{Paiement.datePaiement}</strong><br />
-                  CVV: <strong>{Paiement.cvvPaiement}</strong><br />
+                  CVV: <strong>***</strong><br />
                 </div>
               </div>
             </>

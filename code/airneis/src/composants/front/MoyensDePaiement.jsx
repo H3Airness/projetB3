@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 
@@ -203,6 +203,12 @@ const MoyenDePaiement = () => {
                     <br />
                   </div>
                 )}
+                <hr />
+                <div className="d-flex">
+                <NavLink to='/MesParametres' className='btn-custom link-custom my-3'>
+                  Retour
+                </NavLink>
+              </div>
               </div>
             </div>
           </div>
