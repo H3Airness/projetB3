@@ -23,7 +23,7 @@ import ConfirmationCommande from './composants/front/ConfirmationCommande';
 import MesParametres from './composants/front/MesParametres';
 import UserAdresses from './composants/front/UserAdresses';
 import MoyenDePaiement from './composants/front/MoyensDePaiement';
-import MesCommandes from './composants/MesCommandes';
+import MesCommandes from './composants/front/MesCommandes';
 
 
 
