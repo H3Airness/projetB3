@@ -65,9 +65,10 @@ function MesCommandes() {
                       <div className="commande-details">
                         <div>
                           <h2>Détails de la commande</h2>
-                          <h5>Commandé le :</h5>
+                          <h4>État : {commande.etat} </h4>
+                          <h5>Commandé le : {commande.date}</h5>
                           <h6>Nombre d'articles : <strong>{commande.nombre_articles}</strong></h6>
-                          <h6>Prix total : <strong>{commande.prix_total}€</strong></h6>
+                          <h6>Prix total : <strong>{commande.total_panier}€</strong></h6>
                           <hr />
                           <h4>Articles :</h4>
                           {/* Afficher les articles de la commande ici */}
