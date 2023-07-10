@@ -59,9 +59,17 @@ function MesCommandes() {
                 {commandes.map((commande) => (
                   <div key={commande.id} className={`commande-item ${commandeSelectionnee === commande ? 'commande-selected' : ''}`}>
                     <div className={`bouton-commandes ${commande.etat.toLowerCase()}`} onClick={() => handleClick(commande)}>
-                      <h4>Commande n° {commande.id} - État : {commande.etat}</h4>
                       {commande.etat === 'En cours de préparation' && (
+                        <>
+                        <h4>Commande n° {commande.id} - État : <span style={{ color: 'orange' }}>{commande.etat}</span></h4>
                         <button className="annuler-commande" onClick={() => annulerCommande(commande)}>Annuler la commande</button>
+                        </>
+                      )}
+                      {commande.etat === 'Expédié' && (
+                        <h4>Commande n° {commande.id} - État : <span style={{ color: 'green' }}>{commande.etat}</span></h4>
+                      )}
+                      {commande.etat === 'Annulé' && (
+                        <h4>Commande n° {commande.id} - État : <span style={{ color: 'red' }}>{commande.etat}</span></h4>
                       )}
                     </div>
                     {commandeSelectionnee === commande && (
@@ -80,7 +88,7 @@ function MesCommandes() {
                                 <img
                               className="rounded img-liv"
                               width={75}
-                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id_produit}`}
                               alt={produit.nom} />
                                 
                                 &nbsp; {produit.nom_produit} - Prix : {produit.prix_produit}€ - Quantité : {produit.quantite_produit}

@@ -952,15 +952,6 @@ a:link {
   border-radius: 5px;
 }
 
-.bouton-commandes.livré {
-  color: green;
-}
-
-.bouton-commandes.annulé {
-  color: rgb(223, 55, 55);
-}
-
-
 .bouton-commandes .annuler-commande {
   position: absolute;
   top: 50%;
