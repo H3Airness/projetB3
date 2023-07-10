@@ -77,7 +77,13 @@ function MesCommandes() {
                           <ul>
                             {commande.produits.map((produit) => (
                               <li key={produit.id}>
-                                {produit.nom_produit} - Prix : {produit.prix_produit}€ - Quantité : {produit.quantite_produit}
+                                <img
+                              className="rounded img-liv"
+                              width={75}
+                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                              alt={produit.nom} />
+                                
+                                &nbsp; {produit.nom_produit} - Prix : {produit.prix_produit}€ - Quantité : {produit.quantite_produit}
                               </li>
                             ))}
                           </ul>
