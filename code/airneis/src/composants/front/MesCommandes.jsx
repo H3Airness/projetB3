@@ -56,7 +56,7 @@ function MesCommandes() {
                 {commandes.map((commande) => (
                   <div key={commande.id} className={`commande-item ${commandeSelectionnee === commande ? 'commande-selected' : ''}`}>
                     <div className={`bouton-commandes ${commande.etat.toLowerCase()}`} onClick={() => handleClick(commande)}>
-                      <h4>Commande n° {commande.id} - État : <span style={{ color:'white'}}></span> {commande.etat}</h4>
+                      <h4>Commande n° {commande.id} - État : {commande.etat}</h4>
                       {commande.etat === 'En cours de préparation' && (
                         <button onClick={() => annulerCommande(commande)}>Annuler la commande</button>
                       )}
@@ -67,11 +67,17 @@ function MesCommandes() {
                           <h2>Détails de la commande</h2>
                           <h4>État : {commande.etat} </h4>
                           <h5>Commandé le : {commande.date}</h5>
-                          <h6>Nombre d'articles : <strong>{commande.nombre_articles}</strong></h6>
-                          <h6>Prix total : <strong>{commande.total_panier}€</strong></h6>
+                          <h6>Nombre d'articles : {commande.nombre_articles}</h6>
+                          <h6>Prix total : {commande.total_panier}€</h6>
                           <hr />
                           <h4>Articles :</h4>
-                          {/* Afficher les articles de la commande ici */}
+                          <ul>
+                            {commande.produits.map((produit) => (
+                              <li key={produit.id}>
+                                {produit.nom_produit} - Prix : {produit.prix_produit}€ - Quantité : {produit.quantite_produit}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
                     )}

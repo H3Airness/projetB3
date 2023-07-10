@@ -224,7 +224,7 @@ const Paiement = () => {
                         <tr key={produit.id}>
                           <td>
                             <img
-                              className="rounded d-block"
+                              className="rounded img-liv"
                               width={100}
                               src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
                               alt={produit.nom}
@@ -232,7 +232,7 @@ const Paiement = () => {
                           </td>
 
                           <td>
-                            <p>{produit.nom}</p>
+                          <span>{produit.nom}</span>
                           </td>
 
                           <td>

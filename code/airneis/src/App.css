@@ -911,7 +911,7 @@ a:link {
 }
 
 .commande-selected .bouton-commandes {
-  background-color: #c6c0b2;
+  background-color: #bcae8f;
 }
 
 .commande-header {
@@ -945,6 +945,7 @@ a:link {
 
 .bouton-commandes {
   cursor: pointer;
+  background-color: #8f897fad;
   padding: 10px;
   border: 1px solid black;
   border-radius: 5px;
@@ -955,6 +956,6 @@ a:link {
 }
 
 .bouton-commandes.annulé {
-  color: red;
+  color: rgb(223, 55, 55);
 }
 
