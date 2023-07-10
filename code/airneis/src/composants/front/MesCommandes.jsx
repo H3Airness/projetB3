@@ -27,19 +27,22 @@ function MesCommandes() {
   };
 
   const annulerCommande = (commande) => {
-    axios.post(`http://airneis.ddns.net:3000/annuler-commande.php`, { id: commande.id })
-      .then(response => {
-        const updatedCommandes = commandes.map(c => {
-          if (c.id === commande.id) {
-            return { ...c, etat: 'Annulé' };
-          }
-          return c;
+    const confirmation = window.confirm("Êtes-vous sûr de vouloir annuler cette commande ?");
+    if (confirmation) {
+      axios.post(`http://airneis.ddns.net:3000/annuler-commande.php`, { id: commande.id })
+        .then(response => {
+          const updatedCommandes = commandes.map(c => {
+            if (c.id === commande.id) {
+              return { ...c, etat: 'Annulé' };
+            }
+            return c;
+          });
+          setCommandes(updatedCommandes);
+        })
+        .catch(error => {
+          console.error("Erreur lors de l'annulation de la commande", error);
         });
-        setCommandes(updatedCommandes);
-      })
-      .catch(error => {
-        console.error("Erreur lors de l'annulation de la commande", error);
-      });
+    }
   };
 
   return (
@@ -58,7 +61,7 @@ function MesCommandes() {
                     <div className={`bouton-commandes ${commande.etat.toLowerCase()}`} onClick={() => handleClick(commande)}>
                       <h4>Commande n° {commande.id} - État : {commande.etat}</h4>
                       {commande.etat === 'En cours de préparation' && (
-                        <button onClick={() => annulerCommande(commande)}>Annuler la commande</button>
+                        <button className="annuler-commande" onClick={() => annulerCommande(commande)}>Annuler la commande</button>
                       )}
                     </div>
                     {commandeSelectionnee === commande && (
