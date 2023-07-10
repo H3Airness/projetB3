@@ -30,7 +30,7 @@ function ConfirmationCommande() {
           </>
           ) : (
             <>
-              <h1 className="mb-4 text-center">Votre commande n°{Paiement.idCommande} est confirmée! ✅</h1>
+              <h1 className="mb-4 text-center">Votre commande  <NavLink to="/mesCommandes"> n°{Paiement.idCommande} </NavLink>est confirmée! ✅</h1>
               <div className="rounded Min-heightConteinerPanier">
                 <div className="shadow p-1 mb-1 bg-body rounded divArticles">
 
