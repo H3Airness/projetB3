@@ -32,7 +32,7 @@ function UserAdresses() {
   });
   const [successMessageLivraison, setSuccessMessageLivraison] = useState(null);
   const [successMessageFacturation, setSuccessMessageFacturation] = useState(null);
-  const [selectedAdresseId, setSelectedAdresseId] = useState(""); // Nouvel état pour stocker l'ID de l'adresse sélectionnée
+  const [selectedAdresseId, setSelectedAdresseId] = useState(""); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,11 +42,9 @@ function UserAdresses() {
           setAccountInfo(accountRes.data.accountLivraisons);
           setLoading(false);
         } else {
-          console.error('Erreur lors de la récupération des données du compte: ', accountRes.data.message);
           setLoading(false);
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des données du compte: ', error);
         setLoading(false);
       }
     };
@@ -61,11 +59,9 @@ function UserAdresses() {
           setAccountFac(accountRes.data.accountLivraison);
           setLoading(false);
         } else {
-          console.error('Erreur lors de la récupération des données du compte: ', accountRes.data.message);
           setLoading(false);
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des données du compte: ', error);
         setLoading(false);
       }
     };
@@ -211,10 +207,8 @@ function UserAdresses() {
           window.location.reload();
         }, 3000);
       } else {
-        console.error('Erreur lors de la mise à jour des informations de livraison: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de livraison: ', error);
     }
   };
 
@@ -246,10 +240,8 @@ function UserAdresses() {
           setSuccessMessageFacturation(null);
         }, 2000);
       } else {
-        console.error('Erreur lors de la mise à jour des informations de facturation: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de facturation: ', error);
     }
   };
 
@@ -281,10 +273,8 @@ function UserAdresses() {
           setSuccessMessageFacturation(null);
         }, 2000);
       } else {
-        console.error('Erreur lors de la mise à jour des informations de facturation: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de facturation: ', error);
     }
   };
 
@@ -295,7 +285,6 @@ function UserAdresses() {
       setAccountInfo(updatedAccountInfo);
       setSelectedAdresseId("");
     } catch (error) {
-      console.error('Erreur lors de la suppression de l\'adresse: ', error);
     }
   };
   

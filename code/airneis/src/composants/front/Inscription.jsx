@@ -29,7 +29,6 @@ function Inscription() {
           setError(error);
         }
       } catch (error) {
-        console.log(error);
       }
     }
 

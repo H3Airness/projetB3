@@ -70,12 +70,10 @@ const Paiement = () => {
             idCommande: commandeId,
           };
   
-          console.log('La commande a été créée avec succès');
           moyenPaiement(Paiement);
           navigate("/ConfirmationCommande");
         }
       } catch (error) {
-        console.log(error.response);
       }
     } else {
       setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
@@ -97,11 +95,9 @@ const Paiement = () => {
           setAccountPaiement(accountRes.data.accountPaiement);
           setLoading(false);
         } else {
-          console.error("Erreur lors de la récupération des données du compte: ", accountRes.data.message);
           setLoading(false);
         }
       } catch (error) {
-        console.error("Erreur lors de la récupération des données du compte: ", error);
         setLoading(false);
       }
     };
@@ -173,10 +169,8 @@ const Paiement = () => {
         }, 2000);
         window.location.href = "/Paiement";
       } else {
-        console.error('Erreur lors de la mise à jour des informations de paiement: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de paiement: ', error);
     }
   };
 
@@ -187,7 +181,6 @@ const Paiement = () => {
       setAccountPaiement(updatedAccountPaiement);
       setSelectedPaiementId("");
     } catch (error) {
-      console.error('Erreur lors de la suppression du moyen de paiement: ', error);
     }
   };
 

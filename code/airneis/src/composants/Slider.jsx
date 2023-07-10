@@ -9,7 +9,6 @@ const Gallery = () => {
   useEffect(() => {
     axios.get('http://airneis.ddns.net:3000/carousel/affichage_carousel.php')
       .then(response => setImages(response.data))
-      .catch(error => console.log(error));
   }, []);
 
   const handleInteraction = () => {

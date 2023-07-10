@@ -25,29 +25,23 @@ function Produit() {
     fetch(`http://airneis.ddns.net:3000/produit.php?id=${id}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data.categorie);
         setProduct(data);
         if (data && data.categorie) {
           axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${data.categorie}`)
             .then(response => {
-              console.log(response.data);
               setCategories(response.data);
             })
-            .catch(error => console.log(error));
         }
       })
-      .catch(error => console.error(error));
   }, [id]);
 
   useEffect(() => {
     axios.get(`http://airneis.ddns.net:3000/categorie/categorie.php?categorie=${produit?.categorie}`)
       .then(response => {
-        console.log(response.data);
         const shuffledProducts = shuffleArray(response.data);
         const filteredProducts = shuffledProducts.filter(p => p.id !== produit.id);
         setProducts(filteredProducts.slice(0, 3));
       })
-      .catch(error => console.error(error));
   }, [produit]);
 
   const handleInteraction = () => {

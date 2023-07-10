@@ -44,12 +44,10 @@ function MesParametres() {
             JSON.stringify(response.data.accountInfo)
           );
         } else {
-          console.error(response.data.message);
         }
       }
       setLoading(false);
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -95,7 +93,6 @@ function MesParametres() {
           setPasswordError(response.data.message);
         }
       } catch (error) {
-        console.error(error);
       }
     }
   };

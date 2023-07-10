@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 
@@ -32,11 +32,9 @@ const MoyenDePaiement = () => {
           setAccountPaiement(accountRes.data.accountPaiement);
           setLoading(false);
         } else {
-          console.error("Erreur lors de la récupération des données du compte: ", accountRes.data.message);
           setLoading(false);
         }
       } catch (error) {
-        console.error("Erreur lors de la récupération des données du compte: ", error);
         setLoading(false);
       }
     };
@@ -108,10 +106,8 @@ const MoyenDePaiement = () => {
         }, 2000);
         window.location.reload();
       } else {
-        console.error('Erreur lors de la mise à jour des informations de paiement: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de paiement: ', error);
     }
   };
 
@@ -122,7 +118,6 @@ const MoyenDePaiement = () => {
       setAccountPaiement(updatedAccountPaiement);
       setSelectedPaiementId("");
     } catch (error) {
-      console.error('Erreur lors de la suppression du moyen de paiement: ', error);
     }
   };
 

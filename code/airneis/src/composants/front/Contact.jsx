@@ -49,7 +49,6 @@ function Contact() {
         }
 
       } catch (error) {
-        console.log(error);
       }
     }
 

@@ -41,8 +41,7 @@ function Connexion({ previousLocation }) {
         setError(error);
       }
     } catch (error) {
-      console.log(error);
-    }
+      }
   };
 
   return (

@@ -94,11 +94,9 @@ const Livraison = () => {
           setAccountInfo(accountRes.data.accountLivraisons);
           setLoading(false);
         } else {
-          console.error('Erreur lors de la récupération des données du compte: ', accountRes.data.message);
           setLoading(false);
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des données du compte: ', error);
         setLoading(false);
       }
     };
@@ -113,11 +111,9 @@ const Livraison = () => {
           setAccountFac(accountRes.data.accountLivraison);
           setLoading(false);
         } else {
-          console.error('Erreur lors de la récupération des données du compte: ', accountRes.data.message);
           setLoading(false);
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des données du compte: ', error);
         setLoading(false);
       }
     };
@@ -260,10 +256,8 @@ const Livraison = () => {
         }, 2000);
         window.location.href = "/livraison";
       } else {
-        console.error('Erreur lors de la mise à jour des informations de livraison: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de livraison: ', error);
     }
   };
 
@@ -295,10 +289,8 @@ const Livraison = () => {
           setSuccessMessageFacturation(null);
         }, 2000);
       } else {
-        console.error('Erreur lors de la mise à jour des informations de facturation: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de facturation: ', error);
     }
   };
 
@@ -330,10 +322,8 @@ const Livraison = () => {
           setSuccessMessageFacturation(null);
         }, 2000);
       } else {
-        console.error('Erreur lors de la mise à jour des informations de facturation: ', response.data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des informations de facturation: ', error);
     }
   };
 
@@ -344,7 +334,6 @@ const Livraison = () => {
       setAccountInfo(updatedAccountInfo);
       setSelectedAdresseId("");
     } catch (error) {
-      console.error('Erreur lors de la suppression de l\'adresse: ', error);
     }
   };
  

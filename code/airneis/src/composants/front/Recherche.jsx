@@ -17,7 +17,7 @@ const Recherche = () => {
   function handleSubmit(event) {
     event.preventDefault();
     
-    console.log(`Recherche : ${recherche}`);
+
     const filtre = recherche.trim().toLowerCase(); 
     const resultatsFiltres = donnees.filter(donnee =>
         donnee.nom.toLowerCase().includes(filtre) ||
@@ -36,7 +36,6 @@ const Recherche = () => {
         setResultats(response.data);
       })
       .catch((error) => {
-        console.log(error);
       });
   }, []);
 
