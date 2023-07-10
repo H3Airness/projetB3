@@ -1,12 +1,10 @@
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
 
 function Connexion() {
-  const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 

@@ -25,6 +25,13 @@ const Paiement = () => {
     setSelectedPaiementId(e.target.value);
   };
 
+  const produitsCommande = Object.values(panier).map((produit) => ({
+    idProduit: produit.id,
+    nomProduit: produit.nom,
+    prixProduit: produit.prix,
+    quantiteProduit: produit.quantite,
+  }));
+
   const handlePayer = async () => {
     if (selectedPaiementId) {
       const selectedPaiement = accountPaiement.find(
@@ -57,6 +64,8 @@ const Paiement = () => {
           cvvPaiement: selectedPaiement.cvv,
   
           totalPanier: totalPanierString,
+
+          produitsCommande: produitsCommande,
         });
   
         if (response.data.status === 'success') {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
@@ -8,12 +8,15 @@ import Connexion from "./Connexion";
 function ConfirmationCommande() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
-  const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
-  const { adresseLivraison, adresseFacturation, Paiement } = useContext(InfoCommandeContext);
+  const { panier, nombreProduits, getTotalPanier, getTotalProduit, reinitialiserPanier } = useContext(dataContext);
+  const { adresseLivraison, adresseFacturation, Paiement, reinitialiserCommande } = useContext(InfoCommandeContext);
 
-  console.log("adresseLivraison:", InfoCommandeContext);
-  console.log("adresseFacturation:", adresseFacturation);
-  console.log("Paiement:", Paiement);
+  useEffect(() => {
+    return () => {
+      reinitialiserPanier();
+      reinitialiserCommande();
+    };
+  }, []);
 
   return (
     <>
