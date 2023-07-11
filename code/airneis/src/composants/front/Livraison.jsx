@@ -1,10 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
 import { InfoCommandeContext } from "../context/infoCommandeContext";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
+import { commandeVerif } from "../front/verif/VerifPanier";
+import { useAlert } from "../front/alert/useAlert";
+import Alert from "../front/alert/Alert";
 
 const Livraison = () => {
   const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
@@ -13,12 +16,23 @@ const Livraison = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedAdresseId, setSelectedAdresseId] = useState("");
   const { adresseLivraisonSelectionner, adresseLivraisonFacturation } = useContext(InfoCommandeContext);
+  const [alerte , setAlerte , getError] = useAlert(commandeVerif)
+
+  const nomAdresseRef = useRef();
+  const nomRef = useRef();
+  const prenomRef = useRef();
+  
+  const handleFocus = () => {
+    setAlerte({});
+  }
 
   const handleChangeAdresse = (e) => {
     setSelectedAdresseId(e.target.value);
   };
+
+  const handlePayer = (e) => {
+
   
-  const handlePayer = () => {
     if (selectedAdresseId &&
       (accountFac.nom_facturation ||
         accountFac.prenom_facturation ||
@@ -421,6 +435,14 @@ const Livraison = () => {
                 <h2 className='text-center'>Carnet d'adresses</h2>
                 {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
                 {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
+                <Alert alerte={alerte} />
+                {Object.keys(alerte).length > 0 && (
+                  <div className={`alert alert-${alerte.type} mt-3`}>
+                    {alerte.liste.map((a, index) => {
+                      return <div key={index}>{a}</div>;
+                    })}
+                  </div>
+                )}
                 <br />
                 {editModeLivraison && (
                   <div>
@@ -428,15 +450,15 @@ const Livraison = () => {
                     <form onSubmit={handleSubmitLivraison}>
                       <div>
                         <label>Nom de l'adresse:</label>
-                        <input type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} onChange={handleInputChangeLivraison} required />
+                        <input ref={nomAdresseRef} type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Nom:</label>
-                        <input type='text' name='nom' value={formDataLivraison.nom} onChange={handleInputChangeLivraison} required />
+                        <input ref={nomRef} type='text' name='nom' value={formDataLivraison.nom} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
                       </div>
                       <div>
                         <label>Prénom:</label>
-                        <input type='text' name='prenom' value={formDataLivraison.prenom} onChange={handleInputChangeLivraison} required />
+                        <input ref={prenomRef} type='text' name='prenom' value={formDataLivraison.prenom} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Adresse:</label>
