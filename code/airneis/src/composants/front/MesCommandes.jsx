@@ -78,7 +78,7 @@ function MesCommandes() {
                           <h2>Détails de la commande</h2>
                           <h4>État : {commande.etat} </h4>
                           <h5>Commandé le : {commande.date}</h5>
-                          <h6>Nombre d'articles : {commande.nombre_articles}</h6>
+                          <h6>Nombre d'articles : {commande.total_produit}</h6>
                           <h6>Prix total : {commande.total_panier}€</h6>
                           <hr />
                           <h4>Articles :</h4>
