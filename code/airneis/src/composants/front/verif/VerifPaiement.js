@@ -25,10 +25,10 @@ export const verifPaiement = Joi.object({
           }),
 
      datePaiement: Joi.string()
-          .regex(/^(0[1-9]|1[0-2])\/([0-9]{2})$/)
+          .regex(/^[^<>?:!;,§$£€azertyuiopqsdfghjklmwxcvbn]*$/)
           .required()
           .messages({
-            "string.pattern.base": "Le champ date doit être au format MM/YY (par exemple, 07/22)",
+            "string.pattern.base": "Le champ date doit être au format MM/YY (par exemple, 07/22) et ne peut contenir que des chiffres",
             "any.required": "Le champ date est requis",
           }),
 

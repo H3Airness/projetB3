@@ -6,7 +6,7 @@ import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 import { useAlert } from "../front/alert/useAlert";
-import Alert from "../front/alert/Alert";
+import { useAlert2 } from "../front/alert/useAlert2";
 import { verifLivraison } from "./verif/VerifLivraison";
 import { verifFacturation } from "./verif/VerifFacturation";
 
@@ -17,7 +17,8 @@ const Livraison = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedAdresseId, setSelectedAdresseId] = useState("");
   const { adresseLivraisonSelectionner, adresseLivraisonFacturation } = useContext(InfoCommandeContext);
-  const [alerte , setAlerte , getError] = useAlert(verifLivraison, verifFacturation)
+  const [alerte, setAlerte, getError] = useAlert(verifLivraison);
+  const [alerte2, setAlerte2, getError2] = useAlert2(verifFacturation);
 
   const nomAdresseLivraisonRef = useRef();
   const nomLivraisonRef = useRef();
@@ -34,11 +35,53 @@ const Livraison = () => {
   const codePostalFacturationRef = useRef();
   const villeFacturationRef = useRef();
   const paysFacturationRef = useRef();
-
   
   const handleFocus = () => {
     setAlerte({});
   }
+
+  const handleFocus2 = () => {
+    setAlerte2({});
+  }
+
+  const AlertComponent = ({ alerte, alerte2 }) => {
+    const [visibleAlerte, setVisibleAlerte] = useState(true);
+    const [visibleAlerte2, setVisibleAlerte2] = useState(true);
+  
+    useEffect(() => {
+      const timer1 = setTimeout(() => {
+        setVisibleAlerte(false);
+      }, 10000);
+  
+      const timer2 = setTimeout(() => {
+        setVisibleAlerte2(false);
+      }, 10000);
+  
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }, []);
+  
+    return (
+      <>
+        {Object.keys(alerte).length > 0 && visibleAlerte && (
+          <div className={`alert alert-${alerte.type} mt-3`}>
+            {alerte.liste.map((a, index) => {
+              return <div key={index}>{a}</div>;
+            })}
+          </div>
+        )}
+        {Object.keys(alerte2).length > 0 && visibleAlerte2 && (
+          <div className={`alert alert-${alerte2.type} mt-3`}>
+            {alerte2.liste.map((a, index) => {
+              return <div key={index}>{a}</div>;
+            })}
+          </div>
+        )}
+      </>
+    );
+  };
 
   const handleChangeAdresse = (e) => {
     setSelectedAdresseId(e.target.value);
@@ -147,41 +190,11 @@ const Livraison = () => {
   }, [accountId]);
 
   const handleInputChangeLivraison = (e) => {
-    e.preventDefault();
-  
-    const demande = {
-      nomAdresseLivraison : JSON.stringify(nomAdresseLivraisonRef.current.value),
-      nomLivraison : JSON.stringify(nomLivraisonRef.current.value),
-      prenomLivraison : JSON.stringify(prenomLivraisonRef.current.value),
-      adresseLivraison : JSON.stringify(adresseLivraisonRef.current.value),
-      adresse2Livraison : JSON.stringify(adresse2LivraisonRef.current.value),
-      codePostalLivraison : JSON.stringify(codePostalLivraisonRef.current.value),
-      villeLivraison : JSON.stringify(villeLivraisonRef.current.value),
-      paysLivraison : JSON.stringify(paysLivraisonRef.current.value),
-    }
-    
-    if (getError(demande)) {
-      return;
-    }
-      setFormDataLivraison({ ...formDataLivraison, [e.target.name]: e.target.value });
+    setFormDataLivraison({ ...formDataLivraison, [e.target.name]: e.target.value });
   };
 
 
   const handleInputChangeFacturation = (e) => {
-    e.preventDefault();
-  
-    const demande = {
-      nomFacturation : JSON.stringify(nomFacturationRef.current.value),
-      prenomFacturation : JSON.stringify(prenomFacturationRef.current.value),
-      adresseFacturation : JSON.stringify(adresseFacturationRef.current.value),
-      codePostalFacturation : JSON.stringify(codePostalFacturationRef.current.value),
-      villeFacturation : JSON.stringify(villeFacturationRef.current.value),
-      paysFacturation : JSON.stringify(paysFacturationRef.current.value),
-    }
-    
-    if (getError(demande)) {
-      return;
-    }
     setFormDataFacturation({ ...formDataFacturation, [e.target.name]: e.target.value });
   };
 
@@ -275,6 +288,22 @@ const Livraison = () => {
 
   const handleSubmitLivraison = async (e) => {
     e.preventDefault();
+  
+    const demande = {
+      nomAdresseLivraison : JSON.stringify(nomAdresseLivraisonRef.current.value),
+      nomLivraison : JSON.stringify(nomLivraisonRef.current.value),
+      prenomLivraison : JSON.stringify(prenomLivraisonRef.current.value),
+      adresseLivraison : JSON.stringify(adresseLivraisonRef.current.value),
+      adresse2Livraison : JSON.stringify(adresse2LivraisonRef.current.value),
+      codePostalLivraison : JSON.stringify(codePostalLivraisonRef.current.value),
+      villeLivraison : JSON.stringify(villeLivraisonRef.current.value),
+      paysLivraison : JSON.stringify(paysLivraisonRef.current.value),
+    }
+    
+    if (getError(demande)) {
+      return;
+    }
+
     try {
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_livraison.php', {
         accountId,
@@ -320,6 +349,20 @@ const Livraison = () => {
 
   const handleSubmitFacturation = async (e) => {
     e.preventDefault();
+  
+    const demande = {
+      nomFacturation : JSON.stringify(nomFacturationRef.current.value),
+      prenomFacturation : JSON.stringify(prenomFacturationRef.current.value),
+      adresseFacturation : JSON.stringify(adresseFacturationRef.current.value),
+      codePostalFacturation : JSON.stringify(codePostalFacturationRef.current.value),
+      villeFacturation : JSON.stringify(villeFacturationRef.current.value),
+      paysFacturation : JSON.stringify(paysFacturationRef.current.value),
+    }
+    
+    if (getError2(demande)) {
+      return;
+    }
+
     try {
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_facturation.php', {
         accountId,
@@ -478,7 +521,7 @@ const Livraison = () => {
                 <h2 className='text-center'>Carnet d'adresses</h2>
                 {successMessageLivraison && <div className='alert alert-success'>{successMessageLivraison}</div>}
                 {successMessageFacturation && <div className='alert alert-success'>{successMessageFacturation}</div>}
-                <Alert alerte={alerte} />
+                <AlertComponent alerte={alerte} alerte2={alerte2} />
                 <br />
                 {editModeLivraison && (
                   <div>
@@ -530,27 +573,27 @@ const Livraison = () => {
                     <form onSubmit={handleSubmitFacturation}>
                       <div>
                         <label>Nom:</label>
-                        <input ref={nomFacturationRef} type='text' name='nomFacturation' value={formDataFacturation.nomFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
+                        <input ref={nomFacturationRef} type='text' name='nomFacturation' value={formDataFacturation.nomFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
                       </div>
                       <div>
                         <label>Prénom:</label>
-                        <input ref={prenomFacturationRef} type='text' name='prenomFacturation' value={formDataFacturation.prenomFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
+                        <input ref={prenomFacturationRef} type='text' name='prenomFacturation' value={formDataFacturation.prenomFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
                       </div>
                       <div>
                         <label>Adresse:</label>
-                        <input ref={adresseFacturationRef} type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
+                        <input ref={adresseFacturationRef} type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
                       </div>
                       <div>
                         <label>Code postal:</label>
-                        <input ref={codePostalFacturationRef} type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
+                        <input ref={codePostalFacturationRef} type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
                       </div>
                       <div>
                         <label>Ville:</label>
-                        <input ref={villeFacturationRef} type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
+                        <input ref={villeFacturationRef} type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
                       </div>
                       <div>
                         <label>Pays:</label>
-                        <input ref={paysFacturationRef} type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
+                        <input ref={paysFacturationRef} type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
                       </div>
                       <br />
                       <div className='text-center'>
