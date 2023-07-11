@@ -61,8 +61,8 @@ function MesCommandes() {
                     <div className={`bouton-commandes ${commande.etat.toLowerCase()}`} onClick={() => handleClick(commande)}>
                       {commande.etat === 'En cours de préparation' && (
                         <>
-                        <h4>Commande n° {commande.id} - État : <span style={{ color: 'orange' }}>{commande.etat}</span></h4>
-                        <button className="annuler-commande" onClick={() => annulerCommande(commande)}>Annuler la commande</button>
+                          <h4>Commande n° {commande.id} - État : <span style={{ color: 'orange' }}>{commande.etat}</span></h4>
+                          <button className="annuler-commande" onClick={() => annulerCommande(commande)}>Annuler la commande</button>
                         </>
                       )}
                       {commande.etat === 'Expédié' && (
@@ -86,11 +86,11 @@ function MesCommandes() {
                             {commande.produits.map((produit) => (
                               <li key={produit.id}>
                                 <img
-                              className="rounded img-liv"
-                              width={75}
-                              src={`http://airneis.ddns.net:3000/img_produit/${produit.id_produit}`}
-                              alt={produit.nom} />
-                                
+                                  className="rounded img-liv"
+                                  width={75}
+                                  src={`http://airneis.ddns.net:3000/img_produit/${produit.id_produit}`}
+                                  alt={produit.nom}
+                                />
                                 &nbsp; {produit.nom_produit} - Prix : {produit.prix_produit}€ - Quantité : {produit.quantite_produit}
                               </li>
                             ))}
@@ -127,7 +127,7 @@ function MesCommandes() {
                       </div>
                     )}
                   </div>
-                ))}
+                )).reverse()} 
               </div>
             </>
           )}
