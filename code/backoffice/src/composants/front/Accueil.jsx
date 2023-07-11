@@ -32,7 +32,7 @@ const Accueil = () => {
                         <NavLink to={"/contact"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://cdn-icons-png.flaticon.com/512/1701/1701853.png" alt="" /><span className="texteacceuil">Formulaire de contact</span> </NavLink>
                     </div>
                     <div className='DivAcceuil'> 
-                        <NavLink to={"/commande"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://cdn-icons-png.flaticon.com/512/6948/6948527.png" alt="" /><span className="texteacceuil">Gestion commadne</span> </NavLink>
+                        <NavLink to={"/commande"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://cdn-icons-png.flaticon.com/512/6948/6948527.png" alt="" /><span className="texteacceuil">Gestion commande</span> </NavLink>
                     </div>
                 </div>
 

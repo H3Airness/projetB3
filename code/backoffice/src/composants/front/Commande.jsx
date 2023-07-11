@@ -30,9 +30,41 @@ function Commande() {
     }
   };
 
-  const handleAnnulée = async (id) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
+  const handleExpédié = async (id) => {
+    const confirmation = window.confirm("Êtes-vous sûr de vouloir expédier cette commande ?");
+    if (confirmation) {
+      axios.post(`http://airneis.ddns.net:3000/.php`, { id: commande.id })
+        .then(response => {
+          const updatedCommandes = commandes.map(c => {
+            if (c.id === commande.id) {
+              return { ...c, etat: 'Annulé' };
+            }
+            return c;
+          });
+          setCommandes(updatedCommandes);
+        })
+        .catch(error => {
+          console.error("Erreur lors de l'expédition de la commande", error);
+        });
+    }
+  };
 
+  const handleAnnulée = async (id) => {
+    const confirmation = window.confirm("Êtes-vous sûr de vouloir annuler cette commande ?");
+    if (confirmation) {
+      axios.post(`http://airneis.ddns.net:3000/annuler-commande.php`, { id: commande.id })
+        .then(response => {
+          const updatedCommandes = commandes.map(c => {
+            if (c.id === commande.id) {
+              return { ...c, etat: 'Annulé' };
+            }
+            return c;
+          });
+          setCommandes(updatedCommandes);
+        })
+        .catch(error => {
+          console.error("Erreur lors de l'annulation de la commande", error);
+        });
     }
   };
   
@@ -61,10 +93,12 @@ function Commande() {
                     <div key={commande.id} className={`commande-item ${commandeSelectionnee === commande ? 'commande-selected' : ''}`}>
                       <div className={`bouton-commandes ${commande.etat.toLowerCase()}`} onClick={() => handleClick(commande)}>
                         {commande.etat === 'En cours de préparation' && (
-                          <>
+                          <div>
                             <h4>Commande n° {commande.id} - État : <span style={{ color: 'orange' }}>{commande.etat}</span></h4>
-                            <button className="annuler-commande" onClick={() => annulerCommande(commande)}>Annuler la commande</button>
-                          </>
+                            <button className="btn btn-warning" onClick={() => handleExpédié(commande)}>Expédier la commande</button>
+                            &nbsp; &nbsp;
+                            <button className="btn btn-danger" onClick={() => handleAnnulée(commande)}>Annuler la commande</button>
+                          </div>
                         )}
                         {commande.etat === 'Expédiée' && (
                           <h4>Commande n° {commande.id} - État : <span style={{ color: 'green' }}>{commande.etat}</span></h4>
