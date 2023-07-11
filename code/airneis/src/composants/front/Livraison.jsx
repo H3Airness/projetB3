@@ -5,9 +5,10 @@ import { InfoCommandeContext } from "../context/infoCommandeContext";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
-import { commandeVerif } from "./verif/VerifLivraison";
 import { useAlert } from "../front/alert/useAlert";
 import Alert from "../front/alert/Alert";
+import { verifLivraison } from "./verif/VerifLivraison";
+import { verifFacturation } from "./verif/VerifFacturation";
 
 const Livraison = () => {
   const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
@@ -16,7 +17,7 @@ const Livraison = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedAdresseId, setSelectedAdresseId] = useState("");
   const { adresseLivraisonSelectionner, adresseLivraisonFacturation } = useContext(InfoCommandeContext);
-  const [alerte , setAlerte , getError] = useAlert(commandeVerif)
+  const [alerte , setAlerte , getError] = useAlert(verifLivraison, verifFacturation)
 
   const nomAdresseLivraisonRef = useRef();
   const nomLivraisonRef = useRef();
@@ -26,6 +27,13 @@ const Livraison = () => {
   const codePostalLivraisonRef = useRef();
   const villeLivraisonRef = useRef();
   const paysLivraisonRef = useRef();
+
+  const nomFacturationRef = useRef();
+  const prenomFacturationRef = useRef();
+  const adresseFacturationRef = useRef();
+  const codePostalFacturationRef = useRef();
+  const villeFacturationRef = useRef();
+  const paysFacturationRef = useRef();
 
   
   const handleFocus = () => {
@@ -150,17 +158,30 @@ const Livraison = () => {
       codePostalLivraison : JSON.stringify(codePostalLivraisonRef.current.value),
       villeLivraison : JSON.stringify(villeLivraisonRef.current.value),
       paysLivraison : JSON.stringify(paysLivraisonRef.current.value),
-
-  }
-  
-  if (getError(demande)) {
-    return;
-  }
-    setFormDataLivraison({ ...formDataLivraison, [e.target.name]: e.target.value });
-};
+    }
+    
+    if (getError(demande)) {
+      return;
+    }
+      setFormDataLivraison({ ...formDataLivraison, [e.target.name]: e.target.value });
+  };
 
 
   const handleInputChangeFacturation = (e) => {
+    e.preventDefault();
+  
+    const demande = {
+      nomFacturation : JSON.stringify(nomFacturationRef.current.value),
+      prenomFacturation : JSON.stringify(prenomFacturationRef.current.value),
+      adresseFacturation : JSON.stringify(adresseFacturationRef.current.value),
+      codePostalFacturation : JSON.stringify(codePostalFacturationRef.current.value),
+      villeFacturation : JSON.stringify(villeFacturationRef.current.value),
+      paysFacturation : JSON.stringify(paysFacturationRef.current.value),
+    }
+    
+    if (getError(demande)) {
+      return;
+    }
     setFormDataFacturation({ ...formDataFacturation, [e.target.name]: e.target.value });
   };
 
@@ -465,19 +486,19 @@ const Livraison = () => {
                     <form onSubmit={handleSubmitLivraison}>
                       <div>
                         <label>Nom de l'adresse:</label>
-                        <input ref={nomAdresseLivraisonRef} type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
+                        <input ref={nomAdresseLivraisonRef} type='text' name='nomAdresse' value={formDataLivraison.nomAdresse} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Nom:</label>
-                        <input ref={nomLivraisonRef} type='text' name='nom' value={formDataLivraison.nom} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
+                        <input ref={nomLivraisonRef} type='text' name='nom' value={formDataLivraison.nom} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Prénom:</label>
-                        <input ref={prenomLivraisonRef} type='text' name='prenom' value={formDataLivraison.prenom} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
+                        <input ref={prenomLivraisonRef} type='text' name='prenom' value={formDataLivraison.prenom} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Adresse:</label>
-                        <input ref={adresseLivraisonRef} type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
+                        <input ref={adresseLivraisonRef} type='text' name='adresseLivraison' value={formDataLivraison.adresseLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Adresse 2 (optionnel):</label>
@@ -485,15 +506,15 @@ const Livraison = () => {
                       </div>
                       <div>
                         <label>Code postal:</label>
-                        <input ref={codePostalLivraisonRef} type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
+                        <input ref={codePostalLivraisonRef} type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Ville:</label>
-                        <input ref={villeLivraisonRef} type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
+                        <input ref={villeLivraisonRef} type='text' name='villeLivraison' value={formDataLivraison.villeLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Pays:</label>
-                        <input ref={paysLivraisonRef} type='text' name='pays' value={formDataLivraison.pays} onChange={handleInputChangeLivraison} onFocus={handleFocus} />
+                        <input ref={paysLivraisonRef} type='text' name='pays' value={formDataLivraison.pays} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <br />
                       <div className='text-center'>
@@ -509,27 +530,27 @@ const Livraison = () => {
                     <form onSubmit={handleSubmitFacturation}>
                       <div>
                         <label>Nom:</label>
-                        <input type='text' name='nomFacturation' value={formDataFacturation.nomFacturation} onChange={handleInputChangeFacturation} required />
+                        <input ref={nomFacturationRef} type='text' name='nomFacturation' value={formDataFacturation.nomFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Prénom:</label>
-                        <input type='text' name='prenomFacturation' value={formDataFacturation.prenomFacturation} onChange={handleInputChangeFacturation} required />
+                        <input ref={prenomFacturationRef} type='text' name='prenomFacturation' value={formDataFacturation.prenomFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Adresse:</label>
-                        <input type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} required />
+                        <input ref={adresseFacturationRef} type='text' name='adresseFacturation' value={formDataFacturation.adresseFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Code postal:</label>
-                        <input type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} required />
+                        <input ref={codePostalFacturationRef} type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Ville:</label>
-                        <input type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} required />
+                        <input ref={villeFacturationRef} type='text' name='villeFacturation' value={formDataFacturation.villeFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Pays:</label>
-                        <input type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} required />
+                        <input ref={paysFacturationRef} type='text' name='paysFacturation' value={formDataFacturation.paysFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus} required />
                       </div>
                       <br />
                       <div className='text-center'>
