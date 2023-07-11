@@ -29,15 +29,6 @@ const Paiement = () => {
   const datePaiementRef = useRef();
   const cvvPaiementRef = useRef();
 
-  useEffect(() => {
-    if (!adresseLivraison || !adresseFacturation) {
-      const confirmation = window.confirm("Veuillez renseigner les adresses de livraison et de facturation.");
-      if (confirmation) {
-        navigate("/Livraison");
-      }
-    }
-  }, [adresseLivraison, adresseFacturation]);
-
   const handleChangePaiement = (e) => {
     setSelectedPaiementId(e.target.value);
   };
@@ -357,7 +348,7 @@ return (
                                   {selectedPaiementId !== "" && (
                                     <div>
                                     <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
-                                    <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
+                                    <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-4)}</strong></p>
                                     <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
                                     <p>CVV: <strong>{"***"}</strong></p>
                                     <center>
