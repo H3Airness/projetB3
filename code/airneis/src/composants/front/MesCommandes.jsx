@@ -65,7 +65,7 @@ function MesCommandes() {
                         <button className="annuler-commande" onClick={() => annulerCommande(commande)}>Annuler la commande</button>
                         </>
                       )}
-                      {commande.etat === 'Expédié' && (
+                      {commande.etat === 'Expédiée' && (
                         <h4>Commande n° {commande.id} - État : <span style={{ color: 'green' }}>{commande.etat}</span></h4>
                       )}
                       {commande.etat === 'Annulé' && (
