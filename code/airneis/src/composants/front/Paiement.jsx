@@ -7,7 +7,7 @@ import axios from "axios";
 import Connexion from "./Connexion";
 
 const Paiement = () => {
-  const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
+  const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
@@ -70,7 +70,8 @@ const Paiement = () => {
           numeroPaiement: selectedPaiement.numero,
           datePaiement: selectedPaiement.date,
           cvvPaiement: selectedPaiement.cvv,
-  
+
+          totalProduit: nombreProduits,
           totalPanier: totalPanierString,
 
           produitsCommande: produitsCommande,

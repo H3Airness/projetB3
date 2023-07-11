@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { dataContext } from "../context/dataContext";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 
 const Panier = () => {
   const {
@@ -40,12 +40,14 @@ const Panier = () => {
                 return (
                   <tr key={produit.id}>
                     <td>
-                      <img
-                        className="rounded d-block"
-                        width={150}
-                        src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
-                        alt={produit.nom}
-                      />
+                      <Link to={`/Produit/${produit.id}`}>
+                        <img
+                          className="rounded d-block"
+                          width={150}
+                          src={`http://airneis.ddns.net:3000/img_produit/${produit.id}`}
+                          alt={produit.nom}
+                        />
+                      </Link>
                     </td>
 
                     <td>
