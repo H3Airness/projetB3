@@ -5,17 +5,59 @@ import Connexion from "./Connexion";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 
+const getSalesData = (commandes, periode) => {
+  let data = [];
+  const today = new Date();
+  const endDate = today;
+  let startDate;
+
+  if (periode === 'jour') {
+    startDate = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+  } else if (periode === 'semaine') {
+    startDate = new Date(today.getTime() - 5 * 7 * 24 * 60 * 60 * 1000);
+  }
+
+  const dateLabels = [];
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    dateLabels.push(currentDate.toLocaleDateString());
+    if (periode === 'jour') {
+      currentDate.setDate(currentDate.getDate() + 1);
+    } else if (periode === 'semaine') {
+      currentDate.setDate(currentDate.getDate() + 7);
+    }
+  }
+
+  data = dateLabels.map((dateLabel) => {
+    const filteredCommandes = commandes.filter((commande) => {
+      const commandeDate = new Date(commande.date);
+      return (
+        commandeDate.toLocaleDateString() === dateLabel ||
+        (periode === 'semaine' &&
+          commandeDate >= new Date(dateLabel) &&
+          commandeDate <= new Date(dateLabel).getTime() + 7 * 24 * 60 * 60 * 1000)
+      );
+    });
+
+    const total = filteredCommandes.reduce((acc, cur) => acc + parseFloat(cur.total_panier), 0);
+
+    return {
+      date: dateLabel,
+      total: total.toFixed(2),
+    };
+  });
+
+  return data;
+};
+
+
 function Commande() {
   const { isLoggedIn } = useContext(AuthContext);
   const [commandes, setCommandes] = useState([]);
   const [commandeSelectionnee, setCommandeSelectionnee] = useState(null);
   const [periode, setPeriode] = useState('jour');
-
-
-  const data = commandes.map((commande) => ({
-    id: commande.id,
-    total_panier: parseFloat(commande.total_panier),
-  }));
+  const salesData = getSalesData(commandes, periode);
 
   useEffect(() => {
     axios.get(`http://airneis.ddns.net:3000/commande_back.php`)
@@ -28,55 +70,6 @@ function Commande() {
       });
   }, []);
 
-  const getSalesData = (commandes, periode) => {
-    let data = [];
-    const today = new Date();
-    const endDate = new Date(today.getTime() - 24 * 60 * 60 * 1000); // Date d'hier
-    let startDate;
-  
-    if (periode === 'jour') {
-      startDate = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 jours avant aujourd'hui
-    } else if (periode === 'semaine') {
-      startDate = new Date(today.getTime() - 5 * 7 * 24 * 60 * 60 * 1000); // 5 semaines avant aujourd'hui
-    }
-  
-    const dateLabels = [];
-    let currentDate = new Date(startDate);
-  
-    while (currentDate <= endDate) {
-      dateLabels.push(currentDate.toLocaleDateString());
-      if (periode === 'jour') {
-        currentDate.setDate(currentDate.getDate() + 1);
-      } else if (periode === 'semaine') {
-        currentDate.setDate(currentDate.getDate() + 7);
-      }
-    }
-  
-    data = dateLabels.map((dateLabel) => {
-      const filteredCommandes = commandes.filter((commande) => {
-        const commandeDate = new Date(commande.date);
-        return (
-          commandeDate.toLocaleDateString() === dateLabel ||
-          (periode === 'semaine' &&
-            commandeDate >= new Date(dateLabel) &&
-            commandeDate <= new Date(dateLabel).getTime() + 7 * 24 * 60 * 60 * 1000)
-        );
-      });
-  
-      const total = filteredCommandes.reduce((acc, cur) => acc + parseFloat(cur.total_panier), 0);
-  
-      return {
-        date: dateLabel,
-        total: total.toFixed(2),
-      };
-    });
-  
-    return data;
-  };
-
-  const salesData = getSalesData(commandes, periode);
-  
-
   const handleClick = (commande) => {
     if (commandeSelectionnee === commande) {
       setCommandeSelectionnee(null);
@@ -85,14 +78,14 @@ function Commande() {
     }
   };
 
-  const handleExpédié = async (id) => {
+  const handleExpédié = async (commande) => {
     const confirmation = window.confirm("Êtes-vous sûr de vouloir expédier cette commande ?");
     if (confirmation) {
-      axios.post(`http://airneis.ddns.net:3000/.php`, { id: commande.id })
+      axios.post(`http://airneis.ddns.net:3000/expedier_commande.php`, { id: commande.id })
         .then(response => {
           const updatedCommandes = commandes.map(c => {
             if (c.id === commande.id) {
-              return { ...c, etat: 'Annulé' };
+              return { ...c, etat: 'Expédiée' };
             }
             return c;
           });
@@ -104,7 +97,7 @@ function Commande() {
     }
   };
 
-  const handleAnnulée = async (id) => {
+  const handleAnnulée = async (commande) => {
     const confirmation = window.confirm("Êtes-vous sûr de vouloir annuler cette commande ?");
     if (confirmation) {
       axios.post(`http://airneis.ddns.net:3000/annuler-commande.php`, { id: commande.id })
@@ -139,17 +132,6 @@ function Commande() {
 
               <br />
               <center>
-                <BarChart width={600} height={300} data={data}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="id" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="total_panier" fill="#8884d8" />
-                </BarChart>
-
-                <hr/>
-
                 <div>
                   Période :
                   <select value={periode} onChange={(e) => setPeriode(e.target.value)}>

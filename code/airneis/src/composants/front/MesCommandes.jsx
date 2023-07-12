@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
 import axios from 'axios';
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 import Connexion from "./Connexion";
 
 function MesCommandes() {
@@ -13,7 +13,7 @@ function MesCommandes() {
   useEffect(() => {
     axios.get(`http://airneis.ddns.net:3000/page-mes-commandes.php?accountId=${accountId}`)
       .then(response => {
-        const commandesTrie = response.data.sort((a, b) => b.id - a.id); // Trier les commandes par ID (la dernière commande sera en premier)
+        const commandesTrie = response.data.sort((a, b) => b.id - a.id);
         setCommandes(commandesTrie);
       })
       .catch(error => {
@@ -53,7 +53,12 @@ function MesCommandes() {
       {isLoggedIn ? (
         <>
           {commandes.length === 0 ? (
-            <p>Vous n'avez pas encore de commandes.</p>
+            <center>
+              <p>Aucune commande passée pour le moment ☹️</p>
+              <NavLink to="/recherche" className="btn btn-success">
+                Voir notre catalogue
+              </NavLink>
+            </center>
           ) : (
             <>
               <h1 style={{ textAlign: 'center' }}>Mes commandes</h1>
@@ -94,12 +99,14 @@ function MesCommandes() {
                             <ul>
                               {commande.produits.map((produit) => (
                                 <li key={produit.id}>
+                                  <Link to={`/Produit/${produit.id_produit}`}>
                                   <img
                                     className="rounded img-liv"
                                     width={75}
                                     src={`http://airneis.ddns.net:3000/img_produit/${produit.id_produit}`}
                                     alt={produit.nom}
                                   />
+                                  </Link>
                                   &nbsp; {produit.nom_produit} - Prix : {produit.prix_produit}€ - Quantité : {produit.quantite_produit}
                                 </li>
                               ))}
