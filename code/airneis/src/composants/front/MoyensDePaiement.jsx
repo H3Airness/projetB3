@@ -180,7 +180,7 @@ const MoyenDePaiement = () => {
                           {selectedPaiementId !== "" && (
                             <div>
                               <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
-                              <p>Numéro de carte: <strong>{"**** **** **** **" + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
+                              <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-4)}</strong></p>
                               <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
                               <p>CVV: <strong>{"***"}</strong></p>
                               <center>
