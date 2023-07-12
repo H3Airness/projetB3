@@ -92,6 +92,8 @@ const Paiement = () => {
           navigate("/ConfirmationCommande");
         }
       } catch (error) {
+        // Gérer les erreurs de l'API
+        console.error(error);
       }
     } else {
       setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
@@ -199,8 +201,10 @@ const Paiement = () => {
         }, 2000);
         window.location.href = "/Paiement";
       } else {
+        // Gérer les erreurs de l'API
       }
     } catch (error) {
+      // Gérer les erreurs de l'API
     }
   };
 
@@ -211,6 +215,7 @@ const Paiement = () => {
       setAccountPaiement(updatedAccountPaiement);
       setSelectedPaiementId("");
     } catch (error) {
+      // Gérer les erreurs de l'API
     }
   };
 
@@ -222,7 +227,7 @@ const Paiement = () => {
     return <div>Chargement...</div>;
   }
 
-return (
+  return (
     <>
       {isLoggedIn ? (
         <>
