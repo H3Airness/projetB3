@@ -20,8 +20,7 @@ const Recherche = () => {
 
     const filtre = recherche.trim().toLowerCase(); 
     const resultatsFiltres = donnees.filter(donnee =>
-        donnee.nom.toLowerCase().includes(filtre) ||
-        donnee.description.toLowerCase().includes(filtre)
+        donnee.nom.toLowerCase().includes(filtre)
       );
       
     setResultats(resultatsFiltres);
