@@ -22,8 +22,6 @@ const Inscription = () => {
         'http://airneis.ddns.net:3000/inscription.php',
         formType,
       );
-      console.log(formType);
-      console.log('response.data.status:', response.data.status);
 
       if (response.data.status === 'success') {
         const message = response.data.message;
