@@ -20,11 +20,18 @@ function Produit() {
   const [produits, setProducts] = useState([]);
   const { ajouter } = useContext(dataContext);
   const [autoplay, setAutoplay] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
     fetch(`http://airneis.ddns.net:3000/produit.php?id=${id}`)
       .then(response => response.json())
       .then(data => {
+        clearTimeout(timeout);
+        setIsLoading(false);
         setProduct(data);
         if (data && data.categorie) {
           axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${data.categorie}`)
@@ -32,7 +39,9 @@ function Produit() {
               setCategories(response.data);
             })
         }
-      })
+      });
+
+    return () => clearTimeout(timeout);
   }, [id]);
 
   useEffect(() => {
@@ -48,8 +57,19 @@ function Produit() {
     setAutoplay(false);
   };
 
+  if (isLoading) {
+    return <center><p>Chargement...</p></center>;
+  }
+
   if (!produit) {
-    return <p>Chargement...</p>;
+    return <center>
+      <p style={{fontSize: '30px'}}>Ce produit n'est plus en <span style={{color: 'red'}}>vente</span> sur notre site! ☹️</p>
+      <img className="rounded mx-auto d-block imgproduit" width="20%" style={{ minWidth: '100px', opacity: 0.5 }} src={`http://airneis.ddns.net:3000/img_produit/${id}.jpg`}/>
+      <br />
+      <Link to="/recherche" className="btn btn-success">
+        Voir notre catalogue
+      </Link>
+    </center>;
   }
 
   return (
