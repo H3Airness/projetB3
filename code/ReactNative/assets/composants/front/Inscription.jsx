@@ -10,32 +10,30 @@ const Inscription = () => {
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append('nom', nom);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('password2', confirmPassword);
+    const formType = {
+      nom: nom,
+      email: email,
+      password: password,
+      password2: confirmPassword,
+    };
 
     try {
-      const response = await axios.post('http://airneis.ddns.net:3000/inscription.php', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        mode: 'cors',
-
-      });
+      const response = await axios.post(
+        'http://airneis.ddns.net:3000/inscription.php',
+        formType,
+      );
 
       if (response.data.status === 'success') {
         const message = response.data.message;
         setMessage(message);
         setTimeout(() => {
-          navigation.navigate('/connexion');
+          navigation.navigate('connexion'); 
         }, 3000);
       } else if (response.data.status === 'error') {
         const error = response.data.error;
         setError(error);
       }
-    } catch (error) {
+  } catch (error) {
       console.log(error);
     }
   };
@@ -66,6 +64,7 @@ const Inscription = () => {
           <TextInput
             style={styles.input}
             value={nom}
+            id='nom'
             onChangeText={setNom}
             placeholder="Nom"
             autoCapitalize="none"
@@ -77,6 +76,7 @@ const Inscription = () => {
           <TextInput
             style={styles.input}
             value={email}
+            id='email'
             onChangeText={setEmail}
             placeholder="Email"
             keyboardType="email-address"
@@ -89,6 +89,7 @@ const Inscription = () => {
           <TextInput
             style={styles.input}
             value={password}
+            id='password'
             onChangeText={setPassword}
             placeholder="Mot de passe"
             secureTextEntry
@@ -101,6 +102,7 @@ const Inscription = () => {
           <TextInput
             style={styles.input}
             value={confirmPassword}
+            id='confirmPassword'
             onChangeText={setConfirmPassword}
             placeholder="Confirmer mot de passe"
             secureTextEntry
