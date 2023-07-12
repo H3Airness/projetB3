@@ -1,11 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
 import axios from 'axios';
+import { useLocation } from "react-router-dom";
+import Connexion from "./Connexion";
 
 function MesCommandes() {
   const { accountId, isLoggedIn } = useContext(AuthContext);
   const [commandes, setCommandes] = useState([]);
   const [commandeSelectionnee, setCommandeSelectionnee] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     axios.get(`http://airneis.ddns.net:3000/page-mes-commandes.php?accountId=${accountId}`)
@@ -126,7 +129,7 @@ function MesCommandes() {
 
                             <h4>Moyen de paiement</h4>
                             Nom sur la carte: <strong>{commande.nom_paiement}</strong><br />
-                            Numéro de carte: <strong><span>{'**** **** **** **' + commande.numero_paiement.slice(-2)}</span></strong><br />
+                            Numéro de carte: <strong><span>{'**** **** **** ' + commande.numero_paiement.slice(-4)}</span></strong><br />
                             Date d'expiration: <strong>{commande.date_paiement}</strong><br />
                             CVV: <strong>***</strong><br />
                           </div>
@@ -140,7 +143,7 @@ function MesCommandes() {
           )}
         </>
       ) : (
-        <p>Vous devez vous connecter pour voir vos commandes.</p>
+        <Connexion redirection={location} />
       )}
     </>
   );
