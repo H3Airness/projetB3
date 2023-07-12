@@ -1,15 +1,21 @@
 import axios from "axios";
-import { NavLink } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
 import Connexion from "./Connexion";
-
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 
 function Commande() {
   const { isLoggedIn } = useContext(AuthContext);
   const [commandes, setCommandes] = useState([]);
   const [commandeSelectionnee, setCommandeSelectionnee] = useState(null);
+  const [periode, setPeriode] = useState('jour');
+
+
+  const data = commandes.map((commande) => ({
+    id: commande.id,
+    total_panier: parseFloat(commande.total_panier),
+  }));
 
   useEffect(() => {
     axios.get(`http://airneis.ddns.net:3000/commande_back.php`)
@@ -21,6 +27,55 @@ function Commande() {
         console.error("Erreur lors de la récupération des commandes", error);
       });
   }, []);
+
+  const getSalesData = (commandes, periode) => {
+    let data = [];
+    const today = new Date();
+    const endDate = new Date(today.getTime() - 24 * 60 * 60 * 1000); // Date d'hier
+    let startDate;
+  
+    if (periode === 'jour') {
+      startDate = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 jours avant aujourd'hui
+    } else if (periode === 'semaine') {
+      startDate = new Date(today.getTime() - 5 * 7 * 24 * 60 * 60 * 1000); // 5 semaines avant aujourd'hui
+    }
+  
+    const dateLabels = [];
+    let currentDate = new Date(startDate);
+  
+    while (currentDate <= endDate) {
+      dateLabels.push(currentDate.toLocaleDateString());
+      if (periode === 'jour') {
+        currentDate.setDate(currentDate.getDate() + 1);
+      } else if (periode === 'semaine') {
+        currentDate.setDate(currentDate.getDate() + 7);
+      }
+    }
+  
+    data = dateLabels.map((dateLabel) => {
+      const filteredCommandes = commandes.filter((commande) => {
+        const commandeDate = new Date(commande.date);
+        return (
+          commandeDate.toLocaleDateString() === dateLabel ||
+          (periode === 'semaine' &&
+            commandeDate >= new Date(dateLabel) &&
+            commandeDate <= new Date(dateLabel).getTime() + 7 * 24 * 60 * 60 * 1000)
+        );
+      });
+  
+      const total = filteredCommandes.reduce((acc, cur) => acc + parseFloat(cur.total_panier), 0);
+  
+      return {
+        date: dateLabel,
+        total: total.toFixed(2),
+      };
+    });
+  
+    return data;
+  };
+
+  const salesData = getSalesData(commandes, periode);
+  
 
   const handleClick = (commande) => {
     if (commandeSelectionnee === commande) {
@@ -81,7 +136,43 @@ function Commande() {
           ) : (
             <>
               <h1 style={{ textAlign: 'center' }}>Gestion des commandes</h1>
-              <p style={{ position: 'absolute', top: '150px', left: '100px', fontWeight: 'bold' }}>
+
+              <br />
+              <center>
+                <BarChart width={600} height={300} data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="id" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="total_panier" fill="#8884d8" />
+                </BarChart>
+
+                <hr/>
+
+                <div>
+                  Période :
+                  <select value={periode} onChange={(e) => setPeriode(e.target.value)}>
+                    <option value="jour">Par jour</option>
+                    <option value="semaine">Par semaine</option>
+                  </select>
+                </div>
+
+                <BarChart width={600} height={300} data={salesData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="total" fill="#8884d8" />
+                </BarChart>
+              </center>
+
+              <br />
+              <hr/>
+              <br />
+
+              <p style={{ marginLeft: '100px', fontSize: '40px', fontWeight: 'bold' }}>
                 Année : {new Date().getFullYear()}
               </p>
               <br />
@@ -155,7 +246,7 @@ function Commande() {
 
                             <h4>Moyen de paiement</h4>
                             Nom sur la carte: <strong>{commande.nom_paiement}</strong><br />
-                            Numéro de carte: <strong><span>{'**** **** **** **' + commande.numero_paiement.slice(-2)}</span></strong><br />
+                            Numéro de carte: <strong><span>{'**** **** **** ' + commande.numero_paiement.slice(-4)}</span></strong><br />
                             Date d'expiration: <strong>{commande.date_paiement}</strong><br />
                             CVV: <strong>***</strong><br />
                           </div>
