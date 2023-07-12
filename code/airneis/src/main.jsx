@@ -23,6 +23,7 @@ import ConfirmationCommande from './composants/front/ConfirmationCommande';
 import MesParametres from './composants/front/MesParametres';
 import UserAdresses from './composants/front/UserAdresses';
 import MoyenDePaiement from './composants/front/MoyensDePaiement';
+import MesCommandes from './composants/front/MesCommandes';
 
 
 
@@ -49,6 +50,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='userAdresses' element={<UserAdresses/>} />
       <Route path='moyen-de-paiement' element={<MoyenDePaiement/>} />
       <Route path="*" element={<NotFound />} />
+      <Route path='mesCommandes' element={<MesCommandes/>} />
+
       </Route>
     </Routes>
   </BrowserRouter>

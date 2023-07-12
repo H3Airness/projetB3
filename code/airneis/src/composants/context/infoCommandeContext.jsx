@@ -41,6 +41,15 @@ export const InfoCommandeProvider = ({ children }) => {
     setPaiement(paiement);
   };
 
+  const reinitialiserCommande = () => {
+    setLivraison(null);
+    setFacturation(null);
+    setPaiement(null);
+    sessionStorage.removeItem("adresseLivraison");
+    sessionStorage.removeItem("adresseFacturation");
+    sessionStorage.removeItem("paiement");
+  };
+
   return (
     <InfoCommandeContext.Provider
       value={{
@@ -50,6 +59,7 @@ export const InfoCommandeProvider = ({ children }) => {
         adresseLivraisonSelectionner,
         adresseLivraisonFacturation,
         moyenPaiement,
+        reinitialiserCommande,
       }}
     >
       {children}

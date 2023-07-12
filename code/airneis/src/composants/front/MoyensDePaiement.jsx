@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
 
@@ -180,7 +180,7 @@ const MoyenDePaiement = () => {
                           {selectedPaiementId !== "" && (
                             <div>
                               <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
-                              <p>Numéro de carte: <strong>{"**** **** **** **" + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
+                              <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-4)}</strong></p>
                               <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
                               <p>CVV: <strong>{"***"}</strong></p>
                               <center>
@@ -203,6 +203,12 @@ const MoyenDePaiement = () => {
                     <br />
                   </div>
                 )}
+                <hr />
+                <div className="d-flex">
+                <NavLink to='/MesParametres' className='btn-custom link-custom my-3'>
+                  Retour
+                </NavLink>
+              </div>
               </div>
             </div>
           </div>

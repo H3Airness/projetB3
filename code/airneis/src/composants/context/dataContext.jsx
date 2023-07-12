@@ -70,9 +70,14 @@ export function DataContextProvider({ children }) {
     return total;
   }
 
+  function reinitialiserPanier() {
+    setPanier({});
+    setNombreProduits(0);
+  }
+
   return (
     <dataContext.Provider
-      value={{ panier: Object.values(panier), nombreProduits, ajouter, retirer, supprimer, getTotalProduit, getTotalPanier }}
+      value={{ panier: Object.values(panier), nombreProduits, ajouter, retirer, supprimer, getTotalProduit, getTotalPanier, reinitialiserPanier}}
     >
       {children}
     </dataContext.Provider>

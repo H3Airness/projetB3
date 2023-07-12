@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
@@ -8,12 +8,15 @@ import Connexion from "./Connexion";
 function ConfirmationCommande() {
   const location = useLocation();
   const { isLoggedIn } = useContext(AuthContext);
-  const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
-  const { adresseLivraison, adresseFacturation, Paiement } = useContext(InfoCommandeContext);
+  const { panier, nombreProduits, getTotalPanier, getTotalProduit, reinitialiserPanier } = useContext(dataContext);
+  const { adresseLivraison, adresseFacturation, Paiement, reinitialiserCommande } = useContext(InfoCommandeContext);
 
-  console.log("adresseLivraison:", InfoCommandeContext);
-  console.log("adresseFacturation:", adresseFacturation);
-  console.log("Paiement:", Paiement);
+  useEffect(() => {
+    return () => {
+      reinitialiserPanier();
+      reinitialiserCommande();
+    };
+  }, []);
 
   return (
     <>
@@ -30,7 +33,7 @@ function ConfirmationCommande() {
           </>
           ) : (
             <>
-              <h1 className="mb-4 text-center">Votre commande n°{Paiement.idCommande} est confirmée! ✅</h1>
+              <h1 className="mb-4 text-center">Votre commande  <NavLink to="/mesCommandes"> n°{Paiement.idCommande} </NavLink>est confirmée! ✅</h1>
               <div className="rounded Min-heightConteinerPanier">
                 <div className="shadow p-1 mb-1 bg-body rounded divArticles">
 
@@ -121,9 +124,9 @@ function ConfirmationCommande() {
 
                   <h4>Moyen de paiement</h4>
                   Nom sur la carte: <strong>{Paiement.nomPaiement}</strong><br />
-                  Numéro de carte: <strong>{Paiement.numeroPaiement}</strong><br />
+                  Numéro de carte: <strong><span>{'**** **** **** ' + Paiement.numeroPaiement.slice(-4)}</span></strong><br />
                   Date d'expiration: <strong>{Paiement.datePaiement}</strong><br />
-                  CVV: <strong>{Paiement.cvvPaiement}</strong><br />
+                  CVV: <strong>***</strong><br />
                 </div>
               </div>
             </>
