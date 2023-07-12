@@ -13,7 +13,7 @@ function MesCommandes() {
   useEffect(() => {
     axios.get(`http://airneis.ddns.net:3000/page-mes-commandes.php?accountId=${accountId}`)
       .then(response => {
-        const commandesTrie = response.data.sort((a, b) => new Date(a.date_commande) - new Date(b.date_commande));
+        const commandesTrie = response.data.sort((a, b) => b.id - a.id); // Trier les commandes par ID (la dernière commande sera en premier)
         setCommandes(commandesTrie);
       })
       .catch(error => {
@@ -57,7 +57,7 @@ function MesCommandes() {
           ) : (
             <>
               <h1 style={{ textAlign: 'center' }}>Mes commandes</h1>
-              <p style={{ position: 'absolute', top: '150px', left: '100px', fontWeight: 'bold' }}>
+              <p style={{ marginLeft: '100px', fontSize: '30px', fontWeight: 'bold' }}>
                 Année : {new Date().getFullYear()}
               </p>
               <br />
