@@ -18,6 +18,7 @@ import Carousel from './composants/front/Carousel';
 import AjoutCarousel from './composants/front/AjouterCarousel';
 import ModifierCarousel from './composants/front/ModifierCarousel';
 import ModifierProduit from './composants/front/ModifierProduit';
+import Commande from './composants/front/Commande';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -36,6 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='ajoutCarousel' element={<AjoutCarousel/>} />
         <Route path='modifierCarousel/:id' element={<ModifierCarousel/>} />
         <Route path='modifierProduit/:id' element={<ModifierProduit/>} />
+        <Route path='commande' element={<Commande/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

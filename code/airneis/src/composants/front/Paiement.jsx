@@ -1,10 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
 import { InfoCommandeContext } from "../context/infoCommandeContext";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
+import { useAlert } from "../front/alert/useAlert";
+import Alert from "../front/alert/Alert";
+import { verifPaiement } from "./verif/VerifPaiement";
 
 const Paiement = () => {
   const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
@@ -19,15 +22,12 @@ const Paiement = () => {
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
   const totalPanierString = getTotalPanier().toString();
+  const [alerte , setAlerte , getError] = useAlert(verifPaiement)
 
-  useEffect(() => {
-    if (!adresseLivraison || !adresseFacturation) {
-      const confirmation = window.confirm("Veuillez renseigner les adresses de livraison et de facturation.");
-      if (confirmation) {
-        navigate("/Livraison");
-      }
-    }
-  }, [adresseLivraison, adresseFacturation]);
+  const nomPaiementRef = useRef();
+  const numeroPaiementRef = useRef();
+  const datePaiementRef = useRef();
+  const cvvPaiementRef = useRef();
 
   const handleChangePaiement = (e) => {
     setSelectedPaiementId(e.target.value);
@@ -157,6 +157,18 @@ const Paiement = () => {
 
   const handleSubmitPaiement = async (e) => {
     e.preventDefault();
+
+    const demande = {
+      nomPaiement : JSON.stringify(nomPaiementRef.current.value),
+      numeroPaiement : JSON.stringify(numeroPaiementRef.current.value),
+      datePaiement : JSON.stringify(datePaiementRef.current.value),
+      cvvPaiement : JSON.stringify(cvvPaiementRef.current.value),
+    }
+    
+    if (getError(demande)) {
+      return;
+    }
+
     try {
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_paiement.php', {
         accountId,
@@ -201,6 +213,10 @@ const Paiement = () => {
     } catch (error) {
     }
   };
+
+  const handleFocus = () => {
+    setAlerte({});
+  }
 
   if (loading) {
     return <div>Chargement...</div>;
@@ -287,25 +303,26 @@ return (
                       <div className="sidebar-paiement">
                         <h2 className='text-center'>Moyen de Paiement</h2>
                         {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
+                        <Alert alerte={alerte} />
                         <br />
                         {editModePaiement && (
                           <div>
                             <form onSubmit={handleSubmitPaiement}>
                               <div>
                                 <label>Nom sur la carte:</label>
-                                <input type='text' name='nom' value={formDataPaiement.nom} onChange={handleInputChangePaiement} required />
+                                <input ref={nomPaiementRef} type='text' name='nom' value={formDataPaiement.nom} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <div>
                                 <label>Numéro de carte:</label>
-                                <input type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} required />
+                                <input ref={numeroPaiementRef} type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <div>
                                 <label>Date d’expiration:</label>
-                                <input type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} required />
+                                <input ref={datePaiementRef} type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <div>
                                 <label>CVV:</label>
-                                <input type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} required />
+                                <input ref={cvvPaiementRef} type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <br />
                               <div className='text-center'>
@@ -331,7 +348,7 @@ return (
                                   {selectedPaiementId !== "" && (
                                     <div>
                                     <p>Nom sur la carte: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</strong></p>
-                                    <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-2)}</strong></p>
+                                    <p>Numéro de carte: <strong>{"**** **** **** " + accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-4)}</strong></p>
                                     <p>Date d’expiration: <strong>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</strong></p>
                                     <p>CVV: <strong>{"***"}</strong></p>
                                     <center>

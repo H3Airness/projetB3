@@ -26,7 +26,13 @@ const Accueil = () => {
                         <NavLink to={"/categorie"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://cdn-icons-png.flaticon.com/512/2349/2349123.png" alt="" /><span className="texteacceuil">Gestion des categories</span> </NavLink>
                     </div>
                     <div className='DivAcceuil'> 
-                        <NavLink to={"/carousel"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://ps.w.org/logo-carousel-free/assets/icon.svg?rev=2726528" alt="" /><span className="texteacceuil">Gestion du carousel</span> </NavLink>
+                        <NavLink to={"/carousel"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://ps.w.org/responsive-client-logo-carousel-slider/assets/icon-128x128.png?rev=2562329" alt="" /><span className="texteacceuil">Gestion du carousel</span> </NavLink>
+                    </div>
+                    <div className='DivAcceuil'> 
+                        <NavLink to={"/contact"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://cdn-icons-png.flaticon.com/512/1701/1701853.png" alt="" /><span className="texteacceuil">Formulaire de contact</span> </NavLink>
+                    </div>
+                    <div className='DivAcceuil'> 
+                        <NavLink to={"/commande"} className={({isActive}) => {return isActive ? "nav-link active text-light" : "nav-link"}}> <img className="logo-airneis-connexion" src="https://cdn-icons-png.flaticon.com/512/6948/6948527.png" alt="" /><span className="texteacceuil">Gestion commande</span> </NavLink>
                     </div>
                 </div>
 
