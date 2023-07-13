@@ -13,6 +13,7 @@ import Panier from './assets/composants/front/Panier';
 import Recherche from './assets/composants/front/Recherche';
 import Connexion from './assets/composants/front/Connexion';
 import Inscription from './assets/composants/front/Inscription';
+import Livraison from './assets/composants/front/Livraison';
 import CGU from './assets/composants/front/CGU';
 import MentionLegale from './assets/composants/front/MentionLegale';
 import Contact from './assets/composants/front/Contact';
@@ -42,6 +43,7 @@ function App() {
             <Stack.Screen name="recherche" component={Recherche} />
             <Stack.Screen name="connexion" component={Connexion} />
             <Stack.Screen name="inscription" component={Inscription} />
+            <Stack.Screen name="livraison" component={Livraison} />
             <Stack.Screen name="cgu" component={CGU} />
             <Stack.Screen name="mentionlegale" component={MentionLegale} />
             <Stack.Screen name="contact" component={Contact} />

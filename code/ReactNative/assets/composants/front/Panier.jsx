@@ -16,7 +16,7 @@ const Panier = () => {
     if (!isLoggedIn) {
       alert('Veuillez vous connecter !');
     } else {
-      navigation.navigate('Livraison');
+      navigation.navigate('livraison');
     }
   };
 
