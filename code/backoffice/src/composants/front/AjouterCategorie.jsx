@@ -11,6 +11,11 @@ function AjouterCategorie() {
   const [nom, setNom] = useState('');
   const [icon, setIcon] = useState(null);
   const [banniere, setBanniere] = useState(null);
+  const [errorTitre, setErrorTitre] = useState('');
+  const [errorImg1, setErrorImg1] = useState('');
+  const [errorImg2, setErrorImg2] = useState('');
+
+  const titleRegex = /^[^</>]*$/;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,14 +26,11 @@ function AjouterCategorie() {
     formData.append('banniere', banniere, 'banniere.jpg');
   
     try {
-      // Requête GET pour vérifier le nom de catégorie
       const responsenom = await axios.get(`http://airneis.ddns.net:3000/categorie/verifier_categorie.php?nom=${nom}`);
   
       if (responsenom.data.error) {
-        // Le nom de catégorie existe déjà, afficher l'erreur
         setResponsenom(responsenom.data.error);
       } else {
-        // Le nom de catégorie n'existe pas, procéder aux requêtes d'envoi des images
         const response = await axios.post('http://airneis.ddns.net:3000/categorie/creation_categorie.php', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -44,15 +46,38 @@ function AjouterCategorie() {
   
 
   const handleNomChange = (e) => {
-    setNom(e.target.value);
+    const value = e.target.value;
+    setNom(value);
+    if (titleRegex.test(value)) {
+      setErrorTitre('');
+    } else {
+      setErrorTitre({ status: 'error', message: 'Le champ nom ne peut pas contenir de caractères spéciaux.' });
+    }
   };
 
   const handleIconChange = (e) => {
-    setIcon(e.target.files[0]);
+    const file = e.target.files[0];
+  
+    if (file && file.type === 'image/jpeg') {
+      setIcon(file);
+      setErrorImg1('');
+    } else {
+      setIcon(null);
+      setErrorImg1({ status: 'error', message: 'Veuillez sélectionner un fichier au format jpg / jpeg.' });
+    }
   };
+  
 
   const handleBanniereChange = (e) => {
-    setBanniere(e.target.files[0]);
+    const file = e.target.files[0];
+  
+    if (file && file.type === 'image/jpeg') {
+      setBanniere(file);
+      setErrorImg2('');
+    } else {
+      setBanniere(null);
+      setErrorImg2({ status: 'error', message: 'Veuillez sélectionner un fichier au format jpg / jpeg.' });
+    }
   };
 
   return (
@@ -70,18 +95,24 @@ function AjouterCategorie() {
                     {responsenom && <p className='ReponseFormulaire text-center mt-3'>{responsenom}</p>}
 
                     <div className="card-group mb-4">
+                      {errorTitre && <p className={`ReponseFormulaire text-center mt-3 ${errorTitre.status === 'success' ? 'success' : 'error'}`}>{errorTitre.message}</p>}
                       <label htmlFor="nom">Nom de la catégorie:</label>
-                      <input required name="nom" id="nom" type="text" placeholder="Nom de la catégorie" onChange={handleNomChange} />
+                      <input name="nom" id="nom" type="text" placeholder="Nom de la catégorie" onChange={handleNomChange} required />
                     </div>
 
-                    <div className='mb-4'>
-                      <label htmlFor="icon">Icon (de préférence en 300x300 au format jpg):</label>
-                      <input type="file" id="icon" onChange={handleIconChange} />
-                    </div>
+                    <div className='img'>
+                      <p className='text-center'>Upload des deux images limitées à <strong className='text-danger'>5Mo</strong> au format <strong className='text-danger'>jpg </strong>/<strong className='text-danger'> jpeg</strong></p>
+                      <div className='mb-4'>
+                        {errorImg1 && <p className={`ReponseFormulaire text-center mt-3 ${errorImg1.status === 'success' ? 'success' : 'error'}`}>{errorImg1.message}</p>}
+                        <label htmlFor="icon">Icon (de préférence en 300x300):</label>
+                        <input type="file" id="icon" onChange={handleIconChange} accept=".jpg" required />
+                      </div>
 
-                    <div className='mb-4'>
-                      <label htmlFor="banniere">Bannière :</label>
-                      <input type="file" id="banniere" onChange={handleBanniereChange} />
+                      <div className='mb-4'>
+                        {errorImg2 && <p className={`ReponseFormulaire text-center mt-3 ${errorImg2.status === 'success' ? 'success' : 'error'}`}>{errorImg2.message}</p>}
+                        <label htmlFor="banniere">Bannière :</label>
+                        <input type="file" id="banniere" onChange={handleBanniereChange} accept=".jpg" required />
+                      </div>
                     </div>
 
                     <input value="Créer" type="submit" />
