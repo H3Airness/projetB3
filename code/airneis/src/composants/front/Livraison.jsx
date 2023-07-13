@@ -549,7 +549,7 @@ const Livraison = () => {
                       </div>
                       <div>
                         <label>Code postal:</label>
-                        <input ref={codePostalLivraisonRef} type='text' name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
+                        <input ref={codePostalLivraisonRef} type='number' inputMode="numeric" name='codePostalLivraison' value={formDataLivraison.codePostalLivraison} onChange={handleInputChangeLivraison} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Ville:</label>
@@ -585,7 +585,7 @@ const Livraison = () => {
                       </div>
                       <div>
                         <label>Code postal:</label>
-                        <input ref={codePostalFacturationRef} type='text' name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
+                        <input ref={codePostalFacturationRef} type='number' inputMode="numeric" name='codePostalFacturation' value={formDataFacturation.codePostalFacturation} onChange={handleInputChangeFacturation} onFocus={handleFocus2} required />
                       </div>
                       <div>
                         <label>Ville:</label>

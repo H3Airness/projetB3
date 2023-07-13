@@ -23,6 +23,7 @@ const Paiement = () => {
   const [editModePaiement, setEditModePaiement] = useState(false);
   const totalPanierString = getTotalPanier().toString();
   const [alerte , setAlerte , getError] = useAlert(verifPaiement)
+  const [disableButton, setDisableButton] = useState(false);
 
   const nomPaiementRef = useRef();
   const numeroPaiementRef = useRef();
@@ -47,6 +48,7 @@ const Paiement = () => {
       );
   
       try {
+        setDisableButton(true);
         const response = await axios.post('http://airneis.ddns.net:3000/commande.php', {
           accountId,
   
@@ -90,10 +92,14 @@ const Paiement = () => {
   
           moyenPaiement(Paiement);
           navigate("/ConfirmationCommande");
+        } else {
+          setErrorMessage(response.data.message);
         }
       } catch (error) {
         // Gérer les erreurs de l'API
         console.error(error);
+      } finally {
+        setDisableButton(false);
       }
     } else {
       setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
@@ -319,15 +325,15 @@ const Paiement = () => {
                               </div>
                               <div>
                                 <label>Numéro de carte:</label>
-                                <input ref={numeroPaiementRef} type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} />
+                                <input ref={numeroPaiementRef} type='number' inputMode="numeric" name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <div>
                                 <label>Date d’expiration:</label>
-                                <input ref={datePaiementRef} type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} />
+                                <input ref={datePaiementRef} type='month' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <div>
                                 <label>CVV:</label>
-                                <input ref={cvvPaiementRef} type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} />
+                                <input ref={cvvPaiementRef} type='number' inputMode="numeric" name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <br />
                               <div className='text-center'>
@@ -387,7 +393,7 @@ const Paiement = () => {
                           Retour
                         </NavLink>
                         &emsp;
-                        <button className="btn-confirmer" onClick={handlePayer}>
+                        <button className="btn-confirmer" onClick={handlePayer} disabled={disableButton}>
                           Confirmer ma commande
                         </button>
                       </div>
