@@ -23,6 +23,7 @@ const Paiement = () => {
   const [editModePaiement, setEditModePaiement] = useState(false);
   const totalPanierString = getTotalPanier().toString();
   const [alerte , setAlerte , getError] = useAlert(verifPaiement)
+  const [disableButton, setDisableButton] = useState(false);
 
   const nomPaiementRef = useRef();
   const numeroPaiementRef = useRef();
@@ -47,6 +48,7 @@ const Paiement = () => {
       );
   
       try {
+        setDisableButton(true);
         const response = await axios.post('http://airneis.ddns.net:3000/commande.php', {
           accountId,
   
@@ -94,6 +96,8 @@ const Paiement = () => {
       } catch (error) {
         // Gérer les erreurs de l'API
         console.error(error);
+      } finally {
+        setDisableButton(false);
       }
     } else {
       setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
@@ -387,7 +391,7 @@ const Paiement = () => {
                           Retour
                         </NavLink>
                         &emsp;
-                        <button className="btn-confirmer" onClick={handlePayer}>
+                        <button className="btn-confirmer" onClick={handlePayer} disabled={disableButton}>
                           Confirmer ma commande
                         </button>
                       </div>
