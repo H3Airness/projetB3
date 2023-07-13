@@ -1,9 +1,13 @@
 import { AuthContext } from "../context/authContext";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef, forwardRef  } from "react";
 import Connexion from "./Connexion";
 import axios from "axios";
-import PasswordInput from "./HidePassword";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useAlert } from "../front/alert/useAlert";
+import Alert from "../front/alert/Alert";
+import { verifMotDePasse } from "./verif/VerifMotDePasse";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function MesParametres() {
   const { isLoggedIn, accountId } = useContext(AuthContext);
@@ -16,6 +20,15 @@ function MesParametres() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [alerte , setAlerte , getError] = useAlert(verifMotDePasse)
+
+  const motDePasseRef = useRef();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     const storedAccountInfo = localStorage.getItem("accountInfo");
@@ -66,6 +79,15 @@ function MesParametres() {
 
   const handleSubmitPassword = async (e) => {
     e.preventDefault();
+
+    const demande = {
+      motDePasse : JSON.stringify(motDePasseRef.current.value),
+    }
+    
+    if (getError(demande)) {
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       setPasswordError("Les mots de passe ne correspondent pas");
     } else if (
@@ -108,6 +130,10 @@ function MesParametres() {
     setConfirmPassword(e.target.value);
   };
 
+  const handleFocus = () => {
+    setAlerte({});
+  }
+
   if (loading) {
     return <div>Chargement...</div>;
   }
@@ -119,30 +145,67 @@ function MesParametres() {
           <div className="sidebar-param">
             <h1 className="sidebar-title">Récapitulatif de votre compte</h1>
             <hr />
+            <Alert alerte={alerte} />
             {isEditMode ? (
               <form onSubmit={handleSubmitPassword}>
                 <div className="form-group">
                   <label className="label-mdp">Ancien mot de passe:</label>
-                  <PasswordInput
-                    value={oldPassword}
-                    onChange={handleChangeOldPassword}
-                  />
+                  <div className="password-input">
+                    <input
+                      ref={motDePasseRef}
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      value={oldPassword}
+                      onChange={handleChangeOldPassword}
+                      onFocus={handleFocus}
+                      required
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEyeSlash : faEye}
+                      className="password-icon"
+                      onClick={toggleShowPassword}
+                    />
+                  </div>
                 </div>
                 <div className="form-group">
                   <label className="label-mdp">Nouveau mot de passe:</label>
-                  <PasswordInput
-                    value={newPassword}
-                    onChange={handleChangeNewPassword}
-                  />
+                  <div className="password-input">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      ref={motDePasseRef}
+                      value={newPassword}
+                      onChange={handleChangeNewPassword}
+                      onFocus={handleFocus}
+                      required
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEyeSlash : faEye}
+                      className="password-icon"
+                      onClick={toggleShowPassword}
+                    />
+                  </div>
                 </div>
                 <div className="form-group">
                   <label className="label-mdp">
                     Répéter le nouveau mot de passe:
                   </label>
-                  <PasswordInput
-                    value={confirmPassword}
-                    onChange={handleChangeConfirmPassword}
-                  />
+                  <div className="password-input">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      ref={motDePasseRef}
+                      value={confirmPassword}
+                      onChange={handleChangeConfirmPassword}
+                      onFocus={handleFocus}
+                      required
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEyeSlash : faEye}
+                      className="password-icon"
+                      onClick={toggleShowPassword}
+                    />
+                  </div>
                 </div>
                 {passwordError && (
                   <p className="error-message">{passwordError}</p>

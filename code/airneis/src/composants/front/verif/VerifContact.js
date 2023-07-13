@@ -3,7 +3,7 @@ import Joi from "joi";
 export const commandeVerif = Joi.object({
      nom : Joi.string()
           .min(1)
-          .max(20)
+          .max(22)
           .regex(/^[^</,?;.:!§$£€&%*µ¤1234567890>]*$/)
           .required()
           .messages({
