@@ -325,15 +325,15 @@ const Paiement = () => {
                               </div>
                               <div>
                                 <label>Numéro de carte:</label>
-                                <input ref={numeroPaiementRef} type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} />
+                                <input ref={numeroPaiementRef} type='number' inputMode="numeric" name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <div>
                                 <label>Date d’expiration:</label>
-                                <input ref={datePaiementRef} type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} />
+                                <input ref={datePaiementRef} type='month' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <div>
                                 <label>CVV:</label>
-                                <input ref={cvvPaiementRef} type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} />
+                                <input ref={cvvPaiementRef} type='number' inputMode="numeric" name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} />
                               </div>
                               <br />
                               <div className='text-center'>
