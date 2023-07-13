@@ -19,6 +19,9 @@ function ModifierProduit() {
   const [categories, setCategories] = useState([]);
   const [produit, setProduct] = useState(null);
 
+  const titleRegex = /^[^</>]*$/;
+  const descriptionRegex = /^[^</>]*$/;
+
   useEffect(() => {
     axios.get('http://airneis.ddns.net:3000/categorie/categorie_acceuil.php')
       .then(response => setCategories(response.data))
@@ -44,6 +47,9 @@ function ModifierProduit() {
   const handleSubmitName = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const titleValue = formData.get('nom');
+
+    if (titleRegex.test(titleValue)) {
     axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -51,11 +57,17 @@ function ModifierProduit() {
     })
       .then(response => setResponseName(response.data))
       .catch(error => console.log(error));
+    } else {
+      setResponseName({ status: 'error', message: 'Le champ titre ne peut pas contenir de caractères spéciaux.' });
+    }
   };
 
   const handleSubmitDescription = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const descriptionValue = formData.get('description');
+
+    if (descriptionRegex.test(descriptionValue)) {
     axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -63,6 +75,9 @@ function ModifierProduit() {
     })
       .then(response => setResponseDescription(response.data))
       .catch(error => console.log(error));
+    } else {
+      setResponseDescription({ status: 'error', message: 'Le champ description ne peut pas contenir de caractères spéciaux.' });
+    }
   };
 
   const handleSubmitPrix = e => {
@@ -92,37 +107,57 @@ function ModifierProduit() {
   const handleSubmitImage = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img1.php`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then(response => setResponseImage(response.data))
-      .catch(error => console.log(error));
+    const file = e.target.elements.image.files[0];
+
+    if (file && file.type === 'image/jpeg') {
+      setResponseImage('');
+      const formData = new FormData(e.target);
+      axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img1.php`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(response => setResponseImage(response.data))
+        .catch(error => console.log(error));
+    } else {
+      setResponseImage({ status: 'error', message: 'Veuillez sélectionner un fichier au format jpg / jpeg.' });
+    }
   };
 
   const handleSubmitImage2 = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img2.php`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then(response => setResponseImage2(response.data))
-      .catch(error => console.log(error));
+    const file = e.target.elements.image2.files[0];
+
+    if (file && file.type === 'image/jpeg') {
+      axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img2.php`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(response => setResponseImage2(response.data))
+        .catch(error => console.log(error));
+    }else {
+      setResponseImage2({ status: 'error', message: 'Veuillez sélectionner un fichier au format jpg / jpeg.' });
+    }
   };
 
   const handleSubmitImage3 = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img3.php`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then(response => setResponseImage3(response.data))
-      .catch(error => console.log(error));
+    const file = e.target.elements.image3.files[0];
+
+    if (file && file.type === 'image/jpeg') {
+      axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit_img3.php`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(response => setResponseImage3(response.data))
+        .catch(error => console.log(error));
+    }else {
+      setResponseImage3({ status: 'error', message: 'Veuillez sélectionner un fichier au format jpg / jpeg.' });
+    }
   };
 
   const handleSubmitStock = e => {
@@ -130,9 +165,7 @@ function ModifierProduit() {
     const formData = new FormData(e.target);
     const stockValue = formData.get('stock');
 
-    // Vérifier si la valeur du stock est zéro
   if (stockValue === '0') {
-    // Modifier la valeur du stock à "0.0"
     formData.set('stock', '0.0');
   }
 
