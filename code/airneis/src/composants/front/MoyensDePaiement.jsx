@@ -1,8 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/authContext";
 import { NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 import Connexion from "./Connexion";
+import { useAlert } from "../front/alert/useAlert";
+import Alert from "../front/alert/Alert";
+import { verifPaiement } from "./verif/VerifPaiement";
 
 const MoyenDePaiement = () => {
   const location = useLocation();
@@ -12,6 +15,12 @@ const MoyenDePaiement = () => {
   const [successMessagePaiement, setSuccessMessagePaiement] = useState(null);
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
+  const [alerte , setAlerte , getError] = useAlert(verifPaiement)
+
+  const nomPaiementRef = useRef();
+  const numeroPaiementRef = useRef();
+  const datePaiementRef = useRef();
+  const cvvPaiementRef = useRef();
 
   const handleChangePaiement = (e) => {
     setSelectedPaiementId(e.target.value);
@@ -76,6 +85,18 @@ const MoyenDePaiement = () => {
 
   const handleSubmitPaiement = async (e) => {
     e.preventDefault();
+
+    const demande = {
+      nomPaiement : JSON.stringify(nomPaiementRef.current.value),
+      numeroPaiement : JSON.stringify(numeroPaiementRef.current.value),
+      datePaiement : JSON.stringify(datePaiementRef.current.value),
+      cvvPaiement : JSON.stringify(cvvPaiementRef.current.value),
+    }
+    
+    if (getError(demande)) {
+      return;
+    }
+
     try {
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_paiement.php', {
         accountId,
@@ -121,6 +142,10 @@ const MoyenDePaiement = () => {
     }
   };
 
+  const handleFocus = () => {
+    setAlerte({});
+  }
+
   if (loading) {
     return <div>Chargement...</div>;
   }
@@ -135,6 +160,7 @@ const MoyenDePaiement = () => {
               <div>
                 <h2 className='text-center'>Moyen de Paiement</h2>
                 {successMessagePaiement && <div className='alert alert-success'>{successMessagePaiement}</div>}
+                <Alert alerte={alerte} />
                 <br />
                 <hr />
                 {editModePaiement && (
@@ -142,19 +168,19 @@ const MoyenDePaiement = () => {
                     <form onSubmit={handleSubmitPaiement}>
                       <div>
                         <label>Nom sur la carte:</label>
-                        <input type='text' name='nom' value={formDataPaiement.nom} onChange={handleInputChangePaiement} required />
+                        <input ref={nomPaiementRef} type='text' name='nom' value={formDataPaiement.nom} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Numéro de carte:</label>
-                        <input type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} required />
+                        <input ref={numeroPaiementRef} type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Date d’expiration:</label>
-                        <input type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} required />
+                        <input ref={datePaiementRef} type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>CVV:</label>
-                        <input type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} required />
+                        <input ref={cvvPaiementRef} type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
                       </div>
                       <br />
                       <div className='text-center'>
