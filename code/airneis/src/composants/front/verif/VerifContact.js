@@ -3,12 +3,13 @@ import Joi from "joi";
 export const commandeVerif = Joi.object({
      nom : Joi.string()
           .min(1)
-          .max(20)
-          .regex(/^[^<>]*$/)
+          .max(22)
+          .regex(/^[^</,?;.:!§$£€&%*µ¤1234567890>]*$/)
           .required()
           .messages({
                "string.min" : "le champ nom doit contenir au minimum 1 lettre",
                "string.max" : "le champ nom ne peut contenir au maximum que 20 lettres",
+               "string.pattern.base" : "le champ nom ne peut pas contenir de caractères spéciaux ou de chiffres"
           }),
 
      email : Joi.string()
@@ -24,9 +25,9 @@ export const commandeVerif = Joi.object({
      message : Joi.string()
           .min(4)
           .max(1000)
-          .regex(/^[^<>]*$/)
+          .regex(/^[^</;*µ¤>]*$/)
           .required()
           .messages({
-               "string.pattern.base" : "le champ message ne peut pas contenir les caractères suivants : < >"
+               "string.pattern.base" : "le champ message ne peut pas contenir de caractères spéciaux"
           })
 })

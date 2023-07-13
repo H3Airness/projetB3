@@ -92,6 +92,8 @@ const Paiement = () => {
   
           moyenPaiement(Paiement);
           navigate("/ConfirmationCommande");
+        } else {
+          setErrorMessage(response.data.message);
         }
       } catch (error) {
         // Gérer les erreurs de l'API
