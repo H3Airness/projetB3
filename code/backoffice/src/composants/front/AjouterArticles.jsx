@@ -30,8 +30,8 @@ const AjouterArticles = () => {
       .catch(error => console.log(error));
   }, []);
 
-  const titleRegex = /^[^<>]*$/;
-  const descriptionRegex = /^[^<>]*$/;
+  const titleRegex = /^[^</>]*$/;
+  const descriptionRegex = /^[^</>]*$/;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

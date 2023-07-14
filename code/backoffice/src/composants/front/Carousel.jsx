@@ -21,8 +21,8 @@ const Carousel = () => {
                 .then(response => {
                     if (response.status === 204) {
                         alert('La catégorie a été supprimée avec succès.');
-                        // Actualiser la liste des catégories après la suppression
                         setCategories(categories.filter(categorie => categorie.id_categorie !== id));
+                        window.location.reload();
                     }
                 })
                 .catch(error => {

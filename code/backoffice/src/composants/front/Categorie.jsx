@@ -30,6 +30,7 @@ const Categorie = () => {
                                 alert('La catégorie a été supprimée avec succès.');
                                 // Actualiser la liste des catégories après la suppression
                                 setCategories(categories.filter(categorie => categorie.id_categorie !== id));
+                                window.location.reload();
                             }
                         })
                         .catch(error => {

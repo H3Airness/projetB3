@@ -29,7 +29,15 @@ function AjouterCarousel() {
   };
   
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+
+    if (file && file.type === 'image/jpeg') {
+      setImage(e.target.files[0]);
+      setResponse('');
+    } else {
+      setImage(null);
+      setResponse({ status: 'error', message: 'Veuillez sélectionner un fichier au format jpg / jpeg.' });
+    }
   };
 
   return (
@@ -46,8 +54,8 @@ function AjouterCarousel() {
                   {response && <p className={`ReponseFormulaire text-center mt-3 ${response.status === 'success' ? 'success' : 'error'}`}>{response.message}</p>}
 
                     <div className='mb-4'>
-                      <label htmlFor="image">Image:</label>
-                      <input type="file" id="image" onChange={handleImageChange} />
+                      <label htmlFor="image">Image: <small>(Upload limité à <strong className='text-danger'>5Mo</strong> au format <strong className='text-danger'>jpg</strong>)</small>:</label>
+                      <input type="file" id="image" onChange={handleImageChange} accept=".jpg" />
                     </div>
 
                     <input value="Ajouter" type="submit" />

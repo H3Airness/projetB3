@@ -7,6 +7,7 @@ import { useAlert } from "../front/alert/useAlert";
 import Alert from "../front/alert/Alert";
 import { verifPaiement } from "./verif/VerifPaiement";
 
+
 const MoyenDePaiement = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
@@ -172,15 +173,15 @@ const MoyenDePaiement = () => {
                       </div>
                       <div>
                         <label>Numéro de carte:</label>
-                        <input ref={numeroPaiementRef} type='text' name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
+                        <input ref={numeroPaiementRef} type='number' inputMode="numeric" name='numero' value={formDataPaiement.numero} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>Date d’expiration:</label>
-                        <input ref={datePaiementRef} type='text' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
+                        <input ref={datePaiementRef} type='month' name='date' value={formDataPaiement.date} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
                       </div>
                       <div>
                         <label>CVV:</label>
-                        <input ref={cvvPaiementRef} type='text' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
+                        <input ref={cvvPaiementRef} type='number' name='cvv' value={formDataPaiement.cvv} onChange={handleInputChangePaiement} onFocus={handleFocus} required />
                       </div>
                       <br />
                       <div className='text-center'>

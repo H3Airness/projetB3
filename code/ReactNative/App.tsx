@@ -5,6 +5,7 @@ import { DataContextProvider } from './assets/composants/context/dataContext';
 import Menu from './assets/composants/Menu';
 import { loadFonts } from './fonts';
 import { AuthProvider } from './assets/composants/context/authContext';
+import { InfoCommandeProvider } from './assets/composants/context/InfoCommandeContext';
 
 import Accueil from './assets/composants/front/Accueil';
 import Categorie from './assets/composants/front/Categorie';
@@ -29,27 +30,29 @@ function App() {
   return (
     <AuthProvider>
       <DataContextProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="accueil"
-            screenOptions={{
-              header: () => <Menu />, // Utilisez votre composant Menu comme en-tête
-            }}
-          >
-            <Stack.Screen name="accueil" component={Accueil} />
-            <Stack.Screen name="categorie" component={Categorie} />
-            <Stack.Screen name="produit" component={Produit} />
-            <Stack.Screen name="panier" component={Panier} />
-            <Stack.Screen name="recherche" component={Recherche} />
-            <Stack.Screen name="connexion" component={Connexion} />
-            <Stack.Screen name="inscription" component={Inscription} />
-            <Stack.Screen name="livraison" component={Livraison} />
-            <Stack.Screen name="cgu" component={CGU} />
-            <Stack.Screen name="mentionlegale" component={MentionLegale} />
-            <Stack.Screen name="contact" component={Contact} />
-            <Stack.Screen name="propos" component={Propos} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <InfoCommandeProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="accueil"
+              screenOptions={{
+                header: () => <Menu />, // Utilisez votre composant Menu comme en-tête
+              }}
+            >
+              <Stack.Screen name="accueil" component={Accueil} />
+              <Stack.Screen name="categorie" component={Categorie} />
+              <Stack.Screen name="produit" component={Produit} />
+              <Stack.Screen name="panier" component={Panier} />
+              <Stack.Screen name="recherche" component={Recherche} />
+              <Stack.Screen name="connexion" component={Connexion} />
+              <Stack.Screen name="inscription" component={Inscription} />
+              <Stack.Screen name="livraison" component={Livraison} />
+              <Stack.Screen name="cgu" component={CGU} />
+              <Stack.Screen name="mentionlegale" component={MentionLegale} />
+              <Stack.Screen name="contact" component={Contact} />
+              <Stack.Screen name="propos" component={Propos} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </InfoCommandeProvider>
       </DataContextProvider>
     </AuthProvider>
   );
