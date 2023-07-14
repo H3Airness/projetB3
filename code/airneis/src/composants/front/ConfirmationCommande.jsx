@@ -129,6 +129,11 @@ function ConfirmationCommande() {
                   CVV: <strong>***</strong><br />
                 </div>
               </div>
+              <div className="d-flex justify-content-center">
+                <NavLink to='/Recherche'>
+                  <button className="btn-continuer">Continuer mes achats</button>
+                </NavLink>
+              </div>
             </>
           )}
         </>

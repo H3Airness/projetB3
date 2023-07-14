@@ -49,7 +49,7 @@ function Produit() {
       .then(response => {
         const shuffledProducts = shuffleArray(response.data);
         const filteredProducts = shuffledProducts.filter(p => p.id !== produit.id);
-        setProducts(filteredProducts.slice(0, 3));
+        setProducts(filteredProducts.slice(0, 6));
       })
   }, [produit]);
 
