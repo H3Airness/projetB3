@@ -31,7 +31,7 @@ function MesParametres() {
   };
 
   useEffect(() => {
-    const storedAccountInfo = localStorage.getItem("accountInfo");
+    const storedAccountInfo = sessionStorage.getItem("accountInfo");
     if (storedAccountInfo) {
       setAccountInfo(JSON.parse(storedAccountInfo));
       setLoading(false);
@@ -52,7 +52,7 @@ function MesParametres() {
         );
         if (response.data.status === "success") {
           setAccountInfo(response.data.accountInfo);
-          localStorage.setItem(
+          sessionStorage.setItem(
             "accountInfo",
             JSON.stringify(response.data.accountInfo)
           );

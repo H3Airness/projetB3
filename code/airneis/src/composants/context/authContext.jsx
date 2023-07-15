@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     setAccountId(null);
     sessionStorage.removeItem('isLoggedIn');
     sessionStorage.removeItem('accountId');
-    localStorage.removeItem('accountInfo');
+    sessionStorage.removeItem('accountInfo');
     window.location.reload();
   };
 
