@@ -496,4 +496,19 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+
+  selectContainer: {
+    height: 40,
+    width: 400,
+    marginBottom: 200,
+  },
+  select: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    marginBottom: 10,
+  },
+
 });

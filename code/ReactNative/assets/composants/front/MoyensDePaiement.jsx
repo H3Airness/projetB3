@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity  } from "react-native";
+import { Picker } from '@react-native-picker/picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { AuthContext } from "../context/authContext";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -127,6 +129,8 @@ const MoyenDePaiement = () => {
     }
   };
 
+  console.log(accountPaiement)
+
   if (loading) {
     return <View><Text>Chargement...</Text></View>;
   }
@@ -188,19 +192,30 @@ const MoyenDePaiement = () => {
                 {!editModePaiement && (
                   <View>
                     <View>
-                      <Text style={styles.subHeadingText}>Moyen de paiement</Text>
                       {accountPaiement.length > 0 ? (
-                        <View>
-                          <Picker
-                            selectedValue={selectedPaiementId}
-                            onValueChange={(itemValue) => handleChangePaiement(itemValue)}
-                            style={styles.picker}
-                          >
-                            <Picker.Item label="Sélectionner un moyen de paiement" value="" />
-                            {accountPaiement.map((paiement) => (
-                              <Picker.Item key={paiement.id} label={paiement.nom} value={paiement.id} />
-                            ))}
-                          </Picker>
+                        <View style={styles.selectContainer}>
+                          <DropDownPicker
+                            items={accountPaiement.map((paiement) => ({
+                              label: paiement.nom,
+                              value: paiement.id,
+                            }))}
+                            defaultValue={selectedPaiementId}
+                            containerStyle={{ height: 60, width: 200 }}
+                            onChangeItem={(item) => handleChangePaiement(item.value)}
+                            style={styles.select}
+                          />
+
+                          <View style={styles.container}>
+                                <Picker
+                                  selectedValue={selectedPaiementId}
+                                  style={{ height: 50, width: 150 }}
+                                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                                >
+                                  <Picker.Item label="Java" value="java" />
+                                  <Picker.Item label="JavaScript" value="js" />
+                                </Picker>
+                              </View>
+
                           {selectedPaiementId !== "" && (
                             <View>
                               <Text>Nom sur la carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</Text></Text>
