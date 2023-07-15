@@ -19,6 +19,8 @@ import CGU from './assets/composants/front/CGU';
 import MentionLegale from './assets/composants/front/MentionLegale';
 import Contact from './assets/composants/front/Contact';
 import Propos from './assets/composants/front/Propos';
+import MesParam from './assets/composants/front/MesParametres';
+import MoyenDePaiement from './assets/composants/front/MoyensDePaiement';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +37,7 @@ function App() {
             <Stack.Navigator
               initialRouteName="accueil"
               screenOptions={{
-                header: () => <Menu />, // Utilisez votre composant Menu comme en-tête
+                header: () => <Menu />,
               }}
             >
               <Stack.Screen name="accueil" component={Accueil} />
@@ -50,6 +52,8 @@ function App() {
               <Stack.Screen name="mentionlegale" component={MentionLegale} />
               <Stack.Screen name="contact" component={Contact} />
               <Stack.Screen name="propos" component={Propos} />
+              <Stack.Screen name="mesParam" component={MesParam} />
+              <Stack.Screen name="moyenDePaiement" component={MoyenDePaiement} />
             </Stack.Navigator>
           </NavigationContainer>
         </InfoCommandeProvider>

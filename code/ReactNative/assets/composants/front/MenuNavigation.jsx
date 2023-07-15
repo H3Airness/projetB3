@@ -38,6 +38,9 @@ const MenuNavigation = () => {
     if (menuItem === 'Propos') {
       navigation.navigate('propos');
     }
+    if (menuItem === 'MesParam') {
+      navigation.navigate('mesParam');
+    }
   };
 
   useEffect(() => {
@@ -63,7 +66,7 @@ const MenuNavigation = () => {
           <View style={[styles.menu, menuOpen ? styles.openMenu : null]} ref={menuRef}>
             {isLoggedIn ? (
               <>
-                <TouchableOpacity style={styles.menuItem} onPress={handleMenuItemPress}>
+                <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('MesParam')}>
                   <Text style={styles.menuLink}>Mes paramètres</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuItem} onPress={handleMenuItemPress}>

@@ -28,9 +28,15 @@ const Connexion = () => {
         const message = response.data.message;
         setMessage(message);
         setTimeout(() => {
-          navigation.navigate('accueil');
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('accueil');
+          }
         }, 1000);
-        authContext.login(response.data.accountId);
+        const { accountId, accountInfo } = response.data;
+        authContext.login(accountId, accountInfo);
+
       } else if (response.data.status === 'error') {
         const error = response.data.error;
         setError(error);
