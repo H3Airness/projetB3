@@ -69,7 +69,6 @@ const Accueil = () => {
               style={{ width: Dimensions.get('window').width-100, height: Dimensions.get('window').width-100 }}
               source={{ uri: `http://airneis.ddns.net:3000/img_produit/${image.id}` }}
             />
-            <Text style={{ textAlign: 'center' }}>{image.nom}</Text>
           </TouchableOpacity>
         ))}
       </View>

@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const AuthContext = createContext();
 
@@ -16,8 +17,14 @@ export const AuthProvider = ({ children }) => {
     setAccountId(null);
   };
 
+  const saveAccountInfo = async (accountInfo) => {
+    try {
+      await AsyncStorage.setItem("accountInfo", JSON.stringify(accountInfo));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, accountId, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, accountId, login, logout, saveAccountInfo }}>
       {children}
     </AuthContext.Provider>
   );

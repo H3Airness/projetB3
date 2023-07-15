@@ -31,7 +31,6 @@ const Categorie = () => {
     fetch(`http://airneis.ddns.net:3000/categorie/categorie.php?categorie=${categorie}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         setProduits(data);
       })
       .catch(error => console.error(error));

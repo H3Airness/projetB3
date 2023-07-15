@@ -35,6 +35,7 @@ function MesParametres() {
     if (storedAccountInfo) {
       setAccountInfo(JSON.parse(storedAccountInfo));
       setLoading(false);
+      console.log(storedAccountInfo);
     } else {
       fetchAccountInfo();
     }
@@ -56,6 +57,7 @@ function MesParametres() {
             "accountInfo",
             JSON.stringify(response.data.accountInfo)
           );
+          console.log(storedAccountInfo);
         } else {
         }
       }
