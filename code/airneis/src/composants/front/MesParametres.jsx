@@ -10,11 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function MesParametres() {
-  const { isLoggedIn, accountId } = useContext(AuthContext);
+  const { isLoggedIn, accountId, accountInfo } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const [accountInfo, setAccountInfo] = useState({});
-  const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -28,40 +26,6 @@ function MesParametres() {
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
-  };
-
-  useEffect(() => {
-    const storedAccountInfo = sessionStorage.getItem("accountInfo");
-    if (storedAccountInfo) {
-      setAccountInfo(JSON.parse(storedAccountInfo));
-      setLoading(false);
-    } else {
-      fetchAccountInfo();
-    }
-  }, []);
-
-  const fetchAccountInfo = async () => {
-    try {
-      if (isLoggedIn) {
-        const response = await axios.post(
-          "http://airneis.ddns.net:3000/compte.php",
-          {
-            accountId,
-            isLoggedIn: isLoggedIn,
-          }
-        );
-        if (response.data.status === "success") {
-          setAccountInfo(response.data.accountInfo);
-          sessionStorage.setItem(
-            "accountInfo",
-            JSON.stringify(response.data.accountInfo)
-          );
-        } else {
-        }
-      }
-      setLoading(false);
-    } catch (error) {
-    }
   };
 
   const handleEditPassword = () => {
@@ -132,10 +96,6 @@ function MesParametres() {
 
   const handleFocus = () => {
     setAlerte({});
-  }
-
-  if (loading) {
-    return <div>Chargement...</div>;
   }
 
   return (

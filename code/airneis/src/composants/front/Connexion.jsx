@@ -34,7 +34,8 @@ function Connexion({ previousLocation }) {
             navigate("/");
           }
         }, 2000);
-        authContext.login(response.data.accountId);
+        const { accountId, accountInfo } = response.data;
+        authContext.login(accountId, accountInfo);
       }
       if (response.data.status === "error") {
         const error = response.data.error;
