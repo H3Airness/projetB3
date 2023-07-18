@@ -102,7 +102,7 @@ function Connexion({ previousLocation }) {
           </NavLink>
         </div>
         <div className="text-center">
-          <NavLink className="compteNav" to="/reset-password">
+          <NavLink className="compteNav" to="/forgot-password">
             Mot de passe oublié
           </NavLink>
         </div>

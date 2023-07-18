@@ -1,40 +1,87 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-const ResetPasswordPage = () => {
-  const [email, setEmail] = useState('');
+const ResetPassword = () => {
+  const { id } = useParams();
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [accountInfo, setAccountInfo] = useState(null);
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    fetch(`http://airneis.ddns.net:3000/compte.php?id=${id}`)
+      .then(response => response.json())
+      .then(data => {
+        setAccountInfo(data.accountInfo);
+      });
+  }, [id]);
 
-    try {
-      const response = await axios.post('http://airneis.ddns.net:3000/reset_password.php', { email });
-      setMessage(response.data.message);
-    } catch (error) {
-      setMessage('Une erreur s\'est produite lors de la tentative de réinitialisation du mot de passe. Veuillez réessayer plus tard.');
-    }
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage('Les mots de passe ne correspondent pas.');
+      return;
+    }
+
+    // Envoie une requête POST à l'API
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, password: password })
+  };
+
+  fetch('http://airneis.ddns.net:3000/reset_password.php', requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+          setMessage('Votre mot de passe a été réinitialisé avec succès.');
+      } else {
+          setMessage('Il y a eu une erreur lors de la réinitialisation de votre mot de passe.');
+      }
+    });
+  };
+
+
   return (
-    <div className="divStyle">
-      <form onSubmit={submitForm} className="formStyle">
-        <h2>Réinitialiser le mot de passe</h2>
+    <div>
+      <h1>Réinitialiser le mot de passe</h1>
+      {accountInfo && accountInfo.reset == 1 ? (
+      <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          placeholder="Entrez votre email"
+          type="password"
+          placeholder="Nouveau mot de passe"
+          value={password}
+          onChange={handlePasswordChange}
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="inputStyle"
         />
-        <button type="submit" className="buttonStyle">
-          Réinitialiser le mot de passe
-        </button>
+        <input
+          type="password"
+          placeholder="Confirmer le nouveau mot de passe"
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
+          required
+        />
         {message && <p>{message}</p>}
+        <button type="submit">
+          Mettre à jour le mot de passe
+        </button>
       </form>
+      ) : (
+        <div>
+          <p>lien de réinitialisation obsolète</p>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ResetPasswordPage;
+export default ResetPassword;
