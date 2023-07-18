@@ -91,7 +91,7 @@ const Livraison = () => {
   useEffect(() => {
     const fetchAccountInfo = async () => {
       try {
-        const response = await axios.get(`/api/account/${accountId}`);
+        const response = await axios.get(`http://airneis.ddns.net:3000/info_livraison.php?accountId=${accountId}`);
         setAccountInfo(response.data.adresses);
         setAccountFac(response.data.fac);
         setLoading(false);
@@ -118,100 +118,72 @@ const Livraison = () => {
   return (
     <View>
       <Text>Page de Livraison</Text>
-      <AlertComponent alerte={alerte} alerte2={alerte2} />
 
       {errorMessage ? <Text>{errorMessage}</Text> : null}
 
       <Text>Adresse de livraison</Text>
       <View>
         <Text>Adresse existante :</Text>
-        <Picker
-          selectedValue={selectedAdresseId}
-          onValueChange={(itemValue) => handleChangeAdresse(itemValue)}
-        >
-          <Picker.Item label="Choisir une adresse" value="" />
-          {accountInfo.map((adresse) => (
-            <Picker.Item
-              key={adresse.id}
-              label={adresse.nom_adresse}
-              value={adresse.id}
-            />
-          ))}
-        </Picker>
       </View>
 
       <Text>Nouvelle adresse :</Text>
       <TextInput
         ref={nomAdresseLivraisonRef}
         placeholder="Nom adresse"
-        onFocus={handleFocus}
       />
       <TextInput
         ref={nomLivraisonRef}
         placeholder="Nom"
-        onFocus={handleFocus}
       />
       <TextInput
         ref={prenomLivraisonRef}
         placeholder="Prénom"
-        onFocus={handleFocus}
       />
       <TextInput
         ref={adresseLivraisonRef}
         placeholder="Adresse"
-        onFocus={handleFocus}
       />
       <TextInput
         ref={adresse2LivraisonRef}
         placeholder="Adresse 2"
-        onFocus={handleFocus}
       />
       <TextInput
         ref={codePostalLivraisonRef}
         placeholder="Code postal"
-        onFocus={handleFocus}
       />
       <TextInput
         ref={villeLivraisonRef}
         placeholder="Ville"
-        onFocus={handleFocus}
       />
       <TextInput
         ref={paysLivraisonRef}
         placeholder="Pays"
-        onFocus={handleFocus}
       />
 
       <Text>Adresse de facturation :</Text>
       <TextInput
         ref={nomFacturationRef}
         placeholder="Nom"
-        onFocus={handleFocus2}
       />
       <TextInput
         ref={prenomFacturationRef}
         placeholder="Prénom"
-        onFocus={handleFocus2}
       />
       <TextInput
         ref={adresseFacturationRef}
         placeholder="Adresse"
-        onFocus={handleFocus2}
       />
       <TextInput
         ref={codePostalFacturationRef}
         placeholder="Code postal"
-        onFocus={handleFocus2}
       />
       <TextInput
         ref={villeFacturationRef}
         placeholder="Ville"
-        onFocus={handleFocus2}
       />
       <TextInput
         ref={paysFacturationRef}
         placeholder="Pays"
-        onFocus={handleFocus2}
       />
 
       <Button title="Payer" onPress={handlePayer} />
