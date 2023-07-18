@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -15,7 +16,6 @@ const ResetPassword = () => {
         setAccountInfo(data.accountInfo);
       });
   }, [id]);
-
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -32,52 +32,54 @@ const ResetPassword = () => {
       return;
     }
 
-    // Envoie une requête POST à l'API
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id, password: password })
-  };
+    };
 
-  fetch('http://airneis.ddns.net:3000/reset_password.php', requestOptions)
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-          setMessage('Votre mot de passe a été réinitialisé avec succès.');
-      } else {
-          setMessage('Il y a eu une erreur lors de la réinitialisation de votre mot de passe.');
-      }
-    });
+    fetch('http://airneis.ddns.net:3000/reset_password.php', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+            setMessage('Votre mot de passe a été réinitialisé avec succès.');
+            setTimeout(() => navigate('/'), 3000);
+        } else {
+            setMessage('Il y a eu une erreur lors de la réinitialisation de votre mot de passe.');
+        }
+      });
   };
-
 
   return (
-    <div>
-      <h1>Réinitialiser le mot de passe</h1>
+    <div className="reset-password-container">
+      <h1 className="reset-password-title">Réinitialiser le mot de passe</h1>
       {accountInfo && accountInfo.reset == 1 ? (
-      <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          placeholder="Nouveau mot de passe"
-          value={password}
-          onChange={handlePasswordChange}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirmer le nouveau mot de passe"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-          required
-        />
-        {message && <p>{message}</p>}
-        <button type="submit">
-          Mettre à jour le mot de passe
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="reset-password-form">
+          <input
+            type="password"
+            placeholder="Nouveau mot de passe"
+            value={password}
+            onChange={handlePasswordChange}
+            required
+            className="password-input"
+          />
+          <input
+            type="password"
+            placeholder="Confirmer le nouveau mot de passe"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+            required
+            className="confirm-password-input"
+          />
+          {message && <p className="message-text">{message}</p>}
+          <button type="submit" className="submit-button">
+            Mettre à jour le mot de passe
+          </button>
+        </form>
       ) : (
         <div>
-          <p>lien de réinitialisation obsolète</p>
+          <p className="invalid-link-text">Lien de réinitialisation obsolète</p>
         </div>
       )}
     </div>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
-import axios from 'axios'; // Assurez-vous d'avoir importé axios.
+import axios from 'axios'; 
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [success, setSuccess] = useState(false); 
+  const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);  // nouvel état
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -13,6 +14,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true); // soumission en cours
 
     const response = await axios.get(`http://airneis.ddns.net:3000/select_email.php?email=${email}`);
 
@@ -36,7 +38,10 @@ const ForgotPassword = () => {
           console.error('Une erreur est survenue lors de l\'envoi de l\'email:', error);
           setSuccess(false); 
         }
-      );
+      )
+      .finally(() => {
+        setIsSubmitting(false); 
+      });
   };
 
   return (
@@ -50,7 +55,7 @@ const ForgotPassword = () => {
           onChange={handleEmailChange}
           required
         />
-        <button type="submit">
+        <button type="submit" disabled={isSubmitting}>
           Réinitialiser le mot de passe
         </button>
       </form>
