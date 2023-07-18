@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import emailjs from 'emailjs-com';
 
 function Inscription() {
   const navigate = useNavigate();
@@ -14,12 +15,23 @@ function Inscription() {
     let formType = {};
     formData.forEach((value, key) => (formType[key] = formData.get(key)));
 
+    const templateParams = {
+      to_email: formType.email,
+      };
+
     async function postData() {
       try {
         const response = await axios.post('http://airneis.ddns.net:3000/inscription.php', formType, {});
         if (response.data.status === "success") {
           const message = response.data.message;
           setMessage(message);
+
+       
+          emailjs.send('service_4l8nscb', 'template_atmdncl', templateParams, 'dLcg7jZT153kwwuzg')
+            .then((response) => {
+            }, (err) => {
+            });
+
           setTimeout(() => {
            navigate('/connexion');
           }, 3000);
