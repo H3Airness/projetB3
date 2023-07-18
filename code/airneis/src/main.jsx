@@ -24,6 +24,8 @@ import MesParametres from './composants/front/MesParametres';
 import UserAdresses from './composants/front/UserAdresses';
 import MoyenDePaiement from './composants/front/MoyensDePaiement';
 import MesCommandes from './composants/front/MesCommandes';
+import PasswordResetPage from './composants/ResetPasswordPage';
+import ForgotPassword from './composants/ForgotPassword';
 
 
 
@@ -51,6 +53,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='moyen-de-paiement' element={<MoyenDePaiement/>} />
       <Route path="*" element={<NotFound />} />
       <Route path='mesCommandes' element={<MesCommandes/>} />
+      <Route path='reset-password/:id' element={<PasswordResetPage/>} />
+      <Route path='forgot-password' element={<ForgotPassword/>} />
+
 
       </Route>
     </Routes>

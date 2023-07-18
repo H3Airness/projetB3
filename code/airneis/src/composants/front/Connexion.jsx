@@ -101,6 +101,11 @@ function Connexion({ previousLocation }) {
             Créer un compte ?
           </NavLink>
         </div>
+        <div className="text-center">
+          <NavLink className="compteNav" to="/forgot-password">
+            Mot de passe oublié
+          </NavLink>
+        </div>
       </div>
     </>
   );
