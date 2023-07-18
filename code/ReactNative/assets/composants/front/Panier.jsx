@@ -9,7 +9,6 @@ const Panier = () => {
   const { ajouter, panier, retirer, supprimer, nombreProduits, getTotalProduit, getTotalPanier } =
     useContext(dataContext);
   const { isLoggedIn } = useContext(AuthContext);
-  console.log('Contenu du panier:', panier);
   const navigation = useNavigation();
 
   const handlePayer = () => {
