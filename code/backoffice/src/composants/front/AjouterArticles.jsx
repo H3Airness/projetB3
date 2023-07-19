@@ -12,6 +12,7 @@ const AjouterArticles = () => {
   const [description, setDescription] = useState('');
   const [prix, setPrix] = useState('');
   const [categorie, setCategorie] = useState('');
+  const [materiau, setMateriau] = useState('');
   const [image, setImage] = useState(null);
   const [image2, setImage2] = useState(null);
   const [image3, setImage3] = useState(null);
@@ -41,6 +42,7 @@ const AjouterArticles = () => {
     formData.append('description', description);
     formData.append('prix', prix);
     formData.append('categorie', categorie);
+    formData.append('materiau', materiau);
     formData.append('image', image, 'image.jpg');
     formData.append('image2', image2, 'image2.jpg');
     formData.append('image3', image3, 'image3.jpg');
@@ -99,6 +101,10 @@ const AjouterArticles = () => {
 
   const handleCategorieChange = (e) => {
     setCategorie(e.target.value);
+  };
+
+  const handlemateriauChange = (e) => {
+    setMateriau(e.target.value);
   };
 
   const handleImageChange = (e) => {
@@ -165,12 +171,24 @@ const AjouterArticles = () => {
                 </div>
 
                 <div className="articles-card-group mb-4">
-                  <label htmlFor="choix-item">Selectionnez une catégorie: &emsp;</label>
+                  <label htmlFor="choix-item">Selectionner une catégorie: &emsp;</label>
                   <select name="select" id="choix-item" required onChange={handleCategorieChange} defaultValue="">
                     <option value="" disabled>Choisissez une option</option>
                     {categories.map((categorie, index) => (
                       <option value={categorie.id_categorie} key={categorie.id_categorie}>{categorie.nom}</option>
                     ))}
+                  </select>
+                </div>
+
+                <div className="articles-card-group mb-4">
+                  <label htmlFor="choix-item">Selectionner un matériau: &emsp;</label>
+                  <select name="select" id="choix-item" required onChange={handlemateriauChange} defaultValue="">
+                    <option value="" disabled>Choisissez une option</option>
+                    <option value="bois">Bois</option>
+                    <option value="acier">Acier</option>
+                    <option value="plastique">Plastique</option>
+                    <option value="verre">Verre</option>
+                    <option value="aluminium">Aluminium</option>
                   </select>
                 </div>
 

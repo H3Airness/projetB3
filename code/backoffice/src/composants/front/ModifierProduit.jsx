@@ -10,6 +10,7 @@ function ModifierProduit() {
   const [responseDescription, setResponseDescription] = useState('');
   const [responsePrix, setResponsePrix] = useState('');
   const [responseCategorie, setResponseCategorie] = useState('');
+  const [responseMateriau, setResponseMateriau] = useState('');
   const [responseImage, setResponseImage] = useState('');
   const [responseImage2, setResponseImage2] = useState('');
   const [responseImage3, setResponseImage3] = useState('');
@@ -101,6 +102,18 @@ function ModifierProduit() {
       }
     })
       .then(response => setResponseCategorie(response.data))
+      .catch(error => console.log(error));
+  };
+
+  const handleSubmitMateriau = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    axios.post(`http://airneis.ddns.net:3000/produit/modifier_produit.php`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(response => setResponseMateriau(response.data))
       .catch(error => console.log(error));
   };
 
@@ -250,6 +263,27 @@ function ModifierProduit() {
                     <input type="hidden" name="id" value={produit.id} />       
                   </div>
                   <input value="Modifier la catégorie" type="submit" />
+                </form>
+
+                <br/>
+                <hr/>
+                <br/>
+
+                <form onSubmit={handleSubmitMateriau}>
+                  {responseMateriau && <p className={`ReponseFormulaire text-center mt-3 ${responseMateriau.status === 'success' ? 'success' : 'error'}`}>{responseMateriau.message}</p>}
+                  
+                  <div className='mb-4'>
+                    <label htmlFor="choix-item">Selectionnez un matériau: &emsp;</label>
+                    <select name="materiau" id="materiau" required placeholder={produit.materiau} defaultValue={produit.materiau}>
+                      <option value="bois">Bois</option>
+                      <option value="acier">Acier</option>
+                      <option value="plastique">Plastique</option>
+                      <option value="verre">Verre</option>
+                      <option value="aluminium">Aluminium</option>
+                    </select> 
+                    <input type="hidden" name="id" value={produit.id} />       
+                  </div>
+                  <input value="Modifier le matériau" type="submit" />
                 </form>
 
                 <br/>

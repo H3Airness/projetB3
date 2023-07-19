@@ -88,11 +88,6 @@ function Connexion() {
             <input value="Se connecter" type="submit" />
           </div>
         </form>
-        <div className="text-center">
-          <NavLink className="compteNav" to="http://airneis.ddns.net:80/contact">
-            Vous n'arrivez pas à vous connecter ?
-          </NavLink>
-        </div>
       </div>
     </>
   );
