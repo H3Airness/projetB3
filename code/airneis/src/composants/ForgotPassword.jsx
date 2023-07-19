@@ -6,7 +6,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);  // nouvel état
+  const [isSubmitting, setIsSubmitting] = useState(false);  
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -14,7 +14,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true); // soumission en cours
+    setIsSubmitting(true); 
 
     const response = await axios.get(`http://airneis.ddns.net:3000/select_email.php?email=${email}`);
 

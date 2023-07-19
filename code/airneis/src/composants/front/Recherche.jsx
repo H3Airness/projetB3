@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { dataContext } from "../context/dataContext"
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import Filtre from "../Filtre";
 
 const Recherche = () => {
   const [recherche, setRecherche] = useState("");
   const [donnees, setDonnees] = useState([]);
   const [resultats, setResultats] = useState([]);
   const [aucunResultat, setAucunResultat] = useState(false);
+  const [afficherFiltre, setAfficherFiltre] = useState(false);
   const {ajouter} = useContext(dataContext);
 
   function handleChange(event) {
@@ -16,7 +18,6 @@ const Recherche = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    
 
     const filtre = recherche.trim().toLowerCase(); 
     const resultatsFiltres = donnees.filter(donnee =>
@@ -25,6 +26,10 @@ const Recherche = () => {
       
     setResultats(resultatsFiltres);
     setAucunResultat(resultatsFiltres.length === 0);
+  }
+
+  function handleFilterClick() {
+    setAfficherFiltre(!afficherFiltre);
   }
 
   useEffect(() => {
@@ -61,8 +66,17 @@ const Recherche = () => {
                     type="submit"
                     className="btn btn-primary"
                     style={{ marginLeft: "10px", marginTop: "5px" }}
-                  ><img style={{width:"24px"}} src="http://airneis.ddns.net:3000/img/icon_recherche.png"></img>
+                  >
+                    <img style={{width:"24px"}} src="http://airneis.ddns.net:3000/img/icon_recherche.png"></img>
                     Rechercher
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ marginLeft: "10px", marginTop: "5px" }}
+                    onClick={handleFilterClick}
+                  >
+                    Filtres
                   </button>
                 </div>
               </div>
@@ -75,20 +89,20 @@ const Recherche = () => {
           Aucun résultat trouvé pour votre recherche.
         </div>
       )}
+      {afficherFiltre && <Filtre />}
       <div className="container mt-4">
         <div className="row justify-content-center">
           {resultats.map((resultat) => (
             <div className="col-md-4 mb-3" key={resultat.id}>
               <div className="card">
-              <Link to={`/Produit/${resultat.id}`}>
-                <img
-                  className="card-img-top"
-                  src={`http://airneis.ddns.net:3000/img_produit/${resultat.id}`}
-                  alt={resultat.nom}
-                  style={{ objectFit: "cover", height: "300px" }}
-                />
+                <Link to={`/Produit/${resultat.id}`}>
+                  <img
+                    className="card-img-top"
+                    src={`http://airneis.ddns.net:3000/img_produit/${resultat.id}`}
+                    alt={resultat.nom}
+                    style={{ objectFit: "cover", height: "300px" }}
+                  />
                 </Link>
-
                 <div className="card-body">
                   <h5 className="card-title">{resultat.nom}</h5>
                   <p className="price-text">{resultat.prix} €</p>
@@ -109,7 +123,6 @@ const Recherche = () => {
           ))}
         </div>
       </div>
-
     </>
   );
 };

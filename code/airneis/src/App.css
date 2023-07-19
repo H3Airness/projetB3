@@ -1104,3 +1104,46 @@ a:link {
   color: red;
   font-size: 30px;
 }
+
+.filtre {
+  position: absolute;
+  z-index: 10;
+  background-color: #d3cbb7;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  right: 0;
+  margin-left: 50px;
+}
+
+.filtre label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.filtre label input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.filtre label input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.filtre button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filtre button:hover {
+  background-color: #0056b3;
+}
