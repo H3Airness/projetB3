@@ -1,6 +1,6 @@
 import { AuthContext } from "../context/authContext";
 import React, { useContext, useState, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Connexion from "./Connexion";
 import axios from "axios";
@@ -31,7 +31,7 @@ function MesParametres() {
 
   const handleAddresses = () => {
     setIsEditMode(false);
-    navigation.navigate("/userAdresses");
+    navigation.navigate("adresse");
   };
 
   const handleSubmitPassword = async () => {
@@ -80,95 +80,102 @@ function MesParametres() {
   };
 
   return (
-    <View style={styles.containerCgu}>
-    {isLoggedIn ? (
-      <View style={styles.sidebarParam}>
-        <Text style={styles.titleCgu}>Récapitulatif de votre compte</Text>
-        {isEditMode ? (
-          <View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Ancien mot de passe:</Text>
-              <View style={styles.passwordInput}>
-                <TextInput
-                  ref={motDePasseRef}
-                  secureTextEntry={!showPassword}
-                  style={styles.input}
-                  value={oldPassword}
-                  onChangeText={handleChangeOldPassword}
-                  required
-                />
+    <ScrollView>
+      <View style={styles.containerCgu}>
+      {isLoggedIn ? (
+        <View style={styles.sidebarParam}>
+          <Text style={styles.titleCgu}>Récapitulatif de votre compte</Text>
+          {isEditMode ? (
+            <View>
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Ancien mot de passe:</Text>
+                <View style={styles.passwordInput}>
+                  <TextInput
+                    ref={motDePasseRef}
+                    secureTextEntry={!showPassword}
+                    style={styles.input}
+                    value={oldPassword}
+                    onChangeText={handleChangeOldPassword}
+                    required
+                  />
+                </View>
+              </View>
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Nouveau mot de passe:</Text>
+                <View style={styles.passwordInput}>
+                  <TextInput
+                    secureTextEntry={!showPassword}
+                    style={styles.input}
+                    ref={motDePasseRef}
+                    value={newPassword}
+                    onChangeText={handleChangeNewPassword}
+                    required
+                  />
+                </View>
+              </View>
+              <View style={styles.formGroup}>
+                <Text style={styles.label}>Répéter le nouveau mot de passe:</Text>
+                <View style={styles.passwordInput}>
+                  <TextInput
+                    secureTextEntry={!showPassword}
+                    style={styles.input}
+                    ref={motDePasseRef}
+                    value={confirmPassword}
+                    onChangeText={handleChangeConfirmPassword}
+                    required
+                  />
+                </View>
+              </View>
+              {passwordError && <Text style={styles.errorMessage}>{passwordError}</Text>}
+              <View style={styles.buttonGroup}>
+                <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitPassword}>
+                  <Text style={styles.ajouterButtonText}>Valider ✔️</Text>
+                </TouchableOpacity>
+                <View style={styles.dividerbtn}/>
+                <TouchableOpacity style={styles.ajouterButton} onPress={() => setIsEditMode(false)}>
+                  <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
+                </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Nouveau mot de passe:</Text>
-              <View style={styles.passwordInput}>
-                <TextInput
-                  secureTextEntry={!showPassword}
-                  style={styles.input}
-                  ref={motDePasseRef}
-                  value={newPassword}
-                  onChangeText={handleChangeNewPassword}
-                  required
-                />
+          ) : (
+            <>
+              <View style={styles.formGroup}>
+                <Text style={styles.titleParam}>Nom:</Text>
+                <Text style={styles.formControl}>{accountInfo ? accountInfo.nom : "Nom inconnu"}</Text>
               </View>
-            </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Répéter le nouveau mot de passe:</Text>
-              <View style={styles.passwordInput}>
-                <TextInput
-                  secureTextEntry={!showPassword}
-                  style={styles.input}
-                  ref={motDePasseRef}
-                  value={confirmPassword}
-                  onChangeText={handleChangeConfirmPassword}
-                  required
-                />
+              <View style={styles.formGroup}>
+                <Text style={styles.titleParam}>E-mail:</Text>
+                <Text style={styles.formControl}>{accountInfo ? accountInfo.email : "Email inconnu"}</Text>
               </View>
-            </View>
-            {passwordError && <Text style={styles.errorMessage}>{passwordError}</Text>}
-            <View style={styles.buttonGroup}>
-              <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitPassword}>
-                <Text style={styles.ajouterButtonText}>Valider ✔️</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.ajouterButton} onPress={() => setIsEditMode(false)}>
-                <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : (
-          <>
-            <View style={styles.formGroup}>
-              <Text style={styles.titleParam}>Nom:</Text>
-              <Text style={styles.formControl}>{accountInfo ? accountInfo.nom : "Nom inconnu"}</Text>
-            </View>
-            <View style={styles.formGroup}>
-              <Text style={styles.titleParam}>E-mail:</Text>
-              <Text style={styles.formControl}>{accountInfo ? accountInfo.email : "Email inconnu"}</Text>
-            </View>
-            <View style={styles.button}>
-              <Text style={styles.titleParam}>Mot de passe:</Text>
-              <Text style={styles.formControl}>••••••••</Text>
-              <TouchableOpacity style={styles.ajouterButton} onPress={handleEditPassword}>
-                <Text style={styles.ajouterButtonText}>Modifier le mot de passe</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.divider} />
-            <View style={styles.buttonGroup}>
-              <TouchableOpacity style={styles.ajouterButton} onPress={() => navigation.navigate('moyenDePaiement')}>
-                <Text style={styles.ajouterButtonText}>Mes moyens de paiement</Text>
-              </TouchableOpacity>
+              <View style={styles.button}>
+                <Text style={styles.titleParam}>Mot de passe:</Text>
+                <Text style={styles.formControl}>••••••••</Text>
+                <View style={styles.buttonGroup}>
+                  <TouchableOpacity style={styles.ajouterButton} onPress={handleEditPassword}>
+                    <Text style={styles.ajouterButtonText}>Modifier le mot de passe</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
               <View style={styles.dividerbtn}/>
-              <TouchableOpacity style={styles.ajouterButton} onPress={handleAddresses}>
-                <Text style={styles.ajouterButtonText}>Mes adresses</Text>
-              </TouchableOpacity>
-            </View>
-          </>
+              <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
+              <View style={styles.divider} />
+              <View style={styles.buttonGroup}>
+                <TouchableOpacity style={styles.ajouterButton} onPress={() => navigation.navigate('moyenDePaiement')}>
+                  <Text style={styles.ajouterButtonText}>Mes moyens de paiement</Text>
+                </TouchableOpacity>
+                <View style={styles.dividerbtn}/>
+                <TouchableOpacity style={styles.ajouterButton} onPress={handleAddresses}>
+                  <Text style={styles.ajouterButtonText}>Mes adresses</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </View>
+        ) : (
+          <Connexion />
         )}
       </View>
-      ) : (
-        <Connexion />
-      )}
-    </View>
+    </ScrollView>
   );
 }
 

@@ -100,6 +100,7 @@ function UserAdresses() {
     villeFacturation: '',
     paysFacturation: '',
   });
+
   const [successMessageLivraison, setSuccessMessageLivraison] = useState(null);
   const [successMessageFacturation, setSuccessMessageFacturation] = useState(null);
   const [selectedAdresseId, setSelectedAdresseId] = useState(""); 
@@ -524,7 +525,7 @@ function UserAdresses() {
                   </div>
                   <center>
                     <br />
-                        <button type='button' className='btn-custom' onClick={handleAjoutLivraison}>Ajouter une adresse</button>
+                        <button type='button' className='btn-custom' onClick={handleAjoutLivraison}>Ajouter une adresse de livraison</button>
                       </center>
                       
                   <br />
@@ -550,7 +551,7 @@ function UserAdresses() {
                       <div>
                       <p>Aucune adresse de facturation enregistrée.</p>
                       <center>
-                        <button type='button' className='btn-custom align-item-center' onClick={handleEditFacturation}>Ajouter une adresse</button>
+                        <button type='button' className='btn-custom align-item-center' onClick={handleEditFacturation}>Ajouter une adresse de facturation</button>
                       </center>
                     </div>
                     )}

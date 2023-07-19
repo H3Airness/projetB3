@@ -533,4 +533,99 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
+  pageTitle: { 
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+
+  subtitle: {
+    marginLeft: 100,
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+
+  catalogButton: {
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+
+  catalogButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+
+  commandeItem: {
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#F5F5F5',
+  },
+
+  commandeSelected: {
+    backgroundColor: 'lightblue',
+  },
+
+  boutonCommandes: {
+    padding: 10,
+  },
+
+  enCours: {
+    backgroundColor: 'orange',
+  },
+
+  expediee: {
+    backgroundColor: 'green',
+  },
+
+  annulee: {
+    backgroundColor: 'red',
+  },
+
+  annulerCommande: {
+    backgroundColor: 'red',
+    padding: 5,
+    borderRadius: 3,
+    marginTop: 5,
+  },
+
+  greenText: {
+    color: 'green',
+  },
+
+  orangeText: {
+    color: 'orange',
+  },
+
+  redText: {
+    color: 'red',
+  },
+
+  commandeDetails: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#FFFFFF',
+  },
+
+  detailsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  separator: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+
+  productImage: {
+    width: 75,
+    height: 75,
+  },
+
+  boldText: {
+    fontWeight: 'bold',
+  },
+
 });
