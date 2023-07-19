@@ -31,7 +31,6 @@ function Produit() {
       .get(`http://airneis.ddns.net:3000/produit.php?id=${id}`)
       .then((response) => response.data)
       .then((data) => {
-        console.log(data.categorie);
         setProduct(data);
       })
       .catch((error) => console.error(error));
@@ -41,10 +40,9 @@ function Produit() {
     axios
       .get(`http://airneis.ddns.net:3000/categorie/categorie.php?categorie=${produit?.categorie}`)
       .then((response) => {
-        console.log(response.data);
         const shuffledProducts = shuffleArray(response.data);
         const filteredProducts = shuffledProducts.filter((p) => p.id !== produit.id);
-        setProducts(filteredProducts.slice(0, 3));
+        setProducts(filteredProducts.slice(0, 6));
       })
       .catch((error) => console.error(error));
   }, [produit]);

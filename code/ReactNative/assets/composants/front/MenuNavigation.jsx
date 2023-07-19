@@ -41,6 +41,9 @@ const MenuNavigation = () => {
     if (menuItem === 'MesParam') {
       navigation.navigate('mesParam');
     }
+    if (menuItem === 'MesCommande') {
+      navigation.navigate('mesCommande');
+    }
   };
 
   useEffect(() => {
@@ -69,7 +72,7 @@ const MenuNavigation = () => {
                 <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('MesParam')}>
                   <Text style={styles.menuLink}>Mes paramètres</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem} onPress={handleMenuItemPress}>
+                <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('MesCommande')}>
                   <Text style={styles.menuLink}>Mes commandes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuItem} onPress={logout}>

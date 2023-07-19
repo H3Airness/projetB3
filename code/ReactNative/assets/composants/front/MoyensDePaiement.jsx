@@ -166,7 +166,6 @@ const MoyenDePaiement = () => {
                   )}
                 </Text>
 
-                <View style={styles.divider} />
                 {editModePaiement && (
                   <View>
                     <TextInput
@@ -209,18 +208,21 @@ const MoyenDePaiement = () => {
                       }
                       required
                     />
-                    <TouchableOpacity
-                      onPress={handleSubmitPaiement}
-                      style={styles.ajouterButton}
-                    >
-                      <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={handleCancelPaiement}
-                      style={styles.ajouterButton}
-                    >
-                      <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
-                    </TouchableOpacity>
+                    <View style={styles.buttonGroup}>
+                      <TouchableOpacity
+                        onPress={handleSubmitPaiement}
+                        style={styles.ajouterButton}
+                      >
+                        <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
+                      </TouchableOpacity>
+                      <View style={styles.dividerbtn}/>
+                      <TouchableOpacity
+                        onPress={handleCancelPaiement}
+                        style={styles.ajouterButton}
+                      >
+                        <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 )}
 
@@ -259,7 +261,7 @@ const MoyenDePaiement = () => {
                                     Modifier ⚙️
                                   </Text>
                                 </TouchableOpacity>
-                                <View style={styles.buttonGroup}></View>
+                                <View style={styles.dividerbtn}/>
                                 <TouchableOpacity
                                   onPress={() => handleDeletePaiement(item)}
                                   style={styles.ajouterButton}
@@ -269,6 +271,7 @@ const MoyenDePaiement = () => {
                                   </Text>
                                 </TouchableOpacity>
                               </View>
+                              <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
                             </View>
                           </View>
                         )}
