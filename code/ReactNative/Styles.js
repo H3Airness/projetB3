@@ -85,6 +85,28 @@ export const styles = StyleSheet.create({
     marginTop: 30,
   },
 
+  titleParam: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+
+  buttonGroup: {
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+
+  divider: {
+    marginTop: 80,
+  },
+
+  dividerbtn: {
+    marginTop: 20,
+  },
+
   headingContainer: {
     alignItems: 'center',
     backgroundColor: 'white',

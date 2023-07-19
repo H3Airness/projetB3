@@ -1,7 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import DropDownPicker from "react-native-dropdown-picker";
+import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from "react-native";
 import { AuthContext } from "../context/authContext";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -50,30 +48,29 @@ const MoyenDePaiement = () => {
       }
     };
     fetchData();
-  }, [accountId]);
+  }, [accountId, accountPaiement]);
+  
 
   const handleInputChangePaiement = (name, value) => {
     setFormDataPaiement({ ...formDataPaiement, [name]: value });
   };
 
-  const handleEditPaiement = () => {
+  const handleEditPaiement = (paiement) => {
     setEditModePaiement(true);
-
-    const selectedPaiement = accountPaiement.find(
-      (paiement) => paiement.id === selectedPaiementId
-    );
-
+    setSelectedPaiementId(paiement.id);
+  
     setFormDataPaiement({
-      nom: selectedPaiement.nom,
-      numero: selectedPaiement.numero,
-      date: selectedPaiement.date,
-      cvv: selectedPaiement.cvv,
+      nom: paiement.nom,
+      numero: paiement.numero,
+      date: paiement.date,
+      cvv: paiement.cvv,
     });
   };
+  
 
   const handleAjoutPaiement = () => {
     setEditModePaiement(true);
-    setSelectedPaiementId("");
+    setSelectedPaiementId(null);
 
     setFormDataPaiement({
       nom: "",
@@ -93,7 +90,7 @@ const MoyenDePaiement = () => {
         "http://airneis.ddns.net:3000/update_info_paiement.php",
         {
           accountId,
-          id: selectedPaiementId === "" ? null : selectedPaiementId,
+          id: selectedPaiementId ?? null,
           nom: formDataPaiement.nom,
           numero: formDataPaiement.numero,
           date: formDataPaiement.date,
@@ -121,24 +118,25 @@ const MoyenDePaiement = () => {
         setTimeout(() => {
           setSuccessMessagePaiement(null);
         }, 2000);
-        // window.location.reload();
+        navigation.navigate("moyenDePaiement");
       } else {
       }
     } catch (error) {}
   };
 
-  const handleDeletePaiement = async () => {
-    try {
-      await axios.delete(
-        `http://airneis.ddns.net:3000/delete_info_livraison.php?id=${selectedPaiementId}`
-      );
-      const updatedAccountPaiement = accountPaiement.filter(
-        (paiement) => paiement.id !== selectedPaiementId
-      );
-      setAccountPaiement(updatedAccountPaiement);
-      setSelectedPaiementId("");
-    } catch (error) {}
-  };
+  const handleDeletePaiement = async (paiement) => {
+  try {
+    await axios.delete(
+      `http://airneis.ddns.net:3000/delete_info_paiement.php?id=${paiement.id}`
+    );
+    const updatedAccountPaiement = accountPaiement.filter(
+      (item) => item.id !== paiement.id
+    );
+    setAccountPaiement(updatedAccountPaiement);
+    setSelectedPaiementId("");
+  } catch (error) {}
+};
+
 
   if (loading) {
     return (
@@ -150,20 +148,24 @@ const MoyenDePaiement = () => {
 
   return (
     <>
+    <ScrollView>
       {isLoggedIn ? (
         <>
-          <View style={styles.monCompteContainer}>
+          <View style={styles.containerCgu}>
             <View style={styles.sidebarParam}>
-              <Text style={styles.sidebarTitle}>
+              <Text style={styles.titleCgu}>
                 Récapitulatif de votre compte
               </Text>
               <View>
-                <Text style={styles.headingText}>Moyen de Paiement</Text>
-                {successMessagePaiement && (
-                  <View style={styles.successAlert}>
-                    {successMessagePaiement}
-                  </View>
-                )}
+                <Text style={styles.titleCgu2}>Moyen de Paiement</Text>
+                <Text>
+                  {successMessagePaiement && (
+                    <View style={styles.successAlert}>
+                      <Text>{successMessagePaiement}</Text>
+                    </View>
+                  )}
+                </Text>
+
                 <View style={styles.divider} />
                 {editModePaiement && (
                   <View>
@@ -209,15 +211,15 @@ const MoyenDePaiement = () => {
                     />
                     <TouchableOpacity
                       onPress={handleSubmitPaiement}
-                      style={styles.customButton}
+                      style={styles.ajouterButton}
                     >
-                      <Text style={styles.buttonText}>Enregistrer 💾</Text>
+                      <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={handleCancelPaiement}
-                      style={styles.customButton}
+                      style={styles.ajouterButton}
                     >
-                      <Text style={styles.buttonText}>Annuler ❌</Text>
+                      <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -225,113 +227,75 @@ const MoyenDePaiement = () => {
                 {!editModePaiement && (
                   <View>
                     <View>
-                      {accountPaiement.length > 0 ? (
-                        <View style={styles.selectContainer}>
-                          {accountPaiement.map((paiement) => (
-                            <View key={paiement.id}>
-                              <Text>{paiement.nom}</Text>
-                              <Text>{paiement.numero}</Text>
-                              <Text>{paiement.date}</Text>
-                              <Text>{paiement.cvv}</Text>
-
-                              <TouchableOpacity
-                                onPress={handleEditPaiement}
-                                style={styles.customButton}
-                              >
-                                <Text style={styles.buttonText}>
-                                  Modifier ⚙️
-                                </Text>
-                              </TouchableOpacity>
-                              <TouchableOpacity
-                                onPress={handleDeletePaiement}
-                                style={styles.customButton}
-                              >
-                                <Text style={styles.buttonText}>
-                                  Supprimer ⛒
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
-                          ))}
-
-                          {selectedPaiementId !== "" && (
+                    {accountPaiement.length > 0 ? (
+                      <FlatList
+                        data={accountPaiement}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({ item }) => (
+                          <View key={item.id}>
                             <View>
-                              <Text>
+                              <Text style={styles.titleParam}>
                                 Nom sur la carte:{" "}
-                                <Text style={styles.boldText}>
-                                  {
-                                    accountPaiement.find(
-                                      (paiement) =>
-                                        paiement.id === selectedPaiementId
-                                    ).nom
-                                  }
-                                </Text>
+                                <Text>{item.nom}</Text>
                               </Text>
-                              <Text>
+                              <Text style={styles.titleParam}>
                                 Numéro de carte:{" "}
-                                <Text style={styles.boldText}>
-                                  {"**** **** **** " +
-                                    accountPaiement.find(
-                                      (paiement) =>
-                                        paiement.id === selectedPaiementId
-                                    ).numero.slice(-4)}
-                                </Text>
+                                <Text>{"**** **** **** " + item.numero.slice(-4)}</Text>
                               </Text>
-                              <Text>
+                              <Text style={styles.titleParam}>
                                 Date d'expiration:{" "}
-                                <Text style={styles.boldText}>
-                                  {
-                                    accountPaiement.find(
-                                      (paiement) =>
-                                        paiement.id === selectedPaiementId
-                                    ).date
-                                  }
-                                </Text>
+                                <Text>{item.date}</Text>
                               </Text>
-                              <Text>
+                              <Text style={styles.titleParam}>
                                 CVV:{" "}
-                                <Text style={styles.boldText}>{"***"}</Text>
+                                <Text>{"***"}</Text>
                               </Text>
-                              <TouchableOpacity
-                                onPress={handleEditPaiement}
-                                style={styles.customButton}
-                              >
-                                <Text style={styles.buttonText}>
-                                  Modifier ⚙️
-                                </Text>
-                              </TouchableOpacity>
-                              <TouchableOpacity
-                                onPress={handleDeletePaiement}
-                                style={styles.customButton}
-                              >
-                                <Text style={styles.buttonText}>
-                                  Supprimer ⛒
-                                </Text>
-                              </TouchableOpacity>
+                              <View style={styles.buttonGroup}>
+                                <TouchableOpacity
+                                  onPress={() => handleEditPaiement(item)}
+                                  style={styles.ajouterButton}
+                                >
+                                  <Text style={styles.ajouterButtonText}>
+                                    Modifier ⚙️
+                                  </Text>
+                                </TouchableOpacity>
+                                <View style={styles.buttonGroup}></View>
+                                <TouchableOpacity
+                                  onPress={() => handleDeletePaiement(item)}
+                                  style={styles.ajouterButton}
+                                >
+                                  <Text style={styles.ajouterButtonText}>
+                                    Supprimer ⛒
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
                             </View>
-                          )}
-                        </View>
-                      ) : (
-                        <View>
-                          <Text>Aucun moyen de paiement enregistré</Text>
-                        </View>
-                      )}
+                          </View>
+                        )}
+                      />
+                    ) : (
+                      <View>
+                        <Text>Aucun moyen de paiement enregistré</Text>
+                      </View>
+                    )}
+
                     </View>
                     <TouchableOpacity
                       onPress={handleAjoutPaiement}
-                      style={styles.customButton}
+                      style={styles.ajouterButton}
                     >
-                      <Text style={styles.buttonText}>
+                      <Text style={styles.ajouterButtonText}>
                         Ajouter un moyen de paiement
                       </Text>
                     </TouchableOpacity>
                   </View>
                 )}
-                <View style={styles.divider} />
+                <View style={styles.buttonGroup} />
                 <TouchableOpacity
                   onPress={() => navigation.goBack()}
-                  style={styles.customButton}
+                  style={styles.ajouterButton}
                 >
-                  <Text style={styles.buttonText}>Retour</Text>
+                  <Text style={styles.ajouterButtonText}>Retour</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -340,6 +304,7 @@ const MoyenDePaiement = () => {
       ) : (
         <Connexion />
       )}
+      </ScrollView>
     </>
   );
 };
