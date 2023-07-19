@@ -89,7 +89,7 @@ const Recherche = () => {
           Aucun résultat trouvé pour votre recherche.
         </div>
       )}
-      {afficherFiltre && <Filtre setDonnees={setDonnees} setResultats={setResultats} />}
+      {afficherFiltre && <Filtre setDonnees={setResultats} />}
       <div className="container mt-4">
         <div className="row justify-content-center">
           {resultats.map((resultat) => (
