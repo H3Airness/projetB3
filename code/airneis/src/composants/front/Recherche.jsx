@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { dataContext } from "../context/dataContext"
+import { dataContext } from "../context/dataContext";
 import { Link } from "react-router-dom";
 import Filtre from "../Filtre";
 
@@ -89,7 +89,7 @@ const Recherche = () => {
           Aucun résultat trouvé pour votre recherche.
         </div>
       )}
-      {afficherFiltre && <Filtre />}
+      {afficherFiltre && <Filtre setDonnees={setResultats} />}
       <div className="container mt-4">
         <div className="row justify-content-center">
           {resultats.map((resultat) => (
