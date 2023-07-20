@@ -22,7 +22,7 @@ catch(PDOException $e) {
 }
 
 // Récupère les images depuis la table "images"
-$sql = "SELECT id, source FROM produits WHERE featured = '1' LIMIT 3";
+$sql = "SELECT id, nom, prix FROM produits WHERE featured = '1' LIMIT 3";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $images = $stmt->fetchAll();

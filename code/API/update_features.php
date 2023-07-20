@@ -31,18 +31,18 @@ if (!empty($images)) {
 
 
   foreach ($images as $image) {
-    $source = $image->source;
-    $sql = "UPDATE produits SET featured = 1 WHERE source = ?";
+    $id = $image->id;
+    $sql = "UPDATE produits SET featured = 1 WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$source]);
+    $stmt->execute([$id]);
   }
 
   $conn = null;
 
-  $response = array('message' => 'Articles en exposition bien modifiés.');
+  $response = array('status' => 'success', 'message' => 'Articles en exposition bien modifiés.');
 } else {
     
-  $response = array('message' => 'Veuillez choisir un article.');
+  $response = array('status' => 'error', 'error' => 'Veuillez choisir un article.');
 }
 
 echo json_encode($response);

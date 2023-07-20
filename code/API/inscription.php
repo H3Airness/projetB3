@@ -38,20 +38,20 @@ if (!empty($email) && !empty($password)) {
             }
             else 
             {
-                $response = array('status' => 'error', 'message' => 'Les mots de passe doivent être identiques.');
+                $response = array('status' => 'error', 'error' => 'Les mots de passe doivent être identiques.');
             }
         } else {
-            $response = array('status' => 'error', 'message' => 'L\'utilisateur existe déjà.');
+            $response = array('status' => 'error', 'error' => 'L\'adresse mail existe déjà.');
         }
     } 
     else
     {
-        $response = array('status' => 'error', 'message' => 'L\'adresse email n\'est pas valide.');
+        $response = array('status' => 'error', 'error' => 'L\'adresse mail n\'est pas valide.');
     }
 } 
 else 
 {
-    $response = array('status' => 'error', 'message' => 'Les champs sont vides.');
+    $response = array('status' => 'error', 'error' => 'Les champs sont vides.');
 }
 
 echo json_encode($response);
