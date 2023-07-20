@@ -22,8 +22,8 @@ const Accueil = () => {
 
   return (
     <>
-      <div>
-        <Gallery />
+      <div  className="mt-3">
+        <Gallery/>
       </div>
       <div className="info-airneis mt-5">
         <p>VENANT DES HAUTES TERRES D'ÉCOSSE</p>
