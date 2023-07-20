@@ -587,20 +587,22 @@ const Livraison = () => {
                         </View>
                     )}
                     </View>
-
+                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1 }} />
                     <View>
                       {errorMessage && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
                       )}
                     </View>
                     <View style={styles.buttonGroup} />
-                    <Button title="Payer" onPress={handlePayer} />
-                    <TouchableOpacity
-                      onPress={() => navigation.goBack()}
-                      style={styles.ajouterButton}
-                    >
-                      <Text style={styles.ajouterButtonText}>Retour</Text>
-                    </TouchableOpacity>
+
+                    <View style={styles.containerBtn}>
+                      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
+                        <Text style={styles.ajouterButtonText}>Retour</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={handlePayer} style={styles.btn}>
+                        <Text style={styles.ajouterButtonText}>Continuer</Text>
+                      </TouchableOpacity>
+                    </View>
               </View>
             )}
           </ScrollView>
