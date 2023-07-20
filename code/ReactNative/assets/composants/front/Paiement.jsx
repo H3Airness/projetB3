@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from "react-native";
+import { Picker } from '@react-native-picker/picker';
 import { AuthContext } from "../context/authContext";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -230,58 +231,39 @@ const Paiement = () => {
                   <View>
                     <View>
                     {accountPaiement.length > 0 ? (
-                      <FlatList
-                        data={accountPaiement}
-                        keyExtractor={(item) => item.id.toString()}
-                        renderItem={({ item }) => (
-                          <View key={item.id}>
-                            <View>
-                              <Text style={styles.titleParam}>
-                                Nom sur la carte:{" "}
-                                <Text>{item.nom}</Text>
-                              </Text>
-                              <Text style={styles.titleParam}>
-                                Numéro de carte:{" "}
-                                <Text>{"**** **** **** " + item.numero.slice(-4)}</Text>
-                              </Text>
-                              <Text style={styles.titleParam}>
-                                Date d'expiration:{" "}
-                                <Text>{item.date}</Text>
-                              </Text>
-                              <Text style={styles.titleParam}>
-                                CVV:{" "}
-                                <Text>{"***"}</Text>
-                              </Text>
-                              <View style={styles.buttonGroup}>
-                                <TouchableOpacity
-                                  onPress={() => handleEditPaiement(item)}
-                                  style={styles.ajouterButton}
-                                >
-                                  <Text style={styles.ajouterButtonText}>
-                                    Modifier ⚙️
-                                  </Text>
-                                </TouchableOpacity>
-                                <View style={styles.dividerbtn}/>
-                                <TouchableOpacity
-                                  onPress={() => handleDeletePaiement(item)}
-                                  style={styles.ajouterButton}
-                                >
-                                  <Text style={styles.ajouterButtonText}>
-                                    Supprimer ❌
-                                  </Text>
-                                </TouchableOpacity>
-                              </View>
-                              <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
-                            </View>
+                      <View>
+                      <Picker
+                        selectedValue={selectedPaiementId}
+                        onValueChange={(itemValue) => setSelectedPaiementId(itemValue)}
+                      >
+                        <Picker.Item label="Sélectionner une adresse" value="" />
+                        {accountPaiement.map((paiement) => (
+                          <Picker.Item key={paiement.id} label={paiement.nom} value={paiement.id} />
+                        ))}
+                      </Picker>
+                      {selectedPaiementId !== "" && (
+                        <View style={styles.adresseContainer}>
+                          <Text>Nom sur la carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</Text></Text>
+                          <Text>Numéro carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</Text></Text>
+                          <Text>Date d'expiration: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</Text></Text>
+                          <Text>CVV: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</Text></Text>
+                          <View style={styles.buttonGroup}>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleEditPaiement}>
+                              <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
+                            </TouchableOpacity>
+                            <View style={styles.dividerbtn}/>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleDeletePaiement}>
+                              <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
+                            </TouchableOpacity>
                           </View>
-                        )}
-                      />
+                        </View>
+                      )}
+                    </View>
                     ) : (
                       <View>
                         <Text>Aucun moyen de paiement enregistré</Text>
                       </View>
                     )}
-
                     </View>
                     <TouchableOpacity
                       onPress={handleAjoutPaiement}

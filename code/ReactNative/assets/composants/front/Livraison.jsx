@@ -378,9 +378,8 @@ const Livraison = () => {
       {isLoggedIn ? (
         <View style={styles.containerCgu}>
           <ScrollView>
-            <Text style={styles.titleCgu}>Récapitulatif de votre compte</Text>
+            <Text style={styles.titleCgu}>Carnet d'adresses</Text>
             <View>
-              <Text style={styles.titleCgu2}>Carnet d'adresses</Text>
               {successMessageLivraison && <Text style={styles.successMessage}>{successMessageLivraison}</Text>}
               {successMessageFacturation && <Text style={styles.successMessage}>{successMessageFacturation}</Text>}
               {editModeLivraison && (
@@ -454,7 +453,7 @@ const Livraison = () => {
             </View>
             {editModeFacturation && (
             <View>
-              <Text style={styles.sectionTitle}>Adresse de facturation</Text>
+              <Text style={styles.titleCgu2}>Adresse de facturation</Text>
               <TextInput
                 style={styles.input}
                 value={formDataFacturation.nomFacturation}
