@@ -585,9 +585,12 @@ export const styles = StyleSheet.create({
 
   annulerCommande: {
     backgroundColor: 'red',
+    alignItems: 'center',
     padding: 5,
     borderRadius: 3,
     marginTop: 5,
+    marginLeft: 40,
+    marginRight: 40,
   },
 
   greenText: {

@@ -267,7 +267,7 @@ const MoyenDePaiement = () => {
                                   style={styles.ajouterButton}
                                 >
                                   <Text style={styles.ajouterButtonText}>
-                                    Supprimer ⛒
+                                    Supprimer ❌
                                   </Text>
                                 </TouchableOpacity>
                               </View>

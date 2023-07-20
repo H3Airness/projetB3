@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
 import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image, Alert  } from "react-native";
 import Connexion from "./Connexion";
 import { styles } from '../../../Styles';
 
@@ -31,9 +31,43 @@ function MesCommandes() {
     }
   };
 
+  const handleAnnulerCommande = (commande) => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir annuler cette commande ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => annulerCommande(commande),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const handleConfirmAnnulerCommande = (commande) => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir annuler cette commande ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => annulerCommande(commande),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const annulerCommande = (commande) => {
-    const confirmation = window.confirm("Êtes-vous sûr de vouloir annuler cette commande ?");
-    if (confirmation) {
       axios.post(`http://airneis.ddns.net:3000/annuler-commande.php`, { id: commande.id })
         .then(response => {
           const updatedCommandes = commandes.map(c => {
@@ -47,7 +81,6 @@ function MesCommandes() {
         .catch(error => {
           console.error("Erreur lors de l'annulation de la commande", error);
         });
-    }
   };
 
   return (
@@ -77,8 +110,8 @@ function MesCommandes() {
                         {commande.etat === 'En cours de préparation' && (
                           <>
                             <Text>Commande n° {commande.id} - État : <Text style={styles.orangeText}>{commande.etat}</Text></Text>
-                            <TouchableOpacity style={styles.annulerCommande} onPress={() => annulerCommande(commande)}>
-                              <Text>Annuler la commande</Text>
+                            <TouchableOpacity style={styles.annulerCommande} onPress={() => handleConfirmAnnulerCommande(commande)}>
+                              <Text style={styles.ajouterButtonText}>Annuler la commande</Text>
                             </TouchableOpacity>
                           </>
                         )}
