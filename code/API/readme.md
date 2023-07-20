@@ -15,7 +15,7 @@ L'API dans ce dossier prend en charge les fonctionnalités suivantes :
 3.	Authentification des utilisateurs : Pour les fonctionnalités qui nécessitent une identification, l'API gère le processus d'authentification des utilisateurs.
 
 
-**Structure des fichiers**
+**Structure des fichiers**  
 
 Le dossier "API" est organisé de la manière suivante  
 
