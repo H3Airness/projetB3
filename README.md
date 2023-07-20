@@ -2,11 +2,9 @@
 **Airneis - Site E-commerce de Meubles**
 
 **Description**  
-
 Airneis est un site e-commerce spécialisé dans la vente de meubles de haute qualité. Notre objectif est d'offrir à nos clients une expérience d'achat en ligne conviviale et pratique, en proposant une large gamme de meubles élégants pour embellir leurs espaces.
 
 **Fonctionnalités**  
-
 •	Parcourir les catégories de meubles et consulter les produits individuels.
 •	Rechercher des meubles spécifiques par nom, catégorie, etc.
 •	Ajouter des produits au panier d'achat et gérer les quantités.
@@ -14,7 +12,6 @@ Airneis est un site e-commerce spécialisé dans la vente de meubles de haute qu
 •	Suivre l'état de la commande et consulter l'historique des achats.
 
 **Technologies utilisées**  
-
 •	React : Pour le développement du site web e-commerce.
 •	PHP : Pour l'API qui gère les requêtes du site web et interagit avec la base de données.
 •	MySQL : Base de données pour stocker les informations des produits, des utilisateurs, et des commandes.
