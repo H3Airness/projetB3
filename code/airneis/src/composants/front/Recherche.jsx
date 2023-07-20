@@ -30,6 +30,7 @@ const Recherche = () => {
 
   function handleFilterClick() {
     setAfficherFiltre(!afficherFiltre);
+    setIsOpen(true);
   }
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const Recherche = () => {
           Aucun résultat trouvé pour votre recherche.
         </div>
       )}
-      {afficherFiltre && <Filtre setDonnees={setResultats} />}
+      {afficherFiltre && <Filtre setDonnees={setResultats} fermerFiltre={() => setAfficherFiltre(false)} />}
       <div className="container mt-4">
         <div className="row justify-content-center">
           {resultats.map((resultat) => (

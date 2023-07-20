@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Filtre = ({ setDonnees, setResultats }) => {
+  const [isOpen, setIsOpen] = useState(true);
   const [prixMin, setPrixMin] = useState("");
   const [prixMax, setPrixMax] = useState("");
   const [materiaux, setMateriaux] = useState({
@@ -25,6 +26,7 @@ const Filtre = ({ setDonnees, setResultats }) => {
   };
 
   const handleApplyFilter = () => {
+    setIsOpen(false);
     const selectedMaterials = Object.keys(materiaux).filter(material => materiaux[material]);
     axios.get('http://airneis.ddns.net:3000/recherche.php', {
       params: {
@@ -35,9 +37,13 @@ const Filtre = ({ setDonnees, setResultats }) => {
     })
     .then(response => {
       setDonnees(response.data);
-      setResultats(response.data); 
+      setResultats(response.data);
     });
   };
+
+  if (!isOpen == true) {
+    return null;
+  }
 
   return (
     <div className="filtre">
