@@ -17,7 +17,8 @@ L'API dans ce dossier prend en charge les fonctionnalités suivantes :
 
 **Structure des fichiers**
 
-Le dossier "API" est organisé de la manière suivante :
+Le dossier "API" est organisé de la manière suivante :  
+
 •	inscription.php/connexion.php: Ce fichier contient les configurations de connexion à la base de données, il est utilisé pour gérer l'inscription ou la connexion à airneis.  
 
 •	articles.php: Ce fichier gère les requêtes liées aux produits, y compris la récupération des détails des produits.  
