@@ -9,6 +9,8 @@ function Categorie() {
   const [categories, setCategories] = useState([]);
   const { ajouter } = useContext(dataContext);
   const [categorieNom, setCategorieNom] = useState('');
+  const [pageCourante, setPageCourante] = useState(1);
+  const [produitsParPage] = useState(6);
 
   useEffect(() => {
     axios.get(`http://airneis.ddns.net:3000/categorie/affichage_categorie.php?categorie=${categorie}`)
@@ -30,6 +32,16 @@ function Categorie() {
       .catch(error => console.error(error));
   }, [categorie]);
 
+  const handleClickPage = (numPage) => {
+    setPageCourante(numPage);
+    window.scrollTo(0, 0); 
+  };
+
+  const indexDernierProduit = pageCourante * produitsParPage;
+  const indexPremierProduit = indexDernierProduit - produitsParPage;
+  const produitsAffiches = produits.slice(indexPremierProduit, indexDernierProduit);
+  const totalPages = Math.ceil(produits.length / produitsParPage);
+
   if (produits.length === 0) {
     return <p>Chargement...</p>;
   }
@@ -47,7 +59,7 @@ function Categorie() {
 
       <div className="container mt-4">
         <div className="row justify-content-center">
-          {produits.map((produit) => (
+          {produitsAffiches.map((produit) => (
             <div className="col-md-4 mb-3" key={produit.id}>
               <div className="card">
                 <Link to={`/Produit/${produit.id}`}>
@@ -77,6 +89,36 @@ function Categorie() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="row justify-content-center mt-3">
+          <div className="col-md-12 text-center pagination-bar">
+            <button
+              className="prev-btn"
+              onClick={() => handleClickPage(pageCourante - 1)}
+              disabled={pageCourante === 1}
+            >
+              Précédent
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((numPage) => (
+              <React.Fragment key={numPage}>
+                {numPage !== 1 && <span className="divider">|</span>}
+                <button
+                  className={`pagination-btn ${numPage === pageCourante ? "active" : ""}`}
+                  onClick={() => handleClickPage(numPage)}
+                >
+                  {numPage}
+                </button>
+              </React.Fragment>
+            ))}
+            <button
+              className="next-btn"
+              onClick={() => handleClickPage(pageCourante + 1)}
+              disabled={pageCourante === totalPages}
+            >
+              Suivant
+            </button>
+          </div>
         </div>
       </div>
     </>
