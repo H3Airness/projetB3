@@ -14,7 +14,7 @@ const Menu = () => {
   }, []);
 
   return (
-    <View style={{ backgroundColor: '#4e4d4d', marginTop: statusBarHeight}}>
+    <View style={{ backgroundColor: '#4e4d4d'}}>
       <View
         style={{
           flexDirection: "row",
@@ -58,7 +58,6 @@ const Menu = () => {
               <View
                 style={{
                   position: "absolute",
-                  top: -8,
                   right: -8,
                   backgroundColor: "red",
                   borderRadius: 10,
