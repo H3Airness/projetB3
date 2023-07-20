@@ -490,6 +490,9 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     color: 'white',
   },
+  link: {
+    color: 'blue',
+  },
   containerPropos: {
     flex: 1,
     padding: 16,
@@ -629,6 +632,19 @@ export const styles = StyleSheet.create({
 
   boldText: {
     fontWeight: 'bold',
+  },
+
+  containerBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  btn: {
+    backgroundColor: '#007bff',
+    paddingVertical: 8,
+    borderRadius: 5,
+    padding: 30,
+    alignItems: 'center',
   },
 
 });

@@ -96,7 +96,6 @@ const Paiement = () => {
           setErrorMessage(response.data.message);
         }
       } catch (error) {
-        // Gérer les erreurs de l'API
         console.error(error);
       } finally {
         setDisableButton(false);
@@ -206,12 +205,8 @@ const Paiement = () => {
           setSuccessMessagePaiement(null);
         }, 2000);
         window.location.href = "/Paiement";
-      } else {
-        // Gérer les erreurs de l'API
       }
-    } catch (error) {
-      // Gérer les erreurs de l'API
-    }
+    } catch (error) {}
   };
 
   const handleDeletePaiement = async () => {
@@ -221,7 +216,6 @@ const Paiement = () => {
       setAccountPaiement(updatedAccountPaiement);
       setSelectedPaiementId("");
     } catch (error) {
-      // Gérer les erreurs de l'API
     }
   };
 
