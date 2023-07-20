@@ -5,6 +5,7 @@ const Filtre = ({ setDonnees, setResultats }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [prixMin, setPrixMin] = useState("");
   const [prixMax, setPrixMax] = useState("");
+  const [stockDisponible, setStockDisponible] = useState(false);
   const [materiaux, setMateriaux] = useState({
     bois: false,
     acier: false,
@@ -21,25 +22,34 @@ const Filtre = ({ setDonnees, setResultats }) => {
     setPrixMax(e.target.value);
   };
 
+  const handleChangeStockDisponible = (e) => {
+    setStockDisponible(e.target.checked);
+  };
+
   const handleChangeMateriaux = (e) => {
     setMateriaux({ ...materiaux, [e.target.name]: e.target.checked });
   };
 
   const handleApplyFilter = () => {
     setIsOpen(false);
-    const selectedMaterials = Object.keys(materiaux).filter(material => materiaux[material]);
-    axios.get('http://airneis.ddns.net:3000/recherche.php', {
-      params: {
-        min_price: prixMin,
-        max_price: prixMax,
-        materiaux: selectedMaterials.join(',')
-      }
-    })
-    .then(response => {
-      setDonnees(response.data);
-      setResultats(response.data);
-    });
+    const selectedMaterials = Object.keys(materiaux).filter(
+      (material) => materiaux[material]
+    );
+    axios
+      .get("http://airneis.ddns.net:3000/recherche.php", {
+        params: {
+          min_price: prixMin,
+          max_price: prixMax,
+          materiaux: selectedMaterials.join(","),
+          stock_disponible: stockDisponible ? 1 : 0, 
+        },
+      })
+      .then((response) => {
+        setDonnees(response.data);
+        setResultats(response.data);
+      });
   };
+  
 
   if (!isOpen == true) {
     return null;
@@ -140,6 +150,20 @@ const Filtre = ({ setDonnees, setResultats }) => {
                     </label>
                   </div>
                 </div>
+                <div className="form-group">
+  <input
+    className="form-check-input"
+    type="checkbox"
+    id="stockDisponible"
+    name="stockDisponible"
+    checked={stockDisponible}
+    onChange={handleChangeStockDisponible}
+  />
+  <label className="form-check-label" htmlFor="stockDisponible">
+    Stock disponible uniquement
+  </label>
+</div>
+
                 <div className="form-group">
                   <button type="button" className="btn btn-primary btn-block" onClick={handleApplyFilter}>
                     Appliquer les filtres

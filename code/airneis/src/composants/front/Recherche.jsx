@@ -8,6 +8,7 @@ const Recherche = () => {
   const [recherche, setRecherche] = useState("");
   const [donnees, setDonnees] = useState([]);
   const [resultats, setResultats] = useState([]);
+  const [stockDisponible, setStockDisponible] = useState(false);
   const [aucunResultat, setAucunResultat] = useState(false);
   const [afficherFiltre, setAfficherFiltre] = useState(false);
   const {ajouter} = useContext(dataContext);
@@ -18,30 +19,38 @@ const Recherche = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    const filtre = recherche.trim().toLowerCase(); 
-    const resultatsFiltres = donnees.filter(donnee =>
-        donnee.nom.toLowerCase().includes(filtre)
-      );
-      
+  
+    const filtre = recherche.trim().toLowerCase();
+    const resultatsFiltres = donnees.filter(
+      (donnee) =>
+        donnee.nom.toLowerCase().includes(filtre) &&
+        (!stockDisponible || donnee.stock > 0) 
+    );
+  
     setResultats(resultatsFiltres);
     setAucunResultat(resultatsFiltres.length === 0);
   }
+  
 
   function handleFilterClick() {
     setAfficherFiltre(!afficherFiltre);
+    setStockDisponible(false);
     setIsOpen(true);
   }
 
   useEffect(() => {
     axios
-      .get("http://airneis.ddns.net:3000/recherche.php")
-      .then((response) => {
-        setDonnees(response.data);
-        setResultats(response.data);
-      })
-      .catch((error) => {
-      });
+  .get("http://airneis.ddns.net:3000/recherche.php", {
+    params: {
+      stock_disponible: stockDisponible ? 1 : 0,
+    },
+  })
+  .then((response) => {
+    setDonnees(response.data);
+    setResultats(response.data);
+  })
+  .catch((error) => {});
+
   }, []);
 
   return (
