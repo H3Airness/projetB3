@@ -5,53 +5,95 @@ import { Link } from "react-router-dom";
 import Filtre from "../Filtre";
 
 const Recherche = () => {
-  const [recherche, setRecherche] = useState("");
   const [donnees, setDonnees] = useState([]);
   const [resultats, setResultats] = useState([]);
-  const [stockDisponible, setStockDisponible] = useState(false);
   const [aucunResultat, setAucunResultat] = useState(false);
   const [afficherFiltre, setAfficherFiltre] = useState(false);
-  const {ajouter} = useContext(dataContext);
-
-  function handleChange(event) {
-    setRecherche(event.target.value);
-  }
+  const [filtreRecherche, setFiltreRecherche] = useState("");
+  const { ajouter } = useContext(dataContext);
 
   function handleSubmit(event) {
     event.preventDefault();
-  
-    const filtre = recherche.trim().toLowerCase();
-    const resultatsFiltres = donnees.filter(
-      (donnee) =>
-        donnee.nom.toLowerCase().includes(filtre) &&
-        (!stockDisponible || donnee.stock > 0) 
-    );
-  
+
+    const filtreRechercheTrimmed = filtreRecherche.trim().toLowerCase();
+    const resultatsFiltres = donnees.filter((donnee) => {
+      const nomProduit = donnee.nom.toLowerCase();
+      // Correspondance exacte
+      if (nomProduit === filtreRechercheTrimmed) {
+        return true;
+      }
+      if (
+        nomProduit.length === filtreRechercheTrimmed.length &&
+        differeDUnCaractere(nomProduit, filtreRechercheTrimmed)
+      ) {
+        return true;
+      }
+      if (nomProduit.startsWith(filtreRechercheTrimmed)) {
+        return true;
+      }
+      if (nomProduit.includes(filtreRechercheTrimmed)) {
+        return true;
+      }
+      return false;
+    });
+
     setResultats(resultatsFiltres);
     setAucunResultat(resultatsFiltres.length === 0);
   }
-  
 
   function handleFilterClick() {
+    setFiltreRecherche("");
     setAfficherFiltre(!afficherFiltre);
-    setStockDisponible(false);
-    setIsOpen(true);
   }
 
   useEffect(() => {
+    const filtreRechercheTrimmed = filtreRecherche.trim().toLowerCase();
     axios
-  .get("http://airneis.ddns.net:3000/recherche.php", {
-    params: {
-      stock_disponible: stockDisponible ? 1 : 0,
-    },
-  })
-  .then((response) => {
-    setDonnees(response.data);
-    setResultats(response.data);
-  })
-  .catch((error) => {});
+      .get("http://airneis.ddns.net:3000/recherche.php", {
+        params: {
+          recherche: filtreRechercheTrimmed,
+        },
+      })
+      .then((response) => {
+        const resultatsFiltres = response.data.filter((donnee) => {
+          const nomProduit = donnee.nom.toLowerCase();
+          // Correspondance exacte
+          if (nomProduit === filtreRechercheTrimmed) {
+            return true;
+          }
+          if (
+            nomProduit.length === filtreRechercheTrimmed.length &&
+            differeDUnCaractere(nomProduit, filtreRechercheTrimmed)
+          ) {
+            return true;
+          }
+          if (nomProduit.startsWith(filtreRechercheTrimmed)) {
+            return true;
+          }
+          if (nomProduit.includes(filtreRechercheTrimmed)) {
+            return true;
+          }
+          return false;
+        });
 
-  }, []);
+        setResultats(resultatsFiltres);
+        setAucunResultat(resultatsFiltres.length === 0);
+      })
+      .catch((error) => {});
+  }, [filtreRecherche]);
+
+  function differeDUnCaractere(chaine1, chaine2) {
+    let diffCount = 0;
+    for (let i = 0; i < chaine1.length; i++) {
+      if (chaine1[i] !== chaine2[i]) {
+        diffCount++;
+        if (diffCount > 1) {
+          return false;
+        }
+      }
+    }
+    return diffCount === 1;
+  }
 
   return (
     <>
@@ -68,8 +110,8 @@ const Recherche = () => {
                   type="text"
                   className="form-control"
                   placeholder="Rechercher des produits"
-                  value={recherche}
-                  onChange={handleChange}
+                  value={filtreRecherche}
+                  onChange={(event) => setFiltreRecherche(event.target.value)}
                 />
                 <div className="input-group-append justify-content-end align-items-center">
                   <button
@@ -77,7 +119,11 @@ const Recherche = () => {
                     className="btn btn-primary"
                     style={{ marginLeft: "10px", marginTop: "5px" }}
                   >
-                    <img style={{width:"24px"}} src="http://airneis.ddns.net:3000/img/icon_recherche.png"></img>
+                    <img
+                      style={{ width: "24px" }}
+                      src="http://airneis.ddns.net:3000/img/icon_recherche.png"
+                      alt="Rechercher"
+                    />
                     Rechercher
                   </button>
                   <button
@@ -99,7 +145,13 @@ const Recherche = () => {
           Aucun résultat trouvé pour votre recherche.
         </div>
       )}
-      {afficherFiltre && <Filtre setDonnees={setResultats} fermerFiltre={() => setAfficherFiltre(false)} />}
+      {afficherFiltre && (
+        <Filtre
+          setDonnees={setResultats}
+          setResultats={setResultats}
+          fermerFiltre={() => setAfficherFiltre(false)}
+        />
+      )}
       <div className="container mt-4">
         <div className="row justify-content-center">
           {resultats.map((resultat) => (
@@ -118,7 +170,7 @@ const Recherche = () => {
                   <p className="price-text">{resultat.prix} €</p>
                   <center>
                     {resultat.stock > 0 ? (
-                      <button className="add-to-cart-btn" onClick={() => ajouter(resultat) }>
+                      <button className="add-to-cart-btn" onClick={() => ajouter(resultat)}>
                         <span>Ajouter au panier 🛒</span>
                       </button>
                     ) : (
