@@ -24,7 +24,7 @@ Le code du site backoffice est organisé de la manière suivante :
 
 • src/: Ce répertoire contient le code source principal du site backoffice. Voici une brève description de certains fichiers et répertoires importants à l'intérieur de "src/":
 
-• components/: Ce répertoire contient les composants réutilisables du backoffice, tels que les formulaires, les boutons, etc.
+• composants/: Ce répertoire contient les composants réutilisables du backoffice, tels que les formulaires, les boutons, etc.
 
 • pages/: Ce répertoire contient les pages principales du backoffice, telles que la page de liste des articles, la page de modification d'article, etc.
 

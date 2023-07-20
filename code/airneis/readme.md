@@ -21,7 +21,7 @@ Le code du site web Airneis est organisé de la manière suivante :
 
  • src/: Ce répertoire contient le code source principal du site web. Voici une brève description de certains fichiers et répertoires importants à l'intérieur de "src/":  
 
- • components/: Ce répertoire contient les composants réutilisables du site, tels que les en-têtes, les pieds de page, les cartes de produits, etc.  
+ • composants/: Ce répertoire contient les composants réutilisables du site, tels que les en-têtes, les pieds de page, les cartes de produits, etc.  
 
  • pages/: Ce répertoire contient les pages principales du site, telles que la page d'accueil, les pages de catégories, la page de détails du produit, etc.  
 
