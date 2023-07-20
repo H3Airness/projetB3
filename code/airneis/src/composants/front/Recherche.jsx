@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { dataContext } from "../context/dataContext";
 import { Link } from "react-router-dom";
 import Filtre from "../Filtre";
-
 
 const Recherche = () => {
   const [donnees, setDonnees] = useState([]);
@@ -14,6 +13,7 @@ const Recherche = () => {
   const { ajouter } = useContext(dataContext);
   const [produitsParPage, setProduitsParPage] = useState(10);
   const [pageCourante, setPageCourante] = useState(1);
+  const conteneurRef = useRef(null); 
 
   useEffect(() => {
     axios
@@ -28,13 +28,11 @@ const Recherche = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    
     setPageCourante(1);
 
     const filtreRechercheTrimmed = filtreRecherche.trim().toLowerCase();
     const resultatsFiltres = donnees.filter((donnee) => {
       const nomProduit = donnee.nom.toLowerCase();
-    
       if (nomProduit === filtreRechercheTrimmed) {
         return true;
       }
@@ -77,7 +75,6 @@ const Recherche = () => {
         .then((response) => {
           const resultatsFiltres = response.data.filter((donnee) => {
             const nomProduit = donnee.nom.toLowerCase();
-            
             if (nomProduit === filtreRechercheTrimmed) {
               return true;
             }
@@ -101,8 +98,13 @@ const Recherche = () => {
         })
         .catch((error) => {});
     }
-    setPageCourante(1); 
+    setPageCourante(1);
   }, [filtreRecherche]);
+
+  useEffect(() => {
+ 
+    conteneurRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [pageCourante]);
 
   function differeDUnCaractere(chaine1, chaine2) {
     let diffCount = 0;
@@ -179,7 +181,7 @@ const Recherche = () => {
           fermerFiltre={() => setAfficherFiltre(false)}
         />
       )}
-      <div className="container mt-4">
+      <div className="container mt-4" ref={conteneurRef}>
         <div className="row justify-content-center">
           {produitsAffiches.map((resultat) => (
             <div className="col-md-4 mb-3" key={resultat.id}>
