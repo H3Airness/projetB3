@@ -27,15 +27,7 @@ export const InfoCommandeProvider = ({ children }) => {
 
   return (
     <InfoCommandeContext.Provider
-      value={{
-        adresseLivraison,
-        adresseFacturation,
-        paiement,
-        adresseLivraisonSelectionner,
-        adresseLivraisonFacturation,
-        moyenPaiement,
-        reinitialiserCommande,
-      }}
+      value={{ adresseLivraison, adresseFacturation, paiement, adresseLivraisonSelectionner, adresseLivraisonFacturation, moyenPaiement, reinitialiserCommande, }}
     >
       {children}
     </InfoCommandeContext.Provider>

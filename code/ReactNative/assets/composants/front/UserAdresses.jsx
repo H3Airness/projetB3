@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Button, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
@@ -247,6 +247,24 @@ const UserAdresses = () => {
     }
   };
 
+  const handleConfirmDeleteFacturation = () => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir supprimer cette adresse de facturation ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => handleDeleteFacturation(),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const handleDeleteFacturation = async () => {
     try {
       const response = await axios.post('http://airneis.ddns.net:3000/update_info_facturation.php', {
@@ -279,6 +297,24 @@ const UserAdresses = () => {
     }
   };
 
+  const handleConfirmDeleteLivraison = () => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir supprimer cette adresse de livraison ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => handleDeleteAdresse(),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const handleDeleteAdresse = async () => {
     try {
       await axios.delete(`http://airneis.ddns.net:3000/delete_info_livraison.php?id=${selectedAdresseId}`);
@@ -296,11 +332,11 @@ const UserAdresses = () => {
   return (
     <>
       {isLoggedIn ? (
-        <View style={styles.container}>
+        <View style={styles.containerCgu}>
           <ScrollView>
-            <Text style={styles.title}>Récapitulatif de votre compte</Text>
+            <Text style={styles.titleCgu}>Récapitulatif de votre compte</Text>
             <View>
-              <Text style={styles.sectionTitle}>Carnet d'adresses</Text>
+              <Text style={styles.titleCgu2}>Carnet d'adresses</Text>
               {successMessageLivraison && <Text style={styles.successMessage}>{successMessageLivraison}</Text>}
               {successMessageFacturation && <Text style={styles.successMessage}>{successMessageFacturation}</Text>}
               {editModeLivraison && (
@@ -360,12 +396,13 @@ const UserAdresses = () => {
                         placeholder="Pays"
                         required
                     />
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button} onPress={handleSubmitLivraison}>
-                        <Text style={styles.buttonText}>Enregistrer 💾</Text>
+                    <View style={styles.buttonGroup}>
+                        <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitLivraison}>
+                        <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={handleCancelLivraison}>
-                        <Text style={styles.buttonText}>Annuler ❌</Text>
+                        <View style={styles.dividerbtn}/>
+                        <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelLivraison}>
+                        <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -416,12 +453,13 @@ const UserAdresses = () => {
                 placeholder="Pays"
                 required
               />
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={handleSubmitFacturation}>
-                  <Text style={styles.buttonText}>Enregistrer 💾</Text>
+              <View style={styles.buttonGroup}>
+                <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitFacturation}>
+                  <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleCancelFacturation}>
-                  <Text style={styles.buttonText}>Annuler ❌</Text>
+                <View style={styles.dividerbtn}/>
+                <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelFacturation}>
+                  <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -443,20 +481,21 @@ const UserAdresses = () => {
                       </Picker>
                       {selectedAdresseId !== "" && (
                         <View style={styles.adresseContainer}>
-                          <Text>Nom de l'adresse: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</Text></Text>
-                          <Text>Nom: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</Text></Text>
-                          <Text>Prénom: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</Text></Text>
-                          <Text>Adresse: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</Text></Text>
-                          <Text>Adresse 2: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</Text></Text>
-                          <Text>Code postal: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</Text></Text>
-                          <Text>Ville: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</Text></Text>
-                          <Text>Pays: <Text style={styles.bold}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</Text></Text>
-                          <View style={styles.centeredButtonContainer}>
-                            <TouchableOpacity style={styles.button} onPress={handleEditLivraison}>
-                              <Text style={styles.buttonText}>Modifier ⚙️</Text>
+                          <Text>Nom de l'adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</Text></Text>
+                          <Text>Nom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</Text></Text>
+                          <Text>Prénom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</Text></Text>
+                          <Text>Adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</Text></Text>
+                          <Text>Adresse 2: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</Text></Text>
+                          <Text>Code postal: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</Text></Text>
+                          <Text>Ville: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</Text></Text>
+                          <Text>Pays: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</Text></Text>
+                          <View style={styles.buttonGroup}>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleEditLivraison}>
+                              <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button} onPress={handleDeleteAdresse}>
-                              <Text style={styles.buttonText}>Supprimer ⛒</Text>
+                            <View style={styles.dividerbtn}/>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleConfirmDeleteLivraison}>
+                              <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
                             </TouchableOpacity>
                           </View>
                         </View>
@@ -469,10 +508,12 @@ const UserAdresses = () => {
                   )}
                 </View>
                 <View style={styles.centeredButtonContainer}>
-                  <TouchableOpacity style={styles.button} onPress={handleAjoutLivraison}>
-                    <Text style={styles.buttonText}>Ajouter une adresse ➕</Text>
+                  <TouchableOpacity style={styles.ajouterButton} onPress={handleAjoutLivraison}>
+                    <Text style={styles.ajouterButtonText}>Ajouter une adresse ➕</Text>
                   </TouchableOpacity>
                 </View>
+                <View style={styles.dividerbtn}/>
+                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
 
                 <View>
                     <Text style={styles.sectionTitle}>Adresse de facturation</Text>
@@ -484,25 +525,32 @@ const UserAdresses = () => {
                         <Text>Code postal: <Text style={styles.boldText}>{accountFac.code_postal_facturation}</Text></Text>
                         <Text>Ville: <Text style={styles.boldText}>{accountFac.ville_facturation}</Text></Text>
                         <Text>Pays: <Text style={styles.boldText}>{accountFac.pays_facturation}</Text></Text>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={handleEditFacturation} style={styles.button}>
-                            <Text style={styles.buttonText}>Modifier ⚙️</Text>
+                        <View style={styles.buttonGroup}>
+                            <TouchableOpacity onPress={handleEditFacturation} style={styles.ajouterButton}>
+                            <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={handleDeleteFacturation} style={styles.button}>
-                            <Text style={styles.buttonText}>Supprimer ⛒</Text>
+                            <View style={styles.dividerbtn}/>
+                            <TouchableOpacity onPress={handleConfirmDeleteFacturation} style={styles.ajouterButton}>
+                            <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
                             </TouchableOpacity>
                         </View>
-                        </View>
+                      </View>
                     ) : (
-                        <View>
+                      <View>
                         <Text>Aucune adresse de facturation enregistrée.</Text>
-                        <TouchableOpacity onPress={handleEditFacturation} style={styles.addButton}>
-                            <Text style={styles.buttonText}>Ajouter une adresse de facturation</Text>
+                        <TouchableOpacity onPress={handleEditFacturation} style={styles.ajouterButton}>
+                            <Text style={styles.ajouterButtonText}>Ajouter une adresse de facturation ➕</Text>
                         </TouchableOpacity>
                         </View>
                     )}
                     </View>
-
+                    <View style={styles.buttonGroup} />
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={styles.ajouterButton}
+                    >
+                      <Text style={styles.ajouterButtonText}>Retour</Text>
+                    </TouchableOpacity>
               </View>
             )}
           </ScrollView>

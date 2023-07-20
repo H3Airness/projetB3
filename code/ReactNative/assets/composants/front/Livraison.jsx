@@ -1,53 +1,35 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
-import { dataContext } from "../context/dataContext";
+import React, { useContext, useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Button, ScrollView, Alert } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import axios from 'axios';
+import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../context/authContext";
 import { InfoCommandeContext } from "../context/InfoCommandeContext";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from "axios";
 import Connexion from "./Connexion";
-import { View, Text, Button, TextInput } from "react-native";
+import { styles } from '../../../Styles';
 
 const Livraison = () => {
-  const { panier, getTotalPanier, getTotalProduit } = useContext(dataContext);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-  const route = useRoute();
+  const { accountId, isLoggedIn } = useContext(AuthContext);
+  const [accountInfo, setAccountInfo] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [accountFac, setAccountFac] = useState({});
+  const [editModeLivraison, setEditModeLivraison] = useState(false);
+  const [successMessageLivraison, setSuccessMessageLivraison] = useState(null);
+  const [successMessageFacturation, setSuccessMessageFacturation] = useState(null);
   const [selectedAdresseId, setSelectedAdresseId] = useState("");
-  const { adresseLivraisonSelectionner, adresseLivraisonFacturation } = useContext(
-    InfoCommandeContext
-  );
-
-  const nomAdresseLivraisonRef = useRef();
-  const nomLivraisonRef = useRef();
-  const prenomLivraisonRef = useRef();
-  const adresseLivraisonRef = useRef();
-  const adresse2LivraisonRef = useRef();
-  const codePostalLivraisonRef = useRef();
-  const villeLivraisonRef = useRef();
-  const paysLivraisonRef = useRef();
-
-  const nomFacturationRef = useRef();
-  const prenomFacturationRef = useRef();
-  const adresseFacturationRef = useRef();
-  const codePostalFacturationRef = useRef();
-  const villeFacturationRef = useRef();
-  const paysFacturationRef = useRef();
-
- 
-  const handleChangeAdresse = (value) => {
-    setSelectedAdresseId(value);
-  };
-
-  const handlePayer = () => {
-    if (
-      selectedAdresseId &&
+  const { adresseLivraisonSelectionner, adresseLivraisonFacturation } = useContext(InfoCommandeContext);
+  
+  const handlePayer = (e) => {
+    if (selectedAdresseId &&
       (accountFac.nom_facturation ||
         accountFac.prenom_facturation ||
         accountFac.pays_facturation ||
         accountFac.adresse_facturation ||
         accountFac.code_postal_facturation ||
         accountFac.ville_facturation)
-    ) {
+    ){
       const selectedAdresse = accountInfo.find(
         (adresse) => adresse.id === selectedAdresseId
       );
@@ -71,123 +53,563 @@ const Livraison = () => {
         villeFacturation: accountFac.ville_facturation,
         paysFacturation: accountFac.pays_facturation,
       };
-
+    
       adresseLivraisonSelectionner(adresseLivraison);
       adresseLivraisonFacturation(adresseFacturation);
-      navigation.navigate("Paiement");
+      navigation.navigate("paiement");
     } else {
-      setErrorMessage(
-        "Veuillez renseigner une adresse de livraison et une adresse de facturation"
-      );
+      setErrorMessage("Veuillez renseigner une adresse de livraison et une adresse de facturation");
     }
   };
 
-  const [loading, setLoading] = useState(true);
-  const { accountId, isLoggedIn } = useContext(AuthContext);
-  const [accountInfo, setAccountInfo] = useState([]);
-  const [accountFac, setAccountFac] = useState({});
-  const [adresseExistante, setAdresseExistante] = useState(false);
+  const [formDataLivraison, setFormDataLivraison] = useState({
+    nomAdresse: '',
+    nom: '',
+    prenom: '',
+    adresseLivraison: '',
+    adresseLivraison2: '',
+    codePostalLivraison: '',
+    villeLivraison: '',
+    pays: '',
+  });
+  const [editModeFacturation, setEditModeFacturation] = useState(false);
+  const [formDataFacturation, setFormDataFacturation] = useState({
+    nomFacturation:'',
+    prenomFacturation:'',
+    adresseFacturation: '',
+    codePostalFacturation: '',
+    villeFacturation: '',
+    paysFacturation: '',
+  });
 
   useEffect(() => {
-    const fetchAccountInfo = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://airneis.ddns.net:3000/info_livraison.php?accountId=${accountId}`);
-        setAccountInfo(response.data.adresses);
-        setAccountFac(response.data.fac);
-        setLoading(false);
+        const accountRes = await axios.get(`http://airneis.ddns.net:3000/info_livraison.php?accountId=${accountId}`);
+        if (accountRes.data.status === 'success') {
+          setAccountInfo(accountRes.data.accountLivraisons);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
       } catch (error) {
-        console.error(error);
+        setLoading(false);
       }
     };
+    fetchData();
+  }, [accountId]);
 
-    if (isLoggedIn) {
-      fetchAccountInfo();
-    } else {
-      setLoading(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accountRes = await axios.get(`http://airneis.ddns.net:3000/info_facturation.php?accountId=${accountId}`);
+        if (accountRes.data.status === 'success') {
+          setAccountFac(accountRes.data.accountLivraison);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      } catch (error) {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [accountId]);
+
+  const handleInputChangeLivraison = (name, value) => {
+    setFormDataLivraison({ ...formDataLivraison, [name]: value });
+  };
+
+  const handleInputChangeFacturation = (name, value) => {
+    setFormDataFacturation({ ...formDataFacturation, [name]: value });
+  };
+
+  const handleEditLivraison = () => {
+    setEditModeLivraison(true);
+    setEditModeFacturation(false);
+  
+    const selectedAdresse = accountInfo.find((adresse) => adresse.id === selectedAdresseId);
+  
+    setFormDataLivraison({
+      nomAdresse: selectedAdresse.nom_adresse,
+      nom: selectedAdresse.nom,
+      prenom: selectedAdresse.prenom,
+      adresseLivraison: selectedAdresse.adresse1,
+      adresseLivraison2: selectedAdresse.adresse2,
+      codePostalLivraison: selectedAdresse.code_postal,
+      villeLivraison: selectedAdresse.ville,
+      pays: selectedAdresse.pays,
+    });
+  
+    setFormDataFacturation({
+      nomFacturation: '',
+      prenomFacturation: '',
+      adresseFacturation: '',
+      codePostalFacturation: '',
+      villeFacturation: '',
+      paysFacturation: '',
+    });
+  };
+
+  const handleAjoutLivraison = () => {
+    setEditModeLivraison(true);
+    setEditModeFacturation(false);
+    setSelectedAdresseId("");
+  
+    const selectedAdresse = accountInfo.find((adresse) => adresse.id === selectedAdresseId);
+  
+    setFormDataLivraison({
+      nomAdresse: '',
+      nom: '',
+      prenom: '',
+      adresseLivraison: '',
+      adresseLivraison2: '',
+      codePostalLivraison: '',
+      villeLivraison: '',
+      pays: '',
+    });
+  
+    setFormDataFacturation({
+      nomFacturation: '',
+      prenomFacturation: '',
+      adresseFacturation: '',
+      codePostalFacturation: '',
+      villeFacturation: '',
+      paysFacturation: '',
+    });
+  };
+  
+  const handleEditFacturation = () => {
+    setEditModeFacturation(true);
+    setEditModeLivraison(false);
+  
+    setFormDataLivraison({
+      nomAdresse: '',
+      nom: '',
+      prenom: '',
+      adresseLivraison: '',
+      adresseLivraison2: '',
+      codePostalLivraison: '',
+      villeLivraison: '',
+      pays: '',
+    });
+  
+    setFormDataFacturation({
+      nomFacturation: accountFac.nom_facturation,
+      prenomFacturation: accountFac.prenom_facturation,
+      adresseFacturation: accountFac.adresse_facturation,
+      codePostalFacturation: accountFac.code_postal_facturation,
+      villeFacturation: accountFac.ville_facturation,
+      paysFacturation: accountFac.pays_facturation,
+    });
+  };
+
+  const handleCancelLivraison = () => {
+    setEditModeLivraison(false);
+  };
+
+  const handleCancelFacturation = () => {
+    setEditModeFacturation(false);
+  };
+
+  const handleSubmitLivraison = async () => {
+    
+    try {
+      const response = await axios.post('http://airneis.ddns.net:3000/update_info_livraison.php', {
+        accountId,
+        id: selectedAdresseId === "" ? null : selectedAdresseId,
+        nomAdresse: formDataLivraison.nomAdresse,
+        nom: formDataLivraison.nom,
+        prenom: formDataLivraison.prenom,
+        adresseLivraison: formDataLivraison.adresseLivraison,
+        adresseLivraison2: formDataLivraison.adresseLivraison2,
+        codePostalLivraison: formDataLivraison.codePostalLivraison,
+        villeLivraison: formDataLivraison.villeLivraison,
+        pays: formDataLivraison.pays,
+      });
+      if (response.data.status === 'success') {
+        setEditModeLivraison(false);
+        const updatedAccountInfo = accountInfo.map((adresse) => {
+          if (adresse.id === selectedAdresseId) {
+            return {
+              ...adresse,
+              nom_adresse: formDataLivraison.nomAdresse,
+              nom: formDataLivraison.nom,
+              prenom: formDataLivraison.prenom,
+              adresse1: formDataLivraison.adresseLivraison,
+              adresse2: formDataLivraison.adresseLivraison2,
+              code_postal: formDataLivraison.codePostalLivraison,
+              ville: formDataLivraison.villeLivraison,
+              pays: formDataLivraison.pays,
+            };
+          }
+          return adresse;
+        });
+        setAccountInfo(updatedAccountInfo);
+        setSuccessMessageLivraison('Les informations de livraison ont été mises à jour avec succès.');
+        setTimeout(() => {
+          setSuccessMessageLivraison(null);
+        }, 2000);
+        navigation.navigate("adresse");
+
+      } else {
+      }
+    } catch (error) {
     }
-  }, [accountId, isLoggedIn]);
+  };
+
+  const handleSubmitFacturation = async () => {
+    
+    try {
+      const response = await axios.post('http://airneis.ddns.net:3000/update_info_facturation.php', {
+        accountId,
+        nomFacturation: formDataFacturation.nomFacturation,
+        prenomFacturation: formDataFacturation.prenomFacturation,
+        adresseFacturation: formDataFacturation.adresseFacturation,
+        codePostalFacturation: formDataFacturation.codePostalFacturation,
+        villeFacturation: formDataFacturation.villeFacturation,
+        paysFacturation: formDataFacturation.paysFacturation,
+      });
+      if (response.data.status === 'success') {
+        setEditModeFacturation(false);
+        setAccountFac({
+          ...accountFac,
+          nom_facturation: formDataFacturation.nomFacturation,
+          prenom_facturation: formDataFacturation.prenomFacturation,
+          adresse_facturation: formDataFacturation.adresseFacturation,
+          code_postal_facturation: formDataFacturation.codePostalFacturation,
+          ville_facturation: formDataFacturation.villeFacturation,
+          pays_facturation: formDataFacturation.paysFacturation,
+        });
+        setSuccessMessageFacturation('Les informations de facturation ont été mises à jour avec succès.');
+        setTimeout(() => {
+          setSuccessMessageFacturation(null);
+        }, 2000);
+      } else {
+      }
+    } catch (error) {
+    }
+  };
+
+  const handleConfirmDeleteFacturation = () => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir supprimer cette adresse de facturation ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => handleDeleteFacturation(),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const handleDeleteFacturation = async () => {
+    try {
+      const response = await axios.post('http://airneis.ddns.net:3000/update_info_facturation.php', {
+        accountId,
+        nomFacturation: '',
+        prenomFacturation: '',
+        adresseFacturation: '',
+        codePostalFacturation: null,
+        villeFacturation: '',
+        paysFacturation: '',
+      });
+      if (response.data.status === 'success') {
+        setEditModeFacturation(false);
+        setAccountFac({
+          ...accountFac,
+          nom_facturation: formDataFacturation.nomFacturation,
+          prenom_facturation: formDataFacturation.prenomFacturation,
+          adresse_facturation: formDataFacturation.adresseFacturation,
+          code_postal_facturation: formDataFacturation.codePostalFacturation,
+          ville_facturation: formDataFacturation.villeFacturation,
+          pays_facturation: formDataFacturation.paysFacturation,
+        });
+        setSuccessMessageFacturation('Les informations de facturation ont été mises à jour avec succès.');
+        setTimeout(() => {
+          setSuccessMessageFacturation(null);
+        }, 2000);
+      } else {
+      }
+    } catch (error) {
+    }
+  };
+
+  const handleConfirmDeleteLivraison = () => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir supprimer cette adresse de livraison ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => handleDeleteAdresse(),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const handleDeleteAdresse = async () => {
+    try {
+      await axios.delete(`http://airneis.ddns.net:3000/delete_info_livraison.php?id=${selectedAdresseId}`);
+      navigation.navigate("adresse");
+      setSelectedAdresseId("");
+    } catch (error) {
+    }
+  };
+  
 
   if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (!isLoggedIn) {
-    return <Connexion />;
+    return <Text>Chargement...</Text>;
   }
 
   return (
-    <View>
-      <Text>Page de Livraison</Text>
+    <>
+      {isLoggedIn ? (
+        <View style={styles.containerCgu}>
+          <ScrollView>
+            <Text style={styles.titleCgu}>Récapitulatif de votre compte</Text>
+            <View>
+              <Text style={styles.titleCgu2}>Carnet d'adresses</Text>
+              {successMessageLivraison && <Text style={styles.successMessage}>{successMessageLivraison}</Text>}
+              {successMessageFacturation && <Text style={styles.successMessage}>{successMessageFacturation}</Text>}
+              {editModeLivraison && (
+                <View>
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.nomAdresse}
+                        onChangeText={(value) => handleInputChangeLivraison("nomAdresse", value)}
+                        placeholder="Nom de l'adresse"
+                        required
+                    />
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.nom}
+                        onChangeText={(value) => handleInputChangeLivraison("nom", value)}
+                        placeholder="Nom"
+                        required
+                    />
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.prenom}
+                        onChangeText={(value) => handleInputChangeLivraison("prenom", value)}
+                        placeholder="Prénom"
+                        required
+                    />
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.adresseLivraison}
+                        onChangeText={(value) => handleInputChangeLivraison("adresseLivraison", value)}
+                        placeholder="Adresse"
+                        required
+                    />
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.adresseLivraison2}
+                        onChangeText={(value) => handleInputChangeLivraison("adresseLivraison2", value)}
+                        placeholder="Adresse 2 (optionnel)"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.codePostalLivraison}
+                        onChangeText={(value) => handleInputChangeLivraison("codePostalLivraison", value)}
+                        placeholder="Code postal"
+                        required
+                    />
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.villeLivraison}
+                        onChangeText={(value) => handleInputChangeLivraison("villeLivraison", value)}
+                        placeholder="Ville"
+                        required
+                    />
+                    <TextInput
+                        style={styles.input}
+                        value={formDataLivraison.pays}
+                        onChangeText={(value) => handleInputChangeLivraison("pays", value)}
+                        placeholder="Pays"
+                        required
+                    />
+                    <View style={styles.buttonGroup}>
+                        <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitLivraison}>
+                        <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
+                        </TouchableOpacity>
+                        <View style={styles.dividerbtn}/>
+                        <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelLivraison}>
+                        <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+              )}
+            </View>
+            {editModeFacturation && (
+            <View>
+              <Text style={styles.sectionTitle}>Adresse de facturation</Text>
+              <TextInput
+                style={styles.input}
+                value={formDataFacturation.nomFacturation}
+                onChangeText={(value) => handleInputChangeFacturation("nomFacturation", value)}
+                placeholder="Nom"
+                required
+              />
+              <TextInput
+                style={styles.input}
+                value={formDataFacturation.prenomFacturation}
+                onChangeText={(value) => handleInputChangeFacturation("prenomFacturation", value)}
+                placeholder="Prénom"
+                required
+              />
+              <TextInput
+                style={styles.input}
+                value={formDataFacturation.adresseFacturation}
+                onChangeText={(value) => handleInputChangeFacturation("adresseFacturation", value)}
+                placeholder="Adresse"
+                required
+              />
+              <TextInput
+                style={styles.input}
+                value={formDataFacturation.codePostalFacturation}
+                onChangeText={(value) => handleInputChangeFacturation("codePostalFacturation", value)}
+                placeholder="Code postal"
+                required
+              />
+              <TextInput
+                style={styles.input}
+                value={formDataFacturation.villeFacturation}
+                onChangeText={(value) => handleInputChangeFacturation("villeFacturation", value)}
+                placeholder="Ville"
+                required
+              />
+              <TextInput
+                style={styles.input}
+                value={formDataFacturation.paysFacturation}
+                onChangeText={(value) => handleInputChangeFacturation("paysFacturation", value)}
+                placeholder="Pays"
+                required
+              />
+              <View style={styles.buttonGroup}>
+                <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitFacturation}>
+                  <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
+                </TouchableOpacity>
+                <View style={styles.dividerbtn}/>
+                <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelFacturation}>
+                  <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            )}
+            {!editModeLivraison && !editModeFacturation && (
+              <View>
+                <View>
+                  <Text style={styles.sectionTitle}>Adresse de livraison</Text>
+                  {accountInfo.length > 0 ? (
+                    <View>
+                      <Picker
+                        selectedValue={selectedAdresseId}
+                        onValueChange={(itemValue) => setSelectedAdresseId(itemValue)}
+                      >
+                        <Picker.Item label="Sélectionner une adresse" value="" />
+                        {accountInfo.map((adresse) => (
+                          <Picker.Item key={adresse.id} label={adresse.nom_adresse} value={adresse.id} />
+                        ))}
+                      </Picker>
+                      {selectedAdresseId !== "" && (
+                        <View style={styles.adresseContainer}>
+                          <Text>Nom de l'adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</Text></Text>
+                          <Text>Nom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</Text></Text>
+                          <Text>Prénom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</Text></Text>
+                          <Text>Adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</Text></Text>
+                          <Text>Adresse 2: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</Text></Text>
+                          <Text>Code postal: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</Text></Text>
+                          <Text>Ville: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</Text></Text>
+                          <Text>Pays: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</Text></Text>
+                          <View style={styles.buttonGroup}>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleEditLivraison}>
+                              <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
+                            </TouchableOpacity>
+                            <View style={styles.dividerbtn}/>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleConfirmDeleteLivraison}>
+                              <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      )}
+                    </View>
+                  ) : (
+                    <View>
+                      <Text>Aucune adresse de livraison enregistrée</Text>
+                    </View>
+                  )}
+                </View>
+                <View style={styles.centeredButtonContainer}>
+                  <TouchableOpacity style={styles.ajouterButton} onPress={handleAjoutLivraison}>
+                    <Text style={styles.ajouterButtonText}>Ajouter une adresse ➕</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.dividerbtn}/>
+                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
 
-      {errorMessage ? <Text>{errorMessage}</Text> : null}
+                <View>
+                    <Text style={styles.sectionTitle}>Adresse de facturation</Text>
+                    {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
+                        <View>
+                        <Text>Nom: <Text style={styles.boldText}>{accountFac.nom_facturation}</Text></Text>
+                        <Text>Prénom: <Text style={styles.boldText}>{accountFac.prenom_facturation}</Text></Text>
+                        <Text>Adresse: <Text style={styles.boldText}>{accountFac.adresse_facturation}</Text></Text>
+                        <Text>Code postal: <Text style={styles.boldText}>{accountFac.code_postal_facturation}</Text></Text>
+                        <Text>Ville: <Text style={styles.boldText}>{accountFac.ville_facturation}</Text></Text>
+                        <Text>Pays: <Text style={styles.boldText}>{accountFac.pays_facturation}</Text></Text>
+                        <View style={styles.buttonGroup}>
+                            <TouchableOpacity onPress={handleEditFacturation} style={styles.ajouterButton}>
+                            <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
+                            </TouchableOpacity>
+                            <View style={styles.dividerbtn}/>
+                            <TouchableOpacity onPress={handleConfirmDeleteFacturation} style={styles.ajouterButton}>
+                            <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
+                            </TouchableOpacity>
+                        </View>
+                      </View>
+                    ) : (
+                      <View>
+                        <Text>Aucune adresse de facturation enregistrée.</Text>
+                        <TouchableOpacity onPress={handleEditFacturation} style={styles.ajouterButton}>
+                            <Text style={styles.ajouterButtonText}>Ajouter une adresse de facturation ➕</Text>
+                        </TouchableOpacity>
+                        </View>
+                    )}
+                    </View>
 
-      <Text>Adresse de livraison</Text>
-      <View>
-        <Text>Adresse existante :</Text>
-      </View>
-
-      <Text>Nouvelle adresse :</Text>
-      <TextInput
-        ref={nomAdresseLivraisonRef}
-        placeholder="Nom adresse"
-      />
-      <TextInput
-        ref={nomLivraisonRef}
-        placeholder="Nom"
-      />
-      <TextInput
-        ref={prenomLivraisonRef}
-        placeholder="Prénom"
-      />
-      <TextInput
-        ref={adresseLivraisonRef}
-        placeholder="Adresse"
-      />
-      <TextInput
-        ref={adresse2LivraisonRef}
-        placeholder="Adresse 2"
-      />
-      <TextInput
-        ref={codePostalLivraisonRef}
-        placeholder="Code postal"
-      />
-      <TextInput
-        ref={villeLivraisonRef}
-        placeholder="Ville"
-      />
-      <TextInput
-        ref={paysLivraisonRef}
-        placeholder="Pays"
-      />
-
-      <Text>Adresse de facturation :</Text>
-      <TextInput
-        ref={nomFacturationRef}
-        placeholder="Nom"
-      />
-      <TextInput
-        ref={prenomFacturationRef}
-        placeholder="Prénom"
-      />
-      <TextInput
-        ref={adresseFacturationRef}
-        placeholder="Adresse"
-      />
-      <TextInput
-        ref={codePostalFacturationRef}
-        placeholder="Code postal"
-      />
-      <TextInput
-        ref={villeFacturationRef}
-        placeholder="Ville"
-      />
-      <TextInput
-        ref={paysFacturationRef}
-        placeholder="Pays"
-      />
-
-      <Button title="Payer" onPress={handlePayer} />
-    </View>
+                    <View>
+                      {errorMessage && (
+                        <Text style={styles.errorText}>{errorMessage}</Text>
+                      )}
+                    </View>
+                    <View style={styles.buttonGroup} />
+                    <Button title="Payer" onPress={handlePayer} />
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={styles.ajouterButton}
+                    >
+                      <Text style={styles.ajouterButtonText}>Retour</Text>
+                    </TouchableOpacity>
+              </View>
+            )}
+          </ScrollView>
+        </View>
+      ) : (
+        <Connexion />
+      )}
+    </>    
   );
 };
 

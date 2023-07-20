@@ -6,7 +6,7 @@ import axios from "axios";
 import Connexion from "./Connexion";
 import { styles } from "../../../Styles";
 
-const MoyenDePaiement = () => {
+const Paiement = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const { accountId, isLoggedIn } = useContext(AuthContext);
@@ -312,4 +312,4 @@ const MoyenDePaiement = () => {
   );
 };
 
-export default MoyenDePaiement;
+export default Paiement;
