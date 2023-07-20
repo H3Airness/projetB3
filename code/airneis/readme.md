@@ -51,4 +51,4 @@ ils sont utilisés pour créer un "store" de données qui peut être accessible 
 
  • Utilisez la commande npm run dev pour démarrer le serveur de développement.
 
-Le site web sera accessible dans votre navigateur à l'adresse http://localhost:3000.
+Le site web sera accessible dans votre navigateur à l'adresse http://localhost:5173.
