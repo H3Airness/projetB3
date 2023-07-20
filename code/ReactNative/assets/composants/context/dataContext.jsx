@@ -57,6 +57,11 @@ export function DataContextProvider({ children }) {
     return total;
   }
 
+  function reinitialiserPanier() {
+    setPanier({});
+    setNombreProduits(0);
+  }
+
   return (
     <dataContext.Provider
       value={{
@@ -67,6 +72,7 @@ export function DataContextProvider({ children }) {
         supprimer,
         getTotalProduit,
         getTotalPanier,
+        reinitialiserPanier,
       }}
     >
       {children}

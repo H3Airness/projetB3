@@ -24,6 +24,7 @@ import MesParam from './assets/composants/front/MesParametres';
 import MoyenDePaiement from './assets/composants/front/MoyensDePaiement';
 import Adresse from './assets/composants/front/UserAdresses';
 import MesCommande from './assets/composants/front/MesCommandes';
+import ConfirmationCommande from './assets/composants/front/ConfirmationCommande';
 
 const Stack = createStackNavigator();
 
@@ -60,6 +61,7 @@ function App() {
               <Stack.Screen name="moyenDePaiement" component={MoyenDePaiement} />
               <Stack.Screen name="adresse" component={Adresse} />
               <Stack.Screen name="mesCommande" component={MesCommande} />
+              <Stack.Screen name="confirmationCommande" component={ConfirmationCommande} />
             </Stack.Navigator>
           </NavigationContainer>
         </InfoCommandeProvider>

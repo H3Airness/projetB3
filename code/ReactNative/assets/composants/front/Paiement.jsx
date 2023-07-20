@@ -1,6 +1,9 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { Picker } from '@react-native-picker/picker';
+import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
+import { InfoCommandeContext } from "../context/InfoCommandeContext";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Connexion from "./Connexion";
@@ -10,15 +13,86 @@ const Paiement = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const { accountId, isLoggedIn } = useContext(AuthContext);
+  const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
+  const { adresseLivraison, adresseFacturation, moyenPaiement } = useContext(InfoCommandeContext);
   const [accountPaiement, setAccountPaiement] = useState([]);
   const [successMessagePaiement, setSuccessMessagePaiement] = useState(null);
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const totalPanierString = getTotalPanier().toString();
+  const [disableButton, setDisableButton] = useState(false);
 
-  const nomPaiementRef = useRef();
-  const numeroPaiementRef = useRef();
-  const datePaiementRef = useRef();
-  const cvvPaiementRef = useRef();
+  const produitsCommande = Object.values(panier).map((produit) => ({
+    idProduit: produit.id,
+    nomProduit: produit.nom,
+    prixProduit: produit.prix,
+    quantiteProduit: produit.quantite,
+  }));
+
+  const handlePayer = async () => {
+    if (selectedPaiementId) {
+      const selectedPaiement = accountPaiement.find(
+        (paiement) => paiement.id === selectedPaiementId
+      );
+  
+      try {
+        setDisableButton(true);
+        const response = await axios.post('http://airneis.ddns.net:3000/commande.php', {
+          accountId,
+  
+          nomAdresseLivraison: adresseLivraison.nomAdresseLivraison,
+          nomLivraison: adresseLivraison.nomLivraison,
+          prenomLivraison: adresseLivraison.prenomLivraison,
+          adresseLivraison: adresseLivraison.adresseLivraison,
+          adresseLivraison2: adresseLivraison.adresseLivraison2,
+          codePostalLivraison: adresseLivraison.codePostalLivraison,
+          villeLivraison: adresseLivraison.villeLivraison,
+          paysLivraison: adresseLivraison.paysLivraison,
+  
+          nomFacturation: adresseFacturation.nomFacturation,
+          prenomFacturation: adresseFacturation.prenomFacturation,
+          adresseFacturation: adresseFacturation.adresseFacturation,
+          codePostalFacturation: adresseFacturation.codePostalFacturation,
+          villeFacturation: adresseFacturation.villeFacturation,
+          paysFacturation: adresseFacturation.paysFacturation,
+  
+          nomPaiement: selectedPaiement.nom,
+          numeroPaiement: selectedPaiement.numero,
+          datePaiement: selectedPaiement.date,
+          cvvPaiement: selectedPaiement.cvv,
+
+          totalProduit: nombreProduits,
+          totalPanier: totalPanierString,
+
+          produitsCommande: produitsCommande,
+        });
+  
+        if (response.data.status === 'success') {
+          const { commandeId } = response.data;
+  
+          const Paiement = {
+            nomPaiement: selectedPaiement.nom,
+            numeroPaiement: selectedPaiement.numero,
+            datePaiement: selectedPaiement.date,
+            cvvPaiement: selectedPaiement.cvv,
+            idCommande: commandeId,
+          };
+  
+          moyenPaiement(Paiement);
+          navigation.navigate("confirmationCommande");
+        } else {
+          setErrorMessage(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setDisableButton(false);
+      }
+    } else {
+      setErrorMessage("Veuillez renseigner ou sélectionner un moyen de paiement");
+    }
+  };
 
   const handleChangePaiement = (value) => {
     setSelectedPaiementId(value);
@@ -58,12 +132,14 @@ const Paiement = () => {
   const handleEditPaiement = (paiement) => {
     setEditModePaiement(true);
     setSelectedPaiementId(paiement.id);
+
+    const selectedPaiement = accountPaiement.find((paiement) => paiement.id === selectedPaiementId);
   
     setFormDataPaiement({
-      nom: paiement.nom,
-      numero: paiement.numero,
-      date: paiement.date,
-      cvv: paiement.cvv,
+      nom: selectedPaiement.nom,
+      numero: selectedPaiement.numero,
+      date: selectedPaiement.date,
+      cvv: selectedPaiement.cvv,
     });
   };
   
@@ -169,7 +245,6 @@ const Paiement = () => {
                 {editModePaiement && (
                   <View>
                     <TextInput
-                      ref={nomPaiementRef}
                       style={styles.input}
                       placeholder="Nom sur la carte"
                       value={formDataPaiement.nom}
@@ -179,7 +254,6 @@ const Paiement = () => {
                       required
                     />
                     <TextInput
-                      ref={numeroPaiementRef}
                       style={styles.input}
                       placeholder="Numéro de carte"
                       value={formDataPaiement.numero}
@@ -189,7 +263,6 @@ const Paiement = () => {
                       required
                     />
                     <TextInput
-                      ref={datePaiementRef}
                       style={styles.input}
                       placeholder="Date d'expiration (MM/YY)"
                       value={formDataPaiement.date}
@@ -199,7 +272,6 @@ const Paiement = () => {
                       required
                     />
                     <TextInput
-                      ref={cvvPaiementRef}
                       style={styles.input}
                       placeholder="CVV"
                       value={formDataPaiement.cvv}
@@ -230,58 +302,39 @@ const Paiement = () => {
                   <View>
                     <View>
                     {accountPaiement.length > 0 ? (
-                      <FlatList
-                        data={accountPaiement}
-                        keyExtractor={(item) => item.id.toString()}
-                        renderItem={({ item }) => (
-                          <View key={item.id}>
-                            <View>
-                              <Text style={styles.titleParam}>
-                                Nom sur la carte:{" "}
-                                <Text>{item.nom}</Text>
-                              </Text>
-                              <Text style={styles.titleParam}>
-                                Numéro de carte:{" "}
-                                <Text>{"**** **** **** " + item.numero.slice(-4)}</Text>
-                              </Text>
-                              <Text style={styles.titleParam}>
-                                Date d'expiration:{" "}
-                                <Text>{item.date}</Text>
-                              </Text>
-                              <Text style={styles.titleParam}>
-                                CVV:{" "}
-                                <Text>{"***"}</Text>
-                              </Text>
-                              <View style={styles.buttonGroup}>
-                                <TouchableOpacity
-                                  onPress={() => handleEditPaiement(item)}
-                                  style={styles.ajouterButton}
-                                >
-                                  <Text style={styles.ajouterButtonText}>
-                                    Modifier ⚙️
-                                  </Text>
-                                </TouchableOpacity>
-                                <View style={styles.dividerbtn}/>
-                                <TouchableOpacity
-                                  onPress={() => handleDeletePaiement(item)}
-                                  style={styles.ajouterButton}
-                                >
-                                  <Text style={styles.ajouterButtonText}>
-                                    Supprimer ❌
-                                  </Text>
-                                </TouchableOpacity>
-                              </View>
-                              <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
-                            </View>
+                      <View>
+                      <Picker
+                        selectedValue={selectedPaiementId}
+                        onValueChange={(itemValue) => setSelectedPaiementId(itemValue)}
+                      >
+                        <Picker.Item label="Sélectionner une adresse" value="" />
+                        {accountPaiement.map((paiement) => (
+                          <Picker.Item key={paiement.id} label={paiement.nom} value={paiement.id} />
+                        ))}
+                      </Picker>
+                      {selectedPaiementId !== "" && (
+                        <View style={styles.adresseContainer}>
+                          <Text>Nom sur la carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</Text></Text>
+                          <Text>Numéro carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</Text></Text>
+                          <Text>Date d'expiration: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</Text></Text>
+                          <Text>CVV: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</Text></Text>
+                          <View style={styles.buttonGroup}>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleEditPaiement}>
+                              <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
+                            </TouchableOpacity>
+                            <View style={styles.dividerbtn}/>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleDeletePaiement}>
+                              <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
+                            </TouchableOpacity>
                           </View>
-                        )}
-                      />
+                        </View>
+                      )}
+                    </View>
                     ) : (
                       <View>
                         <Text>Aucun moyen de paiement enregistré</Text>
                       </View>
                     )}
-
                     </View>
                     <TouchableOpacity
                       onPress={handleAjoutPaiement}
@@ -293,13 +346,20 @@ const Paiement = () => {
                     </TouchableOpacity>
                   </View>
                 )}
+                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1 }} />
+
+                {errorMessage && (
+                  <Text style={styles.errorText}>{errorMessage}</Text>
+                )}
                 <View style={styles.buttonGroup} />
-                <TouchableOpacity
-                  onPress={() => navigation.goBack()}
-                  style={styles.ajouterButton}
-                >
-                  <Text style={styles.ajouterButtonText}>Retour</Text>
-                </TouchableOpacity>
+                <View style={styles.containerBtn}>
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
+                    <Text style={styles.ajouterButtonText}>Retour</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handlePayer} style={styles.btn} disabled={disableButton}>
+                    <Text style={styles.ajouterButtonText}>Confirmer ma commande</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
