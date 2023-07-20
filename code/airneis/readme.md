@@ -1,7 +1,9 @@
 **Airneis - Code React du Site Web**
+
 Ce dossier "airneis" contient tout le code source du site web Airneis, développé en React. Le site web est une plateforme e-commerce spécialisée dans la vente de meubles de haute qualité.
 
 **Fonctionnalités**
+
 Le site web Airneis propose les fonctionnalités suivantes :
 
 Parcourir les catégories de meubles et consulter les produits individuels.
@@ -11,7 +13,7 @@ Passer une commande en fournissant les informations de livraison et de paiement.
 Suivre l'état de la commande et consulter l'historique des achats.
 
 
-**Structure du Code**
+**Structure du Code**  
 Le code du site web Airneis est organisé de la manière suivante :
 
 public/: Ce répertoire contient les fichiers statiques tels que le fichier HTML principal, les images, les icônes, etc.
