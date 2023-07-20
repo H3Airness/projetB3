@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
-
+//s
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true); 

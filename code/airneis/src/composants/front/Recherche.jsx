@@ -13,7 +13,7 @@ const Recherche = () => {
   const { ajouter } = useContext(dataContext);
   const [produitsParPage, setProduitsParPage] = useState(10);
   const [pageCourante, setPageCourante] = useState(1);
-  const conteneurRef = useRef(null); 
+  const conteneurRef = useRef(null);
 
   useEffect(() => {
     axios
@@ -67,11 +67,7 @@ const Recherche = () => {
       setAucunResultat(false);
     } else {
       axios
-        .get("http://airneis.ddns.net:3000/recherche.php", {
-          params: {
-            recherche: filtreRechercheTrimmed,
-          },
-        })
+        .get(`http://airneis.ddns.net:3000/recherche.php?recherche=${filtreRechercheTrimmed}`)
         .then((response) => {
           const resultatsFiltres = response.data.filter((donnee) => {
             const nomProduit = donnee.nom.toLowerCase();
@@ -102,7 +98,6 @@ const Recherche = () => {
   }, [filtreRecherche]);
 
   useEffect(() => {
- 
     conteneurRef.current.scrollIntoView({ behavior: "smooth" });
   }, [pageCourante]);
 
