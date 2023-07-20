@@ -23,7 +23,7 @@ Airneis est un site e-commerce spécialisé dans la vente de meubles de haute qu
 1.	Clonez ce dépôt sur votre machine.
 2.	Assurez-vous que Node.js et npm sont installés.
 3.	Naviguez vers le répertoire du projet et exécutez npm install pour installer les dépendances.
-4.	Utilisez la commande npm start pour lancer le serveur de développement du site web.
+4.	Utilisez la commande npm run dev pour lancer le serveur de développement du site web.
    
 **API (PHP)**
 1.	Assurez-vous d'avoir un serveur web avec PHP installé.
