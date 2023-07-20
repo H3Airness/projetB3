@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { dataContext } from "../context/dataContext";
 import { Link } from "react-router-dom";
@@ -11,14 +11,28 @@ const Recherche = () => {
   const [afficherFiltre, setAfficherFiltre] = useState(false);
   const [filtreRecherche, setFiltreRecherche] = useState("");
   const { ajouter } = useContext(dataContext);
+  const [produitsParPage, setProduitsParPage] = useState(10);
+  const [pageCourante, setPageCourante] = useState(1);
+  const conteneurRef = useRef(null); 
+
+  useEffect(() => {
+    axios
+      .get("http://airneis.ddns.net:3000/recherche.php")
+      .then((response) => {
+        setDonnees(response.data);
+        setResultats(response.data);
+      })
+      .catch((error) => {});
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
 
+    setPageCourante(1);
+
     const filtreRechercheTrimmed = filtreRecherche.trim().toLowerCase();
     const resultatsFiltres = donnees.filter((donnee) => {
       const nomProduit = donnee.nom.toLowerCase();
-      // Correspondance exacte
       if (nomProduit === filtreRechercheTrimmed) {
         return true;
       }
@@ -48,39 +62,49 @@ const Recherche = () => {
 
   useEffect(() => {
     const filtreRechercheTrimmed = filtreRecherche.trim().toLowerCase();
-    axios
-      .get("http://airneis.ddns.net:3000/recherche.php", {
-        params: {
-          recherche: filtreRechercheTrimmed,
-        },
-      })
-      .then((response) => {
-        const resultatsFiltres = response.data.filter((donnee) => {
-          const nomProduit = donnee.nom.toLowerCase();
-          // Correspondance exacte
-          if (nomProduit === filtreRechercheTrimmed) {
-            return true;
-          }
-          if (
-            nomProduit.length === filtreRechercheTrimmed.length &&
-            differeDUnCaractere(nomProduit, filtreRechercheTrimmed)
-          ) {
-            return true;
-          }
-          if (nomProduit.startsWith(filtreRechercheTrimmed)) {
-            return true;
-          }
-          if (nomProduit.includes(filtreRechercheTrimmed)) {
-            return true;
-          }
-          return false;
-        });
+    if (filtreRechercheTrimmed === "") {
+      setResultats(donnees);
+      setAucunResultat(false);
+    } else {
+      axios
+        .get("http://airneis.ddns.net:3000/recherche.php", {
+          params: {
+            recherche: filtreRechercheTrimmed,
+          },
+        })
+        .then((response) => {
+          const resultatsFiltres = response.data.filter((donnee) => {
+            const nomProduit = donnee.nom.toLowerCase();
+            if (nomProduit === filtreRechercheTrimmed) {
+              return true;
+            }
+            if (
+              nomProduit.length === filtreRechercheTrimmed.length &&
+              differeDUnCaractere(nomProduit, filtreRechercheTrimmed)
+            ) {
+              return true;
+            }
+            if (nomProduit.startsWith(filtreRechercheTrimmed)) {
+              return true;
+            }
+            if (nomProduit.includes(filtreRechercheTrimmed)) {
+              return true;
+            }
+            return false;
+          });
 
-        setResultats(resultatsFiltres);
-        setAucunResultat(resultatsFiltres.length === 0);
-      })
-      .catch((error) => {});
+          setResultats(resultatsFiltres);
+          setAucunResultat(resultatsFiltres.length === 0);
+        })
+        .catch((error) => {});
+    }
+    setPageCourante(1);
   }, [filtreRecherche]);
+
+  useEffect(() => {
+ 
+    conteneurRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [pageCourante]);
 
   function differeDUnCaractere(chaine1, chaine2) {
     let diffCount = 0;
@@ -94,6 +118,11 @@ const Recherche = () => {
     }
     return diffCount === 1;
   }
+
+  const indexDernierProduit = pageCourante * produitsParPage;
+  const indexPremierProduit = indexDernierProduit - produitsParPage;
+  const produitsAffiches = resultats.slice(indexPremierProduit, indexDernierProduit);
+  const totalPages = Math.ceil(resultats.length / produitsParPage);
 
   return (
     <>
@@ -140,7 +169,7 @@ const Recherche = () => {
           </div>
         </div>
       </div>
-      {aucunResultat && (
+      {aucunResultat && filtreRecherche.trim() !== "" && (
         <div className="alert alert-danger text-center mt-5" role="alert">
           Aucun résultat trouvé pour votre recherche.
         </div>
@@ -152,9 +181,9 @@ const Recherche = () => {
           fermerFiltre={() => setAfficherFiltre(false)}
         />
       )}
-      <div className="container mt-4">
+      <div className="container mt-4" ref={conteneurRef}>
         <div className="row justify-content-center">
-          {resultats.map((resultat) => (
+          {produitsAffiches.map((resultat) => (
             <div className="col-md-4 mb-3" key={resultat.id}>
               <div className="card">
                 <Link to={`/Produit/${resultat.id}`}>
@@ -183,6 +212,35 @@ const Recherche = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="row justify-content-center mt-3">
+          <div className="col-md-12 text-center pagination-bar">
+            <button
+              className="prev-btn"
+              onClick={() => setPageCourante(pageCourante - 1)}
+              disabled={pageCourante === 1}
+            >
+              Précédent
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((numPage) => (
+              <React.Fragment key={numPage}>
+                {numPage !== 1 && <span className="divider">|</span>}
+                <button
+                  className={`pagination-btn ${numPage === pageCourante ? "active" : ""}`}
+                  onClick={() => setPageCourante(numPage)}
+                >
+                  {numPage}
+                </button>
+              </React.Fragment>
+            ))}
+            <button
+              className="next-btn"
+              onClick={() => setPageCourante(pageCourante + 1)}
+              disabled={pageCourante === totalPages}
+            >
+              Suivant
+            </button>
+          </div>
         </div>
       </div>
     </>
