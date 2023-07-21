@@ -11,7 +11,7 @@ const Recherche = () => {
   const [afficherFiltre, setAfficherFiltre] = useState(false);
   const [filtreRecherche, setFiltreRecherche] = useState("");
   const { ajouter } = useContext(dataContext);
-  const [produitsParPage, setProduitsParPage] = useState(10);
+  const [produitsParPage, setProduitsParPage] = useState(9);
   const [pageCourante, setPageCourante] = useState(1);
   const conteneurRef = useRef(null);
 
