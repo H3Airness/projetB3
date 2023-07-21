@@ -1011,6 +1011,7 @@ a:link {
   justify-content: center;
   background-color: #f2e2d5; 
   font-family: Arial, sans-serif;
+  height: 50vh;
 }
 
 .forgot-password h1 {
@@ -1051,17 +1052,18 @@ a:link {
 .success-message {
   color: green;
 }
-
 .reset-password-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: #f2e2d5;
+  height: 60vh;
 }
 
 .reset-password-title {
   font-size: 2rem;
-  color: #333;
+  color: #38240f; 
   margin-bottom: 1rem;
 }
 
@@ -1071,29 +1073,41 @@ a:link {
   align-items: center;
   gap: 1rem;
   width: 350px;
+  background-color: #ffffff; 
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .password-input, .confirm-password-input {
   padding: 0.5rem;
   font-size: 1rem;
-  border-radius: 50px;
-  border: 1px solid #ccc;
-  width: 1px;
+  border-radius: 5px;
+  border: 1px solid #a18973; 
+  width: 100%;
+}
+
+.message-text {
+  color: #d9534f;
+  text-align: center;
 }
 
 .submit-button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: #007BFF;
+  background-color: #38240f; 
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
 }
 
 .submit-button:hover {
-  background-color: #0056b3;
+  background-color: #553417;
 }
+
 
 .message-text {
   color: rgb(68, 255, 0)(255, 255, 255);
