@@ -86,7 +86,7 @@ function MesParametres() {
         <View style={styles.sidebarParam}>
           <Text style={styles.titleCgu}>Récapitulatif de votre compte</Text>
           {isEditMode ? (
-            <View>
+            <View style={styles.priceContainer}>
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Ancien mot de passe:</Text>
                 <View style={styles.passwordInput}>
@@ -139,6 +139,7 @@ function MesParametres() {
             </View>
           ) : (
             <>
+            <View style={styles.priceContainer}>
               <View style={styles.formGroup}>
                 <Text style={styles.titleParam}>Nom:</Text>
                 <Text style={styles.formControl}>{accountInfo ? accountInfo.nom : "Nom inconnu"}</Text>
@@ -155,6 +156,7 @@ function MesParametres() {
                     <Text style={styles.ajouterButtonText}>Modifier le mot de passe</Text>
                   </TouchableOpacity>
                 </View>
+              </View>
               </View>
               <View style={styles.dividerbtn}/>
               <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />

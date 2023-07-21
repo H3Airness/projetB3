@@ -111,7 +111,7 @@ function Produit() {
                     <Text style={styles.ajouterButtonText}>Ajouter au panier</Text>
                   </TouchableOpacity>
                 ) : (
-                  <TouchableOpacity style={styles.stockEpuiseButton} disabled>
+                  <TouchableOpacity style={styles.disabledButton} disabled>
                     <Text style={styles.stockEpuiseButtonText}>Stock épuisé</Text>
                   </TouchableOpacity>
                 )}
@@ -142,7 +142,7 @@ function Produit() {
                         <Text style={styles.ajouterButtonText}>Ajouter au panier</Text>
                       </TouchableOpacity>
                     ) : (
-                      <TouchableOpacity style={styles.stockEpuiseButton} disabled>
+                      <TouchableOpacity style={styles.disabledButton} disabled>
                         <Text style={styles.stockEpuiseButtonText}>Stock épuisé</Text>
                       </TouchableOpacity>
                     )}

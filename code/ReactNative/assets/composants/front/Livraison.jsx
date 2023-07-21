@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
@@ -384,210 +384,273 @@ const Livraison = () => {
               {successMessageFacturation && <Text style={styles.successMessage}>{successMessageFacturation}</Text>}
               {editModeLivraison && (
                 <View>
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.nomAdresse}
-                        onChangeText={(value) => handleInputChangeLivraison("nomAdresse", value)}
-                        placeholder="Nom de l'adresse"
-                        required
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.nom}
-                        onChangeText={(value) => handleInputChangeLivraison("nom", value)}
-                        placeholder="Nom"
-                        required
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.prenom}
-                        onChangeText={(value) => handleInputChangeLivraison("prenom", value)}
-                        placeholder="Prénom"
-                        required
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.adresseLivraison}
-                        onChangeText={(value) => handleInputChangeLivraison("adresseLivraison", value)}
-                        placeholder="Adresse"
-                        required
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.adresseLivraison2}
-                        onChangeText={(value) => handleInputChangeLivraison("adresseLivraison2", value)}
-                        placeholder="Adresse 2 (optionnel)"
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.codePostalLivraison}
-                        onChangeText={(value) => handleInputChangeLivraison("codePostalLivraison", value)}
-                        placeholder="Code postal"
-                        required
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.villeLivraison}
-                        onChangeText={(value) => handleInputChangeLivraison("villeLivraison", value)}
-                        placeholder="Ville"
-                        required
-                    />
-                    <TextInput
-                        style={styles.input}
-                        value={formDataLivraison.pays}
-                        onChangeText={(value) => handleInputChangeLivraison("pays", value)}
-                        placeholder="Pays"
-                        required
-                    />
-                    <View style={styles.buttonGroup}>
-                        <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitLivraison}>
-                        <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
-                        </TouchableOpacity>
-                        <View style={styles.dividerbtn}/>
-                        <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelLivraison}>
-                        <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
-                        </TouchableOpacity>
+                  <Text style={styles.titleCgu2}>Adresse de livraison</Text>
+                  <View style={styles.dividerbtn}/>
+                  <View style={styles.priceContainer}>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Nom de l'adresse: </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.nomAdresse}
+                          onChangeText={(value) => handleInputChangeLivraison("nomAdresse", value)}
+                          placeholder="Nom de l'adresse"
+                          required
+                      />
                     </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Nom: </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.nom}
+                          onChangeText={(value) => handleInputChangeLivraison("nom", value)}
+                          placeholder="Nom"
+                          required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Prénom: </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.prenom}
+                          onChangeText={(value) => handleInputChangeLivraison("prenom", value)}
+                          placeholder="Prénom"
+                          required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Adresse: </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.adresseLivraison}
+                          onChangeText={(value) => handleInputChangeLivraison("adresseLivraison", value)}
+                          placeholder="Adresse"
+                          required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Adresse 2 (optionnel): </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.adresseLivraison2}
+                          onChangeText={(value) => handleInputChangeLivraison("adresseLivraison2", value)}
+                          placeholder="Adresse 2 (optionnel)"
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Code postal: </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.codePostalLivraison}
+                          onChangeText={(value) => handleInputChangeLivraison("codePostalLivraison", value)}
+                          placeholder="Code postal"
+                          required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Ville: </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.villeLivraison}
+                          onChangeText={(value) => handleInputChangeLivraison("villeLivraison", value)}
+                          placeholder="Ville"
+                          required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Pays: </Text>
+                      <TextInput
+                          style={styles.input}
+                          value={formDataLivraison.pays}
+                          onChangeText={(value) => handleInputChangeLivraison("pays", value)}
+                          placeholder="Pays"
+                          required
+                      />
+                    </View>
+                      <View style={styles.buttonGroup}>
+                          <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitLivraison}>
+                          <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
+                          </TouchableOpacity>
+                          <View style={styles.dividerbtn}/>
+                          <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelLivraison}>
+                          <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
+                          </TouchableOpacity>
+                      </View>
+                  </View>
                 </View>
               )}
             </View>
             {editModeFacturation && (
             <View>
               <Text style={styles.titleCgu2}>Adresse de facturation</Text>
-              <TextInput
-                style={styles.input}
-                value={formDataFacturation.nomFacturation}
-                onChangeText={(value) => handleInputChangeFacturation("nomFacturation", value)}
-                placeholder="Nom"
-                required
-              />
-              <TextInput
-                style={styles.input}
-                value={formDataFacturation.prenomFacturation}
-                onChangeText={(value) => handleInputChangeFacturation("prenomFacturation", value)}
-                placeholder="Prénom"
-                required
-              />
-              <TextInput
-                style={styles.input}
-                value={formDataFacturation.adresseFacturation}
-                onChangeText={(value) => handleInputChangeFacturation("adresseFacturation", value)}
-                placeholder="Adresse"
-                required
-              />
-              <TextInput
-                style={styles.input}
-                value={formDataFacturation.codePostalFacturation}
-                onChangeText={(value) => handleInputChangeFacturation("codePostalFacturation", value)}
-                placeholder="Code postal"
-                required
-              />
-              <TextInput
-                style={styles.input}
-                value={formDataFacturation.villeFacturation}
-                onChangeText={(value) => handleInputChangeFacturation("villeFacturation", value)}
-                placeholder="Ville"
-                required
-              />
-              <TextInput
-                style={styles.input}
-                value={formDataFacturation.paysFacturation}
-                onChangeText={(value) => handleInputChangeFacturation("paysFacturation", value)}
-                placeholder="Pays"
-                required
-              />
-              <View style={styles.buttonGroup}>
-                <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitFacturation}>
-                  <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
-                </TouchableOpacity>
-                <View style={styles.dividerbtn}/>
-                <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelFacturation}>
-                  <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
-                </TouchableOpacity>
+              <View style={styles.dividerbtn}/>
+              <View style={styles.priceContainer}>
+                <View style={styles.formGroup}>
+                  <Text style={styles.label}>Nom: </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={formDataFacturation.nomFacturation}
+                    onChangeText={(value) => handleInputChangeFacturation("nomFacturation", value)}
+                    placeholder="Nom"
+                    required
+                  />
+                </View>
+                <View style={styles.formGroup}>
+                  <Text style={styles.label}>Prénom: </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={formDataFacturation.prenomFacturation}
+                    onChangeText={(value) => handleInputChangeFacturation("prenomFacturation", value)}
+                    placeholder="Prénom"
+                    required
+                  />
+                </View>
+                <View style={styles.formGroup}>
+                  <Text style={styles.label}>Adresse: </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={formDataFacturation.adresseFacturation}
+                    onChangeText={(value) => handleInputChangeFacturation("adresseFacturation", value)}
+                    placeholder="Adresse"
+                    required
+                  />
+                </View>
+                <View style={styles.formGroup}>
+                  <Text style={styles.label}>Code Postal: </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={formDataFacturation.codePostalFacturation}
+                    onChangeText={(value) => handleInputChangeFacturation("codePostalFacturation", value)}
+                    placeholder="Code postal"
+                    required
+                  />
+                </View>
+                <View style={styles.formGroup}>
+                  <Text style={styles.label}>Ville: </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={formDataFacturation.villeFacturation}
+                    onChangeText={(value) => handleInputChangeFacturation("villeFacturation", value)}
+                    placeholder="Ville"
+                    required
+                  />
+                </View>
+                <View style={styles.formGroup}>
+                  <Text style={styles.label}>Pays: </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={formDataFacturation.paysFacturation}
+                    onChangeText={(value) => handleInputChangeFacturation("paysFacturation", value)}
+                    placeholder="Pays"
+                    required
+                  />
+                </View>
+                <View style={styles.buttonGroup}>
+                  <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitFacturation}>
+                    <Text style={styles.ajouterButtonText}>Enregistrer 💾</Text>
+                  </TouchableOpacity>
+                  <View style={styles.dividerbtn}/>
+                  <TouchableOpacity style={styles.ajouterButton} onPress={handleCancelFacturation}>
+                    <Text style={styles.ajouterButtonText}>Annuler ❌</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
             )}
             {!editModeLivraison && !editModeFacturation && (
               <View>
                 <View>
-                  <Text style={styles.sectionTitle}>Adresse de livraison</Text>
                   {accountInfo.length > 0 ? (
                     <View>
-                      <Picker
-                        selectedValue={selectedAdresseId}
-                        onValueChange={(itemValue) => setSelectedAdresseId(itemValue)}
-                      >
-                        <Picker.Item label="Sélectionner une adresse" value="" />
-                        {accountInfo.map((adresse) => (
-                          <Picker.Item key={adresse.id} label={adresse.nom_adresse} value={adresse.id} />
-                        ))}
-                      </Picker>
-                      {selectedAdresseId !== "" && (
-                        <View style={styles.adresseContainer}>
-                          <Text>Nom de l'adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</Text></Text>
-                          <Text>Nom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</Text></Text>
-                          <Text>Prénom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</Text></Text>
-                          <Text>Adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</Text></Text>
-                          <Text>Adresse 2: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</Text></Text>
-                          <Text>Code postal: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</Text></Text>
-                          <Text>Ville: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</Text></Text>
-                          <Text>Pays: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</Text></Text>
-                          <View style={styles.buttonGroup}>
-                            <TouchableOpacity style={styles.ajouterButton} onPress={handleEditLivraison}>
-                              <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
-                            </TouchableOpacity>
+                      <Text style={styles.titleCgu2}>Adresse de facturation</Text>
+                      <View style={styles.dividerbtn}/>
+                      <View style={styles.priceContainer}>
+                        <Picker
+                          style={[styles.picker, { backgroundColor: '#f0f0f0' }]}
+                          selectedValue={selectedAdresseId}
+                          onValueChange={(itemValue) => setSelectedAdresseId(itemValue)}
+                        >
+                          <Picker.Item label="Sélectionner une adresse de livraison" value="" />
+                          {accountInfo.map((adresse) => (
+                            <Picker.Item key={adresse.id} label={adresse.nom_adresse} value={adresse.id} />
+                          ))}
+                        </Picker>
+                        {selectedAdresseId !== "" && (
+                          <View style={styles.adresseContainer}>
                             <View style={styles.dividerbtn}/>
-                            <TouchableOpacity style={styles.ajouterButton} onPress={handleConfirmDeleteLivraison}>
-                              <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
-                            </TouchableOpacity>
+                            <Text>Nom de l'adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom_adresse}</Text></Text>
+                            <Text>Nom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).nom}</Text></Text>
+                            <Text>Prénom: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).prenom}</Text></Text>
+                            <Text>Adresse: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse1}</Text></Text>
+                            <Text>Adresse 2: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).adresse2}</Text></Text>
+                            <Text>Code postal: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).code_postal}</Text></Text>
+                            <Text>Ville: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).ville}</Text></Text>
+                            <Text>Pays: <Text style={styles.boldText}>{accountInfo.find((adresse) => adresse.id === selectedAdresseId).pays}</Text></Text>
+                            <View style={styles.buttonGroup}>
+                              <TouchableOpacity style={styles.ajouterButton} onPress={handleEditLivraison}>
+                                <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
+                              </TouchableOpacity>
+                              <View style={styles.dividerbtn}/>
+                              <TouchableOpacity style={styles.ajouterButton} onPress={handleConfirmDeleteLivraison}>
+                                <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
+                              </TouchableOpacity>
+                            </View>
                           </View>
+                        )}
+                        <View style={styles.dividerbtn}/>
+                        <View style={styles.centeredButtonContainer}>
+                          <TouchableOpacity style={styles.btn} onPress={handleAjoutLivraison}>
+                            <Text style={styles.ajouterButtonText}>Ajouter une adresse ➕</Text>
+                          </TouchableOpacity>
                         </View>
-                      )}
+                      </View>
                     </View>
                   ) : (
                     <View>
-                      <Text>Aucune adresse de livraison enregistrée</Text>
+                      <View>
+                        <Text>Aucune adresse de livraison enregistrée</Text>
+                      </View>
+                      <View style={styles.centeredButtonContainer}>
+                      <TouchableOpacity style={styles.btn} onPress={handleAjoutLivraison}>
+                        <Text style={styles.ajouterButtonText}>Ajouter une adresse ➕</Text>
+                      </TouchableOpacity>
                     </View>
+                  </View>
                   )}
                 </View>
-                <View style={styles.centeredButtonContainer}>
-                  <TouchableOpacity style={styles.ajouterButton} onPress={handleAjoutLivraison}>
-                    <Text style={styles.ajouterButtonText}>Ajouter une adresse ➕</Text>
-                  </TouchableOpacity>
-                </View>
                 <View style={styles.dividerbtn}/>
-                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
 
                 <View>
-                    <Text style={styles.sectionTitle}>Adresse de facturation</Text>
                     {accountFac.nom_facturation || accountFac.prenom_facturation || accountFac.pays_facturation || accountFac.adresse_facturation || accountFac.code_postal_facturation || accountFac.ville_facturation ? (
-                        <View>
-                        <Text>Nom: <Text style={styles.boldText}>{accountFac.nom_facturation}</Text></Text>
-                        <Text>Prénom: <Text style={styles.boldText}>{accountFac.prenom_facturation}</Text></Text>
-                        <Text>Adresse: <Text style={styles.boldText}>{accountFac.adresse_facturation}</Text></Text>
-                        <Text>Code postal: <Text style={styles.boldText}>{accountFac.code_postal_facturation}</Text></Text>
-                        <Text>Ville: <Text style={styles.boldText}>{accountFac.ville_facturation}</Text></Text>
-                        <Text>Pays: <Text style={styles.boldText}>{accountFac.pays_facturation}</Text></Text>
-                        <View style={styles.buttonGroup}>
-                            <TouchableOpacity onPress={handleEditFacturation} style={styles.ajouterButton}>
-                            <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
-                            </TouchableOpacity>
-                            <View style={styles.dividerbtn}/>
-                            <TouchableOpacity onPress={handleConfirmDeleteFacturation} style={styles.ajouterButton}>
-                            <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
-                            </TouchableOpacity>
+                      <View>
+                        <Text style={styles.titleCgu2}>Adresse de facturation</Text>
+                        <View style={styles.dividerbtn}/>
+                        <View style={styles.priceContainer}>
+                          <Text>Nom: <Text style={styles.boldText}>{accountFac.nom_facturation}</Text></Text>
+                          <Text>Prénom: <Text style={styles.boldText}>{accountFac.prenom_facturation}</Text></Text>
+                          <Text>Adresse: <Text style={styles.boldText}>{accountFac.adresse_facturation}</Text></Text>
+                          <Text>Code postal: <Text style={styles.boldText}>{accountFac.code_postal_facturation}</Text></Text>
+                          <Text>Ville: <Text style={styles.boldText}>{accountFac.ville_facturation}</Text></Text>
+                          <Text>Pays: <Text style={styles.boldText}>{accountFac.pays_facturation}</Text></Text>
+                          <View style={styles.buttonGroup}>
+                              <TouchableOpacity onPress={handleEditFacturation} style={styles.ajouterButton}>
+                              <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
+                              </TouchableOpacity>
+                              <View style={styles.dividerbtn}/>
+                              <TouchableOpacity onPress={handleConfirmDeleteFacturation} style={styles.ajouterButton}>
+                              <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
+                              </TouchableOpacity>
+                          </View>
                         </View>
                       </View>
                     ) : (
                       <View>
                         <Text>Aucune adresse de facturation enregistrée.</Text>
-                        <TouchableOpacity onPress={handleEditFacturation} style={styles.ajouterButton}>
+                        <TouchableOpacity onPress={handleEditFacturation} style={styles.btn}>
                             <Text style={styles.ajouterButtonText}>Ajouter une adresse de facturation ➕</Text>
                         </TouchableOpacity>
                         </View>
                     )}
                     </View>
-                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1 }} />
                     <View>
                       {errorMessage && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
@@ -596,7 +659,7 @@ const Livraison = () => {
                     <View style={styles.buttonGroup} />
 
                     <View style={styles.containerBtn}>
-                      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
+                      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btnRetour}>
                         <Text style={styles.ajouterButtonText}>Retour</Text>
                       </TouchableOpacity>
                       <TouchableOpacity onPress={handlePayer} style={styles.btn}>

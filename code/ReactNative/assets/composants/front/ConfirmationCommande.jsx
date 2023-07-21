@@ -41,7 +41,7 @@ const ConfirmationCommande = () => {
               <Text style={styles.titleCgu2}>Votre commande a bien été enregistrée sous le numéro <Text style={styles.link} onPress={() => navigation.navigate("mesCommande")}>n°{paiement.idCommande}</Text>. Vous pouvez suivre son état depuis votre espace client.</Text>
 
               <View style={styles.buttonGroup}>
-                <TouchableOpacity onPress={() => navigation.navigate("recherche")} style={styles.ajouterButton}>
+                <TouchableOpacity onPress={() => navigation.navigate("recherche")} style={styles.btn}>
                   <Text style={styles.ajouterButtonText}>Continuer mes achats</Text>
                 </TouchableOpacity>
               </View>

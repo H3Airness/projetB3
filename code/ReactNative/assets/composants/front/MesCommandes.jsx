@@ -110,9 +110,11 @@ function MesCommandes() {
                         {commande.etat === 'En cours de préparation' && (
                           <>
                             <Text>Commande n° {commande.id} - État : <Text style={styles.orangeText}>{commande.etat}</Text></Text>
-                            <TouchableOpacity style={styles.annulerCommande} onPress={() => handleConfirmAnnulerCommande(commande)}>
-                              <Text style={styles.ajouterButtonText}>Annuler la commande</Text>
+                            <View style={styles.buttonGroup}>
+                            <TouchableOpacity style={styles.disabledButton} onPress={() => handleConfirmAnnulerCommande(commande)}>
+                              <Text style={styles.stockEpuiseButtonText}>Annuler la commande</Text>
                             </TouchableOpacity>
+                            </View>
                           </>
                         )}
                         {commande.etat === 'Expédiée' && (

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
@@ -11,6 +11,13 @@ const Connexion = () => {
   const [error, setError] = useState('');
 
   const authContext = useContext(AuthContext);
+
+
+  const handleForgotPassword = () => {
+    const url = 'http://airneis.fr/forgot-password';
+  
+    Linking.openURL(url).catch((err) => console.error('Erreur lors de l\'ouverture de l\'URL :', err));
+  };
 
   const handleSubmit = async () => {
     const formType = {
@@ -100,6 +107,9 @@ const Connexion = () => {
             style={styles.compteNav}
           >
             <Text style={styles.compteNav}>Créer un compte ?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleForgotPassword} style={styles.compteNav}>
+            <Text style={styles.compteNav}>Mot de passe oublié ?</Text>
           </TouchableOpacity>
         </View>
       </View>

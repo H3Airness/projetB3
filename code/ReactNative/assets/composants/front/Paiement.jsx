@@ -160,20 +160,19 @@ const Paiement = () => {
     setEditModePaiement(false);
   };
 
-  const handleSubmitPaiement = async () => {
+  const handleSubmitPaiement = async (e) => {
+    e.preventDefault();
+    
     try {
-      const response = await axios.post(
-        "http://airneis.ddns.net:3000/update_info_paiement.php",
-        {
-          accountId,
-          id: selectedPaiementId ?? null,
-          nom: formDataPaiement.nom,
-          numero: formDataPaiement.numero,
-          date: formDataPaiement.date,
-          cvv: formDataPaiement.cvv,
-        }
-      );
-      if (response.data.status === "success") {
+      const response = await axios.post('http://airneis.ddns.net:3000/update_info_paiement.php', {
+        accountId,
+        id: selectedPaiementId === "" ? null : selectedPaiementId,
+        nom: formDataPaiement.nom,
+        numero: formDataPaiement.numero,
+        date: formDataPaiement.date,
+        cvv: formDataPaiement.cvv,
+      });
+      if (response.data.status === 'success') {
         setEditModePaiement(false);
         const updatedAccountPaiement = accountPaiement.map((paiement) => {
           if (paiement.id === selectedPaiementId) {
@@ -188,14 +187,11 @@ const Paiement = () => {
           return paiement;
         });
         setAccountPaiement(updatedAccountPaiement);
-        setSuccessMessagePaiement(
-          "Les informations de paiement ont été mises à jour avec succès."
-        );
+        setSuccessMessagePaiement('Les informations de paiement ont été mises à jour avec succès.');
         setTimeout(() => {
           setSuccessMessagePaiement(null);
         }, 2000);
-        navigation.navigate("moyenDePaiement");
-      } else {
+        window.location.href = "/Paiement";
       }
     } catch (error) {}
   };
@@ -230,10 +226,9 @@ const Paiement = () => {
           <View style={styles.containerCgu}>
             <View style={styles.sidebarParam}>
               <Text style={styles.titleCgu}>
-                Récapitulatif de votre compte
+              Moyen de Paiement
               </Text>
               <View>
-                <Text style={styles.titleCgu2}>Moyen de Paiement</Text>
                 <Text>
                   {successMessagePaiement && (
                     <View style={styles.successAlert}>
@@ -243,43 +238,55 @@ const Paiement = () => {
                 </Text>
 
                 {editModePaiement && (
-                  <View>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Nom sur la carte"
-                      value={formDataPaiement.nom}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("nom", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Numéro de carte"
-                      value={formDataPaiement.numero}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("numero", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Date d'expiration (MM/YY)"
-                      value={formDataPaiement.date}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("date", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      style={styles.input}
-                      placeholder="CVV"
-                      value={formDataPaiement.cvv}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("cvv", value)
-                      }
-                      required
-                    />
+                  <View style={styles.priceContainer}>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Nom sur la carte: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Nom sur la carte"
+                        value={formDataPaiement.nom}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("nom", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Numéro carte: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Numéro de carte"
+                        value={formDataPaiement.numero}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("numero", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Date d'expiration: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Date d'expiration (MM/YY)"
+                        value={formDataPaiement.date}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("date", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>CVV: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="CVV"
+                        value={formDataPaiement.cvv}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("cvv", value)
+                        }
+                        required
+                      />
+                    </View>
                     <View style={styles.buttonGroup}>
                       <TouchableOpacity
                         onPress={handleSubmitPaiement}
@@ -299,11 +306,12 @@ const Paiement = () => {
                 )}
 
                 {!editModePaiement && (
-                  <View>
+                  <View style={styles.priceContainer}>
                     <View>
                     {accountPaiement.length > 0 ? (
                       <View>
                       <Picker
+                        style={[styles.picker, { backgroundColor: '#f0f0f0' }]}
                         selectedValue={selectedPaiementId}
                         onValueChange={(itemValue) => setSelectedPaiementId(itemValue)}
                       >
@@ -312,12 +320,13 @@ const Paiement = () => {
                           <Picker.Item key={paiement.id} label={paiement.nom} value={paiement.id} />
                         ))}
                       </Picker>
+                      <View style={styles.dividerbtn}/>
                       {selectedPaiementId !== "" && (
                         <View style={styles.adresseContainer}>
                           <Text>Nom sur la carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</Text></Text>
-                          <Text>Numéro carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</Text></Text>
+                          <Text>Numéro carte: <Text style={styles.boldText}>{"**** **** **** " +accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-4)}</Text></Text>
                           <Text>Date d'expiration: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</Text></Text>
-                          <Text>CVV: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</Text></Text>
+                          <Text>CVV: <Text style={styles.boldText}>***</Text></Text>
                           <View style={styles.buttonGroup}>
                             <TouchableOpacity style={styles.ajouterButton} onPress={handleEditPaiement}>
                               <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
@@ -338,22 +347,22 @@ const Paiement = () => {
                     </View>
                     <TouchableOpacity
                       onPress={handleAjoutPaiement}
-                      style={styles.ajouterButton}
+                      style={styles.btn}
                     >
                       <Text style={styles.ajouterButtonText}>
-                        Ajouter un moyen de paiement
+                        Ajouter un moyen de paiement ➕
                       </Text>
                     </TouchableOpacity>
                   </View>
                 )}
-                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1 }} />
+                <View style={styles.buttonGroup} />
 
                 {errorMessage && (
                   <Text style={styles.errorText}>{errorMessage}</Text>
                 )}
                 <View style={styles.buttonGroup} />
                 <View style={styles.containerBtn}>
-                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btnRetour}>
                     <Text style={styles.ajouterButtonText}>Retour</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={handlePayer} style={styles.btn} disabled={disableButton}>

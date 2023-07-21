@@ -28,11 +28,12 @@ const Panier = () => {
           {panier.length === 0 ? (
             <View style={styles.emptyCartContainer}>
               <Text>Votre panier est vide. ☹️</Text>
+              <View style={styles.dividerbtn}/>
               <TouchableOpacity
-                style={styles.catalogueButton}
+                style={styles.ajouterButton}
                 onPress={() => navigation.navigate('recherche')}
               >
-                <Text style={styles.catalogueButtonText}>Voir notre catalogue</Text>
+                <Text style={styles.ajouterButtonText}>   Voir notre catalogue   </Text>
               </TouchableOpacity>
             </View>
           ) : null}
@@ -85,10 +86,9 @@ const Panier = () => {
           </View>
         </View>
 
-        <View style={styles.priceContainer}>
-          <Text style={styles.priceHeading}>Total à payer</Text>
           {panier.length > 0 ? (
-            <View>
+            <View style={styles.priceContainer}>
+              <Text style={styles.priceHeading}>Total à payer</Text>
               <Text>
                 Tarif {nombreProduits > 1 && `pour (${nombreProduits} articles)`}:&nbsp;
                 {new Intl.NumberFormat('fr-FR', {
@@ -106,17 +106,17 @@ const Panier = () => {
                   }).format(getTotalPanier() + 10)}
                 </Text>
               </View>
+              <View style={styles.buttonGroup}></View>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={handlePayer}
+                  disabled={panier.length <= 0}
+                >
+                  <Text style={styles.orderButtonText}>Passer la commande</Text>
+                </TouchableOpacity>
             </View>
           ) : null}
-          <TouchableOpacity
-            style={styles.orderButton}
-            onPress={handlePayer}
-            disabled={panier.length <= 0}
-          >
-            <Text style={styles.orderButtonText}>Passer la commande</Text>
-          </TouchableOpacity>
         </View>
-      </View>
       </ScrollView>
     </>
   );

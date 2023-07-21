@@ -167,47 +167,59 @@ const MoyenDePaiement = () => {
                 </Text>
 
                 {editModePaiement && (
-                  <View>
-                    <TextInput
-                      ref={nomPaiementRef}
-                      style={styles.input}
-                      placeholder="Nom sur la carte"
-                      value={formDataPaiement.nom}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("nom", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      ref={numeroPaiementRef}
-                      style={styles.input}
-                      placeholder="Numéro de carte"
-                      value={formDataPaiement.numero}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("numero", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      ref={datePaiementRef}
-                      style={styles.input}
-                      placeholder="Date d'expiration (MM/YY)"
-                      value={formDataPaiement.date}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("date", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      ref={cvvPaiementRef}
-                      style={styles.input}
-                      placeholder="CVV"
-                      value={formDataPaiement.cvv}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("cvv", value)
-                      }
-                      required
-                    />
+                  <View style={styles.priceContainer}>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Nom sur la carte: </Text>
+                      <TextInput
+                        ref={nomPaiementRef}
+                        style={styles.input}
+                        placeholder="Nom sur la carte"
+                        value={formDataPaiement.nom}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("nom", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Numéro carte</Text>
+                      <TextInput
+                        ref={numeroPaiementRef}
+                        style={styles.input}
+                        placeholder="Numéro de carte"
+                        value={formDataPaiement.numero}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("numero", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Date d'expiration: </Text>
+                      <TextInput
+                        ref={datePaiementRef}
+                        style={styles.input}
+                        placeholder="Date d'expiration (MM/YY)"
+                        value={formDataPaiement.date}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("date", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>CVV: </Text>
+                      <TextInput
+                        ref={cvvPaiementRef}
+                        style={styles.input}
+                        placeholder="CVV"
+                        value={formDataPaiement.cvv}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("cvv", value)
+                        }
+                        required
+                      />
+                    </View>
                     <View style={styles.buttonGroup}>
                       <TouchableOpacity
                         onPress={handleSubmitPaiement}
@@ -236,6 +248,7 @@ const MoyenDePaiement = () => {
                         renderItem={({ item }) => (
                           <View key={item.id}>
                             <View>
+                              <View style={styles.priceContainer}>
                               <Text style={styles.titleParam}>
                                 Nom sur la carte:{" "}
                                 <Text>{item.nom}</Text>
@@ -270,8 +283,9 @@ const MoyenDePaiement = () => {
                                     Supprimer ❌
                                   </Text>
                                 </TouchableOpacity>
+                                </View>
                               </View>
-                              <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
+                              <View style={styles.buttonGroup}/>
                             </View>
                           </View>
                         )}
@@ -285,10 +299,10 @@ const MoyenDePaiement = () => {
                     </View>
                     <TouchableOpacity
                       onPress={handleAjoutPaiement}
-                      style={styles.ajouterButton}
+                      style={styles.btn}
                     >
                       <Text style={styles.ajouterButtonText}>
-                        Ajouter un moyen de paiement
+                        Ajouter un moyen de paiement ➕
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -296,7 +310,7 @@ const MoyenDePaiement = () => {
                 <View style={styles.buttonGroup} />
                 <TouchableOpacity
                   onPress={() => navigation.goBack()}
-                  style={styles.ajouterButton}
+                  style={styles.btnRetour}
                 >
                   <Text style={styles.ajouterButtonText}>Retour</Text>
                 </TouchableOpacity>
