@@ -57,20 +57,24 @@ const Connexion = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <View>
-      <View style={styles.loginCard}>
+    <View style={styles.containerCgu}>
+      <View style={styles.priceContainer}>
         <View>
           <View style={styles.log}>
             <Text style={styles.loginTitre}>Connexion</Text>
           </View>
         </View>
         <View>
-          <View style={styles.message}>
-            {message && <Text style={styles.successText}>{message}</Text>}
-          </View>
-          <View style={styles.error}>
-            {error && <Text style={styles.errorText}>{error}</Text>}
-          </View>
+            {message && 
+              <View style={styles.errorsuccess}>
+                <Text style={styles.stockEpuiseButtonText}>{message}</Text>
+              </View>
+            }
+            {error &&
+            <View style={styles.disabledButton}>
+            <Text style={styles.stockEpuiseButtonText}>{error}</Text>
+            </View>
+            }
         </View>
         <View style={styles.formGroup}>
           <Text>Email:</Text>
@@ -101,7 +105,8 @@ const Connexion = () => {
             <Text style={styles.ajouterButtonText}>Se connecter</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.textCenter}>
+        <View style={styles.dividerbtn}/>
+        <View>
           <TouchableOpacity
             onPress={() => navigation.navigate('inscription')}
             style={styles.compteNav}

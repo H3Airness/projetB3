@@ -40,16 +40,18 @@ function Contact() {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.containerCgu}>
         <Text style={styles.contactTitre}>Formulaire de Contact</Text>
 
-        <View style={styles.Contact}>
+        <View style={styles.priceContainer}>
           <View>
             <Text style={styles.contactLog}>Information de contact</Text>
           </View>
           <View style={styles.iconContact}>
             <Text>Addresse: 27-33 Av. des Champs-Élysées</Text>
-            <Text>75008, Paris, France</Text>
+          </View>
+          <View>
+            <Text>                  75008, Paris, France</Text>
           </View>
           <View style={styles.iconContact}>
             <Text>Email: airneis@hotmail.com</Text>
@@ -59,7 +61,9 @@ function Contact() {
           </View>
         </View>
 
-        <View style={styles.contactCard}>
+        <View style={styles.dividerbtn}/>
+
+        <View style={styles.priceContainer}>
           <View>
             <View>
               <Text style={styles.contactLog}>Envoyez nous un message</Text>
