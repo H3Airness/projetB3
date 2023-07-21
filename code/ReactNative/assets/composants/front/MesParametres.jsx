@@ -86,7 +86,7 @@ function MesParametres() {
         <View style={styles.sidebarParam}>
           <Text style={styles.titleCgu}>Récapitulatif de votre compte</Text>
           {isEditMode ? (
-            <View>
+            <View style={styles.priceContainer}>
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Ancien mot de passe:</Text>
                 <View style={styles.passwordInput}>
@@ -126,7 +126,11 @@ function MesParametres() {
                   />
                 </View>
               </View>
-              {passwordError && <Text style={styles.errorMessage}>{passwordError}</Text>}
+              {passwordError && 
+                <View style={styles.errorsuccess}>
+                  <Text style={styles.errorMessage}>{passwordError}</Text>
+                </View>
+              }
               <View style={styles.buttonGroup}>
                 <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitPassword}>
                   <Text style={styles.ajouterButtonText}>Valider ✔️</Text>
@@ -139,6 +143,7 @@ function MesParametres() {
             </View>
           ) : (
             <>
+            <View style={styles.priceContainer}>
               <View style={styles.formGroup}>
                 <Text style={styles.titleParam}>Nom:</Text>
                 <Text style={styles.formControl}>{accountInfo ? accountInfo.nom : "Nom inconnu"}</Text>
@@ -156,8 +161,7 @@ function MesParametres() {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={styles.dividerbtn}/>
-              <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
+              </View>
               <View style={styles.divider} />
               <View style={styles.buttonGroup}>
                 <TouchableOpacity style={styles.ajouterButton} onPress={() => navigation.navigate('moyenDePaiement')}>

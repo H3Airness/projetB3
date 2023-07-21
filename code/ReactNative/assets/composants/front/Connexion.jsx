@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
@@ -11,6 +11,13 @@ const Connexion = () => {
   const [error, setError] = useState('');
 
   const authContext = useContext(AuthContext);
+
+
+  const handleForgotPassword = () => {
+    const url = 'http://airneis.fr/forgot-password';
+  
+    Linking.openURL(url).catch((err) => console.error('Erreur lors de l\'ouverture de l\'URL :', err));
+  };
 
   const handleSubmit = async () => {
     const formType = {
@@ -50,20 +57,24 @@ const Connexion = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <View>
-      <View style={styles.loginCard}>
+    <View style={styles.containerCgu}>
+      <View style={styles.priceContainer}>
         <View>
           <View style={styles.log}>
             <Text style={styles.loginTitre}>Connexion</Text>
           </View>
         </View>
         <View>
-          <View style={styles.message}>
-            {message && <Text style={styles.successText}>{message}</Text>}
-          </View>
-          <View style={styles.error}>
-            {error && <Text style={styles.errorText}>{error}</Text>}
-          </View>
+            {message && 
+              <View style={styles.errorsuccess}>
+                <Text style={styles.stockEpuiseButtonText}>{message}</Text>
+              </View>
+            }
+            {error &&
+            <View style={styles.disabledButton}>
+            <Text style={styles.stockEpuiseButtonText}>{error}</Text>
+            </View>
+            }
         </View>
         <View style={styles.formGroup}>
           <Text>Email:</Text>
@@ -94,12 +105,16 @@ const Connexion = () => {
             <Text style={styles.ajouterButtonText}>Se connecter</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.textCenter}>
+        <View style={styles.dividerbtn}/>
+        <View>
           <TouchableOpacity
             onPress={() => navigation.navigate('inscription')}
             style={styles.compteNav}
           >
             <Text style={styles.compteNav}>Créer un compte ?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleForgotPassword} style={styles.compteNav}>
+            <Text style={styles.compteNav}>Mot de passe oublié ?</Text>
           </TouchableOpacity>
         </View>
       </View>

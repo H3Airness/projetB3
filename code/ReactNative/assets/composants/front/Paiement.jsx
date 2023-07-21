@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { dataContext } from "../context/dataContext";
 import { AuthContext } from "../context/authContext";
@@ -10,18 +10,23 @@ import Connexion from "./Connexion";
 import { styles } from "../../../Styles";
 
 const Paiement = () => {
+  const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
   const navigation = useNavigation();
+  const [errorMessage, setErrorMessage] = useState("");
+  const { adresseLivraison, adresseFacturation, moyenPaiement } = useContext(InfoCommandeContext);
   const [loading, setLoading] = useState(true);
   const { accountId, isLoggedIn } = useContext(AuthContext);
-  const { panier, nombreProduits, getTotalPanier, getTotalProduit } = useContext(dataContext);
-  const { adresseLivraison, adresseFacturation, moyenPaiement } = useContext(InfoCommandeContext);
   const [accountPaiement, setAccountPaiement] = useState([]);
   const [successMessagePaiement, setSuccessMessagePaiement] = useState(null);
   const [selectedPaiementId, setSelectedPaiementId] = useState("");
   const [editModePaiement, setEditModePaiement] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const totalPanierString = getTotalPanier().toString();
   const [disableButton, setDisableButton] = useState(false);
+  const [pickerKey, setPickerKey] = useState(0);
+
+  const handleChangePaiement = (e) => {
+    setSelectedPaiementId(e.target.value);
+  };
 
   const produitsCommande = Object.values(panier).map((produit) => ({
     idProduit: produit.id,
@@ -94,10 +99,6 @@ const Paiement = () => {
     }
   };
 
-  const handleChangePaiement = (value) => {
-    setSelectedPaiementId(value);
-  };
-
   const [formDataPaiement, setFormDataPaiement] = useState({
     nom: "",
     numero: "",
@@ -108,9 +109,7 @@ const Paiement = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const accountRes = await axios.get(
-          `http://airneis.ddns.net:3000/info_paiement.php?accountId=${accountId}`
-        );
+        const accountRes = await axios.get(`http://airneis.ddns.net:3000/info_paiement.php?accountId=${accountId}`);
         if (accountRes.data.status === "success") {
           setAccountPaiement(accountRes.data.accountPaiement);
           setLoading(false);
@@ -122,19 +121,17 @@ const Paiement = () => {
       }
     };
     fetchData();
-  }, [accountId, accountPaiement]);
-  
+  }, [accountId]);
 
-  const handleInputChangePaiement = (name, value) => {
-    setFormDataPaiement({ ...formDataPaiement, [name]: value });
+  const handleInputChangePaiement = (fieldName, value) => {
+    setFormDataPaiement({ ...formDataPaiement, [fieldName]: value });
   };
 
-  const handleEditPaiement = (paiement) => {
+  const handleEditPaiement = () => {
     setEditModePaiement(true);
-    setSelectedPaiementId(paiement.id);
 
     const selectedPaiement = accountPaiement.find((paiement) => paiement.id === selectedPaiementId);
-  
+
     setFormDataPaiement({
       nom: selectedPaiement.nom,
       numero: selectedPaiement.numero,
@@ -142,11 +139,10 @@ const Paiement = () => {
       cvv: selectedPaiement.cvv,
     });
   };
-  
 
   const handleAjoutPaiement = () => {
     setEditModePaiement(true);
-    setSelectedPaiementId(null);
+    setSelectedPaiementId("");
 
     setFormDataPaiement({
       nom: "",
@@ -154,26 +150,27 @@ const Paiement = () => {
       date: "",
       cvv: "",
     });
+
+    setPickerKey((prevKey) => prevKey + 1);
   };
 
   const handleCancelPaiement = () => {
     setEditModePaiement(false);
   };
 
-  const handleSubmitPaiement = async () => {
+  const handleSubmitPaiement = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await axios.post(
-        "http://airneis.ddns.net:3000/update_info_paiement.php",
-        {
-          accountId,
-          id: selectedPaiementId ?? null,
-          nom: formDataPaiement.nom,
-          numero: formDataPaiement.numero,
-          date: formDataPaiement.date,
-          cvv: formDataPaiement.cvv,
-        }
-      );
-      if (response.data.status === "success") {
+      const response = await axios.post('http://airneis.ddns.net:3000/update_info_paiement.php', {
+        accountId,
+        id: selectedPaiementId === "" ? null : selectedPaiementId,
+        nom: formDataPaiement.nom,
+        numero: formDataPaiement.numero,
+        date: formDataPaiement.date,
+        cvv: formDataPaiement.cvv,
+      });
+      if (response.data.status === 'success') {
         setEditModePaiement(false);
         const updatedAccountPaiement = accountPaiement.map((paiement) => {
           if (paiement.id === selectedPaiementId) {
@@ -188,38 +185,43 @@ const Paiement = () => {
           return paiement;
         });
         setAccountPaiement(updatedAccountPaiement);
-        setSuccessMessagePaiement(
-          "Les informations de paiement ont été mises à jour avec succès."
-        );
+        setSuccessMessagePaiement('Les informations de paiement ont été mises à jour avec succès.');
         setTimeout(() => {
           setSuccessMessagePaiement(null);
         }, 2000);
-        navigation.navigate("moyenDePaiement");
-      } else {
       }
     } catch (error) {}
   };
 
-  const handleDeletePaiement = async (paiement) => {
-  try {
-    await axios.delete(
-      `http://airneis.ddns.net:3000/delete_info_paiement.php?id=${paiement.id}`
+  const handleConfirmDeletePaiement = () => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir supprimer ce moyen de paiement ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => handleDeletePaiement(),
+        },
+      ],
+      { cancelable: true }
     );
-    const updatedAccountPaiement = accountPaiement.filter(
-      (item) => item.id !== paiement.id
-    );
-    setAccountPaiement(updatedAccountPaiement);
-    setSelectedPaiementId("");
-  } catch (error) {}
-};
+  };
+
+  const handleDeletePaiement = async () => {
+    try {
+      await axios.delete(`http://airneis.ddns.net:3000/delete_info_paiement.php?id=${selectedPaiementId}`);
+      setSelectedPaiementId("");
+    } catch (error) {
+    }
+  };
 
 
   if (loading) {
-    return (
-      <View>
-        <Text>Chargement...</Text>
-      </View>
-    );
+    return <View><Text>Chargement...</Text></View>;
   }
 
   return (
@@ -230,56 +232,66 @@ const Paiement = () => {
           <View style={styles.containerCgu}>
             <View style={styles.sidebarParam}>
               <Text style={styles.titleCgu}>
-                Récapitulatif de votre compte
+              Moyen de Paiement
               </Text>
               <View>
-                <Text style={styles.titleCgu2}>Moyen de Paiement</Text>
-                <Text>
-                  {successMessagePaiement && (
-                    <View style={styles.successAlert}>
-                      <Text>{successMessagePaiement}</Text>
-                    </View>
-                  )}
-                </Text>
+                {successMessagePaiement && (
+                  <View style={styles.errorsuccess}>
+                    <Text style={styles.stockEpuiseButtonText}>{successMessagePaiement}</Text>
+                  </View>
+                )}
+                <View style={styles.dividerbtn}/>
 
                 {editModePaiement && (
-                  <View>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Nom sur la carte"
-                      value={formDataPaiement.nom}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("nom", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Numéro de carte"
-                      value={formDataPaiement.numero}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("numero", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Date d'expiration (MM/YY)"
-                      value={formDataPaiement.date}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("date", value)
-                      }
-                      required
-                    />
-                    <TextInput
-                      style={styles.input}
-                      placeholder="CVV"
-                      value={formDataPaiement.cvv}
-                      onChangeText={(value) =>
-                        handleInputChangePaiement("cvv", value)
-                      }
-                      required
-                    />
+                  <View style={styles.priceContainer}>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Nom sur la carte: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Nom sur la carte"
+                        value={formDataPaiement.nom}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("nom", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Numéro carte: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Numéro de carte"
+                        value={formDataPaiement.numero}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("numero", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>Date d'expiration: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Date d'expiration (MM/YY)"
+                        value={formDataPaiement.date}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("date", value)
+                        }
+                        required
+                      />
+                    </View>
+                    <View style={styles.formGroup}>
+                      <Text style={styles.label}>CVV: </Text>
+                      <TextInput
+                        style={styles.input}
+                        placeholder="CVV"
+                        value={formDataPaiement.cvv}
+                        onChangeText={(value) =>
+                          handleInputChangePaiement("cvv", value)
+                        }
+                        required
+                      />
+                    </View>
                     <View style={styles.buttonGroup}>
                       <TouchableOpacity
                         onPress={handleSubmitPaiement}
@@ -299,31 +311,33 @@ const Paiement = () => {
                 )}
 
                 {!editModePaiement && (
-                  <View>
+                  <View style={styles.priceContainer}>
                     <View>
                     {accountPaiement.length > 0 ? (
                       <View>
                       <Picker
+                        style={[styles.picker, { backgroundColor: '#f0f0f0' }]}
                         selectedValue={selectedPaiementId}
                         onValueChange={(itemValue) => setSelectedPaiementId(itemValue)}
                       >
-                        <Picker.Item label="Sélectionner une adresse" value="" />
+                      <Picker.Item label="Sélectionner une adresse" value="" />
                         {accountPaiement.map((paiement) => (
                           <Picker.Item key={paiement.id} label={paiement.nom} value={paiement.id} />
                         ))}
                       </Picker>
+                      <View style={styles.dividerbtn}/>
                       {selectedPaiementId !== "" && (
                         <View style={styles.adresseContainer}>
                           <Text>Nom sur la carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).nom}</Text></Text>
-                          <Text>Numéro carte: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero}</Text></Text>
+                          <Text>Numéro carte: <Text style={styles.boldText}>{"**** **** **** " +accountPaiement.find((paiement) => paiement.id === selectedPaiementId).numero.slice(-4)}</Text></Text>
                           <Text>Date d'expiration: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).date}</Text></Text>
-                          <Text>CVV: <Text style={styles.boldText}>{accountPaiement.find((paiement) => paiement.id === selectedPaiementId).cvv}</Text></Text>
+                          <Text>CVV: <Text style={styles.boldText}>***</Text></Text>
                           <View style={styles.buttonGroup}>
                             <TouchableOpacity style={styles.ajouterButton} onPress={handleEditPaiement}>
                               <Text style={styles.ajouterButtonText}>Modifier ⚙️</Text>
                             </TouchableOpacity>
                             <View style={styles.dividerbtn}/>
-                            <TouchableOpacity style={styles.ajouterButton} onPress={handleDeletePaiement}>
+                            <TouchableOpacity style={styles.ajouterButton} onPress={handleConfirmDeletePaiement}>
                               <Text style={styles.ajouterButtonText}>Supprimer ❌</Text>
                             </TouchableOpacity>
                           </View>
@@ -338,22 +352,24 @@ const Paiement = () => {
                     </View>
                     <TouchableOpacity
                       onPress={handleAjoutPaiement}
-                      style={styles.ajouterButton}
+                      style={styles.btn}
                     >
                       <Text style={styles.ajouterButtonText}>
-                        Ajouter un moyen de paiement
+                        Ajouter un moyen de paiement ➕
                       </Text>
                     </TouchableOpacity>
                   </View>
                 )}
-                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1 }} />
+                <View style={styles.buttonGroup} />
 
                 {errorMessage && (
-                  <Text style={styles.errorText}>{errorMessage}</Text>
+                  <View style={styles.disabledButton}>
+                    <Text style={styles.stockEpuiseButtonText}>{errorMessage}</Text>
+                  </View>
                 )}
                 <View style={styles.buttonGroup} />
                 <View style={styles.containerBtn}>
-                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btnRetour}>
                     <Text style={styles.ajouterButtonText}>Retour</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={handlePayer} style={styles.btn} disabled={disableButton}>
