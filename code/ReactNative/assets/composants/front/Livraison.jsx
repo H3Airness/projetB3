@@ -651,9 +651,12 @@ const Livraison = () => {
                         </View>
                     )}
                     </View>
+                    <View style={styles.dividerbtn}/>
                     <View>
                       {errorMessage && (
-                        <Text style={styles.errorText}>{errorMessage}</Text>
+                        <View style={styles.disabledButton}>
+                          <Text style={styles.stockEpuiseButtonText}>{errorMessage}</Text>
+                        </View>
                       )}
                     </View>
                     <View style={styles.buttonGroup} />

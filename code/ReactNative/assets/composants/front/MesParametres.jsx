@@ -126,7 +126,11 @@ function MesParametres() {
                   />
                 </View>
               </View>
-              {passwordError && <Text style={styles.errorMessage}>{passwordError}</Text>}
+              {passwordError && 
+                <View style={styles.errorsuccess}>
+                  <Text style={styles.errorMessage}>{passwordError}</Text>
+                </View>
+              }
               <View style={styles.buttonGroup}>
                 <TouchableOpacity style={styles.ajouterButton} onPress={handleSubmitPassword}>
                   <Text style={styles.ajouterButtonText}>Valider ✔️</Text>
@@ -158,8 +162,6 @@ function MesParametres() {
                 </View>
               </View>
               </View>
-              <View style={styles.dividerbtn}/>
-              <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 30 }} />
               <View style={styles.divider} />
               <View style={styles.buttonGroup}>
                 <TouchableOpacity style={styles.ajouterButton} onPress={() => navigation.navigate('moyenDePaiement')}>

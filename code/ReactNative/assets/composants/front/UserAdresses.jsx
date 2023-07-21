@@ -338,8 +338,17 @@ const UserAdresses = () => {
             <View>
               <Text style={styles.titleCgu2}>Carnet d'adresses</Text>
               <View style={styles.dividerbtn}/>
-              {successMessageLivraison && <Text style={styles.successMessage}>{successMessageLivraison}</Text>}
-              {successMessageFacturation && <Text style={styles.successMessage}>{successMessageFacturation}</Text>}
+              {successMessageLivraison && 
+                <View style={styles.errorsuccess}>
+                  <Text style={styles.stockEpuiseButtonText}>{successMessageLivraison}</Text>
+                </View>
+              }
+              {successMessageFacturation && 
+                <View style={styles.errorsuccess}>
+                  <Text style={styles.stockEpuiseButtonText}>{successMessageFacturation}</Text>
+                </View>
+              }
+              <View style={styles.dividerbtn}/>
               {editModeLivraison && (
                 <View style={styles.priceContainer}>
                     <View style={styles.formGroup}>

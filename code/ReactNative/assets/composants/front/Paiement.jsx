@@ -358,7 +358,9 @@ const Paiement = () => {
                 <View style={styles.buttonGroup} />
 
                 {errorMessage && (
-                  <Text style={styles.errorText}>{errorMessage}</Text>
+                  <View style={styles.disabledButton}>
+                    <Text style={styles.stockEpuiseButtonText}>{errorMessage}</Text>
+                  </View>
                 )}
                 <View style={styles.buttonGroup} />
                 <View style={styles.containerBtn}>

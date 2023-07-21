@@ -193,6 +193,14 @@ export const styles = StyleSheet.create({
     backgroundColor: '#D9534F',
     borderRadius: 4,
   },
+
+  errorsuccess: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: 'green',
+    borderRadius: 4,
+  },
+
   buttonTextRecherche: {
     color: '#FFF',
   },

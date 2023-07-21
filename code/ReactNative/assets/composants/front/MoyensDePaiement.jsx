@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView, Alert } from "react-native";
 import { AuthContext } from "../context/authContext";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -124,6 +124,24 @@ const MoyenDePaiement = () => {
     } catch (error) {}
   };
 
+  const handleConfirmDeletePaiement = (paiement) => {
+    Alert.alert(
+      "Confirmation",
+      "Êtes-vous sûr de vouloir supprimer ce moyen de paiement ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Confirmer",
+          onPress: () => handleDeletePaiement(paiement),
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const handleDeletePaiement = async (paiement) => {
   try {
     await axios.delete(
@@ -158,13 +176,13 @@ const MoyenDePaiement = () => {
               </Text>
               <View>
                 <Text style={styles.titleCgu2}>Moyen de Paiement</Text>
-                <Text>
-                  {successMessagePaiement && (
-                    <View style={styles.successAlert}>
-                      <Text>{successMessagePaiement}</Text>
-                    </View>
-                  )}
-                </Text>
+                {successMessagePaiement && (
+                  <View style={styles.errorsuccess}>
+                    <Text style={styles.stockEpuiseButtonText}>{successMessagePaiement}</Text>
+                  </View>
+                )}
+                <View style={styles.dividerbtn}/>
+
 
                 {editModePaiement && (
                   <View style={styles.priceContainer}>
@@ -276,7 +294,7 @@ const MoyenDePaiement = () => {
                                 </TouchableOpacity>
                                 <View style={styles.dividerbtn}/>
                                 <TouchableOpacity
-                                  onPress={() => handleDeletePaiement(item)}
+                                  onPress={() => handleConfirmDeletePaiement(item)}
                                   style={styles.ajouterButton}
                                 >
                                   <Text style={styles.ajouterButtonText}>
