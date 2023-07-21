@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Filtre = ({ setDonnees, setResultats }) => {
+const Filtre = ({ setDonnees, setResultats, setPageCourante }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [prixMin, setPrixMin] = useState("");
   const [prixMax, setPrixMax] = useState("");
@@ -47,6 +47,7 @@ const Filtre = ({ setDonnees, setResultats }) => {
       .then((response) => {
         setDonnees(response.data);
         setResultats(response.data);
+        setPageCourante(1); 
       });
   };
   

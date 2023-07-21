@@ -173,6 +173,7 @@ const Recherche = () => {
         <Filtre
           setDonnees={setResultats}
           setResultats={setResultats}
+          setPageCourante={setPageCourante}
           fermerFiltre={() => setAfficherFiltre(false)}
         />
       )}
