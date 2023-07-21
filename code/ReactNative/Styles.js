@@ -190,9 +190,17 @@ export const styles = StyleSheet.create({
   disabledButton: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: '#CCC',
+    backgroundColor: '#D9534F',
     borderRadius: 4,
   },
+
+  errorsuccess: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: 'green',
+    borderRadius: 4,
+  },
+
   buttonTextRecherche: {
     color: '#FFF',
   },
@@ -261,8 +269,8 @@ export const styles = StyleSheet.create({
   quantityButton: {
     padding: 5,
     borderWidth: 1,
-    borderColor: '#007bff',
-    borderRadius: 5,
+    borderColor: '#B3896D',
+    borderRadius: 10,
   },
   quantityText: {
     marginHorizontal: 10,
@@ -442,6 +450,7 @@ export const styles = StyleSheet.create({
   compteNav: {
     color: 'blue',
     textAlign: 'center',
+    marginBottom: 10,
   },
 
   textCenter: {
@@ -640,11 +649,18 @@ export const styles = StyleSheet.create({
   },
 
   btn: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#B3896D',
     paddingVertical: 8,
     borderRadius: 5,
     padding: 30,
     alignItems: 'center',
   },
 
+  btnRetour: {
+    backgroundColor: '#E2C9AF',
+    paddingVertical: 8,
+    borderRadius: 5,
+    padding: 30,
+    alignItems: 'center',
+  },
 });
