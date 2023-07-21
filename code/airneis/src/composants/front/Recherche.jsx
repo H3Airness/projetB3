@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { dataContext } from "../context/dataContext";
 import { Link } from "react-router-dom";
-import Filtre from "../Filtre";
+import Filtre from "./Filtre";
 
 const Recherche = () => {
   const [donnees, setDonnees] = useState([]);

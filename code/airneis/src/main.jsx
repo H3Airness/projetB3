@@ -24,8 +24,8 @@ import MesParametres from './composants/front/MesParametres';
 import UserAdresses from './composants/front/UserAdresses';
 import MoyenDePaiement from './composants/front/MoyensDePaiement';
 import MesCommandes from './composants/front/MesCommandes';
-import PasswordResetPage from './composants/ResetPasswordPage';
-import ForgotPassword from './composants/ForgotPassword';
+import PasswordResetPage from './composants/front/ResetPasswordPage';
+import ForgotPassword from './composants/front/ForgotPassword';
 
 
 
