@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { DataContextProvider } from './assets/composants/context/dataContext';
@@ -31,6 +32,8 @@ const Stack = createStackNavigator();
 function App() {
   useEffect(() => {
     loadFonts();
+    StatusBar.setBackgroundColor('#4E4D4D');
+    StatusBar.setBarStyle('light-content');
   }, []);
 
   return (
