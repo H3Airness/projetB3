@@ -88,7 +88,6 @@ function Produit() {
                 <Text style={styles.prix}>{produit.prix}€</Text>
               </View>
 
-
               <View>
                 {produit.stock > 1 ? (
                   <Text style={{ color: 'green' }}>En stock</Text>
@@ -102,6 +101,8 @@ function Produit() {
                   <Text style={{ color: 'red' }}>Stock épuisé</Text>
                 ) : null}
               </View>
+              
+              <Text style={styles.descriptionProduit}>Matériau: {produit.materiau}</Text>
 
               <Text style={styles.descriptionProduit}>{produit.description}</Text>
 

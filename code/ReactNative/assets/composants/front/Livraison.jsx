@@ -250,9 +250,7 @@ const Livraison = () => {
         setTimeout(() => {
           setSuccessMessageLivraison(null);
         }, 2000);
-        navigation.navigate("adresse");
 
-      } else {
       }
     } catch (error) {
     }
@@ -362,7 +360,6 @@ const Livraison = () => {
   const handleDeleteAdresse = async () => {
     try {
       await axios.delete(`http://airneis.ddns.net:3000/delete_info_livraison.php?id=${selectedAdresseId}`);
-      navigation.navigate("adresse");
       setSelectedAdresseId("");
     } catch (error) {
     }
@@ -380,8 +377,16 @@ const Livraison = () => {
           <ScrollView>
             <Text style={styles.titleCgu}>Carnet d'adresses</Text>
             <View>
-              {successMessageLivraison && <Text style={styles.successMessage}>{successMessageLivraison}</Text>}
-              {successMessageFacturation && <Text style={styles.successMessage}>{successMessageFacturation}</Text>}
+              {successMessageLivraison && 
+                <View style={styles.errorsuccess}>
+                  <Text style={styles.stockEpuiseButtonText}>{successMessageLivraison}</Text>
+                </View>
+              }
+              {successMessageFacturation && 
+                <View style={styles.errorsuccess}>
+                  <Text style={styles.stockEpuiseButtonText}>{successMessageFacturation}</Text>
+                </View>
+              }
               {editModeLivraison && (
                 <View>
                   <Text style={styles.titleCgu2}>Adresse de livraison</Text>

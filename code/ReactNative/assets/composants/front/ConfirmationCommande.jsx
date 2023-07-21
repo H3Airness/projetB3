@@ -27,23 +27,28 @@ const ConfirmationCommande = () => {
         <>
           {panier.length === 0 ? (
             <View style={styles.containerCgu}>
-              <Text>Votre panier est vide. ☹️</Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Recherche")} style={styles.ajouterButtonText}>
-                <Text style={styles.ajouterButtonText}>Voir notre catalogue</Text>
-              </TouchableOpacity>
+              <View style={styles.priceContainer}>
+                <Text style={styles.titleCgu}>Votre panier est vide ! ☹️</Text>
+                <View style={styles.dividerbtn}/>
+                <TouchableOpacity onPress={() => navigation.navigate("recherche")} style={styles.btn}>
+                  <Text style={styles.ajouterButtonText}>Voir notre catalogue</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ) : (
             <>
             <View style={styles.containerCgu}>
-              <Text style={styles.titleCgu}>Commande confirmée! ✅</Text>
+              <View style={styles.priceContainer}>
+                <Text style={styles.titleCgu}>Commande confirmée! ✅</Text>
 
-              <Text style={styles.titleCgu2}>Merci de votre achat !</Text>
-              <Text style={styles.titleCgu2}>Votre commande a bien été enregistrée sous le numéro <Text style={styles.link} onPress={() => navigation.navigate("mesCommande")}>n°{paiement.idCommande}</Text>. Vous pouvez suivre son état depuis votre espace client.</Text>
+                <Text style={styles.titleCgu2}>Merci de votre achat !</Text>
+                <Text style={styles.titleCgu2}>Votre commande a bien été enregistrée sous le numéro <Text style={styles.link} onPress={() => navigation.navigate("mesCommande")}>n°{paiement.idCommande}</Text>. Vous pouvez suivre son état depuis votre espace client.</Text>
 
-              <View style={styles.buttonGroup}>
-                <TouchableOpacity onPress={() => navigation.navigate("recherche")} style={styles.btn}>
-                  <Text style={styles.ajouterButtonText}>Continuer mes achats</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonGroup}>
+                  <TouchableOpacity onPress={() => navigation.navigate("recherche")} style={styles.btn}>
+                    <Text style={styles.ajouterButtonText}>Continuer mes achats</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
             </>
