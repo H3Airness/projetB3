@@ -269,8 +269,8 @@ export const styles = StyleSheet.create({
   quantityButton: {
     padding: 5,
     borderWidth: 1,
-    borderColor: '#B3896D',
-    borderRadius: 10,
+    borderColor: '#007bff',
+    borderRadius: 5,
   },
   quantityText: {
     marginHorizontal: 10,
