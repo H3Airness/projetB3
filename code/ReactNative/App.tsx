@@ -34,6 +34,8 @@ function App() {
     StatusBar.setBackgroundColor('#4E4D4D');
     StatusBar.setBarStyle('light-content');
     loadFonts();
+    StatusBar.setBackgroundColor('#4E4D4D');
+    StatusBar.setBarStyle('light-content');
   }, []);
 
   return (
