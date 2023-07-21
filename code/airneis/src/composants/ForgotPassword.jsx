@@ -14,16 +14,16 @@ const ForgotPassword = () => {
 //s
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true);
+    setIsSubmitting(true); 
   
     try {
       const response = await axios.get(`http://airneis.ddns.net:3000/select_email.php?email=${email}`);
       const { id, error } = response.data;
   
-      if (error) {
-        setMessage('Compte inéxistant');
+      if (error || !id) {
+        setMessage("L'email n'est pas associé à un compte. Veuillez vous inscrire.");
         setSuccess(false);
-      } else if (id) {
+      } else {
         const templateParams = {
           to_email: email,
           reset_link: `http://airneis.fr/reset-password/${id}`,
@@ -34,29 +34,26 @@ const ForgotPassword = () => {
           .send('service_4l8nscb', 'template_0edzpqi', templateParams, 'dLcg7jZT153kwwuzg')
           .then(
             () => {
-              setMessage(
-                'Un lien de réinitialisation de mot de passe a été envoyé à votre adresse email si elle existe.'
-              );
-              setSuccess(true);
+              setMessage('Un lien de réinitialisation de mot de passe a été envoyé à votre adresse email si elle existe.');
+              setSuccess(true); 
             },
             (error) => {
-              console.error('Une erreur est survenue lors de l\'envoi de l\'email:', error);
-              setSuccess(false);
+              console.error("Une erreur est survenue lors de l'envoi de l'email:", error);
+              setSuccess(false); 
             }
           )
           .finally(() => {
-            setIsSubmitting(false);
+            setIsSubmitting(false); 
           });
       }
     } catch (error) {
-      console.error('Une erreur est survenue lors de l\'appel à l\'API:', error);
-      setMessage('Une erreur est survenue lors de la demande de réinitialisation du mot de passe.');
+      console.error("Une erreur est survenue lors de l'appel à l'API:", error);
+      setMessage("Une erreur est survenue lors de la demande de réinitialisation du mot de passe.");
       setSuccess(false);
       setIsSubmitting(false);
     }
   };
   
-
   return (
     <div className="forgot-password">
       <h1>Réinitialisation du mot de passe</h1>
