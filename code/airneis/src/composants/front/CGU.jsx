@@ -4,7 +4,7 @@ const MentionLegale = () => {
   return (
     <>
       <div className="container">
-        <h1 className="cgu-title">Condition Général d'utilisation</h1>
+        <h1 className="cgu-title">Conditions Générales d'utilisations</h1>
         <br />
         APERÇU
         <br />
