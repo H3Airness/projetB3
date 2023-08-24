@@ -1221,3 +1221,12 @@ a:link {
   padding: 20px;
 }
 
+.apk {
+  margin-right: 10px;
+}
+
+.apk:hover {
+  scale: 1.15;
+  transition:0.2s ease-in-out, width 0.8s ease-in-out;
+}
+
