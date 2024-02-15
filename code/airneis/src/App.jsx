@@ -51,7 +51,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='moyen-de-paiement' element={<MoyenDePaiement/>} />
       <Route path='mesCommandes' element={<MesCommandes/>} />
       <Route path='reset-password/:id' element={<PasswordResetPage/>} />
-      <Route path='forgot-password' element={<ForgotPassword/>} />*/}
+      <Route path='forgot-password' element={<ForgotPassword/>} />
 
       </Route>
     </Routes>

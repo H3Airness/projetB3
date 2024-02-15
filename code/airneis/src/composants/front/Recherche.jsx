@@ -145,7 +145,7 @@ const Recherche = () => {
                   >
                     <img
                       style={{ width: "24px" }}
-                      src="http://airneis.ddns.net:3000/img/icon_recherche.png"
+                      src="icon_recherche.png"
                       alt="Rechercher"
                     />
                     Rechercher
