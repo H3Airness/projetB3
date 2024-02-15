@@ -19,7 +19,7 @@ const Gallery = () => {
     <Carousel cols={1} rows={1} gap={10} loop autoplay={autoplay ? 3000 : false} showDots dotColor={"#000000"} dotColorActive={"#333333"} onClick={handleInteraction}>
       {images.map((image, index) => (
         <Carousel.Item key={index}>
-          <img src={`http://airneis.ddns.net:3000/img/carousel/${image.id}.jpg`} alt={image.id} style={{ width: '100%' }} />
+          <img src={`carousel/${image.id}.jpg`} alt={image.id} style={{ width: '100%' }} />
         </Carousel.Item>
       ))}
     </Carousel>

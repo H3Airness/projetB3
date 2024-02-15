@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'Marck';
-  src: url('http://airneis.ddns.net:3001/MarckScript-Regular.ttf');
+  src: url('../public/MarckScript-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Acme';
-  src: url('http://airneis.ddns.net:3001/Acme-Regular.ttf');
+  src: url('../public/Acme-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Arvo';
-  src: url('http://airneis.ddns.net:3001/Arvo-Regular.ttf');
+  src: url('../public/Arvo-Regular.ttf');
 }
 
 html, body {

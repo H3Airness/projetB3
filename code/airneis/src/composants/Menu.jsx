@@ -15,21 +15,21 @@ function Menu() {
                     
                         <NavLink to="/" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}> <img className="logo-airneis" src="http://airneis.ddns.net:3000/img/logo.svg" alt="" /><span className="NavTitre">Àirneis</span></NavLink>
+                        }}> <img className="logo-airneis" src="logo.svg" alt="" /><span className="NavTitre">Àirneis</span></NavLink>
                     </li>
                 </ul>
                 <ul className="navbar-nav NavItems ms-auto">
                     <li className="nav-item">
                         <NavLink to="/Recherche" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
-                        }}><img className="icone-recherche" src="http://airneis.ddns.net:3000/img/icon_recherche.png"></img> </NavLink>
+                        }}><img className="icone-recherche" src="icon_recherche.png"></img> </NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to="/Panier" className={({isActive}) => {
                             return isActive ? "nav-link active text-light" : "nav-link"
                         }}>
                             <div style={{position: 'relative'}}>
-                                <img className="icone-recherche" src="http://airneis.ddns.net:3000/img/icon_panier.png" />
+                                <img className="icone-recherche" src="icon_panier.png" />
                                 {nombreProduits > 0 && (
                                     <div className="nombre-panier">
                                         {nombreProduits}

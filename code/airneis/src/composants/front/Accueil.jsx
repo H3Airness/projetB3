@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Gallery from '../Slider';
+//import Gallery from '../Slider';
 import { Link } from 'react-router-dom';
 
 const Accueil = () => {
@@ -23,7 +23,7 @@ const Accueil = () => {
   return (
     <>
       <div  className="mt-3">
-        <Gallery/>
+        {/*<Gallery/>*/}
       </div>
       <div className="info-airneis mt-5">
         <p>VENANT DES HAUTES TERRES D'ÉCOSSE</p>

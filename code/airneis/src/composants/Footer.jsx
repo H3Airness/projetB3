@@ -28,7 +28,7 @@ function Footer() {
                 <ul className="navbar-nav ms-auto ml-">
                     <li className="nav-item">
                         <a href="http://airneis.ddns.net:3000/Airneis_v2.9.apk" target="_blank" rel="noopener noreferrer" className="nav-link">
-                            <img className='apk' src='http://airneis.ddns.net:3000/img/apk.png' width='37px' title='Télécharger notre application mobile!'></img>
+                            <img className='apk' src='apk.png' width='37px' title='Télécharger notre application mobile!'></img>
                             &#10094; &nbsp; Télécharger notre application mobile
                         </a>
                     </li>

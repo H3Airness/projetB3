@@ -56,7 +56,7 @@ function Connexion({ previousLocation }) {
         >
           <img
             className="logo-airneis-connexion"
-            src="http://airneis.ddns.net:3000/img/logo.svg"
+            src="logo.svg"
             alt=""
           />
           <span className="titreConnexion">Àirneis</span>

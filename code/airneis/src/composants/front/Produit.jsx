@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { dataContext } from "../context/dataContext";
-import Carousel from 'better-react-carousel';
+//import Carousel from 'better-react-carousel';
 
 function shuffleArray(array) {
   const newArray = [...array];
@@ -85,8 +85,8 @@ function Produit() {
             />
           </Link>
 
-          <div className="cat d-flex justify-content-center">
-            <div className='photo'>
+        <div className="cat d-flex justify-content-center">
+            {/*<div className='photo'>
               <Carousel cols={1} rows={1} gap={10} loop autoplay={autoplay ? 5000 : false} showDots dotColor="#000000" dotColorActive="#333333" onClick={handleInteraction}>
                 <Carousel.Item>
                   <img className="rounded mx-auto d-block imgproduit" width="70%" style={{ minWidth: '100px' }} src={`http://airneis.ddns.net:3000/img_produit/${produit.id}.jpg`} alt={produit.titre}/>
@@ -98,7 +98,7 @@ function Produit() {
                   <img className="rounded mx-auto d-block imgproduit" width="70%" style={{ minWidth: '100px' }} src={`http://airneis.ddns.net:3000/img_produit/${produit.id}-3.jpg`} alt={produit.titre}/>
                 </Carousel.Item>
               </Carousel>
-            </div>
+            </div>*/}
 
             <div className='description'>
               <div className="cat d-flex justify-content-between">
